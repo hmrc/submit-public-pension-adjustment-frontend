@@ -1,7 +1,7 @@
 
-# submit-public-pension-adjustment-frontend
+# Submit Public Pension Adjustment Frontend
 
-This is a placeholder README.md for a new repository
+This is a placeholder README.md for a repository
 
 ### License
 
