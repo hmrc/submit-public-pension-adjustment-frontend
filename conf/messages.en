@@ -1,4 +1,4 @@
-service.name = submit-public-pension-adjustment-frontend
+service.name = Submit Public Pension Adjustment service
 
 site.back = Back
 site.remove = Remove
@@ -35,9 +35,9 @@ error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = There is a problem
 
-index.title = submit-public-pension-adjustment-frontend
-index.heading = submit-public-pension-adjustment-frontend
-index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
+index.title = Submit Public Pension Adjustment service
+index.heading = Submit Public Pension Adjustment service
+index.guidance = Welcome to Submit Public Pension Adjustment service. Please see the README file for a guide to getting started.
 
 checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
