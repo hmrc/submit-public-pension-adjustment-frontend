@@ -26,14 +26,9 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import pages.QuestionPage
 import play.api.libs.json._
+import base.SpecBase
 
-trait PageBehaviours
-    extends AnyFreeSpec
-    with Matchers
-    with ScalaCheckPropertyChecks
-    with Generators
-    with OptionValues
-    with TryValues {
+trait PageBehaviours extends SpecBase with ScalaCheckPropertyChecks with Generators {
 
   class BeRetrievable[A] {
     def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit =
@@ -111,4 +106,9 @@ trait PageBehaviours
   def beSettable[A]: BeSettable[A] = new BeSettable[A]
 
   def beRemovable[A]: BeRemovable[A] = new BeRemovable[A]
+
+  def checkNavigation(nextUrl: String, expectedUrl: String) = {
+    val urlWithNoContext = nextUrl.replace("/submit-public-pension-adjustment", "")
+    urlWithNoContext must be(expectedUrl)
+  }
 }

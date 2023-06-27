@@ -16,31 +16,23 @@
 
 package controllers
 
-import com.google.inject.Inject
-import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import controllers.actions._
+import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{ClaimOnBehalfSummary, StatusOfUserSummary}
-import viewmodels.govuk.summarylist._
-import views.html.CheckYourAnswersView
+import views.html.SubmissionInfoView
 
-class CheckYourAnswersController @Inject() (
+class SubmissionInfoController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: CheckYourAnswersView
+  view: SubmissionInfoView
 ) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val rows: Seq[Option[SummaryListRow]] = Seq(
-      ClaimOnBehalfSummary.row(request.userAnswers),
-      StatusOfUserSummary.row(request.userAnswers)
-    )
-    Ok(view(SummaryListViewModel(rows.flatten)))
+  def onPageLoad: Action[AnyContent] = (identify andThen getData) { implicit request =>
+    Ok(view())
   }
 }

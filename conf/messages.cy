@@ -55,3 +55,35 @@ signedOut.guidance = cy: We did not save your answers.
 
 unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
+
+claimOnBehalf.title =  cy: Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
+claimOnBehalf.heading = cy: Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
+claimOnBehalf.checkYourAnswersLabel = cy: Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
+claimOnBehalf.error.required = cy: Select yes if you are making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship
+claimOnBehalf.change.hidden = cy: Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
+claimOnBehalf.caption = cy: Personal details
+
+statusOfUser.title = cy: Do you have power of attorney or deputyship for this person?
+statusOfUser.heading = cy: Do you have power of attorney or deputyship for this person?
+statusOfUser.deputyship = cy: Deputyship
+statusOfUser.powerOfAttorney = cy: Power of Attorney
+statusOfUser.checkYourAnswersLabel = cy: Do you have power of attorney or deputyship for this person?
+statusOfUser.error.required = cy: Select whether you hold power of attorney or deputyship for this person
+statusOfUser.change.hidden = cy: Do you have power of attorney or deputyship for this person?
+statusOfUser.caption = cy: Personal details
+
+submissionInfo.title = cy: Submission service: what you will need
+submissionInfo.heading = cy: Submission service: what you will need
+submissionInfo.message1 = cy: To send your adjustment, you must complete the submission service.
+submissionInfo.message2 = cy: You must provide your:
+submissionInfo.message3 = cy: If you are making a submission on behalf of someone else, you will need their details listed above. You will also need their:
+submissionInfo.list.you.message1 = cy: full name
+submissionInfo.list.you.message2 = cy: home address
+submissionInfo.list.you.message3 = cy: contact number
+submissionInfo.list.you.message4 = cy: bank or building society details
+submissionInfo.list.you.message5 = cy: legacy or reform individual pension scheme references
+submissionInfo.list.you.message6 = cy: public or private pension scheme name
+submissionInfo.list.you.message7 = cy: public or private pension scheme tax reference number
+submissionInfo.list.behalf.message1 = cy: National Insurance number
+submissionInfo.list.behalf.message2 = cy: teacher reference number
+submissionInfo.list.behalf.message3 = cy: unique tax reference number
