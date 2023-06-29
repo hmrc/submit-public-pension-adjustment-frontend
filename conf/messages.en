@@ -236,3 +236,20 @@ whichPensionSchemeWillPayTaxRelief.pensionSchemeB = Pension Scheme B
 whichPensionSchemeWillPayTaxRelief.checkYourAnswersLabel = Which pension scheme will pay the tax relief you are claiming?
 whichPensionSchemeWillPayTaxRelief.error.required = Select which pension scheme will pay the tax relief you are claiming
 whichPensionSchemeWillPayTaxRelief.change.hidden = Which pension scheme will pay the tax relief you are claiming
+
+pensionSchemeMemberName.title = What is the pension scheme member's name?
+pensionSchemeMemberName.heading = What is the pension scheme member's name?
+pensionSchemeMemberName.checkYourAnswersLabel = What is the pension scheme member's name?
+pensionSchemeMemberName.error.required =  Enter the pension scheme member's name
+pensionSchemeMemberName.error.length =  must be 50 characters or less
+pensionSchemeMemberName.change.hidden = What is the pension scheme member's name?
+
+pensionSchemeMemberDOB.title = What is the pension scheme member's date of birth?
+pensionSchemeMemberDOB.heading = What is the pension scheme member's date of birth?
+pensionSchemeMemberDOB.hint = For example, 28 3 1965
+pensionSchemeMemberDOB.checkYourAnswersLabel = What is the pension scheme member's date of birth?
+pensionSchemeMemberDOB.error.required.all = Enter the pension scheme member's date of birth
+pensionSchemeMemberDOB.error.required.two = The date must include include {0} and {1}
+pensionSchemeMemberDOB.error.required = The date must include {0}
+pensionSchemeMemberDOB.error.invalid = Enter a real date of birth.
+pensionSchemeMemberDOB.change.hidden =  What is the pension scheme member's date of birth?

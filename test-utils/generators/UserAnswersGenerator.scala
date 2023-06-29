@@ -40,6 +40,8 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(AskedPensionSchemeToPayTaxChargePage.type, JsValue)] ::
       arbitrary[(StatusOfUserPage.type, JsValue)] ::
       arbitrary[(ClaimOnBehalfPage.type, JsValue)] ::
+      arbitrary[(PensionSchemeMemberDOBPage.type, JsValue)] ::
+      arbitrary[(PensionSchemeMemberNamePage.type, JsValue)] ::
       arbitrary[(WhichPensionSchemeWillPayPage.type, JsValue)] ::
       arbitrary[(PensionSchemeDetailsPage.type, JsValue)] ::
       arbitrary[(WhoWillPayPage.type, JsValue)] ::

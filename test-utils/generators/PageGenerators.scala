@@ -72,4 +72,10 @@ trait PageGenerators {
 
   implicit lazy val arbitraryWhoWillPayPage: Arbitrary[WhoWillPayPage.type] =
     Arbitrary(WhoWillPayPage)
+
+  implicit lazy val arbitraryPensionSchemeMemberDOBPage: Arbitrary[PensionSchemeMemberDOBPage.type] =
+    Arbitrary(PensionSchemeMemberDOBPage)
+
+  implicit lazy val arbitraryPensionSchemeMemberNamePage: Arbitrary[PensionSchemeMemberNamePage.type] =
+    Arbitrary(PensionSchemeMemberNamePage)
 }

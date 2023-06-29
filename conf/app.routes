@@ -101,3 +101,13 @@ GET        /whichPensionSchemeWillPayTaxRelief                        controller
 POST       /whichPensionSchemeWillPayTaxRelief                        controllers.WhichPensionSchemeWillPayTaxReliefController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhichPensionSchemeWillPayTaxRelief                  controllers.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhichPensionSchemeWillPayTaxRelief                  controllers.WhichPensionSchemeWillPayTaxReliefController.onSubmit(mode: Mode = CheckMode)
+
+GET        /their-name                                     controllers.PensionSchemeMemberNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /their-name                                     controllers.PensionSchemeMemberNameController.onSubmit(mode: Mode = NormalMode)
+GET        /change-their-name                              controllers.PensionSchemeMemberNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-their-name                              controllers.PensionSchemeMemberNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /their-dob                                      controllers.PensionSchemeMemberDOBController.onPageLoad(mode: Mode = NormalMode)
+POST       /their-dob                                      controllers.PensionSchemeMemberDOBController.onSubmit(mode: Mode = NormalMode)
+GET        /change-their-dob                               controllers.PensionSchemeMemberDOBController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-their-dob
