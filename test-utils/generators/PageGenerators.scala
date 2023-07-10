@@ -20,5 +20,6 @@ import org.scalacheck.Arbitrary
 import pages._
 
 trait PageGenerators {
-  
+
+  // scala fmt ignore
 }

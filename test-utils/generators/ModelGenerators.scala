@@ -22,4 +22,5 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  // scala fmt ignore
 }

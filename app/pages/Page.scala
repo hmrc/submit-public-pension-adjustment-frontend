@@ -24,7 +24,7 @@ import scala.language.implicitConversions
 trait Page {
   def navigate(mode: Mode, answers: UserAnswers): Call = mode match {
     case NormalMode => navigateInNormalMode(answers)
-    case CheckMode => navigateInCheckMode(answers)
+    case CheckMode  => navigateInCheckMode(answers)
   }
 
   protected def navigateInNormalMode(answers: UserAnswers): Call
