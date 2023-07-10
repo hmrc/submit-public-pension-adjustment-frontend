@@ -14,7 +14,7 @@ case object $className$Page extends QuestionPage[Set[$className$]] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     answers.get($className$Page) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
+      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
