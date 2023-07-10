@@ -4,7 +4,6 @@ import controllers.actions._
 import forms.$className$FormProvider
 import javax.inject.Inject
 import models.Mode
-import navigation.Navigator
 import pages.$className$Page
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -17,7 +16,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class $className$Controller @Inject()(
                                        override val messagesApi: MessagesApi,
                                        sessionRepository: SessionRepository,
-                                       navigator: Navigator,
                                        identify: IdentifierAction,
                                        getData: DataRetrievalAction,
                                        requireData: DataRequiredAction,
@@ -50,7 +48,7 @@ class $className$Controller @Inject()(
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set($className$Page, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage($className$Page, mode, updatedAnswers))
+          } yield Redirect($className$Page.navigate(mode, updatedAnswers))
       )
   }
 }
