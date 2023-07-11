@@ -24,5 +24,19 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
-  // scala fmt ignore
+  implicit lazy val arbitraryStatusOfUserUserAnswersEntry: Arbitrary[(StatusOfUserPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[StatusOfUserPage.type]
+        value <- arbitrary[StatusOfUser].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryClaimOnBehalfUserAnswersEntry: Arbitrary[(ClaimOnBehalfPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ClaimOnBehalfPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
 }

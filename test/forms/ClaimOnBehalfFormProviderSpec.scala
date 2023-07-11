@@ -14,15 +14,32 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
-import org.scalacheck.Arbitrary
-import pages._
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-trait PageGenerators {
-  implicit lazy val arbitraryStatusOfUserPage: Arbitrary[StatusOfUserPage.type] =
-    Arbitrary(StatusOfUserPage)
+class ClaimOnBehalfFormProviderSpec extends BooleanFieldBehaviours {
 
-  implicit lazy val arbitraryClaimOnBehalfPage: Arbitrary[ClaimOnBehalfPage.type] =
-    Arbitrary(ClaimOnBehalfPage)
+  val requiredKey = "claimOnBehalf.error.required"
+  val invalidKey  = "error.boolean"
+
+  val form = new ClaimOnBehalfFormProvider()()
+
+  ".value" - {
+
+    val fieldName = "value"
+
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
 }

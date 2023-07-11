@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
-import org.scalacheck.Arbitrary
-import pages._
+import javax.inject.Inject
 
-trait PageGenerators {
-  implicit lazy val arbitraryStatusOfUserPage: Arbitrary[StatusOfUserPage.type] =
-    Arbitrary(StatusOfUserPage)
+import forms.mappings.Mappings
+import play.api.data.Form
+import models.StatusOfUser
 
-  implicit lazy val arbitraryClaimOnBehalfPage: Arbitrary[ClaimOnBehalfPage.type] =
-    Arbitrary(ClaimOnBehalfPage)
+class StatusOfUserFormProvider @Inject() extends Mappings {
+
+  def apply(): Form[StatusOfUser] =
+    Form(
+      "value" -> enumerable[StatusOfUser]("statusOfUser.error.required")
+    )
 }

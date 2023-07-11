@@ -22,5 +22,8 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
-  // scala fmt ignore
+  implicit lazy val arbitraryStatusOfUser: Arbitrary[StatusOfUser] =
+    Arbitrary {
+      Gen.oneOf(StatusOfUser.values.toSeq)
+    }
 }
