@@ -255,3 +255,23 @@ pensionSchemeMemberDOB.error.required = The date must include {0}
 pensionSchemeMemberDOB.error.invalid = Enter a real date of birth.
 pensionSchemeMemberDOB.change.hidden =  What is the pension scheme member's date of birth?
 pensionSchemeMemberDOB.caption = Personal details
+
+alternativeName.title = alternativeName
+alternativeName.heading = alternativeName
+alternativeName.checkYourAnswersLabel = alternativeName
+alternativeName.error.required = Select yes if alternativeName
+alternativeName.change.hidden = AlternativeName
+
+enterAlternativeName.title = enterAlternativeName
+enterAlternativeName.heading = enterAlternativeName
+enterAlternativeName.checkYourAnswersLabel = enterAlternativeName
+enterAlternativeName.error.required = Enter enterAlternativeName
+enterAlternativeName.error.length = EnterAlternativeName must be 100 characters or less
+enterAlternativeName.change.hidden = EnterAlternativeName
+
+contactNumber.title = contactNumber
+contactNumber.heading = contactNumber
+contactNumber.checkYourAnswersLabel = contactNumber
+contactNumber.error.required = Enter contactNumber
+contactNumber.error.length = ContactNumber must be 100 characters or less
+contactNumber.change.hidden = ContactNumber

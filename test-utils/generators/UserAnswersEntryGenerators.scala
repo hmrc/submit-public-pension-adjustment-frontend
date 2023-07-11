@@ -67,6 +67,32 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryContactNumberUserAnswersEntry: Arbitrary[(ContactNumberPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ContactNumberPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryEnterAlternativeNameUserAnswersEntry: Arbitrary[(EnterAlternativeNamePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[EnterAlternativeNamePage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAlternativeNameUserAnswersEntry: Arbitrary[(AlternativeNamePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AlternativeNamePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  // scala fmt ignore
+
   implicit lazy val arbitraryWhichPensionSchemeWillPayTaxReliefUserAnswersEntry
     : Arbitrary[(WhichPensionSchemeWillPayTaxReliefPage.type, JsValue)] =
     Arbitrary {

@@ -43,7 +43,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
         checkNavigation(result, "/whichPensionSchemeWillPay")
       }
 
-      "to CYA when You selected" in {
+      "to AlternativeNamePage when You selected" in {
         val ua     = emptyUserAnswers
           .set(
             WhoWillPayPage,
@@ -53,7 +53,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhoWillPayPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/alternative-name")
       }
 
       "to JourneyRecovery when not selected" in {

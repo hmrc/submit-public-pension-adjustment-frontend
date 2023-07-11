@@ -256,3 +256,23 @@ pensionSchemeMemberDOB.error.invalid = cy: Enter a real date of birth.
 pensionSchemeMemberDOB.change.hidden = cy: What is the pension scheme member's date of birth?
 pensionSchemeMemberDOB.caption = cy: Personal details
 
+alternativeName.title = cy: alternativeName
+alternativeName.heading = cy: alternativeName
+alternativeName.checkYourAnswersLabel = cy: alternativeName
+alternativeName.error.required = cy: Select yes if alternativeName
+alternativeName.change.hidden = cy: AlternativeName
+
+enterAlternativeName.title = cy: enterAlternativeName
+enterAlternativeName.heading = cy: enterAlternativeName
+enterAlternativeName.checkYourAnswersLabel = cy: enterAlternativeName
+enterAlternativeName.error.required = cy: Enter enterAlternativeName
+enterAlternativeName.error.length = cy: EnterAlternativeName must be 100 characters or less
+enterAlternativeName.change.hidden = cy: EnterAlternativeName
+
+contactNumber.title = cy: contactNumber
+contactNumber.heading = cy: contactNumber
+contactNumber.checkYourAnswersLabel = cy: contactNumber
+contactNumber.error.required = cy: Enter contactNumber
+contactNumber.error.length = cy: ContactNumber must be 100 characters or less
+contactNumber.change.hidden = cy: ContactNumber
+

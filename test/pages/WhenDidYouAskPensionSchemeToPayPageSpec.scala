@@ -16,8 +16,9 @@
 
 package pages
 
-import java.time.LocalDate
+import models.{CheckMode, NormalMode}
 
+import java.time.LocalDate
 import org.scalacheck.Arbitrary
 
 class WhenDidYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
@@ -34,4 +35,54 @@ class WhenDidYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
 
     beRemovable[LocalDate](WhenDidYouAskPensionSchemeToPayPage)
   }
+
+  val validDate = LocalDate.of(2020, 1, 1)
+
+  "must navigate correctly in NormalMode" - {
+
+    "to AlternativeNamePage when user submits" in {
+      val ua = emptyUserAnswers
+        .set(
+          WhenDidYouAskPensionSchemeToPayPage,
+          validDate
+        )
+        .get
+
+      val result = WhenDidYouAskPensionSchemeToPayPage.navigate(NormalMode, ua).url
+
+      checkNavigation(result, "/alternative-name")
+    }
+
+    "to JourneyRecovery when not selected" in {
+      val ua     = emptyUserAnswers
+      val result = WhenDidYouAskPensionSchemeToPayPage.navigate(NormalMode, ua).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
+  }
+
+  "must navigate correctly in CheckMode" - {
+
+    "to CYA when selected" in {
+
+      val ua = emptyUserAnswers
+        .set(
+          WhenDidYouAskPensionSchemeToPayPage,
+          validDate
+        )
+        .get
+
+      val result = WhenDidYouAskPensionSchemeToPayPage.navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/check-your-answers")
+    }
+
+    "to JourneyRecovery when not selected" in {
+      val ua     = emptyUserAnswers
+      val result = WhenDidYouAskPensionSchemeToPayPage.navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
+  }
+
 }

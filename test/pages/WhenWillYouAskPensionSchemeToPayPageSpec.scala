@@ -16,7 +16,7 @@
 
 package pages
 
-import models.WhenWillYouAskPensionSchemeToPay
+import models.{CheckMode, NormalMode, WhenWillYouAskPensionSchemeToPay}
 
 class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
 
@@ -28,4 +28,51 @@ class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
 
     beRemovable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
   }
+
+  "must navigate correctly in NormalMode" - {
+
+    "to AlternativeNamePage when user submits" in {
+      val ua     = emptyUserAnswers
+        .set(
+          WhenWillYouAskPensionSchemeToPayPage,
+          WhenWillYouAskPensionSchemeToPay.OctToDec23
+        )
+        .success
+        .value
+      val result = WhenWillYouAskPensionSchemeToPayPage.navigate(NormalMode, ua).url
+
+      checkNavigation(result, "/alternative-name")
+    }
+
+    "to JourneyRecovery when not selected" in {
+      val ua     = emptyUserAnswers
+      val result = WhenWillYouAskPensionSchemeToPayPage.navigate(NormalMode, ua).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
+  }
+
+  "must navigate correctly in CheckMode" - {
+
+    "to CYA when selected" in {
+      val ua     = emptyUserAnswers
+        .set(
+          WhenWillYouAskPensionSchemeToPayPage,
+          WhenWillYouAskPensionSchemeToPay.JanToMar24
+        )
+        .success
+        .value
+      val result = WhenWillYouAskPensionSchemeToPayPage.navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/check-your-answers")
+    }
+
+    "to JourneyRecovery when not selected" in {
+      val ua     = emptyUserAnswers
+      val result = WhenWillYouAskPensionSchemeToPayPage.navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
+  }
+
 }
