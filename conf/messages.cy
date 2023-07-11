@@ -143,4 +143,4 @@ whenWillYouAskPensionSchemeToPay.janToMar24 = cy: 1 January 2024 to March 31 202
 whenWillYouAskPensionSchemeToPay.checkYourAnswersLabel = cy: When do you think you will ask your pension scheme to pay?
 whenWillYouAskPensionSchemeToPay.error.required = cy: Select when you think you will ask your pension scheme to pay?
 whenWillYouAskPensionSchemeToPay.change.hidden = cy: When do you think you will ask your pension scheme to pay
-
+whenWillYouAskPensionSchemeToPay.hint = cy: Choose the annual quarter when you will ask your pension scheme to pay.

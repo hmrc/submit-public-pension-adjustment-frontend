@@ -37,7 +37,7 @@
                 field  = form("value"),
                 legend = LegendViewModel(messages("whenWillYouAskPensionSchemeToPay.heading")).asPageHeading(),
                 items  = WhenWillYouAskPensionSchemeToPay.options
-            )
+            ).withHint(HintViewModel(messages("whenWillYouAskPensionSchemeToPay.hint")))
         )
 
         @govukButton(
