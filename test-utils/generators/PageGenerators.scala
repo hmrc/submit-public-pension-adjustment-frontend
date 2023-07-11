@@ -21,6 +21,12 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryStatusOfUserPage: Arbitrary[StatusOfUserPage.type] =
+    Arbitrary(StatusOfUserPage)
+
+  implicit lazy val arbitraryClaimOnBehalfPage: Arbitrary[ClaimOnBehalfPage.type] =
+    Arbitrary(ClaimOnBehalfPage)
+
   implicit lazy val arbitraryWhichPensionSchemeWillPayPage: Arbitrary[WhichPensionSchemeWillPayPage.type] =
     Arbitrary(WhichPensionSchemeWillPayPage)
 
@@ -29,6 +35,4 @@ trait PageGenerators {
 
   implicit lazy val arbitraryWhoWillPayPage: Arbitrary[WhoWillPayPage.type] =
     Arbitrary(WhoWillPayPage)
-
-  // scala fmt ignore
 }

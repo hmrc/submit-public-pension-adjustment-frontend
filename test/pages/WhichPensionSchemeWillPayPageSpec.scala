@@ -41,7 +41,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
 
-        result mustBe "/pensionSchemeDetails"
+        checkNavigation(result, "/pensionSchemeDetails")
       }
 
       "to CYA when Pension scheme selected" in {
@@ -54,7 +54,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
 
-        result mustBe "/check-your-answers"
+        checkNavigation(result, "/check-your-answers")
       }
     }
 
@@ -70,7 +70,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhichPensionSchemeWillPayPage.navigate(CheckMode, ua).url
 
-        result mustBe "/check-your-answers"
+        checkNavigation(result, "/check-your-answers")
       }
     }
   }

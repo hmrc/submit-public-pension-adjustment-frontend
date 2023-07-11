@@ -20,6 +20,18 @@ GET         /account/signed-out                          controllers.auth.Signed
 
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad
 
+GET        /claim-on-behalf                        controllers.ClaimOnBehalfController.onPageLoad(mode: Mode = NormalMode)
+POST       /claim-on-behalf                        controllers.ClaimOnBehalfController.onSubmit(mode: Mode = NormalMode)
+GET        /change-claim-on-behalf                 controllers.ClaimOnBehalfController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-claim-on-behalf                 controllers.ClaimOnBehalfController.onSubmit(mode: Mode = CheckMode)
+
+GET        /status-of-user                         controllers.StatusOfUserController.onPageLoad(mode: Mode = NormalMode)
+POST       /status-of-user                         controllers.StatusOfUserController.onSubmit(mode: Mode = NormalMode)
+GET        /change-status-of-user                  controllers.StatusOfUserController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-status-of-user                  controllers.StatusOfUserController.onSubmit(mode: Mode = CheckMode)
+
+GET        /submission-info                        controllers.SubmissionInfoController.onPageLoad()
+
 GET        /whoWillPay                        controllers.WhoWillPayController.onPageLoad(mode: Mode = NormalMode)
 POST       /whoWillPay                        controllers.WhoWillPayController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhoWillPay                  controllers.WhoWillPayController.onPageLoad(mode: Mode = CheckMode)

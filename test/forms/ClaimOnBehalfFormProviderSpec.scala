@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,28 +12,34 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(
-layout: templates.Layout,
-govukButton: GovukButton
-)
+package forms
 
-@()(implicit request: Request[_], messages: Messages)
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-@layout(
-    pageTitle    = titleNoForm(messages("index.title")),
-    showBackLink = false
-) {
+class ClaimOnBehalfFormProviderSpec extends BooleanFieldBehaviours {
 
-    <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
+  val requiredKey = "claimOnBehalf.error.required"
+  val invalidKey  = "error.boolean"
 
-    <p class="govuk-body">@messages("index.guidance")</p>
+  val form = new ClaimOnBehalfFormProvider()()
 
-    <p class="govuk-body">
-        @govukButton(
-        ButtonViewModel(messages("site.start"))
-        .asLink(routes.SubmissionInfoController.onPageLoad().url)
-        )
-    </p>
+  ".value" - {
+
+    val fieldName = "value"
+
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
 }

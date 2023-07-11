@@ -56,6 +56,38 @@ signedOut.guidance = We did not save your answers.
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
+claimOnBehalf.title =  Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
+claimOnBehalf.heading = Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
+claimOnBehalf.checkYourAnswersLabel = Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
+claimOnBehalf.error.required = Select yes if you are making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship
+claimOnBehalf.change.hidden = Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
+claimOnBehalf.caption = Personal details
+
+statusOfUser.title = Do you have power of attorney or deputyship for this person?
+statusOfUser.heading = Do you have power of attorney or deputyship for this person?
+statusOfUser.deputyship = Deputyship
+statusOfUser.powerOfAttorney = Power of Attorney
+statusOfUser.checkYourAnswersLabel = Do you have power of attorney or deputyship for this person?
+statusOfUser.error.required = Select whether you hold power of attorney or deputyship for this person
+statusOfUser.change.hidden = Do you have power of attorney or deputyship for this person?
+statusOfUser.caption = Personal details
+
+submissionInfo.title = Submission service: what you will need
+submissionInfo.heading = Submission service: what you will need
+submissionInfo.message1 = To send your adjustment, you must complete the submission service.
+submissionInfo.message2 = You must provide your:
+submissionInfo.message3 = If you are making a submission on behalf of someone else, you will need their details listed above. You will also need their:
+submissionInfo.list.you.message1 = full name
+submissionInfo.list.you.message2 = home address
+submissionInfo.list.you.message3 = contact number
+submissionInfo.list.you.message4 = bank or building society details
+submissionInfo.list.you.message5 = legacy or reform individual pension scheme references
+submissionInfo.list.you.message6 = public or private pension scheme name
+submissionInfo.list.you.message7 = public or private pension scheme tax reference number
+submissionInfo.list.behalf.message1 = National Insurance number
+submissionInfo.list.behalf.message2 = teacher reference number
+submissionInfo.list.behalf.message3 = unique tax reference number
+
 whoWillPay.title = Who is going to pay the new tax charge?
 whoWillPay.heading = Who is going to pay the new tax charge?
 whoWillPay.you = You

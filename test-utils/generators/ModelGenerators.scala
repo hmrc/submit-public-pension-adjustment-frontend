@@ -22,6 +22,11 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryStatusOfUser: Arbitrary[StatusOfUser] =
+    Arbitrary {
+      Gen.oneOf(StatusOfUser.values.toSeq)
+    }
+
   implicit lazy val arbitraryWhichPensionSchemeWillPay: Arbitrary[WhichPensionSchemeWillPay] =
     Arbitrary {
       Gen.oneOf(WhichPensionSchemeWillPay.values.toSeq)
@@ -39,6 +44,4 @@ trait ModelGenerators {
     Arbitrary {
       Gen.oneOf(WhoWillPay.values.toSeq)
     }
-
-  // scala fmt ignore
 }

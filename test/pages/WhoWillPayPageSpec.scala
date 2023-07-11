@@ -41,7 +41,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhoWillPayPage.navigate(NormalMode, ua).url
 
-        result mustBe "/whichPensionSchemeWillPay"
+        checkNavigation(result, "/whichPensionSchemeWillPay")
       }
 
       "to CYA when You selected" in {
@@ -54,7 +54,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhoWillPayPage.navigate(NormalMode, ua).url
 
-        result mustBe "/check-your-answers"
+        checkNavigation(result, "/check-your-answers")
       }
     }
 
@@ -70,7 +70,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhoWillPayPage.navigate(CheckMode, ua).url
 
-        result mustBe "/check-your-answers"
+        checkNavigation(result, "/check-your-answers")
       }
     }
   }

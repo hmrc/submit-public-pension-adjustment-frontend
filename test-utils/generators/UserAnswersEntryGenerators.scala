@@ -24,10 +24,26 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryStatusOfUserUserAnswersEntry: Arbitrary[(StatusOfUserPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[StatusOfUserPage.type]
+        value <- arbitrary[StatusOfUser].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryClaimOnBehalfUserAnswersEntry: Arbitrary[(ClaimOnBehalfPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ClaimOnBehalfPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryWhichPensionSchemeWillPayUserAnswersEntry: Arbitrary[(WhichPensionSchemeWillPayPage.type, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhichPensionSchemeWillPayPage.type]
+        page <- arbitrary[WhichPensionSchemeWillPayPage.type]
         value <- arbitrary[WhichPensionSchemeWillPay].map(Json.toJson(_))
       } yield (page, value)
     }
@@ -35,7 +51,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
   implicit lazy val arbitraryPensionSchemeDetailsUserAnswersEntry: Arbitrary[(PensionSchemeDetailsPage.type, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[PensionSchemeDetailsPage.type]
+        page <- arbitrary[PensionSchemeDetailsPage.type]
         value <- arbitrary[PensionSchemeDetails].map(Json.toJson(_))
       } yield (page, value)
     }
@@ -43,10 +59,8 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
   implicit lazy val arbitraryWhoWillPayUserAnswersEntry: Arbitrary[(WhoWillPayPage.type, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[WhoWillPayPage.type]
+        page <- arbitrary[WhoWillPayPage.type]
         value <- arbitrary[WhoWillPay].map(Json.toJson(_))
       } yield (page, value)
     }
-
-  // scala fmt ignore
 }
