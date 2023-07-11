@@ -40,7 +40,7 @@ trait ModelGenerators {
   implicit lazy val arbitraryPensionSchemeDetails: Arbitrary[PensionSchemeDetails] =
     Arbitrary {
       for {
-        pensionSchemeName <- arbitrary[String]
+        pensionSchemeName         <- arbitrary[String]
         pensionSchemeTaxReference <- arbitrary[String]
       } yield PensionSchemeDetails(pensionSchemeName, pensionSchemeTaxReference)
     }

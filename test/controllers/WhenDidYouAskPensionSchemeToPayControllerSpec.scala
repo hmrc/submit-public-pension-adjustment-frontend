@@ -43,7 +43,8 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-  lazy val whenDidYouAskPensionSchemeToPayRoute = routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode).url
+  lazy val whenDidYouAskPensionSchemeToPayRoute =
+    routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -86,7 +87,10 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+          getRequest,
+          messages(application)
+        ).toString
       }
     }
 

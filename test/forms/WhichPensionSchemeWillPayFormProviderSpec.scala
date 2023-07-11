@@ -26,13 +26,13 @@ class WhichPensionSchemeWillPayFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "whichPensionSchemeWillPay.error.required"
 
     behave like optionsField[WhichPensionSchemeWillPay](
       form,
       fieldName,
-      validValues  = WhichPensionSchemeWillPay.values,
+      validValues = WhichPensionSchemeWillPay.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

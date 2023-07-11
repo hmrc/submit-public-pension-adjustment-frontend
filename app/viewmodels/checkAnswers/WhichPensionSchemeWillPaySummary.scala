@@ -26,25 +26,23 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object WhichPensionSchemeWillPaySummary  {
+object WhichPensionSchemeWillPaySummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhichPensionSchemeWillPayPage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"whichPensionSchemeWillPay.$answer"))
-          )
+    answers.get(WhichPensionSchemeWillPayPage).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"whichPensionSchemeWillPay.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key     = "whichPensionSchemeWillPay.checkYourAnswersLabel",
-          value   = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.WhichPensionSchemeWillPayController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whichPensionSchemeWillPay.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.WhichPensionSchemeWillPayController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("whichPensionSchemeWillPay.change.hidden"))
         )
+      )
     }
 }

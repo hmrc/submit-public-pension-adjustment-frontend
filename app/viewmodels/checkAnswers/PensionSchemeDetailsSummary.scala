@@ -26,21 +26,21 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object PensionSchemeDetailsSummary  {
+object PensionSchemeDetailsSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(PensionSchemeDetailsPage).map {
-      answer =>
+    answers.get(PensionSchemeDetailsPage).map { answer =>
+      val value = HtmlFormat.escape(answer.pensionSchemeName).toString + "<br/>" + HtmlFormat
+        .escape(answer.pensionSchemeTaxReference)
+        .toString
 
-      val value = HtmlFormat.escape(answer.pensionSchemeName).toString + "<br/>" + HtmlFormat.escape(answer.pensionSchemeTaxReference).toString
-
-        SummaryListRowViewModel(
-          key     = "pensionSchemeDetails.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.PensionSchemeDetailsController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("pensionSchemeDetails.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "pensionSchemeDetails.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(value)),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.PensionSchemeDetailsController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("pensionSchemeDetails.change.hidden"))
         )
+      )
     }
 }

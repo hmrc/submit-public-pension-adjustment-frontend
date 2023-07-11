@@ -24,7 +24,11 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues
 import play.api.libs.json.{JsError, JsString, Json}
 
-class WhenWillYouAskPensionSchemeToPaySpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues {
+class WhenWillYouAskPensionSchemeToPaySpec
+    extends AnyFreeSpec
+    with Matchers
+    with ScalaCheckPropertyChecks
+    with OptionValues {
 
   "WhenWillYouAskPensionSchemeToPay" - {
 
@@ -32,10 +36,11 @@ class WhenWillYouAskPensionSchemeToPaySpec extends AnyFreeSpec with Matchers wit
 
       val gen = Gen.oneOf(WhenWillYouAskPensionSchemeToPay.values.toSeq)
 
-      forAll(gen) {
-        whenWillYouAskPensionSchemeToPay =>
-
-          JsString(whenWillYouAskPensionSchemeToPay.toString).validate[WhenWillYouAskPensionSchemeToPay].asOpt.value mustEqual whenWillYouAskPensionSchemeToPay
+      forAll(gen) { whenWillYouAskPensionSchemeToPay =>
+        JsString(whenWillYouAskPensionSchemeToPay.toString)
+          .validate[WhenWillYouAskPensionSchemeToPay]
+          .asOpt
+          .value mustEqual whenWillYouAskPensionSchemeToPay
       }
     }
 
@@ -43,10 +48,8 @@ class WhenWillYouAskPensionSchemeToPaySpec extends AnyFreeSpec with Matchers wit
 
       val gen = arbitrary[String] suchThat (!WhenWillYouAskPensionSchemeToPay.values.map(_.toString).contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[WhenWillYouAskPensionSchemeToPay] mustEqual JsError("error.invalid")
+      forAll(gen) { invalidValue =>
+        JsString(invalidValue).validate[WhenWillYouAskPensionSchemeToPay] mustEqual JsError("error.invalid")
       }
     }
 
@@ -54,10 +57,8 @@ class WhenWillYouAskPensionSchemeToPaySpec extends AnyFreeSpec with Matchers wit
 
       val gen = Gen.oneOf(WhenWillYouAskPensionSchemeToPay.values.toSeq)
 
-      forAll(gen) {
-        whenWillYouAskPensionSchemeToPay =>
-
-          Json.toJson(whenWillYouAskPensionSchemeToPay) mustEqual JsString(whenWillYouAskPensionSchemeToPay.toString)
+      forAll(gen) { whenWillYouAskPensionSchemeToPay =>
+        Json.toJson(whenWillYouAskPensionSchemeToPay) mustEqual JsString(whenWillYouAskPensionSchemeToPay.toString)
       }
     }
   }

@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhichPensionSchemeWillPayFormProvider
-import models.{NormalMode, WhichPensionSchemeWillPay, UserAnswers}
+import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -39,7 +39,7 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
   lazy val whichPensionSchemeWillPayRoute = routes.WhichPensionSchemeWillPayController.onPageLoad(NormalMode).url
 
   val formProvider = new WhichPensionSchemeWillPayFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "WhichPensionSchemeWillPay Controller" - {
 
@@ -61,7 +61,10 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhichPensionSchemeWillPayPage, WhichPensionSchemeWillPay.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(WhichPensionSchemeWillPayPage, WhichPensionSchemeWillPay.values.head)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -73,7 +76,10 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhichPensionSchemeWillPay.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhichPensionSchemeWillPay.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

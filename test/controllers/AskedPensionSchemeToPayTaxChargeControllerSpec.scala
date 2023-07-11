@@ -37,9 +37,10 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new AskedPensionSchemeToPayTaxChargeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val askedPensionSchemeToPayTaxChargeRoute = routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode).url
+  lazy val askedPensionSchemeToPayTaxChargeRoute =
+    routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode).url
 
   "AskedPensionSchemeToPayTaxCharge Controller" - {
 

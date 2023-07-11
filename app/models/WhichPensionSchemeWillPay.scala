@@ -32,16 +32,18 @@ object WhichPensionSchemeWillPay extends Enumerable.Implicits {
   case object PrivatePensionScheme extends WithName("privatePensionScheme") with WhichPensionSchemeWillPay
 
   val values: Seq[WhichPensionSchemeWillPay] = Seq(
-    PensionSchemeA, PensionSchemeB, PensionSchemeC, PrivatePensionScheme
+    PensionSchemeA,
+    PensionSchemeB,
+    PensionSchemeC,
+    PrivatePensionScheme
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"whichPensionSchemeWillPay.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+    RadioItem(
+      content = Text(messages(s"whichPensionSchemeWillPay.${value.toString}")),
+      value = Some(value.toString),
+      id = Some(s"value_$index")
+    )
   }
 
   implicit val enumerable: Enumerable[WhichPensionSchemeWillPay] =

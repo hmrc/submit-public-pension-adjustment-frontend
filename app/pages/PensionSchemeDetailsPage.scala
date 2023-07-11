@@ -26,17 +26,15 @@ case object PensionSchemeDetailsPage extends QuestionPage[PensionSchemeDetails] 
 
   override def toString: String = "pensionSchemeDetails"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PensionSchemeDetailsPage) match {
       case Some(_) => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PensionSchemeDetailsPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

@@ -27,17 +27,15 @@ case object WhenDidYouAskPensionSchemeToPayPage extends QuestionPage[LocalDate] 
 
   override def toString: String = "whenDidYouAskPensionSchemeToPay"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhenDidYouAskPensionSchemeToPayPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhenDidYouAskPensionSchemeToPayPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

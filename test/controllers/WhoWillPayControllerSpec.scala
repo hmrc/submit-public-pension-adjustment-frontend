@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhoWillPayFormProvider
-import models.{NormalMode, WhoWillPay, UserAnswers}
+import models.{NormalMode, UserAnswers, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -39,7 +39,7 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
   lazy val whoWillPayRoute = routes.WhoWillPayController.onPageLoad(NormalMode).url
 
   val formProvider = new WhoWillPayFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "WhoWillPay Controller" - {
 
@@ -73,7 +73,10 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhoWillPay.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhoWillPay.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

@@ -26,25 +26,23 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object WhoWillPaySummary  {
+object WhoWillPaySummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhoWillPayPage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"whoWillPay.$answer"))
-          )
+    answers.get(WhoWillPayPage).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"whoWillPay.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key     = "whoWillPay.checkYourAnswersLabel",
-          value   = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.WhoWillPayController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whoWillPay.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "whoWillPay.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.WhoWillPayController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("whoWillPay.change.hidden"))
         )
+      )
     }
 }

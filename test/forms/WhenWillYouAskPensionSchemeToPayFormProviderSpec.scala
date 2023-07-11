@@ -26,13 +26,13 @@ class WhenWillYouAskPensionSchemeToPayFormProviderSpec extends OptionFieldBehavi
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "whenWillYouAskPensionSchemeToPay.error.required"
 
     behave like optionsField[WhenWillYouAskPensionSchemeToPay](
       form,
       fieldName,
-      validValues  = WhenWillYouAskPensionSchemeToPay.values,
+      validValues = WhenWillYouAskPensionSchemeToPay.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

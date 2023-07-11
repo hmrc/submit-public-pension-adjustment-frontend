@@ -32,7 +32,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
     "must navigate correctly in NormalMode" - {
 
       "to AskedPensionSchemeToPayTaxChargePage when questions answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             PensionSchemeDetailsPage,
             PensionSchemeDetails("name", "pstr")
@@ -56,7 +56,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             PensionSchemeDetailsPage,
             PensionSchemeDetails("name", "pstr")
@@ -69,7 +69,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = PensionSchemeDetailsPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")

@@ -27,18 +27,16 @@ case object WhichPensionSchemeWillPayPage extends QuestionPage[WhichPensionSchem
 
   override def toString: String = "whichPensionSchemeWillPay"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhichPensionSchemeWillPayPage) match {
       case Some(PrivatePensionScheme) => controllers.routes.PensionSchemeDetailsController.onPageLoad(NormalMode)
-      case Some(_) => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_)                    => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode)
+      case _                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhichPensionSchemeWillPayPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

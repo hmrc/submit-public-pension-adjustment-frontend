@@ -29,42 +29,41 @@ import views.html.WhenWillYouAskPensionSchemeToPayView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class WhenWillYouAskPensionSchemeToPayController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       sessionRepository: SessionRepository,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       formProvider: WhenWillYouAskPensionSchemeToPayFormProvider,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: WhenWillYouAskPensionSchemeToPayView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class WhenWillYouAskPensionSchemeToPayController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: WhenWillYouAskPensionSchemeToPayFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: WhenWillYouAskPensionSchemeToPayView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val preparedForm = request.userAnswers.get(WhenWillYouAskPensionSchemeToPayPage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(WhenWillYouAskPensionSchemeToPayPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenWillYouAskPensionSchemeToPayPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(WhenWillYouAskPensionSchemeToPayPage.navigate(mode, updatedAnswers))
-      )
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenWillYouAskPensionSchemeToPayPage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(WhenWillYouAskPensionSchemeToPayPage.navigate(mode, updatedAnswers))
+        )
   }
 }

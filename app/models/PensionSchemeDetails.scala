@@ -18,7 +18,7 @@ package models
 
 import play.api.libs.json._
 
-case class PensionSchemeDetails (pensionSchemeName: String, pensionSchemeTaxReference: String)
+case class PensionSchemeDetails(pensionSchemeName: String, pensionSchemeTaxReference: String)
 
 object PensionSchemeDetails {
   implicit val format = Json.format[PensionSchemeDetails]

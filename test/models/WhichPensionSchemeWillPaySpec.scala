@@ -32,10 +32,11 @@ class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with Scala
 
       val gen = Gen.oneOf(WhichPensionSchemeWillPay.values.toSeq)
 
-      forAll(gen) {
-        whichPensionSchemeWillPay =>
-
-          JsString(whichPensionSchemeWillPay.toString).validate[WhichPensionSchemeWillPay].asOpt.value mustEqual whichPensionSchemeWillPay
+      forAll(gen) { whichPensionSchemeWillPay =>
+        JsString(whichPensionSchemeWillPay.toString)
+          .validate[WhichPensionSchemeWillPay]
+          .asOpt
+          .value mustEqual whichPensionSchemeWillPay
       }
     }
 
@@ -43,10 +44,8 @@ class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with Scala
 
       val gen = arbitrary[String] suchThat (!WhichPensionSchemeWillPay.values.map(_.toString).contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[WhichPensionSchemeWillPay] mustEqual JsError("error.invalid")
+      forAll(gen) { invalidValue =>
+        JsString(invalidValue).validate[WhichPensionSchemeWillPay] mustEqual JsError("error.invalid")
       }
     }
 
@@ -54,10 +53,8 @@ class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with Scala
 
       val gen = Gen.oneOf(WhichPensionSchemeWillPay.values.toSeq)
 
-      forAll(gen) {
-        whichPensionSchemeWillPay =>
-
-          Json.toJson(whichPensionSchemeWillPay) mustEqual JsString(whichPensionSchemeWillPay.toString)
+      forAll(gen) { whichPensionSchemeWillPay =>
+        Json.toJson(whichPensionSchemeWillPay) mustEqual JsString(whichPensionSchemeWillPay.toString)
       }
     }
   }

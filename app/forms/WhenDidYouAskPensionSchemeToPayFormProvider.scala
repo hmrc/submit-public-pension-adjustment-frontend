@@ -27,10 +27,10 @@ class WhenDidYouAskPensionSchemeToPayFormProvider @Inject() extends Mappings {
   def apply(): Form[LocalDate] =
     Form(
       "value" -> localDate(
-        invalidKey     = "whenDidYouAskPensionSchemeToPay.error.invalid",
+        invalidKey = "whenDidYouAskPensionSchemeToPay.error.invalid",
         allRequiredKey = "whenDidYouAskPensionSchemeToPay.error.required.all",
         twoRequiredKey = "whenDidYouAskPensionSchemeToPay.error.required.two",
-        requiredKey    = "whenDidYouAskPensionSchemeToPay.error.required"
+        requiredKey = "whenDidYouAskPensionSchemeToPay.error.required"
       )
     )
 }

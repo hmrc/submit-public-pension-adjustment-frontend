@@ -32,7 +32,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
     "must navigate correctly in NormalMode" - {
 
       "to PensionSchemeDetails when Private pension scheme selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage,
             WhichPensionSchemeWillPay.PrivatePensionScheme
@@ -45,7 +45,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
       }
 
       "to CYA when public Pension scheme selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage,
             publicPensionScheme.sample.value
@@ -58,7 +58,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecoveryPage when not selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -68,7 +68,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage,
             WhichPensionSchemeWillPay.PensionSchemeA
@@ -81,7 +81,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = WhichPensionSchemeWillPayPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")

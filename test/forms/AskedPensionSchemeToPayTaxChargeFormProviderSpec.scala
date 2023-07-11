@@ -22,7 +22,7 @@ import play.api.data.FormError
 class AskedPensionSchemeToPayTaxChargeFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "askedPensionSchemeToPayTaxCharge.error.required"
-  val invalidKey = "error.boolean"
+  val invalidKey  = "error.boolean"
 
   val form = new AskedPensionSchemeToPayTaxChargeFormProvider()()
 

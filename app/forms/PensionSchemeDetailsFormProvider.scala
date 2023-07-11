@@ -25,12 +25,12 @@ import models.PensionSchemeDetails
 
 class PensionSchemeDetailsFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[PensionSchemeDetails] = Form(
-     mapping(
-      "pensionSchemeName" -> text("pensionSchemeDetails.error.pensionSchemeName.required")
+  def apply(): Form[PensionSchemeDetails] = Form(
+    mapping(
+      "pensionSchemeName"         -> text("pensionSchemeDetails.error.pensionSchemeName.required")
         .verifying(maxLength(100, "pensionSchemeDetails.error.pensionSchemeName.length")),
       "pensionSchemeTaxReference" -> text("pensionSchemeDetails.error.pensionSchemeTaxReference.required")
         .verifying(maxLength(100, "pensionSchemeDetails.error.pensionSchemeTaxReference.length"))
     )(PensionSchemeDetails.apply)(PensionSchemeDetails.unapply)
-   )
- }
+  )
+}

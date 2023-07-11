@@ -32,7 +32,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
     "must navigate correctly in NormalMode" - {
 
       "to WhichPensionSchemeWillPayPage when PensionScheme selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             WhoWillPayPage,
             WhoWillPay.Pensionscheme
@@ -45,7 +45,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
       }
 
       "to CYA when You selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             WhoWillPayPage,
             WhoWillPay.You
@@ -58,7 +58,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = WhoWillPayPage.navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -68,7 +68,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             WhoWillPayPage,
             WhoWillPay.You
@@ -81,7 +81,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = WhoWillPayPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")

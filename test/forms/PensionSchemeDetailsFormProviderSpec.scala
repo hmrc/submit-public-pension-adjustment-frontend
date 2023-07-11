@@ -25,10 +25,10 @@ class PensionSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".pensionSchemeName" - {
 
-    val fieldName = "pensionSchemeName"
+    val fieldName   = "pensionSchemeName"
     val requiredKey = "pensionSchemeDetails.error.pensionSchemeName.required"
-    val lengthKey = "pensionSchemeDetails.error.pensionSchemeName.length"
-    val maxLength = 100
+    val lengthKey   = "pensionSchemeDetails.error.pensionSchemeName.length"
+    val maxLength   = 100
 
     behave like fieldThatBindsValidData(
       form,
@@ -52,10 +52,10 @@ class PensionSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".pensionSchemeTaxReference" - {
 
-    val fieldName = "pensionSchemeTaxReference"
+    val fieldName   = "pensionSchemeTaxReference"
     val requiredKey = "pensionSchemeDetails.error.pensionSchemeTaxReference.required"
-    val lengthKey = "pensionSchemeDetails.error.pensionSchemeTaxReference.length"
-    val maxLength = 100
+    val lengthKey   = "pensionSchemeDetails.error.pensionSchemeTaxReference.length"
+    val maxLength   = 100
 
     behave like fieldThatBindsValidData(
       form,

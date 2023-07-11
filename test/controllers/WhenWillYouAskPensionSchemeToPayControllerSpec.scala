@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhenWillYouAskPensionSchemeToPayFormProvider
-import models.{NormalMode, WhenWillYouAskPensionSchemeToPay, UserAnswers}
+import models.{NormalMode, UserAnswers, WhenWillYouAskPensionSchemeToPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -36,10 +36,11 @@ class WhenWillYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mocki
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val whenWillYouAskPensionSchemeToPayRoute = routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(NormalMode).url
+  lazy val whenWillYouAskPensionSchemeToPayRoute =
+    routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(NormalMode).url
 
   val formProvider = new WhenWillYouAskPensionSchemeToPayFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "WhenWillYouAskPensionSchemeToPay Controller" - {
 
@@ -61,7 +62,10 @@ class WhenWillYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mocki
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhenWillYouAskPensionSchemeToPayPage, WhenWillYouAskPensionSchemeToPay.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(WhenWillYouAskPensionSchemeToPayPage, WhenWillYouAskPensionSchemeToPay.values.head)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -73,7 +77,10 @@ class WhenWillYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhenWillYouAskPensionSchemeToPay.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhenWillYouAskPensionSchemeToPay.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

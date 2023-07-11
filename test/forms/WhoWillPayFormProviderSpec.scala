@@ -26,13 +26,13 @@ class WhoWillPayFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "whoWillPay.error.required"
 
     behave like optionsField[WhoWillPay](
       form,
       fieldName,
-      validValues  = WhoWillPay.values,
+      validValues = WhoWillPay.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

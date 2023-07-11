@@ -38,7 +38,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new PensionSchemeDetailsFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val pensionSchemeDetailsRoute = routes.PensionSchemeDetailsController.onPageLoad(NormalMode).url
 
@@ -46,7 +46,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
     userAnswersId,
     Json.obj(
       PensionSchemeDetailsPage.toString -> Json.obj(
-        "pensionSchemeName" -> "value 1",
+        "pensionSchemeName"         -> "value 1",
         "pensionSchemeTaxReference" -> "value 2"
       )
     )
@@ -82,7 +82,10 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PensionSchemeDetails("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(PensionSchemeDetails("value 1", "value 2")), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

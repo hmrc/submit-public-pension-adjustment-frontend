@@ -32,7 +32,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
     "must navigate correctly in NormalMode" - {
 
       "to CYA when Yes selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             AskedPensionSchemeToPayTaxChargePage,
             true
@@ -45,7 +45,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
       }
 
       "to WhenWillYouAskPensionSchemeToPayPage when no selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             AskedPensionSchemeToPayTaxChargePage,
             false
@@ -58,7 +58,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = AskedPensionSchemeToPayTaxChargePage.navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -68,7 +68,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             AskedPensionSchemeToPayTaxChargePage,
             true
@@ -81,7 +81,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = AskedPensionSchemeToPayTaxChargePage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")

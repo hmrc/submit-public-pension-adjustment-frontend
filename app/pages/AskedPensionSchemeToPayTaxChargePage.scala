@@ -26,18 +26,16 @@ case object AskedPensionSchemeToPayTaxChargePage extends QuestionPage[Boolean] {
 
   override def toString: String = "askedPensionSchemeToPayTaxCharge"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(AskedPensionSchemeToPayTaxChargePage) match {
-      case Some(true) => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode)
+      case Some(true)  => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode)
       case Some(false) => controllers.routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AskedPensionSchemeToPayTaxChargePage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

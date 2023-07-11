@@ -26,25 +26,26 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object WhenWillYouAskPensionSchemeToPaySummary  {
+object WhenWillYouAskPensionSchemeToPaySummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhenWillYouAskPensionSchemeToPayPage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"whenWillYouAskPensionSchemeToPay.$answer"))
-          )
+    answers.get(WhenWillYouAskPensionSchemeToPayPage).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"whenWillYouAskPensionSchemeToPay.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key     = "whenWillYouAskPensionSchemeToPay.checkYourAnswersLabel",
-          value   = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whenWillYouAskPensionSchemeToPay.change.hidden"))
+      SummaryListRowViewModel(
+        key = "whenWillYouAskPensionSchemeToPay.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("whenWillYouAskPensionSchemeToPay.change.hidden"))
         )
+      )
     }
 }

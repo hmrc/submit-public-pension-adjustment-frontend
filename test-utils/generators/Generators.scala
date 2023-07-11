@@ -114,7 +114,6 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     }
   }
 
-  def publicPensionScheme: Gen[WhichPensionSchemeWillPay] = {
-    arbitrary[WhichPensionSchemeWillPay] suchThat(scheme => scheme != PrivatePensionScheme)
-  }
+  def publicPensionScheme: Gen[WhichPensionSchemeWillPay] =
+    arbitrary[WhichPensionSchemeWillPay] suchThat (scheme => scheme != PrivatePensionScheme)
 }

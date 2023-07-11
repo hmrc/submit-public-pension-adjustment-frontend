@@ -26,21 +26,19 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object WhenDidYouAskPensionSchemeToPaySummary  {
+object WhenDidYouAskPensionSchemeToPaySummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhenDidYouAskPensionSchemeToPayPage).map {
-      answer =>
+    answers.get(WhenDidYouAskPensionSchemeToPayPage).map { answer =>
+      val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
-        val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-
-        SummaryListRowViewModel(
-          key     = "whenDidYouAskPensionSchemeToPay.checkYourAnswersLabel",
-          value   = ValueViewModel(answer.format(dateFormatter)),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whenDidYouAskPensionSchemeToPay.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "whenDidYouAskPensionSchemeToPay.checkYourAnswersLabel",
+        value = ValueViewModel(answer.format(dateFormatter)),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("whenDidYouAskPensionSchemeToPay.change.hidden"))
         )
+      )
     }
 }

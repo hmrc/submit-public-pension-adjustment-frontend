@@ -27,17 +27,15 @@ case object WhenWillYouAskPensionSchemeToPayPage extends QuestionPage[WhenWillYo
 
   override def toString: String = "whenWillYouAskPensionSchemeToPay"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhenWillYouAskPensionSchemeToPayPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhenWillYouAskPensionSchemeToPayPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }
