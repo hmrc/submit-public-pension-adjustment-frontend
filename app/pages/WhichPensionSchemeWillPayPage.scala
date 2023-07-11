@@ -16,8 +16,8 @@
 
 package pages
 
-import models.WhichPensionSchemeWillPay
-import models.UserAnswers
+import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPay}
+import models.WhichPensionSchemeWillPay.PrivatePensionScheme
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -29,6 +29,7 @@ case object WhichPensionSchemeWillPayPage extends QuestionPage[WhichPensionSchem
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     answers.get(WhichPensionSchemeWillPayPage) match {
+      case Some(PrivatePensionScheme) => controllers.routes.PensionSchemeDetailsController.onPageLoad(NormalMode)
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

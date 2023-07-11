@@ -16,10 +16,10 @@
 
 package pages
 
-import models.WhichPensionSchemeWillPay
+import models.{CheckMode, NormalMode, WhichPensionSchemeWillPay}
 import pages.behaviours.PageBehaviours
 
-class WhichPensionSchemeWillPaySpec extends PageBehaviours {
+class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
 
   "WhichPensionSchemeWillPayPage" - {
 
@@ -31,19 +31,46 @@ class WhichPensionSchemeWillPaySpec extends PageBehaviours {
 
     "must navigate correctly in NormalMode" - {
 
-      "to PensionSchemeDetails when PensionScheme selected" in {
+      "to PensionSchemeDetails when Private pension scheme selected" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayPage,
+            WhichPensionSchemeWillPay.PrivatePensionScheme
+          )
+          .success
+          .value
+        val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
 
+        result mustBe "/pensionSchemeDetails"
       }
 
-      "to CYA when Private pension scheme selected" in {
+      "to CYA when Pension scheme selected" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayPage,
+            WhichPensionSchemeWillPay.PensionSchemeA
+          )
+          .success
+          .value
+        val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
 
+        result mustBe "/check-your-answers"
       }
     }
 
     "must navigate correctly in CheckMode" - {
 
       "to CYA" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayPage,
+            WhichPensionSchemeWillPay.PensionSchemeA
+          )
+          .success
+          .value
+        val result = WhichPensionSchemeWillPayPage.navigate(CheckMode, ua).url
 
+        result mustBe "/check-your-answers"
       }
     }
   }

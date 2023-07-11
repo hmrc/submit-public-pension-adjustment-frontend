@@ -16,10 +16,10 @@
 
 package pages
 
-import models.{NormalMode, WhoWillPay}
+import models.{CheckMode, NormalMode, WhoWillPay}
 import pages.behaviours.PageBehaviours
 
-class WhoWillPaySpec extends PageBehaviours {
+class WhoWillPayPageSpec extends PageBehaviours {
 
   "WhoWillPayPage" - {
 
@@ -32,18 +32,45 @@ class WhoWillPaySpec extends PageBehaviours {
     "must navigate correctly in NormalMode" - {
 
       "to WhichPensionSchemeWillPayPage when PensionScheme selected" in {
-        
+        val ua = emptyUserAnswers
+          .set(
+            WhoWillPayPage,
+            WhoWillPay.Pensionscheme
+          )
+          .success
+          .value
+        val result = WhoWillPayPage.navigate(NormalMode, ua).url
+
+        result mustBe "/whichPensionSchemeWillPay"
       }
 
       "to CYA when You selected" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhoWillPayPage,
+            WhoWillPay.You
+          )
+          .success
+          .value
+        val result = WhoWillPayPage.navigate(NormalMode, ua).url
 
+        result mustBe "/check-your-answers"
       }
     }
 
     "must navigate correctly in CheckMode" - {
 
       "to CYA" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhoWillPayPage,
+            WhoWillPay.You
+          )
+          .success
+          .value
+        val result = WhoWillPayPage.navigate(CheckMode, ua).url
 
+        result mustBe "/check-your-answers"
       }
     }
   }
