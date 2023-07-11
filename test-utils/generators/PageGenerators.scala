@@ -21,6 +21,15 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryWhenWillYouAskPensionSchemeToPayPage: Arbitrary[WhenWillYouAskPensionSchemeToPayPage.type] =
+    Arbitrary(WhenWillYouAskPensionSchemeToPayPage)
+
+  implicit lazy val arbitraryWhenDidYouAskPensionSchemeToPayPage: Arbitrary[WhenDidYouAskPensionSchemeToPayPage.type] =
+    Arbitrary(WhenDidYouAskPensionSchemeToPayPage)
+
+  implicit lazy val arbitraryAskedPensionSchemeToPayTaxChargePage: Arbitrary[AskedPensionSchemeToPayTaxChargePage.type] =
+    Arbitrary(AskedPensionSchemeToPayTaxChargePage)
+
   implicit lazy val arbitraryStatusOfUserPage: Arbitrary[StatusOfUserPage.type] =
     Arbitrary(StatusOfUserPage)
 

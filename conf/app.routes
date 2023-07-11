@@ -46,3 +46,17 @@ GET        /whichPensionSchemeWillPay                        controllers.WhichPe
 POST       /whichPensionSchemeWillPay                        controllers.WhichPensionSchemeWillPayController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhichPensionSchemeWillPay                  controllers.WhichPensionSchemeWillPayController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhichPensionSchemeWillPay                  controllers.WhichPensionSchemeWillPayController.onSubmit(mode: Mode = CheckMode)
+GET        /askedPensionSchemeToPayTaxCharge                        controllers.AskedPensionSchemeToPayTaxChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /askedPensionSchemeToPayTaxCharge                        controllers.AskedPensionSchemeToPayTaxChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAskedPensionSchemeToPayTaxCharge                  controllers.AskedPensionSchemeToPayTaxChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAskedPensionSchemeToPayTaxCharge                  controllers.AskedPensionSchemeToPayTaxChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouAskPensionSchemeToPay                  controllers.WhenDidYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouAskPensionSchemeToPay                  controllers.WhenDidYouAskPensionSchemeToPayController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouAskPensionSchemeToPay                        controllers.WhenDidYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouAskPensionSchemeToPay                        controllers.WhenDidYouAskPensionSchemeToPayController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenWillYouAskPensionSchemeToPay                        controllers.WhenWillYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenWillYouAskPensionSchemeToPay                        controllers.WhenWillYouAskPensionSchemeToPayController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenWillYouAskPensionSchemeToPay                  controllers.WhenWillYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenWillYouAskPensionSchemeToPay                  controllers.WhenWillYouAskPensionSchemeToPayController.onSubmit(mode: Mode = CheckMode)
