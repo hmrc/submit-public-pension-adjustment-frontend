@@ -35,7 +35,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             WhoWillPayPage,
-            WhoWillPay.Pensionscheme
+            WhoWillPay.PensionScheme
           )
           .success
           .value

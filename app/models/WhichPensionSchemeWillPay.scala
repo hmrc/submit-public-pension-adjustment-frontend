@@ -26,9 +26,7 @@ object WhichPensionSchemeWillPay extends Enumerable.Implicits {
 
   case object PensionSchemeA extends WithName("pensionSchemeA") with WhichPensionSchemeWillPay
   case object PensionSchemeB extends WithName("pensionSchemeB") with WhichPensionSchemeWillPay
-
   case object PensionSchemeC extends WithName("pensionSchemeC") with WhichPensionSchemeWillPay
-
   case object PrivatePensionScheme extends WithName("privatePensionScheme") with WhichPensionSchemeWillPay
 
   val values: Seq[WhichPensionSchemeWillPay] = Seq(

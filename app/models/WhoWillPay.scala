@@ -25,11 +25,11 @@ sealed trait WhoWillPay
 object WhoWillPay extends Enumerable.Implicits {
 
   case object You extends WithName("you") with WhoWillPay
-  case object Pensionscheme extends WithName("pensionScheme") with WhoWillPay
+  case object PensionScheme extends WithName("pensionScheme") with WhoWillPay
 
   val values: Seq[WhoWillPay] = Seq(
     You,
-    Pensionscheme
+    PensionScheme
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>

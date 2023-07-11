@@ -24,12 +24,12 @@ sealed trait WhenWillYouAskPensionSchemeToPay
 
 object WhenWillYouAskPensionSchemeToPay extends Enumerable.Implicits {
 
-  case object Octtodec23 extends WithName("octToDec23") with WhenWillYouAskPensionSchemeToPay
-  case object Jantomar24 extends WithName("janToMar24") with WhenWillYouAskPensionSchemeToPay
+  case object OctToDec23 extends WithName("octToDec23") with WhenWillYouAskPensionSchemeToPay
+  case object JanToMar24 extends WithName("janToMar24") with WhenWillYouAskPensionSchemeToPay
 
   val values: Seq[WhenWillYouAskPensionSchemeToPay] = Seq(
-    Octtodec23,
-    Jantomar24
+    OctToDec23,
+    JanToMar24
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
