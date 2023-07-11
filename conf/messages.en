@@ -55,3 +55,31 @@ signedOut.guidance = We did not save your answers.
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
+
+whoWillPay.title = WhoWillPay
+whoWillPay.heading = WhoWillPay
+whoWillPay.you = You
+whoWillPay.pensionScheme = Pension Scheme
+whoWillPay.checkYourAnswersLabel = WhoWillPay
+whoWillPay.error.required = Select whoWillPay
+whoWillPay.change.hidden = WhoWillPay
+
+pensionSchemeDetails.title = pensionSchemeDetails
+pensionSchemeDetails.heading = pensionSchemeDetails
+pensionSchemeDetails.pensionSchemeName = pensionSchemeName
+pensionSchemeDetails.pensioinSchemeTaxReference = pensioinSchemeTaxReference
+pensionSchemeDetails.checkYourAnswersLabel = PensionSchemeDetails
+pensionSchemeDetails.error.pensionSchemeName.required = Enter pensionSchemeName
+pensionSchemeDetails.error.pensioinSchemeTaxReference.required = Enter pensioinSchemeTaxReference
+pensionSchemeDetails.error.pensionSchemeName.length = pensionSchemeName must be 100 characters or less
+pensionSchemeDetails.error.pensioinSchemeTaxReference.length = pensioinSchemeTaxReference must be 100 characters or less
+pensionSchemeDetails.pensionSchemeName.change.hidden = pensionSchemeName
+pensionSchemeDetails.pensioinSchemeTaxReference.change.hidden = pensioinSchemeTaxReference
+
+whichPensionSchemeWillPay.title = WhichPensionSchemeWillPay
+whichPensionSchemeWillPay.heading = WhichPensionSchemeWillPay
+whichPensionSchemeWillPay.pensionSchemeA = Pension Scheme A
+whichPensionSchemeWillPay.pensionSchemeB = Pension Scheme B
+whichPensionSchemeWillPay.checkYourAnswersLabel = WhichPensionSchemeWillPay
+whichPensionSchemeWillPay.error.required = Select whichPensionSchemeWillPay
+whichPensionSchemeWillPay.change.hidden = WhichPensionSchemeWillPay

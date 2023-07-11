@@ -22,5 +22,23 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryWhichPensionSchemeWillPay: Arbitrary[WhichPensionSchemeWillPay] =
+    Arbitrary {
+      Gen.oneOf(WhichPensionSchemeWillPay.values.toSeq)
+    }
+
+  implicit lazy val arbitraryPensionSchemeDetails: Arbitrary[PensionSchemeDetails] =
+    Arbitrary {
+      for {
+        pensionSchemeName <- arbitrary[String]
+        pensioinSchemeTaxReference <- arbitrary[String]
+      } yield PensionSchemeDetails(pensionSchemeName, pensioinSchemeTaxReference)
+    }
+
+  implicit lazy val arbitraryWhoWillPay: Arbitrary[WhoWillPay] =
+    Arbitrary {
+      Gen.oneOf(WhoWillPay.values.toSeq)
+    }
+
   // scala fmt ignore
 }

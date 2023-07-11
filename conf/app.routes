@@ -19,3 +19,18 @@ GET         /account/sign-out                            controllers.auth.AuthCo
 GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
 
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad
+
+GET        /whoWillPay                        controllers.WhoWillPayController.onPageLoad(mode: Mode = NormalMode)
+POST       /whoWillPay                        controllers.WhoWillPayController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhoWillPay                  controllers.WhoWillPayController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhoWillPay                  controllers.WhoWillPayController.onSubmit(mode: Mode = CheckMode)
+
+GET        /pensionSchemeDetails                        controllers.PensionSchemeDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /pensionSchemeDetails                        controllers.PensionSchemeDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /changePensionSchemeDetails                  controllers.PensionSchemeDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePensionSchemeDetails                  controllers.PensionSchemeDetailsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichPensionSchemeWillPay                        controllers.WhichPensionSchemeWillPayController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichPensionSchemeWillPay                        controllers.WhichPensionSchemeWillPayController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichPensionSchemeWillPay                  controllers.WhichPensionSchemeWillPayController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichPensionSchemeWillPay                  controllers.WhichPensionSchemeWillPayController.onSubmit(mode: Mode = CheckMode)

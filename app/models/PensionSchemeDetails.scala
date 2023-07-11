@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-package generators
+package models
 
-import org.scalacheck.Arbitrary
-import pages._
+import play.api.libs.json._
 
-trait PageGenerators {
+case class PensionSchemeDetails (pensionSchemeName: String, pensioinSchemeTaxReference: String)
 
-  implicit lazy val arbitraryWhichPensionSchemeWillPayPage: Arbitrary[WhichPensionSchemeWillPayPage.type] =
-    Arbitrary(WhichPensionSchemeWillPayPage)
-
-  implicit lazy val arbitraryPensionSchemeDetailsPage: Arbitrary[PensionSchemeDetailsPage.type] =
-    Arbitrary(PensionSchemeDetailsPage)
-
-  implicit lazy val arbitraryWhoWillPayPage: Arbitrary[WhoWillPayPage.type] =
-    Arbitrary(WhoWillPayPage)
-
-  // scala fmt ignore
+object PensionSchemeDetails {
+  implicit val format = Json.format[PensionSchemeDetails]
 }

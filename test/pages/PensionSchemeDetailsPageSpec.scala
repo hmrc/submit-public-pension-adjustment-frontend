@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages._
+import models.PensionSchemeDetails
+import pages.behaviours.PageBehaviours
 
-trait PageGenerators {
+class PensionSchemeDetailsPageSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryWhichPensionSchemeWillPayPage: Arbitrary[WhichPensionSchemeWillPayPage.type] =
-    Arbitrary(WhichPensionSchemeWillPayPage)
+  "PensionSchemeDetailsPage" - {
 
-  implicit lazy val arbitraryPensionSchemeDetailsPage: Arbitrary[PensionSchemeDetailsPage.type] =
-    Arbitrary(PensionSchemeDetailsPage)
+    beRetrievable[PensionSchemeDetails](PensionSchemeDetailsPage)
 
-  implicit lazy val arbitraryWhoWillPayPage: Arbitrary[WhoWillPayPage.type] =
-    Arbitrary(WhoWillPayPage)
+    beSettable[PensionSchemeDetails](PensionSchemeDetailsPage)
 
-  // scala fmt ignore
+    beRemovable[PensionSchemeDetails](PensionSchemeDetailsPage)
+  }
 }

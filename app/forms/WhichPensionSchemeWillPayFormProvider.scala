@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
-import org.scalacheck.Arbitrary
-import pages._
+import javax.inject.Inject
 
-trait PageGenerators {
+import forms.mappings.Mappings
+import play.api.data.Form
+import models.WhichPensionSchemeWillPay
 
-  implicit lazy val arbitraryWhichPensionSchemeWillPayPage: Arbitrary[WhichPensionSchemeWillPayPage.type] =
-    Arbitrary(WhichPensionSchemeWillPayPage)
+class WhichPensionSchemeWillPayFormProvider @Inject() extends Mappings {
 
-  implicit lazy val arbitraryPensionSchemeDetailsPage: Arbitrary[PensionSchemeDetailsPage.type] =
-    Arbitrary(PensionSchemeDetailsPage)
-
-  implicit lazy val arbitraryWhoWillPayPage: Arbitrary[WhoWillPayPage.type] =
-    Arbitrary(WhoWillPayPage)
-
-  // scala fmt ignore
+  def apply(): Form[WhichPensionSchemeWillPay] =
+    Form(
+      "value" -> enumerable[WhichPensionSchemeWillPay]("whichPensionSchemeWillPay.error.required")
+    )
 }
