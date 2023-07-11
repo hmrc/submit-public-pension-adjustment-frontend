@@ -17,7 +17,7 @@
 package generators
 
 import models.WhichPensionSchemeWillPay
-import models.WhichPensionSchemeWillPay.PrivatePensionScheme
+import models.WhichPensionSchemeWillPay.{PensionSchemeA, PensionSchemeB, PensionSchemeC, PrivatePensionScheme}
 
 import java.time.{Instant, LocalDate, ZoneOffset}
 import org.scalacheck.Arbitrary._
@@ -115,5 +115,9 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
   }
 
   def publicPensionScheme: Gen[WhichPensionSchemeWillPay] =
-    arbitrary[WhichPensionSchemeWillPay] suchThat (scheme => scheme != PrivatePensionScheme)
+    Gen.oneOf(
+      PensionSchemeA,
+      PensionSchemeB,
+      PensionSchemeC
+    )
 }
