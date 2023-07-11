@@ -96,7 +96,6 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.CheckYourAnswersController.onPageLoad.url
       }
     }
 

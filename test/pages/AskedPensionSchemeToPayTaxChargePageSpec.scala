@@ -16,6 +16,7 @@
 
 package pages
 
+import models.{CheckMode, NormalMode, WhoWillPay}
 import pages.behaviours.PageBehaviours
 
 class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
@@ -27,5 +28,64 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
     beSettable[Boolean](AskedPensionSchemeToPayTaxChargePage)
 
     beRemovable[Boolean](AskedPensionSchemeToPayTaxChargePage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to CYA when Yes selected" in {
+        val ua = emptyUserAnswers
+          .set(
+            AskedPensionSchemeToPayTaxChargePage,
+            true
+          )
+          .success
+          .value
+        val result = AskedPensionSchemeToPayTaxChargePage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/whenDidYouAskPensionSchemeToPay")
+      }
+
+      "to WhenWillYouAskPensionSchemeToPayPage when no selected" in {
+        val ua = emptyUserAnswers
+          .set(
+            AskedPensionSchemeToPayTaxChargePage,
+            false
+          )
+          .success
+          .value
+        val result = AskedPensionSchemeToPayTaxChargePage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/whenWillYouAskPensionSchemeToPay")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua = emptyUserAnswers
+        val result = AskedPensionSchemeToPayTaxChargePage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA when selected" in {
+        val ua = emptyUserAnswers
+          .set(
+            AskedPensionSchemeToPayTaxChargePage,
+            true
+          )
+          .success
+          .value
+        val result = AskedPensionSchemeToPayTaxChargePage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua = emptyUserAnswers
+        val result = AskedPensionSchemeToPayTaxChargePage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
   }
 }
