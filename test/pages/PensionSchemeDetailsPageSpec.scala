@@ -16,7 +16,7 @@
 
 package pages
 
-import models.PensionSchemeDetails
+import models.{CheckMode, NormalMode, PensionSchemeDetails}
 import pages.behaviours.PageBehaviours
 
 class PensionSchemeDetailsPageSpec extends PageBehaviours {
@@ -28,5 +28,52 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
     beSettable[PensionSchemeDetails](PensionSchemeDetailsPage)
 
     beRemovable[PensionSchemeDetails](PensionSchemeDetailsPage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to AskedPensionSchemeToPayTaxChargePage when questions answered" in {
+        val ua = emptyUserAnswers
+          .set(
+            PensionSchemeDetailsPage,
+            PensionSchemeDetails("name", "pstr")
+          )
+          .success
+          .value
+        val result = PensionSchemeDetailsPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/askedPensionSchemeToPayTaxCharge")
+      }
+
+      "to JourneyRecoveryPage when not answered" in {
+        val ua = emptyUserAnswers
+
+        val result = PensionSchemeDetailsPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA when answered" in {
+        val ua = emptyUserAnswers
+          .set(
+            PensionSchemeDetailsPage,
+            PensionSchemeDetails("name", "pstr")
+          )
+          .success
+          .value
+        val result = PensionSchemeDetailsPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua = emptyUserAnswers
+        val result = PensionSchemeDetailsPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
   }
 }

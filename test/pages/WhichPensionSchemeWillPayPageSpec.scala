@@ -44,17 +44,24 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         checkNavigation(result, "/pensionSchemeDetails")
       }
 
-      "to CYA when Pension scheme selected" in {
+      "to CYA when public Pension scheme selected" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage,
-            WhichPensionSchemeWillPay.PensionSchemeA
+            publicPensionScheme.sample.value
           )
           .success
           .value
         val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/askedPensionSchemeToPayTaxCharge")
+      }
+
+      "to JourneyRecoveryPage when not selected" in {
+        val ua = emptyUserAnswers
+        val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
       }
     }
 
@@ -71,6 +78,13 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val result = WhichPensionSchemeWillPayPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua = emptyUserAnswers
+        val result = WhichPensionSchemeWillPayPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
       }
     }
   }

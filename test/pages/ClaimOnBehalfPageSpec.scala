@@ -44,7 +44,6 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/status-of-user")
   }
 
-  // TODO CHANGE TO APPROPRIATE PAGE
   "must redirect to check your answers page when user selects no" in {
 
     val page = ClaimOnBehalfPage
@@ -56,7 +55,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+    checkNavigation(nextPageUrl, "/whoWillPay")
   }
 
   "must redirect user to change status of user when user resubmits answers in check mode" in {

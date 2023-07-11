@@ -56,11 +56,18 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
         checkNavigation(result, "/check-your-answers")
       }
+
+      "to JourneyRecovery when not selected" in {
+        val ua = emptyUserAnswers
+        val result = WhoWillPayPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
     }
 
     "must navigate correctly in CheckMode" - {
 
-      "to CYA" in {
+      "to CYA when selected" in {
         val ua = emptyUserAnswers
           .set(
             WhoWillPayPage,
@@ -71,6 +78,13 @@ class WhoWillPayPageSpec extends PageBehaviours {
         val result = WhoWillPayPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua = emptyUserAnswers
+        val result = WhoWillPayPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
       }
     }
   }

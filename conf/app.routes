@@ -46,6 +46,7 @@ GET        /whichPensionSchemeWillPay                        controllers.WhichPe
 POST       /whichPensionSchemeWillPay                        controllers.WhichPensionSchemeWillPayController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhichPensionSchemeWillPay                  controllers.WhichPensionSchemeWillPayController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhichPensionSchemeWillPay                  controllers.WhichPensionSchemeWillPayController.onSubmit(mode: Mode = CheckMode)
+
 GET        /askedPensionSchemeToPayTaxCharge                        controllers.AskedPensionSchemeToPayTaxChargeController.onPageLoad(mode: Mode = NormalMode)
 POST       /askedPensionSchemeToPayTaxCharge                        controllers.AskedPensionSchemeToPayTaxChargeController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAskedPensionSchemeToPayTaxCharge                  controllers.AskedPensionSchemeToPayTaxChargeController.onPageLoad(mode: Mode = CheckMode)
