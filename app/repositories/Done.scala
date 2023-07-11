@@ -14,18 +14,7 @@
  * limitations under the License.
  */
 
-package models.requests
+package repositories
 
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.Name
-
-import java.time.LocalDate
-
-case class IdentifierRequest[A](
-  request: Request[A],
-  userId: String,
-  nino: String,
-  name: Option[Name],
-  saUtr: Option[String],
-  dateOfBirth: Option[LocalDate]
-) extends WrappedRequest[A](request)
+sealed abstract class Done
+object Done extends Done

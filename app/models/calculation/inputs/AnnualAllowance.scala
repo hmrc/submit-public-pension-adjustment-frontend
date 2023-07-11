@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package models.requests
+package models.calculation.inputs
 
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.Name
+import play.api.libs.json.{Format, Json, Reads, __}
 
-import java.time.LocalDate
+case class AnnualAllowance(scottishTaxYears: List[Period], taxYears: List[TaxYear])
 
-case class IdentifierRequest[A](
-  request: Request[A],
-  userId: String,
-  nino: String,
-  name: Option[Name],
-  saUtr: Option[String],
-  dateOfBirth: Option[LocalDate]
-) extends WrappedRequest[A](request)
+object AnnualAllowance {
+
+  implicit lazy val reads: Reads[AnnualAllowance] = {
+
+    import play.api.libs.functional.syntax._
+
+    ((__ \ "scottishTaxYears").read[List[Period]] and
+      (__ \ "taxYears").read[List[TaxYear]])(AnnualAllowance(_, _))
+  }
+
+  implicit lazy val formats: Format[AnnualAllowance] = Json.format
+}

@@ -55,8 +55,9 @@ signedOut.title = For your security, we signed you out
 signedOut.heading = For your security, we signed you out
 signedOut.guidance = We did not save your answers.
 
-unauthorised.title = You can’t access this service with this account
-unauthorised.heading = You can’t access this service with this account
+unauthorised.title = Authorisation failed.
+unauthorised.heading = Authorisation failed.
+unauthorised.guidance = You should access this service by clicking "Continue to sign in" from the Public Pension Adjustment "Calculation results" page.
 
 claimOnBehalf.title =  Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
 claimOnBehalf.heading = Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
@@ -306,3 +307,5 @@ submission.pensionAdministrator = Your pension administrator will contact you to
 submission.receiveCompensation = The process of receiving any compensation you may be owed will take
 submission.link = What did you think of this service?
 submission.takesSecond = (takes 30 seconds)
+
+landingPage.title = Submit Public Pension Adjustment

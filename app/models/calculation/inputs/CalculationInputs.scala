@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package models.requests
+package models.calculation.inputs
 
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.Name
+import play.api.libs.json.{Format, Json}
 
-import java.time.LocalDate
+case class CalculationInputs(
+  resubmission: Resubmission,
+  annualAllowance: Option[AnnualAllowance],
+  lifeTimeAllowance: Option[LifeTimeAllowance]
+)
 
-case class IdentifierRequest[A](
-  request: Request[A],
-  userId: String,
-  nino: String,
-  name: Option[Name],
-  saUtr: Option[String],
-  dateOfBirth: Option[LocalDate]
-) extends WrappedRequest[A](request)
+object CalculationInputs {
+
+  implicit lazy val format: Format[CalculationInputs] = Json.format
+}

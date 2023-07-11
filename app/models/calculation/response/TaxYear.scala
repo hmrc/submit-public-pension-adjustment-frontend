@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package models.requests
+package models.calculation.response
 
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.Name
-
-import java.time.LocalDate
-
-case class IdentifierRequest[A](
-  request: Request[A],
-  userId: String,
-  nino: String,
-  name: Option[Name],
-  saUtr: Option[String],
-  dateOfBirth: Option[LocalDate]
-) extends WrappedRequest[A](request)
+trait TaxYear {
+  def period: Period
+}

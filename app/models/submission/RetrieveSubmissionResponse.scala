@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-package models.requests
+package models.submission
 
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.Name
+import models.calculation.inputs.CalculationInputs
+import models.calculation.response.CalculationResponse
+import play.api.libs.json.{Format, Json}
 
-import java.time.LocalDate
+case class RetrieveSubmissionResponse(calculationInputs: CalculationInputs, calculation: Option[CalculationResponse])
 
-case class IdentifierRequest[A](
-  request: Request[A],
-  userId: String,
-  nino: String,
-  name: Option[Name],
-  saUtr: Option[String],
-  dateOfBirth: Option[LocalDate]
-) extends WrappedRequest[A](request)
+object RetrieveSubmissionResponse {
+
+  implicit lazy val format: Format[RetrieveSubmissionResponse] = Json.format
+}
