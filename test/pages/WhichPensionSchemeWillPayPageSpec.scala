@@ -28,5 +28,23 @@ class WhichPensionSchemeWillPaySpec extends PageBehaviours {
     beSettable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage)
 
     beRemovable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to PensionSchemeDetails when PensionScheme selected" in {
+
+      }
+
+      "to CYA when Private pension scheme selected" in {
+
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA" in {
+
+      }
+    }
   }
 }

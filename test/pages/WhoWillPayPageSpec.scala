@@ -16,7 +16,7 @@
 
 package pages
 
-import models.WhoWillPay
+import models.{NormalMode, WhoWillPay}
 import pages.behaviours.PageBehaviours
 
 class WhoWillPaySpec extends PageBehaviours {
@@ -28,5 +28,23 @@ class WhoWillPaySpec extends PageBehaviours {
     beSettable[WhoWillPay](WhoWillPayPage)
 
     beRemovable[WhoWillPay](WhoWillPayPage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to WhichPensionSchemeWillPayPage when PensionScheme selected" in {
+        
+      }
+
+      "to CYA when You selected" in {
+
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA" in {
+
+      }
+    }
   }
 }

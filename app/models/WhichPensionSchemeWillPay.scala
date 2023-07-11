@@ -24,11 +24,15 @@ sealed trait WhichPensionSchemeWillPay
 
 object WhichPensionSchemeWillPay extends Enumerable.Implicits {
 
-  case object Pensionschemea extends WithName("pensionSchemeA") with WhichPensionSchemeWillPay
-  case object Pensionschemeb extends WithName("pensionSchemeB") with WhichPensionSchemeWillPay
+  case object PensionSchemeA extends WithName("pensionSchemeA") with WhichPensionSchemeWillPay
+  case object PensionSchemeB extends WithName("pensionSchemeB") with WhichPensionSchemeWillPay
+
+  case object PensionSchemeC extends WithName("pensionSchemeC") with WhichPensionSchemeWillPay
+
+  case object PrivatePensionScheme extends WithName("privatePensionScheme") with WhichPensionSchemeWillPay
 
   val values: Seq[WhichPensionSchemeWillPay] = Seq(
-    Pensionschemea, Pensionschemeb
+    PensionSchemeA, PensionSchemeB, PensionSchemeC, PrivatePensionScheme
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {

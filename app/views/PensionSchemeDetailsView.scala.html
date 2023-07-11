@@ -46,10 +46,11 @@
 
         @govukInput(
             InputViewModel(
-                field = form("pensioinSchemeTaxReference"),
-                label = LabelViewModel(messages("pensionSchemeDetails.pensioinSchemeTaxReference"))
+                field = form("pensionSchemeTaxReference"),
+                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeTaxReference"))
             )
             .withWidth(Full)
+            .withHint(HintViewModel(messages("pensionSchemeDetails.pensionSchemeTaxReference.hint")))
         )
 
         @govukButton(

@@ -55,3 +55,35 @@ signedOut.guidance = cy: We did not save your answers.
 
 unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
+
+whoWillPay.title = cy: Who is going to pay the new tax charge?
+whoWillPay.heading = cy: Who is going to pay the new tax charge?
+whoWillPay.you = cy: You
+whoWillPay.pensionScheme = cy: Pension Scheme
+whoWillPay.checkYourAnswersLabel = cy: Who is going to pay the new tax charge
+whoWillPay.error.required = cy: Select who is going to pay the new tax charge
+whoWillPay.change.hidden = cy: Who is going to pay the new tax charge
+
+pensionSchemeDetails.title = cy: What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.heading = cy: What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.pensionSchemeName = cy: Name of the pension scheme
+pensionSchemeDetails.pensionSchemeTaxReference = cy: Pension scheme tax reference (PSTR)
+pensionSchemeDetails.pensionSchemeTaxReference.hint = cy: You can find the PSTR can on your pension scheme’s annual statement. For example, 00348916RT.
+pensionSchemeDetails.checkYourAnswersLabel = cy: PensionSchemeDetails
+pensionSchemeDetails.error.pensionSchemeName.required = cy: Enter the pension scheme name
+pensionSchemeDetails.error.pensionSchemeTaxReference.required = cy: Enter the pension scheme tax reference (PSTR)
+pensionSchemeDetails.error.pensionSchemeName.length = cy: The pension scheme name must be 100 characters or less
+pensionSchemeDetails.error.pensionSchemeTaxReference.length = cy: The pension scheme tax reference must be 100 characters or less
+pensionSchemeDetails.pensionSchemeName.change.hidden = cy: Pension scheme name
+pensionSchemeDetails.pensionSchemeTaxReference.change.hidden = cy: Pension scheme tax reference
+
+whichPensionSchemeWillPay.title = cy: Which pension scheme will pay the tax charge?
+whichPensionSchemeWillPay.heading = cy: Which pension scheme will pay the tax charge?
+whichPensionSchemeWillPay.pensionSchemeA = cy: Pension scheme A
+whichPensionSchemeWillPay.pensionSchemeB = cy: Pension scheme B
+whichPensionSchemeWillPay.pensionSchemeC = cy: Pension scheme C
+whichPensionSchemeWillPay.privatePensionScheme = cy: Private pension scheme
+whichPensionSchemeWillPay.hint = cy: You must give the name and tax reference number of the pension scheme that is paying the tax charge. The tax charge can be paid by a public or private pension scheme.
+whichPensionSchemeWillPay.checkYourAnswersLabel = cy: Which pension scheme will pay the tax charge
+whichPensionSchemeWillPay.error.required = cy: Select which pension scheme will pay the tax charge
+whichPensionSchemeWillPay.change.hidden = cy: Which pension scheme will pay the tax charge

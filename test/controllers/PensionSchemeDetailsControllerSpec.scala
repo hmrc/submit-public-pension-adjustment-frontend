@@ -47,7 +47,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
     Json.obj(
       PensionSchemeDetailsPage.toString -> Json.obj(
         "pensionSchemeName" -> "value 1",
-        "pensioinSchemeTaxReference" -> "value 2"
+        "pensionSchemeTaxReference" -> "value 2"
       )
     )
   )
@@ -100,7 +100,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, pensionSchemeDetailsRoute)
-            .withFormUrlEncodedBody(("pensionSchemeName", "value 1"), ("pensioinSchemeTaxReference", "value 2"))
+            .withFormUrlEncodedBody(("pensionSchemeName", "value 1"), ("pensionSchemeTaxReference", "value 2"))
 
         val result = route(application, request).value
 
@@ -150,7 +150,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, pensionSchemeDetailsRoute)
-            .withFormUrlEncodedBody(("pensionSchemeName", "value 1"), ("pensioinSchemeTaxReference", "value 2"))
+            .withFormUrlEncodedBody(("pensionSchemeName", "value 1"), ("pensionSchemeTaxReference", "value 2"))
 
         val result = route(application, request).value
 

@@ -31,8 +31,8 @@ trait ModelGenerators {
     Arbitrary {
       for {
         pensionSchemeName <- arbitrary[String]
-        pensioinSchemeTaxReference <- arbitrary[String]
-      } yield PensionSchemeDetails(pensionSchemeName, pensioinSchemeTaxReference)
+        pensionSchemeTaxReference <- arbitrary[String]
+      } yield PensionSchemeDetails(pensionSchemeName, pensionSchemeTaxReference)
     }
 
   implicit lazy val arbitraryWhoWillPay: Arbitrary[WhoWillPay] =

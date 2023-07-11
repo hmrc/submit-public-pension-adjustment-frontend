@@ -32,7 +32,7 @@ object PensionSchemeDetailsSummary  {
     answers.get(PensionSchemeDetailsPage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.pensionSchemeName).toString + "<br/>" + HtmlFormat.escape(answer.pensioinSchemeTaxReference).toString
+      val value = HtmlFormat.escape(answer.pensionSchemeName).toString + "<br/>" + HtmlFormat.escape(answer.pensionSchemeTaxReference).toString
 
         SummaryListRowViewModel(
           key     = "pensionSchemeDetails.checkYourAnswersLabel",
