@@ -20,6 +20,15 @@ import org.scalacheck.Arbitrary
 import pages._
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryUkAddressPage: Arbitrary[UkAddressPage.type] =
+    Arbitrary(UkAddressPage)
+
+  implicit lazy val arbitraryInternationalAddressPage: Arbitrary[InternationalAddressPage.type] =
+    Arbitrary(InternationalAddressPage)
+
+  implicit lazy val arbitraryAreYouAUKResidentPage: Arbitrary[AreYouAUKResidentPage.type] =
+    Arbitrary(AreYouAUKResidentPage)
   implicit lazy val arbitraryStatusOfUserPage: Arbitrary[StatusOfUserPage.type] =
     Arbitrary(StatusOfUserPage)
 

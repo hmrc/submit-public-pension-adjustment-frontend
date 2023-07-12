@@ -22,6 +22,22 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryUkAddress: Arbitrary[UkAddress] =
+    Arbitrary {
+      for {
+        adressLine1 <- arbitrary[String]
+        addressLine2 <- arbitrary[String]
+      } yield UkAddress(adressLine1, addressLine2)
+    }
+
+  implicit lazy val arbitraryInternationalAddress: Arbitrary[InternationalAddress] =
+    Arbitrary {
+      for {
+        addressLine1 <- arbitrary[String]
+        addressLine2 <- arbitrary[String]
+      } yield InternationalAddress(addressLine1, addressLine2)
+    }
+
   implicit lazy val arbitraryStatusOfUser: Arbitrary[StatusOfUser] =
     Arbitrary {
       Gen.oneOf(StatusOfUser.values.toSeq)

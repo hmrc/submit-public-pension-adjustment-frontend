@@ -31,3 +31,17 @@ GET        /change-status-of-user                  controllers.StatusOfUserContr
 POST       /change-status-of-user                  controllers.StatusOfUserController.onSubmit(mode: Mode = CheckMode)
 
 GET        /submission-info                        controllers.SubmissionInfoController.onPageLoad()
+GET        /areYouAUKResident                        controllers.AreYouAUKResidentController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouAUKResident                        controllers.AreYouAUKResidentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouAUKResident                  controllers.AreYouAUKResidentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouAUKResident                  controllers.AreYouAUKResidentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /internationalAddress                        controllers.InternationalAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /internationalAddress                        controllers.InternationalAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeInternationalAddress                  controllers.InternationalAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeInternationalAddress                  controllers.InternationalAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /ukAddress                        controllers.UkAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /ukAddress                        controllers.UkAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeUkAddress                  controllers.UkAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeUkAddress                  controllers.UkAddressController.onSubmit(mode: Mode = CheckMode)
