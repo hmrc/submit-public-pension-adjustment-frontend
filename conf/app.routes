@@ -32,6 +32,36 @@ POST       /change-status-of-user                  controllers.StatusOfUserContr
 
 GET        /submission-info                        controllers.SubmissionInfoController.onPageLoad()
 
+GET        /whoWillPay                        controllers.WhoWillPayController.onPageLoad(mode: Mode = NormalMode)
+POST       /whoWillPay                        controllers.WhoWillPayController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhoWillPay                  controllers.WhoWillPayController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhoWillPay                  controllers.WhoWillPayController.onSubmit(mode: Mode = CheckMode)
+
+GET        /pensionSchemeDetails                        controllers.PensionSchemeDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /pensionSchemeDetails                        controllers.PensionSchemeDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /changePensionSchemeDetails                  controllers.PensionSchemeDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePensionSchemeDetails                  controllers.PensionSchemeDetailsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichPensionSchemeWillPay                        controllers.WhichPensionSchemeWillPayController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichPensionSchemeWillPay                        controllers.WhichPensionSchemeWillPayController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichPensionSchemeWillPay                  controllers.WhichPensionSchemeWillPayController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichPensionSchemeWillPay                  controllers.WhichPensionSchemeWillPayController.onSubmit(mode: Mode = CheckMode)
+
+GET        /askedPensionSchemeToPayTaxCharge                        controllers.AskedPensionSchemeToPayTaxChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /askedPensionSchemeToPayTaxCharge                        controllers.AskedPensionSchemeToPayTaxChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAskedPensionSchemeToPayTaxCharge                  controllers.AskedPensionSchemeToPayTaxChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAskedPensionSchemeToPayTaxCharge                  controllers.AskedPensionSchemeToPayTaxChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenDidYouAskPensionSchemeToPay                  controllers.WhenDidYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenDidYouAskPensionSchemeToPay                  controllers.WhenDidYouAskPensionSchemeToPayController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenDidYouAskPensionSchemeToPay                        controllers.WhenDidYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenDidYouAskPensionSchemeToPay                        controllers.WhenDidYouAskPensionSchemeToPayController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whenWillYouAskPensionSchemeToPay                        controllers.WhenWillYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = NormalMode)
+POST       /whenWillYouAskPensionSchemeToPay                        controllers.WhenWillYouAskPensionSchemeToPayController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhenWillYouAskPensionSchemeToPay                  controllers.WhenWillYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhenWillYouAskPensionSchemeToPay                  controllers.WhenWillYouAskPensionSchemeToPayController.onSubmit(mode: Mode = CheckMode)
+
 GET        /areYouAUKResident                        controllers.AreYouAUKResidentController.onPageLoad(mode: Mode = NormalMode)
 POST       /areYouAUKResident                        controllers.AreYouAUKResidentController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAreYouAUKResident                  controllers.AreYouAUKResidentController.onPageLoad(mode: Mode = CheckMode)

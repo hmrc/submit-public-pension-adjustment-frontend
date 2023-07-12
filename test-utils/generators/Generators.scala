@@ -16,8 +16,10 @@
 
 package generators
 
-import java.time.{Instant, LocalDate, ZoneOffset}
+import models.WhichPensionSchemeWillPay
+import models.WhichPensionSchemeWillPay.{PensionSchemeA, PensionSchemeB, PensionSchemeC, PrivatePensionScheme}
 
+import java.time.{Instant, LocalDate, ZoneOffset}
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Gen._
 import org.scalacheck.{Gen, Shrink}
@@ -111,4 +113,11 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
       Instant.ofEpochMilli(millis).atOffset(ZoneOffset.UTC).toLocalDate
     }
   }
+
+  def publicPensionScheme: Gen[WhichPensionSchemeWillPay] =
+    Gen.oneOf(
+      PensionSchemeA,
+      PensionSchemeB,
+      PensionSchemeC
+    )
 }

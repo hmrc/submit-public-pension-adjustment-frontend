@@ -32,7 +32,7 @@ case object ClaimOnBehalfPage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ClaimOnBehalfPage) match {
       case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad
+      case Some(false) => routes.WhoWillPayController.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
