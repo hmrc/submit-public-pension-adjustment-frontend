@@ -24,7 +24,8 @@ trait PageGenerators {
   implicit lazy val arbitraryHowMuchTaxReliefPage: Arbitrary[HowMuchTaxReliefPage.type] =
     Arbitrary(HowMuchTaxReliefPage)
 
-  implicit lazy val arbitraryClaimingHigherOrAdditionalTaxRateReliefPage: Arbitrary[ClaimingHigherOrAdditionalTaxRateReliefPage.type] =
+  implicit lazy val arbitraryClaimingHigherOrAdditionalTaxRateReliefPage
+    : Arbitrary[ClaimingHigherOrAdditionalTaxRateReliefPage.type] =
     Arbitrary(ClaimingHigherOrAdditionalTaxRateReliefPage)
 
   implicit lazy val arbitraryReformPensionSchemeReferencePage: Arbitrary[ReformPensionSchemeReferencePage.type] =

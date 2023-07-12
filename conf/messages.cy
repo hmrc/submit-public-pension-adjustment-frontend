@@ -154,3 +154,18 @@ reformPensionSchemeReference.checkYourAnswersLabel = cy: What is your reform ind
 reformPensionSchemeReference.error.required = cy: Enter your reform individual pension scheme reference
 reformPensionSchemeReference.error.length = cy: Reform individual pension scheme reference must be 100 characters or less
 reformPensionSchemeReference.change.hidden = cy: What is your reform individual pension scheme reference
+
+claimingHigherOrAdditionalTaxRateRelief.title = cy: Are you claiming for higher or additional tax rate relief?
+claimingHigherOrAdditionalTaxRateRelief.heading = cy: Are you claiming for higher or additional tax rate relief?
+claimingHigherOrAdditionalTaxRateRelief.checkYourAnswersLabel = cy: Are you claiming for higher or additional tax rate relief
+claimingHigherOrAdditionalTaxRateRelief.error.required = cy: Select yes if you are claiming for higher or additional tax rate relief
+claimingHigherOrAdditionalTaxRateRelief.change.hidden = cy: Are you claiming for higher or additional tax rate relief
+
+howMuchTaxRelief.title = cy: How much tax relief are you claiming for?
+howMuchTaxRelief.heading = cy: How much tax relief are you claiming for?
+howMuchTaxRelief.checkYourAnswersLabel = cy: How much tax relief are you claiming for
+howMuchTaxRelief.error.nonNumeric = cy: Enter your how much tax relief you are claiming for using numbers
+howMuchTaxRelief.error.required = cy: Enter how much tax relief you are claiming for
+howMuchTaxRelief.error.wholeNumber = cy: Enter how much tax relief you are claiming for using whole numbers
+howMuchTaxRelief.error.outOfRange = cy: How much tax relief you are claiming for must be between {0} and {1}
+howMuchTaxRelief.change.hidden = cy: How much tax relief are you claiming for

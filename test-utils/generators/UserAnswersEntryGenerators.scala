@@ -32,7 +32,8 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryClaimingHigherOrAdditionalTaxRateReliefUserAnswersEntry: Arbitrary[(ClaimingHigherOrAdditionalTaxRateReliefPage.type, JsValue)] =
+  implicit lazy val arbitraryClaimingHigherOrAdditionalTaxRateReliefUserAnswersEntry
+    : Arbitrary[(ClaimingHigherOrAdditionalTaxRateReliefPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[ClaimingHigherOrAdditionalTaxRateReliefPage.type]

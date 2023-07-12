@@ -16,6 +16,7 @@
 
 package pages
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
@@ -27,5 +28,51 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
     beSettable[String](ReformPensionSchemeReferencePage)
 
     beRemovable[String](ReformPensionSchemeReferencePage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to ClaimingHigherOrAdditionalTaxRateReliefPage when answered" in {
+        val ua     = emptyUserAnswers
+          .set(
+            ReformPensionSchemeReferencePage,
+            "ripsr"
+          )
+          .success
+          .value
+        val result = ReformPensionSchemeReferencePage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/claimingHigherOrAdditionalTaxRateRelief")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua     = emptyUserAnswers
+        val result = ReformPensionSchemeReferencePage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA when answered" in {
+        val ua     = emptyUserAnswers
+          .set(
+            ReformPensionSchemeReferencePage,
+            "ripsr"
+          )
+          .success
+          .value
+        val result = ReformPensionSchemeReferencePage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua     = emptyUserAnswers
+        val result = ReformPensionSchemeReferencePage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
   }
 }
