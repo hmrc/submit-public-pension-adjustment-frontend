@@ -27,18 +27,22 @@ trait ModelGenerators {
       for {
         addressLine1 <- arbitrary[String]
         addressLine2 <- arbitrary[Option[String]]
-        townOrCity <- arbitrary[String]
-        county <- arbitrary[Option[String]]
-        postCode <- arbitrary[String]
+        townOrCity   <- arbitrary[String]
+        county       <- arbitrary[Option[String]]
+        postCode     <- arbitrary[String]
       } yield UkAddress(addressLine1, addressLine2, townOrCity, county, postCode)
     }
 
   implicit lazy val arbitraryInternationalAddress: Arbitrary[InternationalAddress] =
     Arbitrary {
       for {
-        addressLine1 <- arbitrary[String]
-        addressLine2 <- arbitrary[String]
-      } yield InternationalAddress(addressLine1, addressLine2)
+        addressLine1  <- arbitrary[String]
+        addressLine2  <- arbitrary[Option[String]]
+        townOrCity    <- arbitrary[String]
+        stateOrRegion <- arbitrary[Option[String]]
+        postCode      <- arbitrary[Option[String]]
+        country       <- arbitrary[String]
+      } yield InternationalAddress(addressLine1, addressLine2, townOrCity, stateOrRegion, postCode, country)
     }
 
   implicit lazy val arbitraryStatusOfUser: Arbitrary[StatusOfUser] =

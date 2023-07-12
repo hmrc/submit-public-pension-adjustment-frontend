@@ -52,9 +52,9 @@ class UkAddressFormProviderSpec extends StringFieldBehaviours {
 
   ".addressLine2" - {
 
-    val fieldName   = "addressLine2"
-    val lengthKey   = "ukAddress.error.addressLine2.length"
-    val maxLength   = 100
+    val fieldName = "addressLine2"
+    val lengthKey = "ukAddress.error.addressLine2.length"
+    val maxLength = 100
 
     behave like fieldThatBindsValidData(
       form,
@@ -99,9 +99,9 @@ class UkAddressFormProviderSpec extends StringFieldBehaviours {
 
   ".county" - {
 
-    val fieldName   = "county"
-    val lengthKey   = "ukAddress.error.county.length"
-    val maxLength   = 100
+    val fieldName = "county"
+    val lengthKey = "ukAddress.error.county.length"
+    val maxLength = 100
 
     behave like fieldThatBindsValidData(
       form,

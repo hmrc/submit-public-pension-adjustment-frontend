@@ -52,6 +52,38 @@
             .withWidth(Full)
         )
 
+        @govukInput(
+            InputViewModel(
+                field = form("townOrCity"),
+                label = LabelViewModel(messages("internationalAddress.townOrCity"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("stateOrRegion"),
+                label = LabelViewModel(messages("internationalAddress.stateOrRegion"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("postCode"),
+                label = LabelViewModel(messages("internationalAddress.postCode"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("country"),
+                label = LabelViewModel(messages("internationalAddress.country"))
+            )
+            .withWidth(Full)
+        )
+
         @govukButton(
             ButtonViewModel(messages("site.continue"))
         )

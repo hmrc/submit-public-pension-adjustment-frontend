@@ -46,8 +46,12 @@ class InternationalAddressControllerSpec extends SpecBase with MockitoSugar {
     userAnswersId,
     Json.obj(
       InternationalAddressPage.toString -> Json.obj(
-        "addressLine1" -> "value 1",
-        "addressLine2" -> "value 2"
+        "addressLine1"  -> "value 1",
+        "addressLine2"  -> "value 2",
+        "townOrCity"    -> "townOrCity",
+        "stateOrRegion" -> "stateOrRegion",
+        "postCode"      -> "postCode",
+        "country"       -> "country"
       )
     )
   )
@@ -82,7 +86,19 @@ class InternationalAddressControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(InternationalAddress("value 1", "value 2")), NormalMode)(
+        contentAsString(result) mustEqual view(
+          form.fill(
+            InternationalAddress(
+              "value 1",
+              Some("value 2"),
+              "townOrCity",
+              Some("stateOrRegion"),
+              Some("postCode"),
+              "country"
+            )
+          ),
+          NormalMode
+        )(
           request,
           messages(application)
         ).toString
@@ -103,7 +119,14 @@ class InternationalAddressControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, internationalAddressRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              ("addressLine1", "value 1"),
+              ("addressLine2", "value 2"),
+              ("townOrCity", "townOrCity"),
+              ("stateOrRegion", "stateOrRegion"),
+              ("postCode", "postCode"),
+              ("country", "country")
+            )
 
         val result = route(application, request).value
 
@@ -153,7 +176,14 @@ class InternationalAddressControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, internationalAddressRoute)
-            .withFormUrlEncodedBody(("addressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              ("addressLine1", "value 1"),
+              ("addressLine2", "value 2"),
+              ("townOrCity", "townOrCity"),
+              ("stateOrRegion", "stateOrRegion"),
+              ("postCode", "postCode"),
+              ("country", "country")
+            )
 
         val result = route(application, request).value
 
