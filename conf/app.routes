@@ -46,3 +46,13 @@ GET        /ukAddress                        controllers.UkAddressController.onP
 POST       /ukAddress                        controllers.UkAddressController.onSubmit(mode: Mode = NormalMode)
 GET        /changeUkAddress                  controllers.UkAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeUkAddress                  controllers.UkAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /legacyPensionSchemeReference                        controllers.LegacyPensionSchemeReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /legacyPensionSchemeReference                        controllers.LegacyPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeLegacyPensionSchemeReference                  controllers.LegacyPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeLegacyPensionSchemeReference                  controllers.LegacyPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /reformPensionSchemeReference                        controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /reformPensionSchemeReference                        controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeReformPensionSchemeReference                  controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeReformPensionSchemeReference                  controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode)

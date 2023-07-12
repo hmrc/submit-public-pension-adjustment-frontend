@@ -141,3 +141,17 @@ ukAddress.townOrCity.change.hidden = Town or city
 ukAddress.county.change.hidden = County
 ukAddress.postCode.change.hidden = Postcode
 
+
+legacyPensionSchemeReference.title = legacyPensionSchemeReference
+legacyPensionSchemeReference.heading = legacyPensionSchemeReference
+legacyPensionSchemeReference.checkYourAnswersLabel = legacyPensionSchemeReference
+legacyPensionSchemeReference.error.required = Enter legacyPensionSchemeReference
+legacyPensionSchemeReference.error.length = LegacyPensionSchemeReference must be 100 characters or less
+legacyPensionSchemeReference.change.hidden = LegacyPensionSchemeReference
+
+reformPensionSchemeReference.title = reformPensionSchemeReference
+reformPensionSchemeReference.heading = reformPensionSchemeReference
+reformPensionSchemeReference.checkYourAnswersLabel = reformPensionSchemeReference
+reformPensionSchemeReference.error.required = Enter reformPensionSchemeReference
+reformPensionSchemeReference.error.length = ReformPensionSchemeReference must be 100 characters or less
+reformPensionSchemeReference.change.hidden = ReformPensionSchemeReference

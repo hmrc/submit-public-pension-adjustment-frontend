@@ -21,6 +21,12 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryReformPensionSchemeReferencePage: Arbitrary[ReformPensionSchemeReferencePage.type] =
+    Arbitrary(ReformPensionSchemeReferencePage)
+
+  implicit lazy val arbitraryLegacyPensionSchemeReferencePage: Arbitrary[LegacyPensionSchemeReferencePage.type] =
+    Arbitrary(LegacyPensionSchemeReferencePage)
+
   implicit lazy val arbitraryUkAddressPage: Arbitrary[UkAddressPage.type] =
     Arbitrary(UkAddressPage)
 
