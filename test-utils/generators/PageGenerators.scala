@@ -88,5 +88,11 @@ trait PageGenerators {
   implicit lazy val arbitraryAlternativeNamePage: Arbitrary[AlternativeNamePage.type] =
     Arbitrary(AlternativeNamePage)
 
+  implicit lazy val arbitraryPensionSchemeMemberTaxReferencePage: Arbitrary[PensionSchemeMemberTaxReferencePage.type] =
+    Arbitrary(PensionSchemeMemberTaxReferencePage)
+
+  implicit lazy val arbitraryPensionSchemeMemberNinoPage: Arbitrary[PensionSchemeMemberNinoPage.type] =
+    Arbitrary(PensionSchemeMemberNinoPage)
+
   // scala fmt ignore
 }

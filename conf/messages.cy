@@ -311,6 +311,25 @@ submission.receiveCompensation = cy: The process of receiving any compensation y
 submission.link = cy: What did you think of this service?
 submission.takesSecond = cy: (takes 30 seconds)
 
+pensionSchemeMemberNino.title = cy: What is their National Insurance number?
+pensionSchemeMemberNino.heading = cy: What is their National Insurance number?
+pensionSchemeMemberNino.hint1 = cy: You can find a National Insurance number on a National Insurance card, benefit letter, payslip or P60.
+pensionSchemeMemberNino.hint2 = cy: A National Insurance number has 9 characters. It will include 2 letters, 6 numbers, and 1 letter, for example: QQ 123456 C.
+pensionSchemeMemberNino.checkYourAnswersLabel = cy: What is their National Insurance number?
+pensionSchemeMemberNino.caption = cy: Personal details
+pensionSchemeMemberNino.error.required = cy: Enter their National Insurance number
+pensionSchemeMemberNino.error.invalid = cy: Enter their National Insurance number in the correct format
+pensionSchemeMemberNino.change.hidden =  cy: What is their National Insurance number?
+
+pensionSchemeMemberTaxReference.title = cy: What is their unique tax reference number?
+pensionSchemeMemberTaxReference.heading = cy: What is their unique tax reference number? (optional)
+pensionSchemeMemberTaxReference.hint1 = cy: The unique tax reference number has 10 digits.
+pensionSchemeMemberTaxReference.caption = cy: Personal details
+pensionSchemeMemberTaxReference.checkYourAnswersLabel = cy: What is their unique tax reference number?
+pensionSchemeMemberTaxReference.error.length = cy: Your unique tax reference number must be 10 digits or less
+pensionSchemeMemberTaxReference.error.invalid = cy: Enter their unique tax reference number in the correct format
+pensionSchemeMemberTaxReference.change.hidden = cy: What is their unique tax reference number?
+
 landingPage.title = cy: Submit Public Pension Adjustment
 
 calculationPrerequisite.title = cy: Calculation Prerequisite

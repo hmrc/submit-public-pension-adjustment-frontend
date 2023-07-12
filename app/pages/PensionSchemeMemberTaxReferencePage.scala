@@ -16,22 +16,25 @@
 
 package pages
 
+import controllers.routes
 import models.{NormalMode, UserAnswers}
-
-import java.time.LocalDate
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
+case object PensionSchemeMemberTaxReferencePage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "pensionSchemeMemberDOB"
+  override def toString: String = "pensionSchemeMemberTaxReference"
 
+//TODO POINT TO CORRECT PAGE
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
+    answers.get(PensionSchemeMemberTaxReferencePage) match {
+      case _ => routes.CheckYourAnswersController.onPageLoad
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.routes.CheckYourAnswersController.onPageLoad
-
+    answers.get(PensionSchemeMemberTaxReferencePage) match {
+      case _ => routes.CheckYourAnswersController.onPageLoad
+    }
 }

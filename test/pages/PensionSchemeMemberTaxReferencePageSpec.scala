@@ -16,47 +16,40 @@
 
 package pages
 
-import models.StatusOfUser.Deputyship
 import models.{CheckMode, NormalMode}
 
-import java.time.LocalDate
-import org.scalacheck.Arbitrary
+class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
 
-class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
+  "PensionSchemeMemberTaxReferencePage" - {
 
-  "PensionSchemeMemberDOBPage" - {
+    beRetrievable[String](PensionSchemeMemberTaxReferencePage)
 
-    implicit lazy val arbitraryLocalDate: Arbitrary[LocalDate] = Arbitrary {
-      datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
-    }
+    beSettable[String](PensionSchemeMemberTaxReferencePage)
 
-    beRetrievable[LocalDate](PensionSchemeMemberDOBPage)
-
-    beSettable[LocalDate](PensionSchemeMemberDOBPage)
-
-    beRemovable[LocalDate](PensionSchemeMemberDOBPage)
+    beRemovable[String](PensionSchemeMemberTaxReferencePage)
   }
 
-  "must redirect to Pension Scheme Members Nino page when user submits data" in {
+  // TODO CHANGE TESTS
+  "must redirect to CYA page when user submits data in normal mode" in {
 
-    val page = PensionSchemeMemberDOBPage
+    val page = PensionSchemeMemberTaxReferencePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
+      .set(page, "1234567890")
       .success
       .value
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-nino")
+    checkNavigation(nextPageUrl, "/check-your-answers")
   }
 
   "must redirect to check your answer page when user submits data in check mode" in {
 
-    val page = PensionSchemeMemberDOBPage
+    val page = PensionSchemeMemberTaxReferencePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
+      .set(page, "1234567890")
       .success
       .value
 

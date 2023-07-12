@@ -42,6 +42,8 @@ class CheckYourAnswersController @Inject() (
       StatusOfUserSummary.row(request.userAnswers),
       PensionSchemeMemberNameSummary.row(request.userAnswers),
       PensionSchemeMemberDOBSummary.row(request.userAnswers),
+      PensionSchemeMemberNinoSummary.row(request.userAnswers),
+      PensionSchemeMemberTaxReferenceSummary.row(request.userAnswers),
       WhoWillPaySummary.row(request.userAnswers),
       WhichPensionSchemeWillPaySummary.row(request.userAnswers),
       PensionSchemeDetailsSummary.row(request.userAnswers),
