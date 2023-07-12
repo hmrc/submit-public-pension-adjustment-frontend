@@ -243,6 +243,7 @@ pensionSchemeMemberName.checkYourAnswersLabel = What is the pension scheme membe
 pensionSchemeMemberName.error.required =  Enter the pension scheme member's name
 pensionSchemeMemberName.error.length =  must be 50 characters or less
 pensionSchemeMemberName.change.hidden = What is the pension scheme member's name?
+pensionSchemeMemberName.caption = Personal details
 
 pensionSchemeMemberDOB.title = What is the pension scheme member's date of birth?
 pensionSchemeMemberDOB.heading = What is the pension scheme member's date of birth?
@@ -253,3 +254,4 @@ pensionSchemeMemberDOB.error.required.two = The date must include include {0} an
 pensionSchemeMemberDOB.error.required = The date must include {0}
 pensionSchemeMemberDOB.error.invalid = Enter a real date of birth.
 pensionSchemeMemberDOB.change.hidden =  What is the pension scheme member's date of birth?
+pensionSchemeMemberDOB.caption = Personal details

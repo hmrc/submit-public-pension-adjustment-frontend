@@ -37,9 +37,11 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("pensionSchemeMemberName.heading")).asPageHeading()
-            )
-            .withWidth(Full)
+                label = HmrcPageHeadingLabel(
+                    content = messages("pensionSchemeMemberName.heading"),
+                    caption = messages("pensionSchemeMemberName.caption")
+                )
+           )
         )
 
         @govukButton(

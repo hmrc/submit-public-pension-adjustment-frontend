@@ -27,10 +27,10 @@ class PensionSchemeMemberDOBFormProvider @Inject() extends Mappings {
   def apply(): Form[LocalDate] =
     Form(
       "value" -> localDate(
-        invalidKey     = "pensionSchemeMemberDOB.error.invalid",
+        invalidKey = "pensionSchemeMemberDOB.error.invalid",
         allRequiredKey = "pensionSchemeMemberDOB.error.required.all",
         twoRequiredKey = "pensionSchemeMemberDOB.error.required.two",
-        requiredKey    = "pensionSchemeMemberDOB.error.required"
+        requiredKey = "pensionSchemeMemberDOB.error.required"
       )
     )
 }

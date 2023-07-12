@@ -30,6 +30,6 @@ case object PensionSchemeMemberNamePage extends QuestionPage[String] {
     controllers.routes.PensionSchemeMemberDOBController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.routes.PensionSchemeMemberDOBController.onPageLoad(CheckMode)
+    controllers.routes.CheckYourAnswersController.onPageLoad
 
 }

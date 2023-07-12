@@ -243,6 +243,7 @@ pensionSchemeMemberName.checkYourAnswersLabel = cy: What is the pension scheme m
 pensionSchemeMemberName.error.required = cy: Enter the pension scheme member's name
 pensionSchemeMemberName.error.length = cy: must be 50 characters or less
 pensionSchemeMemberName.change.hidden = cy: What is the pension scheme member's name?
+pensionSchemeMemberName.caption = cy: Personal details
 
 pensionSchemeMemberDOB.title = cy: What is the pension scheme member's date of birth?
 pensionSchemeMemberDOB.heading = cy: What is the pension scheme member's date of birth?
@@ -253,4 +254,5 @@ pensionSchemeMemberDOB.error.required.two = cy: The date must include include {0
 pensionSchemeMemberDOB.error.required = cy: The date must include {0}
 pensionSchemeMemberDOB.error.invalid = cy: Enter a real date of birth.
 pensionSchemeMemberDOB.change.hidden = cy: What is the pension scheme member's date of birth?
+pensionSchemeMemberDOB.caption = cy: Personal details
 

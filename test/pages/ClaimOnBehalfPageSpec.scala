@@ -17,7 +17,6 @@
 package pages
 
 import models.{CheckMode, NormalMode, UserAnswers}
-import pages.behaviours.PageBehaviours
 
 class ClaimOnBehalfPageSpec extends PageBehaviours {
 

@@ -18,7 +18,6 @@ package pages
 
 import models.StatusOfUser.Deputyship
 import models.{NormalMode, StatusOfUser}
-import pages.behaviours.PageBehaviours
 
 class StatusOfUserSpec extends PageBehaviours {
 
@@ -43,6 +42,6 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+    checkNavigation(nextPageUrl, "/their-name")
   }
 }

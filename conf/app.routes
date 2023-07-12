@@ -110,4 +110,4 @@ POST       /change-their-name                              controllers.PensionSc
 GET        /their-dob                                      controllers.PensionSchemeMemberDOBController.onPageLoad(mode: Mode = NormalMode)
 POST       /their-dob                                      controllers.PensionSchemeMemberDOBController.onSubmit(mode: Mode = NormalMode)
 GET        /change-their-dob                               controllers.PensionSchemeMemberDOBController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-their-dob
+POST       /change-their-dob                               controllers.PensionSchemeMemberDOBController.onSubmit(mode: Mode = CheckMode)

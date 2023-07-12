@@ -29,7 +29,7 @@ case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
   override def toString: String = "pensionSchemeMemberDOB"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.routes.CheckYourAnswersController.onPageLoad
+    controllers.routes.CheckYourAnswersController.onPageLoad // change to correct page when implemented
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.routes.CheckYourAnswersController.onPageLoad
