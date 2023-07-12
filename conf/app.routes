@@ -66,3 +66,8 @@ GET        /howMuchTaxRelief                  controllers.HowMuchTaxReliefContro
 POST       /howMuchTaxRelief                  controllers.HowMuchTaxReliefController.onSubmit(mode: Mode = NormalMode)
 GET        /changeHowMuchTaxRelief                        controllers.HowMuchTaxReliefController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeHowMuchTaxRelief                        controllers.HowMuchTaxReliefController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichPensionSchemeWillPayTaxRelief                        controllers.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichPensionSchemeWillPayTaxRelief                        controllers.WhichPensionSchemeWillPayTaxReliefController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichPensionSchemeWillPayTaxRelief                  controllers.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichPensionSchemeWillPayTaxRelief                  controllers.WhichPensionSchemeWillPayTaxReliefController.onSubmit(mode: Mode = CheckMode)

@@ -169,3 +169,11 @@ howMuchTaxRelief.error.required = Enter how much tax relief you are claiming for
 howMuchTaxRelief.error.wholeNumber = Enter how much tax relief you are claiming for using whole numbers
 howMuchTaxRelief.error.outOfRange = How much tax relief you are claiming for must be between {0} and {1}
 howMuchTaxRelief.change.hidden = How much tax relief are you claiming for
+
+whichPensionSchemeWillPayTaxRelief.title = Which pension scheme will pay the tax relief you are claiming?
+whichPensionSchemeWillPayTaxRelief.heading = Which pension scheme will pay the tax relief you are claiming?
+whichPensionSchemeWillPayTaxRelief.pensionSchemeA = Pension Scheme A
+whichPensionSchemeWillPayTaxRelief.pensionSchemeB = Pension Scheme B
+whichPensionSchemeWillPayTaxRelief.checkYourAnswersLabel = Which pension scheme will pay the tax relief you are claiming?
+whichPensionSchemeWillPayTaxRelief.error.required = Select whichPensionSchemeWillPayTaxRelief
+whichPensionSchemeWillPayTaxRelief.change.hidden = WhichPensionSchemeWillPayTaxRelief
