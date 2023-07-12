@@ -17,7 +17,6 @@
 package pages
 
 import models.WhenWillYouAskPensionSchemeToPay
-import pages.behaviours.PageBehaviours
 
 class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
 

@@ -17,7 +17,6 @@
 package pages
 
 import models.{CheckMode, NormalMode, WhoWillPay}
-import pages.behaviours.PageBehaviours
 
 class WhoWillPayPageSpec extends PageBehaviours {
 
