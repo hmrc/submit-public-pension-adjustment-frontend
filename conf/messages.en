@@ -141,17 +141,16 @@ ukAddress.townOrCity.change.hidden = Town or city
 ukAddress.county.change.hidden = County
 ukAddress.postCode.change.hidden = Postcode
 
+legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference?
+legacyPensionSchemeReference.heading = What is your legacy individual pension scheme reference?
+legacyPensionSchemeReference.checkYourAnswersLabel = What is your legacy individual pension scheme reference
+legacyPensionSchemeReference.error.required = Enter your legacy individual pension scheme reference
+legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 100 characters or less
+legacyPensionSchemeReference.change.hidden = What is your legacy individual pension scheme reference
 
-legacyPensionSchemeReference.title = legacyPensionSchemeReference
-legacyPensionSchemeReference.heading = legacyPensionSchemeReference
-legacyPensionSchemeReference.checkYourAnswersLabel = legacyPensionSchemeReference
-legacyPensionSchemeReference.error.required = Enter legacyPensionSchemeReference
-legacyPensionSchemeReference.error.length = LegacyPensionSchemeReference must be 100 characters or less
-legacyPensionSchemeReference.change.hidden = LegacyPensionSchemeReference
-
-reformPensionSchemeReference.title = reformPensionSchemeReference
-reformPensionSchemeReference.heading = reformPensionSchemeReference
-reformPensionSchemeReference.checkYourAnswersLabel = reformPensionSchemeReference
-reformPensionSchemeReference.error.required = Enter reformPensionSchemeReference
-reformPensionSchemeReference.error.length = ReformPensionSchemeReference must be 100 characters or less
-reformPensionSchemeReference.change.hidden = ReformPensionSchemeReference
+reformPensionSchemeReference.title = What is your reform individual pension scheme reference?
+reformPensionSchemeReference.heading = What is your reform individual pension scheme reference?
+reformPensionSchemeReference.checkYourAnswersLabel = What is your reform individual pension scheme reference
+reformPensionSchemeReference.error.required = Enter your reform individual pension scheme reference
+reformPensionSchemeReference.error.length = Reform individual pension scheme reference must be 100 characters or less
+reformPensionSchemeReference.change.hidden = What is your reform individual pension scheme reference

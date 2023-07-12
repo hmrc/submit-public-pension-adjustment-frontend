@@ -16,7 +16,7 @@
 
 package pages
 
-import models.InternationalAddress
+import models.{CheckMode, InternationalAddress, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class InternationalAddressPageSpec extends PageBehaviours {
@@ -28,5 +28,51 @@ class InternationalAddressPageSpec extends PageBehaviours {
     beSettable[InternationalAddress](InternationalAddressPage)
 
     beRemovable[InternationalAddress](InternationalAddressPage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to LegacyPensionSchemeReferencePage when answered" in {
+        val ua = emptyUserAnswers
+          .set(
+            InternationalAddressPage,
+            arbitraryInternationalAddress.arbitrary.sample.value
+          )
+          .success
+          .value
+        val result = InternationalAddressPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/legacyPensionSchemeReference")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua = emptyUserAnswers
+        val result = InternationalAddressPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA when answered" in {
+        val ua = emptyUserAnswers
+          .set(
+            InternationalAddressPage,
+            arbitraryInternationalAddress.arbitrary.sample.value
+          )
+          .success
+          .value
+        val result = InternationalAddressPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua = emptyUserAnswers
+        val result = InternationalAddressPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
   }
 }

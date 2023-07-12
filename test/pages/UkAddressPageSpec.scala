@@ -16,7 +16,7 @@
 
 package pages
 
-import models.UkAddress
+import models.{CheckMode, NormalMode, UkAddress}
 import pages.behaviours.PageBehaviours
 
 class UkAddressPageSpec extends PageBehaviours {
@@ -28,5 +28,51 @@ class UkAddressPageSpec extends PageBehaviours {
     beSettable[UkAddress](UkAddressPage)
 
     beRemovable[UkAddress](UkAddressPage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to LegacyPensionSchemeReferencePage when answered" in {
+        val ua = emptyUserAnswers
+          .set(
+            UkAddressPage,
+            arbitraryUkAddress.arbitrary.sample.value
+          )
+          .success
+          .value
+        val result = UkAddressPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/legacyPensionSchemeReference")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua = emptyUserAnswers
+        val result = UkAddressPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA when answered" in {
+        val ua = emptyUserAnswers
+          .set(
+            UkAddressPage,
+            arbitraryUkAddress.arbitrary.sample.value
+          )
+          .success
+          .value
+        val result = UkAddressPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua = emptyUserAnswers
+        val result = UkAddressPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
   }
 }

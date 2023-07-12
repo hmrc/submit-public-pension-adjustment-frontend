@@ -16,8 +16,7 @@
 
 package pages
 
-import models.UkAddress
-import models.UserAnswers
+import models.{NormalMode, UkAddress, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -29,7 +28,7 @@ case object UkAddressPage extends QuestionPage[UkAddress] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(UkAddressPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => controllers.routes.LegacyPensionSchemeReferenceController.onPageLoad(NormalMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

@@ -140,3 +140,17 @@ ukAddress.addressLine2.change.hidden = cy: Address line 2
 ukAddress.townOrCity.change.hidden = cy: Town or city
 ukAddress.county.change.hidden = cy: County
 ukAddress.postCode.change.hidden = cy: Postcode
+
+legacyPensionSchemeReference.title = cy: What is your legacy individual pension scheme reference?
+legacyPensionSchemeReference.heading = cy: What is your legacy individual pension scheme reference?
+legacyPensionSchemeReference.checkYourAnswersLabel = cy: What is your legacy individual pension scheme reference
+legacyPensionSchemeReference.error.required = cy: Enter your legacy individual pension scheme reference
+legacyPensionSchemeReference.error.length = cy: Legacy individual pension scheme reference must be 100 characters or less
+legacyPensionSchemeReference.change.hidden = cy: What is your legacy individual pension scheme reference
+
+reformPensionSchemeReference.title = cy: What is your reform individual pension scheme reference?
+reformPensionSchemeReference.heading = cy: What is your reform individual pension scheme reference?
+reformPensionSchemeReference.checkYourAnswersLabel = cy: What is your reform individual pension scheme reference
+reformPensionSchemeReference.error.required = cy: Enter your reform individual pension scheme reference
+reformPensionSchemeReference.error.length = cy: Reform individual pension scheme reference must be 100 characters or less
+reformPensionSchemeReference.change.hidden = cy: What is your reform individual pension scheme reference

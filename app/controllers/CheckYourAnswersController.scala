@@ -22,7 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{AreYouAUKResidentSummary, ClaimOnBehalfSummary, InternationalAddressSummary, StatusOfUserSummary, UkAddressSummary}
+import viewmodels.checkAnswers.{AreYouAUKResidentSummary, ClaimOnBehalfSummary, InternationalAddressSummary, LegacyPensionSchemeReferenceSummary, ReformPensionSchemeReferenceSummary, StatusOfUserSummary, UkAddressSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -42,7 +42,9 @@ class CheckYourAnswersController @Inject() (
       StatusOfUserSummary.row(request.userAnswers),
       AreYouAUKResidentSummary.row(request.userAnswers),
       UkAddressSummary.row(request.userAnswers),
-      InternationalAddressSummary.row(request.userAnswers)
+      InternationalAddressSummary.row(request.userAnswers),
+      LegacyPensionSchemeReferenceSummary.row(request.userAnswers),
+      ReformPensionSchemeReferenceSummary.row(request.userAnswers)
     )
     Ok(view(SummaryListViewModel(rows.flatten)))
   }
