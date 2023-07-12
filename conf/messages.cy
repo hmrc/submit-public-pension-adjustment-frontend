@@ -169,3 +169,12 @@ howMuchTaxRelief.error.required = cy: Enter how much tax relief you are claiming
 howMuchTaxRelief.error.wholeNumber = cy: Enter how much tax relief you are claiming for using whole numbers
 howMuchTaxRelief.error.outOfRange = cy: How much tax relief you are claiming for must be between {0} and {1}
 howMuchTaxRelief.change.hidden = cy: How much tax relief are you claiming for
+
+whichPensionSchemeWillPayTaxRelief.title = cy: Which pension scheme will pay the tax relief you are claiming?
+whichPensionSchemeWillPayTaxRelief.heading = cy: Which pension scheme will pay the tax relief you are claiming?
+whichPensionSchemeWillPayTaxRelief.hint = cy: You must give the name and tax reference number of the public pension scheme that is paying.
+whichPensionSchemeWillPayTaxRelief.pensionSchemeA = cy: Pension Scheme A
+whichPensionSchemeWillPayTaxRelief.pensionSchemeB = cy: Pension Scheme B
+whichPensionSchemeWillPayTaxRelief.checkYourAnswersLabel = cy: Which pension scheme will pay the tax relief you are claiming?
+whichPensionSchemeWillPayTaxRelief.error.required = cy: Select which pension scheme will pay the tax relief you are claiming
+whichPensionSchemeWillPayTaxRelief.change.hidden = cy: Which pension scheme will pay the tax relief you are claiming

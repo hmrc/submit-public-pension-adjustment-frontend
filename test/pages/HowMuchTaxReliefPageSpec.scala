@@ -16,6 +16,7 @@
 
 package pages
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class HowMuchTaxReliefPageSpec extends PageBehaviours {
@@ -27,5 +28,51 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     beSettable[Int](HowMuchTaxReliefPage)
 
     beRemovable[Int](HowMuchTaxReliefPage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to WhichPensionSchemeWillPayTaxReliefPage when answered" in {
+        val ua     = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            100
+          )
+          .success
+          .value
+        val result = HowMuchTaxReliefPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/whichPensionSchemeWillPayTaxRelief")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua     = emptyUserAnswers
+        val result = HowMuchTaxReliefPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA when answered" in {
+        val ua     = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            100
+          )
+          .success
+          .value
+        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua     = emptyUserAnswers
+        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
   }
 }

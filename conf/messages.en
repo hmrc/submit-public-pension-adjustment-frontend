@@ -172,8 +172,9 @@ howMuchTaxRelief.change.hidden = How much tax relief are you claiming for
 
 whichPensionSchemeWillPayTaxRelief.title = Which pension scheme will pay the tax relief you are claiming?
 whichPensionSchemeWillPayTaxRelief.heading = Which pension scheme will pay the tax relief you are claiming?
+whichPensionSchemeWillPayTaxRelief.hint = You must give the name and tax reference number of the public pension scheme that is paying.
 whichPensionSchemeWillPayTaxRelief.pensionSchemeA = Pension Scheme A
 whichPensionSchemeWillPayTaxRelief.pensionSchemeB = Pension Scheme B
 whichPensionSchemeWillPayTaxRelief.checkYourAnswersLabel = Which pension scheme will pay the tax relief you are claiming?
-whichPensionSchemeWillPayTaxRelief.error.required = Select whichPensionSchemeWillPayTaxRelief
-whichPensionSchemeWillPayTaxRelief.change.hidden = WhichPensionSchemeWillPayTaxRelief
+whichPensionSchemeWillPayTaxRelief.error.required = Select which pension scheme will pay the tax relief you are claiming
+whichPensionSchemeWillPayTaxRelief.change.hidden = Which pension scheme will pay the tax relief you are claiming

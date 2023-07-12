@@ -22,7 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{AreYouAUKResidentSummary, ClaimOnBehalfSummary, ClaimingHigherOrAdditionalTaxRateReliefSummary, HowMuchTaxReliefSummary, InternationalAddressSummary, LegacyPensionSchemeReferenceSummary, ReformPensionSchemeReferenceSummary, StatusOfUserSummary, UkAddressSummary}
+import viewmodels.checkAnswers.{AreYouAUKResidentSummary, ClaimOnBehalfSummary, ClaimingHigherOrAdditionalTaxRateReliefSummary, HowMuchTaxReliefSummary, InternationalAddressSummary, LegacyPensionSchemeReferenceSummary, ReformPensionSchemeReferenceSummary, StatusOfUserSummary, UkAddressSummary, WhichPensionSchemeWillPayTaxReliefSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -46,7 +46,8 @@ class CheckYourAnswersController @Inject() (
       LegacyPensionSchemeReferenceSummary.row(request.userAnswers),
       ReformPensionSchemeReferenceSummary.row(request.userAnswers),
       ClaimingHigherOrAdditionalTaxRateReliefSummary.row(request.userAnswers),
-      HowMuchTaxReliefSummary.row(request.userAnswers)
+      HowMuchTaxReliefSummary.row(request.userAnswers),
+      WhichPensionSchemeWillPayTaxReliefSummary.row(request.userAnswers)
     )
 
     Ok(view(SummaryListViewModel(rows.flatten)))
