@@ -56,3 +56,13 @@ GET        /reformPensionSchemeReference                        controllers.Refo
 POST       /reformPensionSchemeReference                        controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode)
 GET        /changeReformPensionSchemeReference                  controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeReformPensionSchemeReference                  controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /claimingHigherOrAdditionalTaxRateRelief                        controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onPageLoad(mode: Mode = NormalMode)
+POST       /claimingHigherOrAdditionalTaxRateRelief                        controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onSubmit(mode: Mode = NormalMode)
+GET        /changeClaimingHigherOrAdditionalTaxRateRelief                  controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeClaimingHigherOrAdditionalTaxRateRelief                  controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchTaxRelief                  controllers.HowMuchTaxReliefController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchTaxRelief                  controllers.HowMuchTaxReliefController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchTaxRelief                        controllers.HowMuchTaxReliefController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchTaxRelief                        controllers.HowMuchTaxReliefController.onSubmit(mode: Mode = CheckMode)

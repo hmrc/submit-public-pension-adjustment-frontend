@@ -154,3 +154,18 @@ reformPensionSchemeReference.checkYourAnswersLabel = What is your reform individ
 reformPensionSchemeReference.error.required = Enter your reform individual pension scheme reference
 reformPensionSchemeReference.error.length = Reform individual pension scheme reference must be 100 characters or less
 reformPensionSchemeReference.change.hidden = What is your reform individual pension scheme reference
+
+claimingHigherOrAdditionalTaxRateRelief.title = claimingHigherOrAdditionalTaxRateRelief
+claimingHigherOrAdditionalTaxRateRelief.heading = claimingHigherOrAdditionalTaxRateRelief
+claimingHigherOrAdditionalTaxRateRelief.checkYourAnswersLabel = claimingHigherOrAdditionalTaxRateRelief
+claimingHigherOrAdditionalTaxRateRelief.error.required = Select yes if claimingHigherOrAdditionalTaxRateRelief
+claimingHigherOrAdditionalTaxRateRelief.change.hidden = ClaimingHigherOrAdditionalTaxRateRelief
+
+howMuchTaxRelief.title = HowMuchTaxRelief
+howMuchTaxRelief.heading = HowMuchTaxRelief
+howMuchTaxRelief.checkYourAnswersLabel = HowMuchTaxRelief
+howMuchTaxRelief.error.nonNumeric = Enter your howMuchTaxRelief using numbers
+howMuchTaxRelief.error.required = Enter your howMuchTaxRelief
+howMuchTaxRelief.error.wholeNumber = Enter your howMuchTaxRelief using whole numbers
+howMuchTaxRelief.error.outOfRange = HowMuchTaxRelief must be between {0} and {1}
+howMuchTaxRelief.change.hidden = HowMuchTaxRelief
