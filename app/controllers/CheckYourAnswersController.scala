@@ -22,7 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{ClaimOnBehalfSummary, StatusOfUserSummary}
+import viewmodels.checkAnswers.{AreYouAUKResidentSummary, ClaimOnBehalfSummary, InternationalAddressSummary, StatusOfUserSummary, UkAddressSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -39,7 +39,10 @@ class CheckYourAnswersController @Inject() (
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val rows: Seq[Option[SummaryListRow]] = Seq(
       ClaimOnBehalfSummary.row(request.userAnswers),
-      StatusOfUserSummary.row(request.userAnswers)
+      StatusOfUserSummary.row(request.userAnswers),
+      AreYouAUKResidentSummary.row(request.userAnswers),
+      UkAddressSummary.row(request.userAnswers),
+      InternationalAddressSummary.row(request.userAnswers)
     )
     Ok(view(SummaryListViewModel(rows.flatten)))
   }

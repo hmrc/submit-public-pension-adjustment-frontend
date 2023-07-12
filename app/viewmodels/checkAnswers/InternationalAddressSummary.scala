@@ -30,10 +30,14 @@ object InternationalAddressSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(InternationalAddressPage).map { answer =>
-      val value =
-        HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat
-          .escape(answer.addressLine2.getOrElse(""))
-          .toString
+      val value = Seq(
+        Some(HtmlFormat.escape(answer.addressLine1).toString),
+        answer.addressLine2.map(HtmlFormat.escape),
+        Some(HtmlFormat.escape(answer.townOrCity)),
+        answer.stateOrRegion.map(HtmlFormat.escape),
+        answer.postCode.map(HtmlFormat.escape),
+        Some(HtmlFormat.escape(answer.country))
+      ).flatten.mkString("<br/>")
 
       SummaryListRowViewModel(
         key = "internationalAddress.checkYourAnswersLabel",
