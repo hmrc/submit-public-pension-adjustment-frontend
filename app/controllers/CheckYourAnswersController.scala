@@ -22,7 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{ClaimOnBehalfSummary, StatusOfUserSummary}
+import viewmodels.checkAnswers.{AskedPensionSchemeToPayTaxChargeSummary, ClaimOnBehalfSummary, PensionSchemeDetailsSummary, StatusOfUserSummary, WhenDidYouAskPensionSchemeToPaySummary, WhenWillYouAskPensionSchemeToPaySummary, WhichPensionSchemeWillPaySummary, WhoWillPaySummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -39,7 +39,13 @@ class CheckYourAnswersController @Inject() (
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val rows: Seq[Option[SummaryListRow]] = Seq(
       ClaimOnBehalfSummary.row(request.userAnswers),
-      StatusOfUserSummary.row(request.userAnswers)
+      StatusOfUserSummary.row(request.userAnswers),
+      WhoWillPaySummary.row(request.userAnswers),
+      WhichPensionSchemeWillPaySummary.row(request.userAnswers),
+      PensionSchemeDetailsSummary.row(request.userAnswers),
+      AskedPensionSchemeToPayTaxChargeSummary.row(request.userAnswers),
+      WhenWillYouAskPensionSchemeToPaySummary.row(request.userAnswers),
+      WhenDidYouAskPensionSchemeToPaySummary.row(request.userAnswers)
     )
     Ok(view(SummaryListViewModel(rows.flatten)))
   }

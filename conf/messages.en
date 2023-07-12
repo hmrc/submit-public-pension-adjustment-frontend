@@ -87,3 +87,60 @@ submissionInfo.list.you.message7 = public or private pension scheme tax referenc
 submissionInfo.list.behalf.message1 = National Insurance number
 submissionInfo.list.behalf.message2 = teacher reference number
 submissionInfo.list.behalf.message3 = unique tax reference number
+
+whoWillPay.title = Who is going to pay the new tax charge?
+whoWillPay.heading = Who is going to pay the new tax charge?
+whoWillPay.you = You
+whoWillPay.pensionScheme = Pension Scheme
+whoWillPay.checkYourAnswersLabel = Who is going to pay the new tax charge
+whoWillPay.error.required = Select who is going to pay the new tax charge
+whoWillPay.change.hidden = Who is going to pay the new tax charge
+
+pensionSchemeDetails.title = What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.heading = What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.pensionSchemeName = Name of the pension scheme
+pensionSchemeDetails.pensionSchemeTaxReference = Pension scheme tax reference (PSTR)
+pensionSchemeDetails.pensionSchemeTaxReference.hint = You can find the PSTR can on your pension scheme’s annual statement. For example, 00348916RT.
+pensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the pension scheme
+pensionSchemeDetails.error.pensionSchemeName.required = Enter the pension scheme name
+pensionSchemeDetails.error.pensionSchemeTaxReference.required = Enter the pension scheme tax reference (PSTR)
+pensionSchemeDetails.error.pensionSchemeName.length = The pension scheme name must be 100 characters or less
+pensionSchemeDetails.error.pensionSchemeTaxReference.length = The pension scheme tax reference must be 100 characters or less
+pensionSchemeDetails.pensionSchemeName.change.hidden = Pension scheme name
+pensionSchemeDetails.pensionSchemeTaxReference.change.hidden = Pension scheme tax reference
+
+whichPensionSchemeWillPay.title = Which pension scheme will pay the tax charge?
+whichPensionSchemeWillPay.heading = Which pension scheme will pay the tax charge?
+whichPensionSchemeWillPay.pensionSchemeA = Pension scheme A
+whichPensionSchemeWillPay.pensionSchemeB = Pension scheme B
+whichPensionSchemeWillPay.pensionSchemeC = Pension scheme C
+whichPensionSchemeWillPay.privatePensionScheme = Private pension scheme
+whichPensionSchemeWillPay.hint = You must give the name and tax reference number of the pension scheme that is paying the tax charge. The tax charge can be paid by a public or private pension scheme.
+whichPensionSchemeWillPay.checkYourAnswersLabel = Which pension scheme will pay the tax charge
+whichPensionSchemeWillPay.error.required = Select which pension scheme will pay the tax charge
+whichPensionSchemeWillPay.change.hidden = Which pension scheme will pay the tax charge
+
+askedPensionSchemeToPayTaxCharge.title = Have you asked your pension scheme to pay the tax charge?
+askedPensionSchemeToPayTaxCharge.heading = Have you asked your pension scheme to pay the tax charge?
+askedPensionSchemeToPayTaxCharge.checkYourAnswersLabel = Have you asked your pension scheme to pay the tax charge
+askedPensionSchemeToPayTaxCharge.error.required = Select yes if you have asked your pension scheme to pay the tax charge
+askedPensionSchemeToPayTaxCharge.change.hidden = Have you asked your pension scheme to pay the tax charge
+
+whenDidYouAskPensionSchemeToPay.title = When did you ask your pension scheme to pay?
+whenDidYouAskPensionSchemeToPay.heading = When did you ask your pension scheme to pay?
+whenDidYouAskPensionSchemeToPay.hint = For example, 12 11 2007
+whenDidYouAskPensionSchemeToPay.checkYourAnswersLabel = When did you ask your pension scheme to pay
+whenDidYouAskPensionSchemeToPay.error.required.all = Enter when you asked your pension scheme to pay
+whenDidYouAskPensionSchemeToPay.error.required.two = The date must include {0} and {1}
+whenDidYouAskPensionSchemeToPay.error.required = The date must include {0}
+whenDidYouAskPensionSchemeToPay.error.invalid = Enter a real date
+whenDidYouAskPensionSchemeToPay.change.hidden = When did you ask your pension scheme to pay
+
+whenWillYouAskPensionSchemeToPay.title = When do you think you will ask your pension scheme to pay?
+whenWillYouAskPensionSchemeToPay.heading = When do you think you will ask your pension scheme to pay?
+whenWillYouAskPensionSchemeToPay.octToDec23 = 1 October 2023 to 31 December 2023
+whenWillYouAskPensionSchemeToPay.janToMar24 = 1 January 2024 to March 31 2024
+whenWillYouAskPensionSchemeToPay.checkYourAnswersLabel = When do you think you will ask your pension scheme to pay?
+whenWillYouAskPensionSchemeToPay.error.required = Select when you think you will ask your pension scheme to pay?
+whenWillYouAskPensionSchemeToPay.change.hidden = When do you think you will ask your pension scheme to pay
+whenWillYouAskPensionSchemeToPay.hint = Choose the annual quarter when you will ask your pension scheme to pay.

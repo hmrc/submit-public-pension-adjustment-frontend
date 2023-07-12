@@ -20,9 +20,30 @@ import org.scalacheck.Arbitrary
 import pages._
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryWhenWillYouAskPensionSchemeToPayPage
+    : Arbitrary[WhenWillYouAskPensionSchemeToPayPage.type] =
+    Arbitrary(WhenWillYouAskPensionSchemeToPayPage)
+
+  implicit lazy val arbitraryWhenDidYouAskPensionSchemeToPayPage: Arbitrary[WhenDidYouAskPensionSchemeToPayPage.type] =
+    Arbitrary(WhenDidYouAskPensionSchemeToPayPage)
+
+  implicit lazy val arbitraryAskedPensionSchemeToPayTaxChargePage
+    : Arbitrary[AskedPensionSchemeToPayTaxChargePage.type] =
+    Arbitrary(AskedPensionSchemeToPayTaxChargePage)
+
   implicit lazy val arbitraryStatusOfUserPage: Arbitrary[StatusOfUserPage.type] =
     Arbitrary(StatusOfUserPage)
 
   implicit lazy val arbitraryClaimOnBehalfPage: Arbitrary[ClaimOnBehalfPage.type] =
     Arbitrary(ClaimOnBehalfPage)
+
+  implicit lazy val arbitraryWhichPensionSchemeWillPayPage: Arbitrary[WhichPensionSchemeWillPayPage.type] =
+    Arbitrary(WhichPensionSchemeWillPayPage)
+
+  implicit lazy val arbitraryPensionSchemeDetailsPage: Arbitrary[PensionSchemeDetailsPage.type] =
+    Arbitrary(PensionSchemeDetailsPage)
+
+  implicit lazy val arbitraryWhoWillPayPage: Arbitrary[WhoWillPayPage.type] =
+    Arbitrary(WhoWillPayPage)
 }
