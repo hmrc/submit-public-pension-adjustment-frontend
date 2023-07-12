@@ -220,6 +220,7 @@ claimingHigherOrAdditionalTaxRateRelief.change.hidden = cy: Are you claiming for
 
 howMuchTaxRelief.title = cy: How much tax relief are you claiming for?
 howMuchTaxRelief.heading = cy: How much tax relief are you claiming for?
+howMuchTaxRelief.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300
 howMuchTaxRelief.checkYourAnswersLabel = cy: How much tax relief are you claiming for
 howMuchTaxRelief.error.nonNumeric = cy: Enter your how much tax relief you are claiming for using numbers
 howMuchTaxRelief.error.required = cy: Enter how much tax relief you are claiming for

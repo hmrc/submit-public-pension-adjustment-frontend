@@ -39,6 +39,7 @@
                 field = form("value"),
                 label = LabelViewModel(messages("howMuchTaxRelief.heading")).asPageHeading()
             )
+            .withHint(HintViewModel(messages("howMuchTaxRelief.hint")))
             .asNumeric()
             .withWidth(Fixed10)
         )
