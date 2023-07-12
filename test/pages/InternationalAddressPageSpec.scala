@@ -32,7 +32,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
     "must navigate correctly in NormalMode" - {
 
       "to LegacyPensionSchemeReferencePage when answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             InternationalAddressPage,
             arbitraryInternationalAddress.arbitrary.sample.value
@@ -45,7 +45,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = InternationalAddressPage.navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -55,7 +55,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             InternationalAddressPage,
             arbitraryInternationalAddress.arbitrary.sample.value
@@ -68,7 +68,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = InternationalAddressPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")

@@ -22,8 +22,8 @@ import play.api.data.FormError
 class LegacyPensionSchemeReferenceFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "legacyPensionSchemeReference.error.required"
-  val lengthKey = "legacyPensionSchemeReference.error.length"
-  val maxLength = 100
+  val lengthKey   = "legacyPensionSchemeReference.error.length"
+  val maxLength   = 100
 
   val form = new LegacyPensionSchemeReferenceFormProvider()()
 

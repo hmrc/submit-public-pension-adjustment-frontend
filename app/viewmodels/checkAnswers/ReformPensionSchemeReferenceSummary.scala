@@ -25,19 +25,17 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ReformPensionSchemeReferenceSummary  {
+object ReformPensionSchemeReferenceSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ReformPensionSchemeReferencePage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "reformPensionSchemeReference.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("reformPensionSchemeReference.change.hidden"))
-          )
+    answers.get(ReformPensionSchemeReferencePage).map { answer =>
+      SummaryListRowViewModel(
+        key = "reformPensionSchemeReference.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("reformPensionSchemeReference.change.hidden"))
         )
+      )
     }
 }

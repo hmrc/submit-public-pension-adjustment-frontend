@@ -37,7 +37,7 @@ class ReformPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ReformPensionSchemeReferenceFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val reformPensionSchemeReferenceRoute = routes.ReformPensionSchemeReferenceController.onPageLoad(NormalMode).url
 

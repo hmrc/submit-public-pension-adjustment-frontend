@@ -19,7 +19,6 @@ package pages
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
-
 class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
 
   "LegacyPensionSchemeReferencePage" - {
@@ -33,7 +32,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
     "must navigate correctly in NormalMode" - {
 
       "to ReformPensionSchemeReferencePage when answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             LegacyPensionSchemeReferencePage,
             "lipsr"
@@ -46,7 +45,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = LegacyPensionSchemeReferencePage.navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -56,7 +55,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             LegacyPensionSchemeReferencePage,
             "lipsr"
@@ -69,7 +68,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = LegacyPensionSchemeReferencePage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")

@@ -37,7 +37,7 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new LegacyPensionSchemeReferenceFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val legacyPensionSchemeReferenceRoute = routes.LegacyPensionSchemeReferenceController.onPageLoad(NormalMode).url
 
