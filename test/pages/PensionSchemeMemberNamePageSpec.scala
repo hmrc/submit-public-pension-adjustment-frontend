@@ -16,6 +16,8 @@
 
 package pages
 
+import models.NormalMode
+
 class PensionSchemeMemberNamePageSpec extends PageBehaviours {
 
   "PensionSchemeMemberNamePage" - {
@@ -25,5 +27,19 @@ class PensionSchemeMemberNamePageSpec extends PageBehaviours {
     beSettable[String](PensionSchemeMemberNamePage)
 
     beRemovable[String](PensionSchemeMemberNamePage)
+  }
+
+  "must redirect to Pension Scheme Members DOB page when user submits data" in {
+
+    val page = PensionSchemeMemberNamePage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, "bob")
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/their-dob")
   }
 }

@@ -27,7 +27,6 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
 
   override def toString: String = "statusOfUser"
 
-  // TODO POINT TO NEXT PAGE IN JOURNEY
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(StatusOfUserPage) match {
       case Some(_) => routes.PensionSchemeMemberNameController.onPageLoad(NormalMode)

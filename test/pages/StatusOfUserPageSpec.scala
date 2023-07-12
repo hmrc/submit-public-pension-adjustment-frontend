@@ -30,7 +30,6 @@ class StatusOfUserSpec extends PageBehaviours {
     beRemovable[StatusOfUser](StatusOfUserPage)
   }
 
-  // TODO POINT TO NEXT PAGE IN JOURNEY
   "must redirect to status of user page when user submits data" in {
 
     val page = StatusOfUserPage
