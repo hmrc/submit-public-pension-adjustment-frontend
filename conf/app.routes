@@ -61,3 +61,43 @@ GET        /whenWillYouAskPensionSchemeToPay                        controllers.
 POST       /whenWillYouAskPensionSchemeToPay                        controllers.WhenWillYouAskPensionSchemeToPayController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWhenWillYouAskPensionSchemeToPay                  controllers.WhenWillYouAskPensionSchemeToPayController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWhenWillYouAskPensionSchemeToPay                  controllers.WhenWillYouAskPensionSchemeToPayController.onSubmit(mode: Mode = CheckMode)
+
+GET        /areYouAUKResident                        controllers.AreYouAUKResidentController.onPageLoad(mode: Mode = NormalMode)
+POST       /areYouAUKResident                        controllers.AreYouAUKResidentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAreYouAUKResident                  controllers.AreYouAUKResidentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAreYouAUKResident                  controllers.AreYouAUKResidentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /internationalAddress                        controllers.InternationalAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /internationalAddress                        controllers.InternationalAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeInternationalAddress                  controllers.InternationalAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeInternationalAddress                  controllers.InternationalAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /ukAddress                        controllers.UkAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /ukAddress                        controllers.UkAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeUkAddress                  controllers.UkAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeUkAddress                  controllers.UkAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /legacyPensionSchemeReference                        controllers.LegacyPensionSchemeReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /legacyPensionSchemeReference                        controllers.LegacyPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeLegacyPensionSchemeReference                  controllers.LegacyPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeLegacyPensionSchemeReference                  controllers.LegacyPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /reformPensionSchemeReference                        controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /reformPensionSchemeReference                        controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /changeReformPensionSchemeReference                  controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeReformPensionSchemeReference                  controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /claimingHigherOrAdditionalTaxRateRelief                        controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onPageLoad(mode: Mode = NormalMode)
+POST       /claimingHigherOrAdditionalTaxRateRelief                        controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onSubmit(mode: Mode = NormalMode)
+GET        /changeClaimingHigherOrAdditionalTaxRateRelief                  controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeClaimingHigherOrAdditionalTaxRateRelief                  controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onSubmit(mode: Mode = CheckMode)
+
+GET        /howMuchTaxRelief                  controllers.HowMuchTaxReliefController.onPageLoad(mode: Mode = NormalMode)
+POST       /howMuchTaxRelief                  controllers.HowMuchTaxReliefController.onSubmit(mode: Mode = NormalMode)
+GET        /changeHowMuchTaxRelief                        controllers.HowMuchTaxReliefController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeHowMuchTaxRelief                        controllers.HowMuchTaxReliefController.onSubmit(mode: Mode = CheckMode)
+
+GET        /whichPensionSchemeWillPayTaxRelief                        controllers.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode: Mode = NormalMode)
+POST       /whichPensionSchemeWillPayTaxRelief                        controllers.WhichPensionSchemeWillPayTaxReliefController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWhichPensionSchemeWillPayTaxRelief                  controllers.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWhichPensionSchemeWillPayTaxRelief                  controllers.WhichPensionSchemeWillPayTaxReliefController.onSubmit(mode: Mode = CheckMode)

@@ -49,4 +49,32 @@ trait ModelGenerators {
     Arbitrary {
       Gen.oneOf(WhoWillPay.values.toSeq)
     }
+
+  implicit lazy val arbitraryWhichPensionSchemeWillPayTaxRelief: Arbitrary[WhichPensionSchemeWillPayTaxRelief] =
+    Arbitrary {
+      Gen.oneOf(WhichPensionSchemeWillPayTaxRelief.values.toSeq)
+    }
+
+  implicit lazy val arbitraryUkAddress: Arbitrary[UkAddress] =
+    Arbitrary {
+      for {
+        addressLine1 <- arbitrary[String]
+        addressLine2 <- arbitrary[Option[String]]
+        townOrCity   <- arbitrary[String]
+        county       <- arbitrary[Option[String]]
+        postCode     <- arbitrary[String]
+      } yield UkAddress(addressLine1, addressLine2, townOrCity, county, postCode)
+    }
+
+  implicit lazy val arbitraryInternationalAddress: Arbitrary[InternationalAddress] =
+    Arbitrary {
+      for {
+        addressLine1  <- arbitrary[String]
+        addressLine2  <- arbitrary[Option[String]]
+        townOrCity    <- arbitrary[String]
+        stateOrRegion <- arbitrary[Option[String]]
+        postCode      <- arbitrary[Option[String]]
+        country       <- arbitrary[String]
+      } yield InternationalAddress(addressLine1, addressLine2, townOrCity, stateOrRegion, postCode, country)
+    }
 }
