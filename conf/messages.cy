@@ -87,3 +87,9 @@ submissionInfo.list.you.message7 = cy: public or private pension scheme tax refe
 submissionInfo.list.behalf.message1 = cy: National Insurance number
 submissionInfo.list.behalf.message2 = cy: teacher reference number
 submissionInfo.list.behalf.message3 = cy: unique tax reference number
+
+areYouAUKResident.title = cy: Are you a UK resident?
+areYouAUKResident.heading = cy: Are you a UK resident?
+areYouAUKResident.checkYourAnswersLabel = cy: Are you a UK resident
+areYouAUKResident.error.required = cy: Select yes if you are a UK resident
+areYouAUKResident.change.hidden = cy: Are you a UK resident

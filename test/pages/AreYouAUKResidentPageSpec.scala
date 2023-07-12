@@ -16,6 +16,7 @@
 
 package pages
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class AreYouAUKResidentPageSpec extends PageBehaviours {
@@ -27,5 +28,64 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
     beSettable[Boolean](AreYouAUKResidentPage)
 
     beRemovable[Boolean](AreYouAUKResidentPage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to UKAddressPage when Yes selected" in {
+        val ua     = emptyUserAnswers
+          .set(
+            AreYouAUKResidentPage,
+            true
+          )
+          .success
+          .value
+        val result = AreYouAUKResidentPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/ukAddress")
+      }
+
+      "to InternationalAddressPage when no selected" in {
+        val ua     = emptyUserAnswers
+          .set(
+            AreYouAUKResidentPage,
+            false
+          )
+          .success
+          .value
+        val result = AreYouAUKResidentPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/internationalAddress")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua     = emptyUserAnswers
+        val result = AreYouAUKResidentPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA when selected" in {
+        val ua     = emptyUserAnswers
+          .set(
+            AreYouAUKResidentPage,
+            true
+          )
+          .success
+          .value
+        val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
+
+      "to JourneyRecovery when not selected" in {
+        val ua     = emptyUserAnswers
+        val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
   }
 }

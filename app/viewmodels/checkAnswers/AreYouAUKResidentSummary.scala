@@ -24,21 +24,19 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object AreYouAUKResidentSummary  {
+object AreYouAUKResidentSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AreYouAUKResidentPage).map {
-      answer =>
+    answers.get(AreYouAUKResidentPage).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "areYouAUKResident.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.AreYouAUKResidentController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("areYouAUKResident.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "areYouAUKResident.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.AreYouAUKResidentController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("areYouAUKResident.change.hidden"))
         )
+      )
     }
 }

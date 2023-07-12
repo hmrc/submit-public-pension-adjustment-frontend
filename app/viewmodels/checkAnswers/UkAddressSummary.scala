@@ -26,21 +26,21 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object UkAddressSummary  {
+object UkAddressSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(UkAddressPage).map {
-      answer =>
+    answers.get(UkAddressPage).map { answer =>
+      val value = HtmlFormat.escape(answer.addressLine1).toString + "<br/>" + HtmlFormat
+        .escape(answer.addressLine2.getOrElse(""))
+        .toString
 
-      val value = HtmlFormat.escape(answer.adressLine1).toString + "<br/>" + HtmlFormat.escape(answer.addressLine2).toString
-
-        SummaryListRowViewModel(
-          key     = "ukAddress.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.UkAddressController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("ukAddress.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "ukAddress.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(value)),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.UkAddressController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("ukAddress.change.hidden"))
         )
+      )
     }
 }

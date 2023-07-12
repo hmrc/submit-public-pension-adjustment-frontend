@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.InternationalAddressFormProvider
-import models.{NormalMode, InternationalAddress, UserAnswers}
+import models.{InternationalAddress, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -38,7 +38,7 @@ class InternationalAddressControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new InternationalAddressFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val internationalAddressRoute = routes.InternationalAddressController.onPageLoad(NormalMode).url
 
@@ -82,7 +82,10 @@ class InternationalAddressControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(InternationalAddress("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(InternationalAddress("value 1", "value 2")), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

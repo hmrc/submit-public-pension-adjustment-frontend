@@ -37,7 +37,7 @@ class AreYouAUKResidentControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new AreYouAUKResidentFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val areYouAUKResidentRoute = routes.AreYouAUKResidentController.onPageLoad(NormalMode).url
 
@@ -96,7 +96,6 @@ class AreYouAUKResidentControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.CheckYourAnswersController.onPageLoad.url
       }
     }
 

@@ -38,7 +38,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new UkAddressFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val ukAddressRoute = routes.UkAddressController.onPageLoad(NormalMode).url
 
@@ -46,8 +46,11 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
     userAnswersId,
     Json.obj(
       UkAddressPage.toString -> Json.obj(
-        "adressLine1" -> "value 1",
-        "addressLine2" -> "value 2"
+        "addressLine1" -> "value 1",
+        "addressLine2" -> "value 2",
+        "townOrCity"   -> "town",
+        "county"       -> "county",
+        "postCode"     -> "postCode"
       )
     )
   )
@@ -82,7 +85,10 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(UkAddress("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(
+          form.fill(UkAddress("value 1", Some("value 2"), "town", Some("county"), "postCode")),
+          NormalMode
+        )(request, messages(application)).toString
       }
     }
 
@@ -100,7 +106,13 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, ukAddressRoute)
-            .withFormUrlEncodedBody(("adressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              ("addressLine1", "value 1"),
+              ("addressLine2", "value 2"),
+              ("townOrCity", "town"),
+              ("county", "county"),
+              ("postCode", "postCode")
+            )
 
         val result = route(application, request).value
 
@@ -150,7 +162,13 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, ukAddressRoute)
-            .withFormUrlEncodedBody(("adressLine1", "value 1"), ("addressLine2", "value 2"))
+            .withFormUrlEncodedBody(
+              ("addressLine1", "value 1"),
+              ("addressLine2", "value 2"),
+              ("townOrCity", "town"),
+              ("county", "county"),
+              ("postCode", "postCode")
+            )
 
         val result = route(application, request).value
 

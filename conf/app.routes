@@ -31,6 +31,7 @@ GET        /change-status-of-user                  controllers.StatusOfUserContr
 POST       /change-status-of-user                  controllers.StatusOfUserController.onSubmit(mode: Mode = CheckMode)
 
 GET        /submission-info                        controllers.SubmissionInfoController.onPageLoad()
+
 GET        /areYouAUKResident                        controllers.AreYouAUKResidentController.onPageLoad(mode: Mode = NormalMode)
 POST       /areYouAUKResident                        controllers.AreYouAUKResidentController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAreYouAUKResident                  controllers.AreYouAUKResidentController.onPageLoad(mode: Mode = CheckMode)

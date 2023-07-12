@@ -29,7 +29,7 @@ trait PageGenerators {
 
   implicit lazy val arbitraryAreYouAUKResidentPage: Arbitrary[AreYouAUKResidentPage.type] =
     Arbitrary(AreYouAUKResidentPage)
-  implicit lazy val arbitraryStatusOfUserPage: Arbitrary[StatusOfUserPage.type] =
+  implicit lazy val arbitraryStatusOfUserPage: Arbitrary[StatusOfUserPage.type]           =
     Arbitrary(StatusOfUserPage)
 
   implicit lazy val arbitraryClaimOnBehalfPage: Arbitrary[ClaimOnBehalfPage.type] =

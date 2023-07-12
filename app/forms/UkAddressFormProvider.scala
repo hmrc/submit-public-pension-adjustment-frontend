@@ -25,12 +25,22 @@ import models.UkAddress
 
 class UkAddressFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[UkAddress] = Form(
-     mapping(
-      "adressLine1" -> text("ukAddress.error.adressLine1.required")
-        .verifying(maxLength(100, "ukAddress.error.adressLine1.length")),
-      "addressLine2" -> text("ukAddress.error.addressLine2.required")
-        .verifying(maxLength(100, "ukAddress.error.addressLine2.length"))
+  def apply(): Form[UkAddress] = Form(
+    mapping(
+      "addressLine1" -> text("ukAddress.error.addressLine1.required")
+        .verifying(maxLength(100, "ukAddress.error.addressLine1.length")),
+      "addressLine2" -> optional(
+        text("ukAddress.error.addressLine2.required")
+          .verifying(maxLength(100, "ukAddress.error.addressLine2.length"))
+      ),
+      "townOrCity"   -> text("ukAddress.error.townOrCity.required")
+        .verifying(maxLength(100, "ukAddress.error.townOrCity.length")),
+      "county"       -> optional(
+        text("ukAddress.error.county.required")
+          .verifying(maxLength(100, "ukAddress.error.county.length"))
+      ),
+      "postCode"     -> text("ukAddress.error.postCode.required")
+        .verifying(maxLength(100, "ukAddress.error.postCode.length"))
     )(UkAddress.apply)(UkAddress.unapply)
-   )
- }
+  )
+}

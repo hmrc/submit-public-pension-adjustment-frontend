@@ -25,10 +25,10 @@ class InternationalAddressFormProviderSpec extends StringFieldBehaviours {
 
   ".addressLine1" - {
 
-    val fieldName = "addressLine1"
+    val fieldName   = "addressLine1"
     val requiredKey = "internationalAddress.error.addressLine1.required"
-    val lengthKey = "internationalAddress.error.addressLine1.length"
-    val maxLength = 100
+    val lengthKey   = "internationalAddress.error.addressLine1.length"
+    val maxLength   = 100
 
     behave like fieldThatBindsValidData(
       form,
@@ -52,10 +52,10 @@ class InternationalAddressFormProviderSpec extends StringFieldBehaviours {
 
   ".addressLine2" - {
 
-    val fieldName = "addressLine2"
+    val fieldName   = "addressLine2"
     val requiredKey = "internationalAddress.error.addressLine2.required"
-    val lengthKey = "internationalAddress.error.addressLine2.length"
-    val maxLength = 100
+    val lengthKey   = "internationalAddress.error.addressLine2.length"
+    val maxLength   = 100
 
     behave like fieldThatBindsValidData(
       form,

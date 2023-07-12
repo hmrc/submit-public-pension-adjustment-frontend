@@ -38,8 +38,8 @@
 
         @govukInput(
             InputViewModel(
-                field = form("adressLine1"),
-                label = LabelViewModel(messages("ukAddress.adressLine1"))
+                field = form("addressLine1"),
+                label = LabelViewModel(messages("ukAddress.addressLine1"))
             )
             .withWidth(Full)
         )
@@ -48,6 +48,30 @@
             InputViewModel(
                 field = form("addressLine2"),
                 label = LabelViewModel(messages("ukAddress.addressLine2"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("townOrCity"),
+                label = LabelViewModel(messages("ukAddress.townOrCity"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("county"),
+                label = LabelViewModel(messages("ukAddress.county"))
+            )
+            .withWidth(Full)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("postCode"),
+                label = LabelViewModel(messages("ukAddress.postCode"))
             )
             .withWidth(Full)
         )

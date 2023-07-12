@@ -18,7 +18,13 @@ package models
 
 import play.api.libs.json._
 
-case class UkAddress (adressLine1: String, addressLine2: String)
+case class UkAddress(
+  addressLine1: String,
+  addressLine2: Option[String],
+  townOrCity: String,
+  county: Option[String],
+  postCode: String
+)
 
 object UkAddress {
   implicit val format = Json.format[UkAddress]
