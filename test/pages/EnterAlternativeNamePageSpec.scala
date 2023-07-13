@@ -18,7 +18,6 @@ package pages
 
 import models.{CheckMode, NormalMode}
 
-
 class EnterAlternativeNamePageSpec extends PageBehaviours {
 
   "EnterAlternativeNamePage" - {

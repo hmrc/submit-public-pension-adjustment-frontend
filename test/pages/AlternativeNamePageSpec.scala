@@ -16,7 +16,6 @@
 
 package pages
 
-
 import models.{CheckMode, NormalMode}
 
 class AlternativeNamePageSpec extends PageBehaviours {
