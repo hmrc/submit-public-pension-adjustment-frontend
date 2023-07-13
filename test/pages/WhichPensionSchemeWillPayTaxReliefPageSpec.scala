@@ -17,7 +17,6 @@
 package pages
 
 import models.WhichPensionSchemeWillPayTaxRelief
-import pages.behaviours.PageBehaviours
 
 class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 

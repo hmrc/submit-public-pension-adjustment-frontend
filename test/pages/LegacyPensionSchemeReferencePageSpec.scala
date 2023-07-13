@@ -17,7 +17,6 @@
 package pages
 
 import models.{CheckMode, NormalMode}
-import pages.behaviours.PageBehaviours
 
 class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
 
