@@ -16,16 +16,30 @@
 
 package pages
 
-import models.WhenWillYouAskPensionSchemeToPay
+import models.NormalMode
 
-class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
+class PensionSchemeMemberNamePageSpec extends PageBehaviours {
 
-  "WhenWillYouAskPensionSchemeToPayPage" - {
+  "PensionSchemeMemberNamePage" - {
 
-    beRetrievable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+    beRetrievable[String](PensionSchemeMemberNamePage)
 
-    beSettable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+    beSettable[String](PensionSchemeMemberNamePage)
 
-    beRemovable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+    beRemovable[String](PensionSchemeMemberNamePage)
+  }
+
+  "must redirect to Pension Scheme Members DOB page when user submits data" in {
+
+    val page = PensionSchemeMemberNamePage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, "bob")
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/their-dob")
   }
 }

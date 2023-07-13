@@ -16,16 +16,22 @@
 
 package pages
 
-import models.WhenWillYouAskPensionSchemeToPay
+import java.time.LocalDate
 
-class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
+import org.scalacheck.Arbitrary
 
-  "WhenWillYouAskPensionSchemeToPayPage" - {
+class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
 
-    beRetrievable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+  "PensionSchemeMemberDOBPage" - {
 
-    beSettable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+    implicit lazy val arbitraryLocalDate: Arbitrary[LocalDate] = Arbitrary {
+      datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
+    }
 
-    beRemovable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+    beRetrievable[LocalDate](PensionSchemeMemberDOBPage)
+
+    beSettable[LocalDate](PensionSchemeMemberDOBPage)
+
+    beRemovable[LocalDate](PensionSchemeMemberDOBPage)
   }
 }

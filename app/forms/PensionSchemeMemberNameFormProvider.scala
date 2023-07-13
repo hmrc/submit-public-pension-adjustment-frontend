@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.WhenWillYouAskPensionSchemeToPay
+import javax.inject.Inject
 
-class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  "WhenWillYouAskPensionSchemeToPayPage" - {
+class PensionSchemeMemberNameFormProvider @Inject() extends Mappings {
 
-    beRetrievable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
-
-    beSettable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
-
-    beRemovable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
-  }
+  def apply(): Form[String] =
+    Form(
+      "value" -> text("pensionSchemeMemberName.error.required")
+        .verifying(maxLength(30, "pensionSchemeMemberName.error.length"))
+    )
 }

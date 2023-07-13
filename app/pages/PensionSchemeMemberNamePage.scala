@@ -16,16 +16,20 @@
 
 package pages
 
-import models.WhenWillYouAskPensionSchemeToPay
+import models.{CheckMode, NormalMode, UserAnswers}
+import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
-class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
+case object PensionSchemeMemberNamePage extends QuestionPage[String] {
 
-  "WhenWillYouAskPensionSchemeToPayPage" - {
+  override def path: JsPath = JsPath \ toString
 
-    beRetrievable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+  override def toString: String = "pensionSchemeMemberName"
 
-    beSettable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    controllers.routes.PensionSchemeMemberDOBController.onPageLoad(NormalMode)
 
-    beRemovable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
-  }
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    controllers.routes.CheckYourAnswersController.onPageLoad
+
 }

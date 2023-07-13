@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.WhenWillYouAskPensionSchemeToPay
+import java.time.{LocalDate, ZoneOffset}
 
-class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
+import forms.behaviours.DateBehaviours
 
-  "WhenWillYouAskPensionSchemeToPayPage" - {
+class PensionSchemeMemberDOBFormProviderSpec extends DateBehaviours {
 
-    beRetrievable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+  val form = new PensionSchemeMemberDOBFormProvider()()
 
-    beSettable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+  ".value" - {
 
-    beRemovable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+    val validData = datesBetween(
+      min = LocalDate.of(2000, 1, 1),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, "value", validData)
+
+    behave like mandatoryDateField(form, "value", "pensionSchemeMemberDOB.error.required.all")
   }
 }

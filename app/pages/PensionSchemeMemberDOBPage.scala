@@ -16,16 +16,22 @@
 
 package pages
 
-import models.WhenWillYouAskPensionSchemeToPay
+import models.UserAnswers
 
-class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
+import java.time.LocalDate
+import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
-  "WhenWillYouAskPensionSchemeToPayPage" - {
+case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
 
-    beRetrievable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+  override def path: JsPath = JsPath \ toString
 
-    beSettable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
+  override def toString: String = "pensionSchemeMemberDOB"
 
-    beRemovable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
-  }
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    controllers.routes.CheckYourAnswersController.onPageLoad // change to correct page when implemented
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    controllers.routes.CheckYourAnswersController.onPageLoad
+
 }

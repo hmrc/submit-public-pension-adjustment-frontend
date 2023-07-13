@@ -17,7 +17,6 @@
 package pages
 
 import models.{CheckMode, NormalMode, PensionSchemeDetails}
-import pages.behaviours.PageBehaviours
 
 class PensionSchemeDetailsPageSpec extends PageBehaviours {
 

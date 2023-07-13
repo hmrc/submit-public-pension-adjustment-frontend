@@ -18,7 +18,6 @@ package pages
 
 import models.StatusOfUser.Deputyship
 import models.{NormalMode, StatusOfUser}
-import pages.behaviours.PageBehaviours
 
 class StatusOfUserSpec extends PageBehaviours {
 
@@ -31,7 +30,6 @@ class StatusOfUserSpec extends PageBehaviours {
     beRemovable[StatusOfUser](StatusOfUserPage)
   }
 
-  // TODO POINT TO NEXT PAGE IN JOURNEY
   "must redirect to status of user page when user submits data" in {
 
     val page = StatusOfUserPage
@@ -43,6 +41,6 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+    checkNavigation(nextPageUrl, "/their-name")
   }
 }

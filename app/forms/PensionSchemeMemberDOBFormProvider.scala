@@ -14,18 +14,23 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.WhenWillYouAskPensionSchemeToPay
+import java.time.LocalDate
 
-class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
+import forms.mappings.Mappings
+import javax.inject.Inject
+import play.api.data.Form
 
-  "WhenWillYouAskPensionSchemeToPayPage" - {
+class PensionSchemeMemberDOBFormProvider @Inject() extends Mappings {
 
-    beRetrievable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
-
-    beSettable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
-
-    beRemovable[WhenWillYouAskPensionSchemeToPay](WhenWillYouAskPensionSchemeToPayPage)
-  }
+  def apply(): Form[LocalDate] =
+    Form(
+      "value" -> localDate(
+        invalidKey = "pensionSchemeMemberDOB.error.invalid",
+        allRequiredKey = "pensionSchemeMemberDOB.error.required.all",
+        twoRequiredKey = "pensionSchemeMemberDOB.error.required.two",
+        requiredKey = "pensionSchemeMemberDOB.error.required"
+      )
+    )
 }

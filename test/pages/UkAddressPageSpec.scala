@@ -17,7 +17,6 @@
 package pages
 
 import models.{CheckMode, NormalMode, UkAddress}
-import pages.behaviours.PageBehaviours
 
 class UkAddressPageSpec extends PageBehaviours {
 

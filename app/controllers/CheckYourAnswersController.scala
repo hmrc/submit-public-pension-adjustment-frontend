@@ -40,6 +40,8 @@ class CheckYourAnswersController @Inject() (
     val rows: Seq[Option[SummaryListRow]] = Seq(
       ClaimOnBehalfSummary.row(request.userAnswers),
       StatusOfUserSummary.row(request.userAnswers),
+      PensionSchemeMemberNameSummary.row(request.userAnswers),
+      PensionSchemeMemberDOBSummary.row(request.userAnswers),
       WhoWillPaySummary.row(request.userAnswers),
       WhichPensionSchemeWillPaySummary.row(request.userAnswers),
       PensionSchemeDetailsSummary.row(request.userAnswers),
