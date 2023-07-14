@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, StatusOfUser, UserAnswers}
+import models.{StatusOfUser, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.routes

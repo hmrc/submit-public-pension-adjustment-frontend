@@ -21,7 +21,7 @@ import javax.inject.Inject
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms._
-import models.{PensionSchemeDetails, PSTR}
+import models.PensionSchemeDetails
 
 class PensionSchemeDetailsFormProvider @Inject() extends Mappings {
 
@@ -29,8 +29,10 @@ class PensionSchemeDetailsFormProvider @Inject() extends Mappings {
     mapping(
       "pensionSchemeName"         -> text("pensionSchemeDetails.error.pensionSchemeName.required")
         .verifying(maxLength(100, "pensionSchemeDetails.error.pensionSchemeName.length")),
-      "pensionSchemeTaxReference" -> pstr("pensionSchemeDetails.error.pensionSchemeTaxReference.required",  "pensionSchemeDetails.error.pensionSchemeTaxReference.invalid")
-
+      "pensionSchemeTaxReference" -> pstr(
+        "pensionSchemeDetails.error.pensionSchemeTaxReference.required",
+        "pensionSchemeDetails.error.pensionSchemeTaxReference.invalid"
+      )
     )(PensionSchemeDetails.apply)(PensionSchemeDetails.unapply)
   )
 }

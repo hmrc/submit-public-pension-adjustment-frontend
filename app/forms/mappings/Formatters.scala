@@ -111,10 +111,10 @@ trait Formatters {
     }
 
   private[mappings] def pstrFormatter(
-                                       requiredKey: String,
-                                       invalidKey: String,
-                                       args: Seq[String] = Seq.empty
-                                     ): Formatter[String] =
+    requiredKey: String,
+    invalidKey: String,
+    args: Seq[String] = Seq.empty
+  ): Formatter[String] =
     new Formatter[String] {
 
       private val baseFormatter = stringFormatter(requiredKey, args)
@@ -124,8 +124,8 @@ trait Formatters {
           .bind(key, data)
           .flatMap {
             case s if PSTR.fromString(s).isDefined => Right(s)
-            case PSTR.New => Right(PSTR.New)
-            case _ => Left(Seq(FormError(key, invalidKey, args)))
+            case PSTR.New                          => Right(PSTR.New)
+            case _                                 => Left(Seq(FormError(key, invalidKey, args)))
           }
 
       def unbind(key: String, value: String) = Map(key -> value.toString)

@@ -52,7 +52,7 @@ class PensionSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".pensionSchemeTaxReference" - {
 
-    val fieldName = "pensionSchemeTaxReference"
+    val fieldName   = "pensionSchemeTaxReference"
     val requiredKey = "pensionSchemeDetails.error.pensionSchemeTaxReference.required"
 
     behave like fieldThatBindsValidData(
