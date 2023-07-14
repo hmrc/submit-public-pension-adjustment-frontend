@@ -26,7 +26,6 @@ import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-import java.time.LocalDate
 import scala.xml.Text
 
 class EnterAlternativeNameSummarySpec extends AnyFreeSpec with Matchers {

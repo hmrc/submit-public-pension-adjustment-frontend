@@ -16,7 +16,6 @@
 
 package pages
 
-import models.StatusOfUser.Deputyship
 import models.{CheckMode, NormalMode}
 
 import java.time.LocalDate

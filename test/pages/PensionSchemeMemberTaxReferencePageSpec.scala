@@ -29,8 +29,7 @@ class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
     beRemovable[String](PensionSchemeMemberTaxReferencePage)
   }
 
-  // TODO CHANGE TESTS
-  "must redirect to CYA page when user submits data in normal mode" in {
+  "must redirect to their residence page page when user submits data in normal mode" in {
 
     val page = PensionSchemeMemberTaxReferencePage
 
@@ -41,7 +40,7 @@ class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+    checkNavigation(nextPageUrl, "/their-residence")
   }
 
   "must redirect to check your answer page when user submits data in check mode" in {

@@ -18,62 +18,76 @@ package pages
 
 import models.{CheckMode, NormalMode}
 
-class ContactNumberPageSpec extends PageBehaviours {
+class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
-  "ContactNumberPage" - {
+  "PensionSchemeMemberResidencePage" - {
 
-    beRetrievable[String](ContactNumberPage)
+    beRetrievable[Boolean](PensionSchemeMemberResidencePage)
 
-    beSettable[String](ContactNumberPage)
+    beSettable[Boolean](PensionSchemeMemberResidencePage)
 
-    beRemovable[String](ContactNumberPage)
+    beRemovable[Boolean](PensionSchemeMemberResidencePage)
   }
 
-  "must redirect to AreYouAUKResidentPage page when user submits answers in normal mode" in {
+  "must redirect to enter their uk address page when user selects yes" in {
 
-    val page = ContactNumberPage
+    val page = PensionSchemeMemberResidencePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, "0123456789")
+      .set(page, true)
       .success
       .value
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/areYouAUKResident")
+    checkNavigation(nextPageUrl, "/their-uk-address")
   }
 
-  "must redirect to AreYouAUKResidentPage page when user does not enter an answer in normal mode" in {
+  "must redirect to enter their international address page when user selects no" in {
 
-    val page = ContactNumberPage
+    val page = PensionSchemeMemberResidencePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, "")
+      .set(page, false)
       .success
       .value
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/areYouAUKResident")
+    checkNavigation(nextPageUrl, "/their-international-address")
   }
 
-  "must redirect to CYA page when user submits answers in check mode" in {
+  "must redirect to enter their uk address page when user selects yes in check mode" in {
 
-    val page = ContactNumberPage
+    val page = PensionSchemeMemberResidencePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, "0123456789")
+      .set(page, true)
       .success
       .value
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+    checkNavigation(nextPageUrl, "/change-their-uk-address")
+  }
+
+  "must redirect to enter their international address page when user selects no in check mode" in {
+
+    val page = PensionSchemeMemberResidencePage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, false)
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/change-their-international-address")
   }
 
   "must redirect to JourneyRecoveryPage when not answered in normal mode" in {
 
-    val page = ContactNumberPage
+    val page = PensionSchemeMemberResidencePage
 
     val userAnswers = emptyUserAnswers
 
@@ -84,7 +98,7 @@ class ContactNumberPageSpec extends PageBehaviours {
 
   "must redirect to JourneyRecoveryPage when not answered in check mode" in {
 
-    val page = ContactNumberPage
+    val page = PensionSchemeMemberResidencePage
 
     val userAnswers = emptyUserAnswers
 
@@ -92,5 +106,4 @@ class ContactNumberPageSpec extends PageBehaviours {
 
     checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
-
 }

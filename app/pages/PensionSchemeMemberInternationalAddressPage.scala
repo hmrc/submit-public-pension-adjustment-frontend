@@ -16,25 +16,26 @@
 
 package pages
 
-import controllers.routes
-import models.{NormalMode, UserAnswers}
+import models.{NormalMode, PensionSchemeMemberInternationalAddress, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import controllers.routes
 
-case object PensionSchemeMemberTaxReferencePage extends QuestionPage[String] {
+case object PensionSchemeMemberInternationalAddressPage extends QuestionPage[PensionSchemeMemberInternationalAddress] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "pensionSchemeMemberTaxReference"
+  override def toString: String = "pensionSchemeMemberInternationalAddress"
 
-//TODO POINT TO CORRECT PAGE
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeMemberTaxReferencePage) match {
-      case _ => routes.PensionSchemeMemberResidenceController.onPageLoad(NormalMode)
+    answers.get(PensionSchemeMemberInternationalAddressPage) match {
+      case Some(_) => routes.AlternativeNameController.onPageLoad(NormalMode)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeMemberTaxReferencePage) match {
-      case _ => routes.CheckYourAnswersController.onPageLoad
+    answers.get(PensionSchemeMemberInternationalAddressPage) match {
+      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

@@ -144,3 +144,18 @@ GET        /their-UTR                                               controllers.
 POST       /their-UTR                                               controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
 GET        /change-their-UTR                                        controllers.PensionSchemeMemberTaxReferenceController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-their-UTR                                        controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /their-residence                                         controllers.PensionSchemeMemberResidenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /their-residence                                         controllers.PensionSchemeMemberResidenceController.onSubmit(mode: Mode = NormalMode)
+GET        /change-their-residence                                  controllers.PensionSchemeMemberResidenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-their-residence                                  controllers.PensionSchemeMemberResidenceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /their-uk-address                                        controllers.PensionSchemeMemberUKAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /their-uk-address                                        controllers.PensionSchemeMemberUKAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /change-their-uk-address                                 controllers.PensionSchemeMemberUKAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-their-uk-address                                 controllers.PensionSchemeMemberUKAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /their-international-address                             controllers.PensionSchemeMemberInternationalAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /their-international-address                             controllers.PensionSchemeMemberInternationalAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /change-their-international-address                      controllers.PensionSchemeMemberInternationalAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-their-international-address                      controllers.PensionSchemeMemberInternationalAddressController.onSubmit(mode: Mode = CheckMode)

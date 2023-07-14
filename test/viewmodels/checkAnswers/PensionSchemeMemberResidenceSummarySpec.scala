@@ -20,13 +20,13 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.AlternativeNamePage
+import pages.PensionSchemeMemberResidencePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
+class PensionSchemeMemberResidenceSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
@@ -35,21 +35,21 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
 
       val userAnswers = UserAnswers("id")
         .set(
-          AlternativeNamePage,
+          PensionSchemeMemberResidencePage,
           true
         )
         .get
 
-      AlternativeNameSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberResidenceSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "alternativeName.checkYourAnswersLabel",
+          key = "pensionSchemeMemberResidence.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.AlternativeNameController.onPageLoad(CheckMode).url
+              routes.PensionSchemeMemberResidenceController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("alternativeName.change.hidden")
+              .withVisuallyHiddenText("pensionSchemeMemberResidence.change.hidden")
           )
         )
       )
@@ -60,21 +60,21 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
 
       val userAnswers = UserAnswers("id")
         .set(
-          AlternativeNamePage,
+          PensionSchemeMemberResidencePage,
           false
         )
         .get
 
-      AlternativeNameSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberResidenceSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "alternativeName.checkYourAnswersLabel",
+          key = "pensionSchemeMemberResidence.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.AlternativeNameController.onPageLoad(CheckMode).url
+              routes.PensionSchemeMemberResidenceController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("alternativeName.change.hidden")
+              .withVisuallyHiddenText("pensionSchemeMemberResidence.change.hidden")
           )
         )
       )
@@ -84,6 +84,6 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
 
   "when answer unavailable, return empty" in {
     val userAnswers = UserAnswers("id")
-    AlternativeNameSummary.row(userAnswers) shouldBe None
+    PensionSchemeMemberResidenceSummary.row(userAnswers) shouldBe None
   }
 }

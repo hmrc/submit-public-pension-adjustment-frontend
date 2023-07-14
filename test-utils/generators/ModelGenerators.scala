@@ -23,6 +23,16 @@ import uk.gov.hmrc.domain.Nino
 
 trait ModelGenerators {
 
+  def ukPostcode: Gen[String] =
+    for {
+      firstChars <- Gen.choose(1, 2)
+      first      <- Gen.listOfN(firstChars, Gen.alphaUpperChar).map(_.mkString)
+      second     <- Gen.numChar.map(_.toString)
+      third      <- Gen.oneOf(Gen.alphaUpperChar, Gen.numChar).map(_.toString)
+      fourth     <- Gen.numChar.map(_.toString)
+      fifth      <- Gen.listOfN(2, Gen.alphaUpperChar).map(_.mkString)
+    } yield s"$first$second$third$fourth$fifth"
+
   implicit lazy val arbitraryWhenWillYouAskPensionSchemeToPay: Arbitrary[WhenWillYouAskPensionSchemeToPay] =
     Arbitrary {
       Gen.oneOf(WhenWillYouAskPensionSchemeToPay.values.toSeq)
@@ -88,4 +98,28 @@ trait ModelGenerators {
       lastChar   <- Gen.oneOf('A', 'B', 'C', 'D')
     } yield Nino(firstChar.toString + secondChar.toString + digits.mkString + lastChar.toString)
   }
+
+  implicit lazy val arbitraryPensionSchemeMemberUKAddress: Arbitrary[PensionSchemeMemberUKAddress] =
+    Arbitrary {
+      for {
+        addressLine1 <- arbitrary[String]
+        addressLine2 <- arbitrary[Option[String]]
+        townOrCity   <- arbitrary[String]
+        county       <- arbitrary[Option[String]]
+        postCode     <- arbitrary[String]
+      } yield PensionSchemeMemberUKAddress(addressLine1, addressLine2, townOrCity, county, postCode)
+    }
+
+  implicit lazy val arbitraryPensionSchemeMemberInternationalAddress
+    : Arbitrary[PensionSchemeMemberInternationalAddress] =
+    Arbitrary {
+      for {
+        addressLine1 <- arbitrary[String]
+        addressLine2 <- arbitrary[Option[String]]
+        townOrCity   <- arbitrary[String]
+        county       <- arbitrary[Option[String]]
+        postCode     <- arbitrary[Option[String]]
+        country      <- arbitrary[String]
+      } yield PensionSchemeMemberInternationalAddress(addressLine1, addressLine2, townOrCity, county, postCode, country)
+    }
 }

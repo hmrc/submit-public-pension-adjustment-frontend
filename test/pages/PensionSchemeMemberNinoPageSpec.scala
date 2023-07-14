@@ -19,8 +19,6 @@ package pages
 import models.{CheckMode, NormalMode}
 import uk.gov.hmrc.domain.Nino
 
-import java.time.LocalDate
-
 class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
 
   "PensionSchemeMemberNinoPage" - {

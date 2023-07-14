@@ -17,40 +17,42 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, PensionSchemeMemberUKAddress, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.ContactNumberPage
+import pages.PensionSchemeMemberUKAddressPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-import scala.xml.Text
-
-class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
+class PensionSchemeMemberUKAddressSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
+  val mockAddress = PensionSchemeMemberUKAddress("line1", None, "town", None, "AA1 1AA")
+
   "row" - {
-    "when user enters number, return the summary row" in {
+    "when user submits address, return the summary row" in {
 
       val userAnswers = UserAnswers("id")
         .set(
-          ContactNumberPage,
-          "07777777777"
+          PensionSchemeMemberUKAddressPage,
+          mockAddress
         )
         .get
-      ContactNumberSummary.row(userAnswers) shouldBe Some(
+
+      PensionSchemeMemberUKAddressSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "contactNumber.checkYourAnswersLabel",
-          value = ValueViewModel(Text("07777777777").toString()),
+          key = "pensionSchemeMemberUKAddress.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("line1<br/>town<br/>AA1 1AA")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ContactNumberController.onPageLoad(CheckMode).url
+              routes.PensionSchemeMemberUKAddressController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("contactNumber.change.hidden")
+              .withVisuallyHiddenText("pensionSchemeMemberUKAddress.change.hidden")
           )
         )
       )
@@ -58,8 +60,7 @@ class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      EnterAlternativeNameSummary.row(userAnswers) shouldBe None
+      PensionSchemeMemberUKAddressSummary.row(userAnswers) shouldBe None
     }
-
   }
 }
