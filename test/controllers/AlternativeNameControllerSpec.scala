@@ -17,42 +17,42 @@
 package controllers
 
 import base.SpecBase
-import forms.WhoWillPayFormProvider
-import models.{NormalMode, UserAnswers, WhoWillPay}
+import forms.AlternativeNameFormProvider
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.WhoWillPayPage
+import pages.AlternativeNamePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.WhoWillPayView
+import views.html.AlternativeNameView
 
 import scala.concurrent.Future
 
-class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
+class AlternativeNameControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val whoWillPayRoute = routes.WhoWillPayController.onPageLoad(NormalMode).url
-
-  val formProvider = new WhoWillPayFormProvider()
+  val formProvider = new AlternativeNameFormProvider()
   val form         = formProvider()
 
-  "WhoWillPay Controller" - {
+  lazy val alternativeNameRoute = routes.AlternativeNameController.onPageLoad(NormalMode).url
+
+  "AlternativeName Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whoWillPayRoute)
+        val request = FakeRequest(GET, alternativeNameRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[WhoWillPayView]
+        val view = application.injector.instanceOf[AlternativeNameView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -61,45 +61,19 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhoWillPayPage, WhoWillPay.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(AlternativeNamePage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whoWillPayRoute)
+        val request = FakeRequest(GET, alternativeNameRoute)
 
-        val view = application.injector.instanceOf[WhoWillPayView]
+        val view = application.injector.instanceOf[AlternativeNameView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhoWillPay.values.head), NormalMode)(
-          request,
-          messages(application)
-        ).toString
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, whoWillPayRoute)
-            .withFormUrlEncodedBody(("value", WhoWillPay.values.head.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.AlternativeNameController.onPageLoad(NormalMode).url
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -109,12 +83,12 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whoWillPayRoute)
-            .withFormUrlEncodedBody(("value", "invalid value"))
+          FakeRequest(POST, alternativeNameRoute)
+            .withFormUrlEncodedBody(("value", ""))
 
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[WhoWillPayView]
+        val view = application.injector.instanceOf[AlternativeNameView]
 
         val result = route(application, request).value
 
@@ -128,7 +102,7 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, whoWillPayRoute)
+        val request = FakeRequest(GET, alternativeNameRoute)
 
         val result = route(application, request).value
 
@@ -137,19 +111,18 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "redirect to Journey Recovery for a POST if no existing data is found" in {
+    "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
         val request =
-          FakeRequest(POST, whoWillPayRoute)
-            .withFormUrlEncodedBody(("value", WhoWillPay.values.head.toString))
+          FakeRequest(POST, alternativeNameRoute)
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }

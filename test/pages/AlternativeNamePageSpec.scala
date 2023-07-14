@@ -16,22 +16,22 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode}
 
-class ClaimOnBehalfPageSpec extends PageBehaviours {
+class AlternativeNamePageSpec extends PageBehaviours {
 
-  "ClaimOnBehalfPage" - {
+  "AlternativeNamePage" - {
 
-    beRetrievable[Boolean](ClaimOnBehalfPage)
+    beRetrievable[Boolean](AlternativeNamePage)
 
-    beSettable[Boolean](ClaimOnBehalfPage)
+    beSettable[Boolean](AlternativeNamePage)
 
-    beRemovable[Boolean](ClaimOnBehalfPage)
+    beRemovable[Boolean](AlternativeNamePage)
   }
 
-  "must redirect to status of user page when user selects yes" in {
+  "must redirect to enter alternative number page when user selects yes" in {
 
-    val page = ClaimOnBehalfPage
+    val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
       .set(page, true)
@@ -40,12 +40,12 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/status-of-user")
+    checkNavigation(nextPageUrl, "/enter-alternative-name")
   }
 
-  "must redirect to check your answers page when user selects no" in {
+  "must redirect to contact number page when user selects no" in {
 
-    val page = ClaimOnBehalfPage
+    val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
       .set(page, false)
@@ -54,27 +54,12 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/whoWillPay")
+    checkNavigation(nextPageUrl, "/contact-number")
   }
 
-  "must redirect user to change status of user when user resubmits yes in check mode" in {
+  "must redirect user to check their answers when user resubmits no in check mode" in {
 
-    val page = ClaimOnBehalfPage
-
-    val userAnswers = emptyUserAnswers
-      .set(page, true)
-      .success
-      .value
-
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/change-status-of-user")
-  }
-
-  // TODO CHANGE TO APPROPRIATE PAGE
-  "must redirect user to check your answers page when user resubmits no in check mode" in {
-
-    val page = ClaimOnBehalfPage
+    val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
       .set(page, false)
@@ -86,9 +71,23 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/check-your-answers")
   }
 
+  "must redirect user to enter alternative name page when user resubmits yes in check mode" in {
+
+    val page = AlternativeNamePage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, true)
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/change-enter-alternative-name")
+  }
+
   "must redirect to JourneyRecoveryPage when not answered in normal mode" in {
 
-    val page = ClaimOnBehalfPage
+    val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
 
@@ -97,9 +96,9 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
 
-  "must redirect to JourneyRecoveryPage when not answered in check mode" in {
+  "must redirect to JourneyRecoveryPage when not answered in check mode " in {
 
-    val page = ClaimOnBehalfPage
+    val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
 

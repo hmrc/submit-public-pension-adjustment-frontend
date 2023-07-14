@@ -45,6 +45,9 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(WhichPensionSchemeWillPayPage.type, JsValue)] ::
       arbitrary[(PensionSchemeDetailsPage.type, JsValue)] ::
       arbitrary[(WhoWillPayPage.type, JsValue)] ::
+      arbitrary[(ContactNumberPage.type, JsValue)] ::
+      arbitrary[(EnterAlternativeNamePage.type, JsValue)] ::
+      arbitrary[(AlternativeNamePage.type, JsValue)] ::
       Nil
 
   implicit lazy val arbitraryUserData: Arbitrary[UserAnswers] = {

@@ -111,3 +111,18 @@ GET        /their-dob                                      controllers.PensionSc
 POST       /their-dob                                      controllers.PensionSchemeMemberDOBController.onSubmit(mode: Mode = NormalMode)
 GET        /change-their-dob                               controllers.PensionSchemeMemberDOBController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-their-dob                               controllers.PensionSchemeMemberDOBController.onSubmit(mode: Mode = CheckMode)
+
+GET        /alternative-name                       controllers.AlternativeNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /alternative-name                       controllers.AlternativeNameController.onSubmit(mode: Mode = NormalMode)
+GET        /change-alternative-name                controllers.AlternativeNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-alternative-name                controllers.AlternativeNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /enter-alternative-name                       controllers.EnterAlternativeNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /enter-alternative-name                       controllers.EnterAlternativeNameController.onSubmit(mode: Mode = NormalMode)
+GET        /change-enter-alternative-name                controllers.EnterAlternativeNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-enter-alternative-name                controllers.EnterAlternativeNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /contact-number                       controllers.ContactNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /contact-number                       controllers.ContactNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /change-contact-number                controllers.ContactNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-contact-number                controllers.ContactNumberController.onSubmit(mode: Mode = CheckMode)

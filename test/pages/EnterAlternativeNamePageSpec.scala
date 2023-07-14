@@ -16,40 +16,39 @@
 
 package pages
 
-import models.StatusOfUser.Deputyship
-import models.{CheckMode, NormalMode, StatusOfUser}
+import models.{CheckMode, NormalMode}
 
-class StatusOfUserSpec extends PageBehaviours {
+class EnterAlternativeNamePageSpec extends PageBehaviours {
 
-  "StatusOfUserPage" - {
+  "EnterAlternativeNamePage" - {
 
-    beRetrievable[StatusOfUser](StatusOfUserPage)
+    beRetrievable[String](EnterAlternativeNamePage)
 
-    beSettable[StatusOfUser](StatusOfUserPage)
+    beSettable[String](EnterAlternativeNamePage)
 
-    beRemovable[StatusOfUser](StatusOfUserPage)
+    beRemovable[String](EnterAlternativeNamePage)
   }
 
-  "must redirect to status of user page when user submits data" in {
+  "must redirect to contact number when user submits answers" in {
 
-    val page = StatusOfUserPage
+    val page = EnterAlternativeNamePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, Deputyship)
+      .set(page, "John Doe")
       .success
       .value
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-name")
+    checkNavigation(nextPageUrl, "/contact-number")
   }
 
-  "must redirect to check your answer page when user submits data in check mode" in {
+  "must redirect to check your answers page when user submits answers in check mode" in {
 
-    val page = StatusOfUserPage
+    val page = EnterAlternativeNamePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, Deputyship)
+      .set(page, "John Doe")
       .success
       .value
 
@@ -58,9 +57,9 @@ class StatusOfUserSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/check-your-answers")
   }
 
-  "must redirect to JourneyRecoveryPage when not answered in normal mode" in {
+  "must redirect to JourneyRecoveryPage when not answered in normal mode " in {
 
-    val page = StatusOfUserPage
+    val page = EnterAlternativeNamePage
 
     val userAnswers = emptyUserAnswers
 
@@ -69,9 +68,9 @@ class StatusOfUserSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
 
-  "must redirect to JourneyRecoveryPage when not answered in check mode" in {
+  "must redirect to JourneyRecoveryPage when not answered in check mode " in {
 
-    val page = StatusOfUserPage
+    val page = EnterAlternativeNamePage
 
     val userAnswers = emptyUserAnswers
 

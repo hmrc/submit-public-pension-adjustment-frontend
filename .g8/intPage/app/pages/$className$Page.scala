@@ -3,6 +3,7 @@ package pages
 import models.UserAnswers
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import controllers.routes
 
 case object $className$Page extends QuestionPage[Int] {
   
