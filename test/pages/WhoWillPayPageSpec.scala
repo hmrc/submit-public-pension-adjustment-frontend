@@ -40,7 +40,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhoWillPayPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/whichPensionSchemeWillPay")
+        checkNavigation(result, "/which-pension-scheme-will-pay")
       }
 
       "to AlternativeNamePage when You selected" in {

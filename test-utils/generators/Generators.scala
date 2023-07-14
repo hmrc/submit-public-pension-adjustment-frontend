@@ -43,6 +43,8 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     }
   }
 
+  def validPstrs = Gen.oneOf(Seq("12345678RL"))
+
   def intsInRangeWithCommas(min: Int, max: Int): Gen[String] = {
     val numberGen = choose[Int](min, max).map(_.toString)
     genIntersperseString(numberGen, ",")

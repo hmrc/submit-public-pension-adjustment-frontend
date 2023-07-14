@@ -54,7 +54,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/whoWillPay")
+    checkNavigation(nextPageUrl, "/who-will-pay")
   }
 
   "must redirect user to change status of user when user resubmits yes in check mode" in {

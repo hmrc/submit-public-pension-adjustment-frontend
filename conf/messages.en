@@ -98,14 +98,15 @@ whoWillPay.change.hidden = Who is going to pay the new tax charge
 
 pensionSchemeDetails.title = What is the name and tax reference of the pension scheme?
 pensionSchemeDetails.heading = What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.hint = If more than one pension scheme has paid or agreed to pay the tax, you can add them later.
 pensionSchemeDetails.pensionSchemeName = Name of the pension scheme
 pensionSchemeDetails.pensionSchemeTaxReference = Pension scheme tax reference (PSTR)
 pensionSchemeDetails.pensionSchemeTaxReference.hint = You can find the PSTR can on your pension scheme’s annual statement. For example, 00348916RT.
 pensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the pension scheme
-pensionSchemeDetails.error.pensionSchemeName.required = Enter the pension scheme name
-pensionSchemeDetails.error.pensionSchemeTaxReference.required = Enter the pension scheme tax reference (PSTR)
-pensionSchemeDetails.error.pensionSchemeName.length = The pension scheme name must be 100 characters or less
-pensionSchemeDetails.error.pensionSchemeTaxReference.length = The pension scheme tax reference must be 100 characters or less
+pensionSchemeDetails.error.pensionSchemeName.required = Enter the name of the pension scheme that will pay the tax charge
+pensionSchemeDetails.error.pensionSchemeTaxReference.required = Enter the pension scheme tax reference of the scheme that will pay the tax charge
+pensionSchemeDetails.error.pensionSchemeName.length = The name of your pension scheme must be 100 characters or less
+pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = Enter your pension tax reference in the format 00348916RT
 pensionSchemeDetails.pensionSchemeName.change.hidden = Pension scheme name
 pensionSchemeDetails.pensionSchemeTaxReference.change.hidden = Pension scheme tax reference
 
