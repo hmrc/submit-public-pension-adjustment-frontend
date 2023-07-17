@@ -50,7 +50,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
         "addressLine2" -> "value 2",
         "townOrCity"   -> "town",
         "county"       -> "county",
-        "postCode"     -> "postCode"
+        "postCode"     -> "AA11 1AA"
       )
     )
   )
@@ -86,7 +86,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(UkAddress("value 1", Some("value 2"), "town", Some("county"), "postCode")),
+          form.fill(UkAddress("value 1", Some("value 2"), "town", Some("county"), "AA11 1AA")),
           NormalMode
         )(request, messages(application)).toString
       }
@@ -111,7 +111,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
               ("addressLine2", "value 2"),
               ("townOrCity", "town"),
               ("county", "county"),
-              ("postCode", "postCode")
+              ("postCode", "AA11 1AA")
             )
 
         val result = route(application, request).value

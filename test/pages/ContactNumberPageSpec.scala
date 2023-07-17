@@ -40,7 +40,7 @@ class ContactNumberPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/areYouAUKResident")
+    checkNavigation(nextPageUrl, "/residence")
   }
 
   "must redirect to AreYouAUKResidentPage page when user does not enter an answer in normal mode" in {

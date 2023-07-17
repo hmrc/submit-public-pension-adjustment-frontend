@@ -40,7 +40,15 @@ class UkAddressFormProvider @Inject() extends Mappings {
           .verifying(maxLength(100, "ukAddress.error.county.length"))
       ),
       "postCode"     -> text("ukAddress.error.postCode.required")
-        .verifying(maxLength(100, "ukAddress.error.postCode.length"))
+        .verifying(
+          firstError(
+            maxLength(8, "ukAddress.error.postCode.length"),
+            regexp(
+              """[a-zA-Z]{1,2}[0-9][0-9a-zA-Z]? ?[0-9][a-zA-Z]{2}""",
+              "ukAddress.error.postCode.invalid"
+            )
+          )
+        )
     )(UkAddress.apply)(UkAddress.unapply)
   )
 }
