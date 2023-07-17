@@ -40,7 +40,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/pensionSchemeDetails")
+        checkNavigation(result, "/pension-scheme-details")
       }
 
       "to CYA when public Pension scheme selected" in {

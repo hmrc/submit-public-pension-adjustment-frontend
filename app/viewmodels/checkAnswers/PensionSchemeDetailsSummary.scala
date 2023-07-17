@@ -30,7 +30,7 @@ object PensionSchemeDetailsSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(PensionSchemeDetailsPage).map { answer =>
-      val value = HtmlFormat.escape(answer.pensionSchemeName).toString + "<br/>" + HtmlFormat
+      val value = HtmlFormat.escape(answer.pensionSchemeName).toString + " / " + HtmlFormat
         .escape(answer.pensionSchemeTaxReference)
         .toString
 

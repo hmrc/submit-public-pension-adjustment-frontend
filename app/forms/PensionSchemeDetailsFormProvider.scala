@@ -29,8 +29,10 @@ class PensionSchemeDetailsFormProvider @Inject() extends Mappings {
     mapping(
       "pensionSchemeName"         -> text("pensionSchemeDetails.error.pensionSchemeName.required")
         .verifying(maxLength(100, "pensionSchemeDetails.error.pensionSchemeName.length")),
-      "pensionSchemeTaxReference" -> text("pensionSchemeDetails.error.pensionSchemeTaxReference.required")
-        .verifying(maxLength(100, "pensionSchemeDetails.error.pensionSchemeTaxReference.length"))
+      "pensionSchemeTaxReference" -> pstr(
+        "pensionSchemeDetails.error.pensionSchemeTaxReference.required",
+        "pensionSchemeDetails.error.pensionSchemeTaxReference.invalid"
+      )
     )(PensionSchemeDetails.apply)(PensionSchemeDetails.unapply)
   )
 }

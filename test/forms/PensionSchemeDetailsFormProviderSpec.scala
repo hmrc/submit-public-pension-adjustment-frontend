@@ -54,20 +54,11 @@ class PensionSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName   = "pensionSchemeTaxReference"
     val requiredKey = "pensionSchemeDetails.error.pensionSchemeTaxReference.required"
-    val lengthKey   = "pensionSchemeDetails.error.pensionSchemeTaxReference.length"
-    val maxLength   = 100
 
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      stringsWithMaxLength(maxLength)
-    )
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+      validPstrs
     )
 
     behave like mandatoryField(

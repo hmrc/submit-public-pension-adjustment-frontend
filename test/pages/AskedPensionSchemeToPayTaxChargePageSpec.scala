@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, WhoWillPay}
+import models.{CheckMode, NormalMode}
 
 class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
 

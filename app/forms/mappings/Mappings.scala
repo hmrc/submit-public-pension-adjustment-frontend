@@ -27,6 +27,13 @@ trait Mappings extends Formatters with Constraints {
   protected def text(errorKey: String = "error.required", args: Seq[String] = Seq.empty): FieldMapping[String] =
     of(stringFormatter(errorKey, args))
 
+  protected def pstr(
+    requiredKey: String,
+    invalidKey: String = "error.invalid",
+    args: Seq[String] = Seq.empty
+  ): FieldMapping[String] =
+    of(pstrFormatter(requiredKey, invalidKey, args))
+
   protected def int(
     requiredKey: String = "error.required",
     wholeNumberKey: String = "error.wholeNumber",

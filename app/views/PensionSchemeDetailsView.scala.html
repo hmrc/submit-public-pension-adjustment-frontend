@@ -15,6 +15,7 @@
  *@
 
 @import viewmodels.InputWidth._
+@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -39,17 +40,17 @@
         @govukInput(
             InputViewModel(
                 field = form("pensionSchemeName"),
-                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeName"))
+                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeName")).asPageHeading(LabelSize.Medium)
             )
-            .withWidth(Full)
+            .withWidth(Fixed10)
         )
 
         @govukInput(
             InputViewModel(
                 field = form("pensionSchemeTaxReference"),
-                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeTaxReference"))
+                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeTaxReference")).asPageHeading(LabelSize.Medium)
             )
-            .withWidth(Full)
+            .withWidth(Fixed10)
             .withHint(HintViewModel(messages("pensionSchemeDetails.pensionSchemeTaxReference.hint")))
         )
 
