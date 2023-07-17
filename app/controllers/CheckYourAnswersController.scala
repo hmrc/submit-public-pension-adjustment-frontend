@@ -63,7 +63,8 @@ class CheckYourAnswersController @Inject() (
       ReformPensionSchemeReferenceSummary.row(request.userAnswers),
       ClaimingHigherOrAdditionalTaxRateReliefSummary.row(request.userAnswers),
       HowMuchTaxReliefSummary.row(request.userAnswers),
-      WhichPensionSchemeWillPayTaxReliefSummary.row(request.userAnswers)
+      WhichPensionSchemeWillPayTaxReliefSummary.row(request.userAnswers),
+      BankDetailsSummary.row(request.userAnswers)
     )
     Ok(view(SummaryListViewModel(rows.flatten)))
   }

@@ -33,6 +33,15 @@ trait ModelGenerators {
       fifth      <- Gen.listOfN(2, Gen.alphaUpperChar).map(_.mkString)
     } yield s"$first$second$third$fourth$fifth"
 
+  implicit lazy val arbitraryBankDetails: Arbitrary[BankDetails] =
+    Arbitrary {
+      for {
+        accountName   <- arbitrary[String]
+        sortCode      <- arbitrary[String]
+        accountNumber <- arbitrary[String]
+      } yield BankDetails(accountName, sortCode, accountNumber)
+    }
+
   implicit lazy val arbitraryWhenWillYouAskPensionSchemeToPay: Arbitrary[WhenWillYouAskPensionSchemeToPay] =
     Arbitrary {
       Gen.oneOf(WhenWillYouAskPensionSchemeToPay.values.toSeq)
