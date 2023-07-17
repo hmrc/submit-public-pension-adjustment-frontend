@@ -43,7 +43,10 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     }
   }
 
-  def validPstrs = Gen.oneOf(Seq("12345678RL"))
+  def validPstrs = for {
+    firstDigits <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
+    secondChars <- Gen.listOfN(2, Gen.alphaUpperChar).map(_.mkString)
+  } yield s"$firstDigits$secondChars"
 
   def intsInRangeWithCommas(min: Int, max: Int): Gen[String] = {
     val numberGen = choose[Int](min, max).map(_.toString)
