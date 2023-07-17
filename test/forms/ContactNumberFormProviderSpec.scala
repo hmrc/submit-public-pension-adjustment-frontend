@@ -17,13 +17,13 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import org.scalacheck.Gen
 import play.api.data.FormError
 
 class ContactNumberFormProviderSpec extends StringFieldBehaviours {
 
-  val requiredKey = "contactNumber.error.required"
-  val lengthKey   = "contactNumber.error.length"
-  val maxLength   = 100
+  val invalidKey = "contactNumber.error.invalid"
+  val maxLength  = 100
 
   val form = new ContactNumberFormProvider()()
 
@@ -34,20 +34,11 @@ class ContactNumberFormProviderSpec extends StringFieldBehaviours {
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      stringsWithMaxLength(maxLength)
+      Gen.oneOf("07777777777", "+447777777777", "07777777777  ", "+1(111)111-1111", "111.111.1111")
     )
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    "fail to bind an invalid phone number" in {
+      form.bind(Map(fieldName -> "invalid")).error("value").value.message mustEqual invalidKey
+    }
   }
 }

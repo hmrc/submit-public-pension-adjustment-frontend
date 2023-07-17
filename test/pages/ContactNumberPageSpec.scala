@@ -17,6 +17,7 @@
 package pages
 
 import models.{CheckMode, NormalMode}
+import org.scalacheck.Gen
 
 class ContactNumberPageSpec extends PageBehaviours {
 
@@ -35,6 +36,20 @@ class ContactNumberPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
       .set(page, "0123456789")
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/areYouAUKResident")
+  }
+
+  "must redirect to AreYouAUKResidentPage page when user does not enter an answer in normal mode" in {
+
+    val page = ContactNumberPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, "")
       .success
       .value
 

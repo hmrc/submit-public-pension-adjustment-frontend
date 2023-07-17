@@ -31,26 +31,26 @@ case object AlternativeNamePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(AlternativeNamePage) match {
-      case Some(true)  => routes.EnterAlternativeNameController.onPageLoad(NormalMode)
-      case Some(false) => routes.ContactNumberController.onPageLoad(NormalMode)
+      case Some(false) => routes.EnterAlternativeNameController.onPageLoad(NormalMode)
+      case Some(true)  => routes.ContactNumberController.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AlternativeNamePage) match {
-      case Some(true)  => routes.EnterAlternativeNameController.onPageLoad(CheckMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad
+      case Some(false) => routes.EnterAlternativeNameController.onPageLoad(CheckMode)
+      case Some(true)  => routes.CheckYourAnswersController.onPageLoad
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case false =>
+        case true  =>
           for {
             updated <- userAnswers.remove(EnterAlternativeNamePage)
           } yield updated
-        case true  => super.cleanup(value, userAnswers)
+        case false => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

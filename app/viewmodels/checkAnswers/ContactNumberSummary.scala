@@ -29,9 +29,10 @@ object ContactNumberSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ContactNumberPage).map { answer =>
+      val value = if (answer == "") messages("checkYourAnswers.notAnswered") else answer
       SummaryListRowViewModel(
         key = "contactNumber.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        value = ValueViewModel(HtmlFormat.escape(value).toString),
         actions = Seq(
           ActionItemViewModel("site.change", routes.ContactNumberController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("contactNumber.change.hidden"))

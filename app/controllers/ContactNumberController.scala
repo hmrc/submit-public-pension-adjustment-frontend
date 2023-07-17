@@ -47,7 +47,7 @@ class ContactNumberController @Inject() (
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val preparedForm = request.userAnswers.get(ContactNumberPage) match {
       case None        => form
-      case Some(value) => form.fill(value)
+      case Some(value) => form.fill(Some(value))
     }
 
     Ok(view(preparedForm, mode))
@@ -61,7 +61,7 @@ class ContactNumberController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ContactNumberPage, value))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(ContactNumberPage, value.getOrElse("")))
               _              <- sessionRepository.set(updatedAnswers)
             } yield Redirect(ContactNumberPage.navigate(mode, updatedAnswers))
         )

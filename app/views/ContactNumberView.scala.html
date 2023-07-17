@@ -26,6 +26,11 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+<p>@messages("contactNumber.hint")</p>
+<p class="govuk-body">@messages("contactNumber.label")</p>
+}
+
 @layout(pageTitle = title(form, messages("contactNumber.title"))) {
 
     @formHelper(action = routes.ContactNumberController.onSubmit(mode)) {
@@ -34,12 +39,14 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+
         @govukInput(
             InputViewModel(
                 field = form("value"),
                 label = LabelViewModel(messages("contactNumber.heading")).asPageHeading()
             )
             .withWidth(Full)
+            .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

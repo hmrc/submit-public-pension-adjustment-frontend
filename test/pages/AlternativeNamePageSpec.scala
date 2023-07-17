@@ -29,12 +29,12 @@ class AlternativeNamePageSpec extends PageBehaviours {
     beRemovable[Boolean](AlternativeNamePage)
   }
 
-  "must redirect to enter alternative number page when user selects yes" in {
+  "must redirect to enter alternative number page when user selects no" in {
 
     val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, true)
+      .set(page, false)
       .success
       .value
 
@@ -43,12 +43,12 @@ class AlternativeNamePageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/enter-alternative-name")
   }
 
-  "must redirect to contact number page when user selects no" in {
+  "must redirect to contact number page when user selects yes" in {
 
     val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, false)
+      .set(page, true)
       .success
       .value
 
@@ -57,12 +57,12 @@ class AlternativeNamePageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/contact-number")
   }
 
-  "must redirect user to check their answers when user resubmits no in check mode" in {
+  "must redirect user to check their answers when user resubmits yes in check mode" in {
 
     val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, false)
+      .set(page, true)
       .success
       .value
 
@@ -71,12 +71,12 @@ class AlternativeNamePageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/check-your-answers")
   }
 
-  "must redirect user to enter alternative name page when user resubmits yes in check mode" in {
+  "must redirect user to enter alternative name page when user resubmits no in check mode" in {
 
     val page = AlternativeNamePage
 
     val userAnswers = emptyUserAnswers
-      .set(page, true)
+      .set(page, false)
       .success
       .value
 
