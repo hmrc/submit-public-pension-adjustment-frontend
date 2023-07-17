@@ -40,7 +40,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
           .value
         val result = PensionSchemeDetailsPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/askedPensionSchemeToPayTaxCharge")
+        checkNavigation(result, "/asked-pension-scheme-to-pay-tax-charge")
       }
 
       "to JourneyRecoveryPage when not answered" in {

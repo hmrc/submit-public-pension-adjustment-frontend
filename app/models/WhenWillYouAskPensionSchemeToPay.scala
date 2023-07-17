@@ -26,10 +26,18 @@ object WhenWillYouAskPensionSchemeToPay extends Enumerable.Implicits {
 
   case object OctToDec23 extends WithName("octToDec23") with WhenWillYouAskPensionSchemeToPay
   case object JanToMar24 extends WithName("janToMar24") with WhenWillYouAskPensionSchemeToPay
+  case object AprToJune24 extends WithName("aprToJune24") with WhenWillYouAskPensionSchemeToPay
+  case object JulToSep24 extends WithName("julToSep24") with WhenWillYouAskPensionSchemeToPay
+  case object OctToDec24 extends WithName("octToDec24") with WhenWillYouAskPensionSchemeToPay
+  case object JanToMar25 extends WithName("janToMar25") with WhenWillYouAskPensionSchemeToPay
 
   val values: Seq[WhenWillYouAskPensionSchemeToPay] = Seq(
     OctToDec23,
-    JanToMar24
+    JanToMar24,
+    AprToJune24,
+    JulToSep24,
+    OctToDec24,
+    JanToMar25
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>

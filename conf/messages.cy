@@ -130,20 +130,26 @@ askedPensionSchemeToPayTaxCharge.change.hidden = cy: Have you asked your pension
 
 whenDidYouAskPensionSchemeToPay.title = cy: When did you ask your pension scheme to pay?
 whenDidYouAskPensionSchemeToPay.heading = cy: When did you ask your pension scheme to pay?
-whenDidYouAskPensionSchemeToPay.hint = cy: For example, 12 11 2007
+whenDidYouAskPensionSchemeToPay.hint = cy: For example 25 9 2023
 whenDidYouAskPensionSchemeToPay.checkYourAnswersLabel = cy: When did you ask your pension scheme to pay
-whenDidYouAskPensionSchemeToPay.error.required.all = cy: Enter when you asked your pension scheme to pay
+whenDidYouAskPensionSchemeToPay.error.required.all = cy: Enter the date when you asked your pension scheme to pay into the spaces provided as day, month, year
 whenDidYouAskPensionSchemeToPay.error.required.two = cy: The date must include {0} and {1}
 whenDidYouAskPensionSchemeToPay.error.required = cy: The date must include {0}
-whenDidYouAskPensionSchemeToPay.error.invalid = cy: Enter a real date
+whenDidYouAskPensionSchemeToPay.error.invalid = cy: Enter the date when you asked your pension scheme to pay into the spaces provided as day, month, year
 whenDidYouAskPensionSchemeToPay.change.hidden = cy: When did you ask your pension scheme to pay
+whenDidYouAskPensionSchemeToPay.error.afterMaximum = cy: You have entered a future date for when you asked your pension scheme to pay
+whenDidYouAskPensionSchemeToPay.error.beforeMinimum = cy: You have entered a date you asked your pension scheme to pay before the remedy period, it must be within the remedy period 6 April 2015 to 5 April 2022
 
 whenWillYouAskPensionSchemeToPay.title = cy: When do you think you will ask your pension scheme to pay?
 whenWillYouAskPensionSchemeToPay.heading = cy: When do you think you will ask your pension scheme to pay?
 whenWillYouAskPensionSchemeToPay.octToDec23 = cy: 1 October 2023 to 31 December 2023
-whenWillYouAskPensionSchemeToPay.janToMar24 = cy: 1 January 2024 to March 31 2024
+whenWillYouAskPensionSchemeToPay.janToMar24 = cy: 1 January 2024 to 31 March 2024
+whenWillYouAskPensionSchemeToPay.aprToJune24 = cy: 1 April 2024 to 30 June 2024
+whenWillYouAskPensionSchemeToPay.julToSep24 = cy: 1 July 2024 to 30 September 2024
+whenWillYouAskPensionSchemeToPay.octToDec24 = cy: 1 October 2024 to 31 December 2024
+whenWillYouAskPensionSchemeToPay.janToMar25 = cy: 1 January 2025 to 31 March 2025
 whenWillYouAskPensionSchemeToPay.checkYourAnswersLabel = cy: When do you think you will ask your pension scheme to pay?
-whenWillYouAskPensionSchemeToPay.error.required = cy: Select when you think you will ask your pension scheme to pay?
+whenWillYouAskPensionSchemeToPay.error.required = cy: Select when you think you will ask your pension scheme to pay
 whenWillYouAskPensionSchemeToPay.change.hidden = cy: When do you think you will ask your pension scheme to pay
 whenWillYouAskPensionSchemeToPay.hint = cy: Choose the annual quarter when you will ask your pension scheme to pay.
 
