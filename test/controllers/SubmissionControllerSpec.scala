@@ -23,7 +23,7 @@ import views.html.SubmissionView
 
 class SubmissionControllerSpec extends SpecBase {
 
-  "ubmission Controller" - {
+  "Submission Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
