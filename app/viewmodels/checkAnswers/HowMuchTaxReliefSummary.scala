@@ -20,7 +20,9 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.HowMuchTaxReliefPage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -30,7 +32,7 @@ object HowMuchTaxReliefSummary {
     answers.get(HowMuchTaxReliefPage).map { answer =>
       SummaryListRowViewModel(
         key = "howMuchTaxRelief.checkYourAnswersLabel",
-        value = ValueViewModel(answer.toString),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel("site.change", routes.HowMuchTaxReliefController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("howMuchTaxRelief.change.hidden"))

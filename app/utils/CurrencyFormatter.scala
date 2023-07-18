@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-package forms
+package utils
 
-import forms.mappings.Mappings
-import play.api.data.Form
-
-import javax.inject.Inject
-
-class HowMuchTaxReliefFormProvider @Inject() extends Mappings {
-
-  def apply(): Form[BigInt] =
-    Form(
-      "value" -> bigInt(
-        "howMuchTaxRelief.error.required",
-        "howMuchTaxRelief.error.wholeNumber",
-        "howMuchTaxRelief.error.nonNumeric"
-      )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "howMuchTaxRelief.error.outOfRange"))
-    )
+trait CurrencyFormatter {
+  def currencyFormat(amt: BigInt): String = f"&pound;$amt"
+  def currencyFormat(amt: Int): String    = f"&pound;$amt"
 }
+
+object CurrencyFormatter extends CurrencyFormatter

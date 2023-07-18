@@ -22,11 +22,11 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
   "HowMuchTaxReliefPage" - {
 
-    beRetrievable[Int](HowMuchTaxReliefPage)
+    beRetrievable[BigInt](HowMuchTaxReliefPage)
 
-    beSettable[Int](HowMuchTaxReliefPage)
+    beSettable[BigInt](HowMuchTaxReliefPage)
 
-    beRemovable[Int](HowMuchTaxReliefPage)
+    beRemovable[BigInt](HowMuchTaxReliefPage)
 
     "must navigate correctly in NormalMode" - {
 
@@ -34,13 +34,13 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
-            100
+            BigInt("100")
           )
           .success
           .value
         val result = HowMuchTaxReliefPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/whichPensionSchemeWillPayTaxRelief")
+        checkNavigation(result, "/which-pension-scheme-will-pay-tax-relief")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -57,7 +57,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
-            100
+            BigInt("100")
           )
           .success
           .value

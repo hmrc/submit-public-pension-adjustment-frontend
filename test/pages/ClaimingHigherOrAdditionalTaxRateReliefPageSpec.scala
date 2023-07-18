@@ -53,7 +53,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/howMuchTaxRelief")
+        checkNavigation(result, "/tax-relief-amount")
       }
 
       "to JourneyRecovery when not answered" in {
