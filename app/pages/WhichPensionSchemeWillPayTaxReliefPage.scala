@@ -29,13 +29,13 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[WhichPen
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => controllers.routes.DeclarationsController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => controllers.routes.DeclarationsController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
