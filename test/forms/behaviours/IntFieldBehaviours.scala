@@ -37,22 +37,6 @@ trait IntFieldBehaviours extends FieldBehaviours {
         result.errors must contain only wholeNumberError
       }
     }
-
-//    "not bind integers larger than Int.MaxValue" in {
-//
-//      forAll(intsLargerThanMaxValue -> "massiveInt") { num: BigInt =>
-//        val result = form.bind(Map(fieldName -> num.toString)).apply(fieldName)
-//        result.errors must contain only nonNumericError
-//      }
-//    }
-//
-//    "not bind integers smaller than Int.MinValue" in {
-//
-//      forAll(intsSmallerThanMinValue -> "massivelySmallInt") { num: BigInt =>
-//        val result = form.bind(Map(fieldName -> num.toString)).apply(fieldName)
-//        result.errors must contain only nonNumericError
-//      }
-//    }
   }
 
   def intFieldWithMinimum(form: Form[_], fieldName: String, minimum: Int, expectedError: FormError): Unit =
