@@ -110,6 +110,35 @@ trait Formatters {
         baseFormatter.unbind(key, value.toString)
     }
 
+  private[mappings] def bigIntFormatter(
+    requiredKey: String,
+    wholeNumberKey: String,
+    nonNumericKey: String
+  ): Formatter[BigInt] =
+    new Formatter[BigInt] {
+
+      val decimalRegexp = """^-?(\d*\.\d*)$"""
+
+      private val baseFormatter = stringFormatter(requiredKey)
+
+      override def bind(key: String, data: Map[String, String]) =
+        baseFormatter
+          .bind(key, data)
+          .map(_.replace(",", ""))
+          .flatMap {
+            case s if s.matches(decimalRegexp) =>
+              Left(Seq(FormError(key, wholeNumberKey)))
+            case s                             =>
+              nonFatalCatch
+                .either(BigInt(s))
+                .left
+                .map(_ => Seq(FormError(key, nonNumericKey)))
+          }
+
+      override def unbind(key: String, value: BigInt) =
+        baseFormatter.unbind(key, value.toString)
+    }
+
   private[mappings] def pstrFormatter(
     requiredKey: String,
     invalidKey: String,

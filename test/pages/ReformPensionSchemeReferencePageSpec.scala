@@ -40,7 +40,7 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
           .value
         val result = ReformPensionSchemeReferencePage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/claimingHigherOrAdditionalTaxRateRelief")
+        checkNavigation(result, "/claiming-additional-tax-rate-relief")
       }
 
       "to JourneyRecovery when not answered" in {

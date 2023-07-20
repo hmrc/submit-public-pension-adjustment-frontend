@@ -40,8 +40,9 @@
                 label = LabelViewModel(messages("howMuchTaxRelief.heading")).asPageHeading()
             )
             .withHint(HintViewModel(messages("howMuchTaxRelief.hint")))
-            .asNumeric()
             .withWidth(Fixed10)
+            .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
         )
 
         @govukButton(

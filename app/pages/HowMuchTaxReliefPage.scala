@@ -20,7 +20,7 @@ import models.{NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object HowMuchTaxReliefPage extends QuestionPage[Int] {
+case object HowMuchTaxReliefPage extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ toString
 

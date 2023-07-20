@@ -39,7 +39,7 @@ class HowMuchTaxReliefControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = 0
+  val validAnswer = BigInt("0")
 
   lazy val howMuchTaxReliefRoute = routes.HowMuchTaxReliefController.onPageLoad(NormalMode).url
 

@@ -34,6 +34,13 @@ trait Mappings extends Formatters with Constraints {
   ): FieldMapping[String] =
     of(pstrFormatter(requiredKey, invalidKey, args))
 
+  protected def bigInt(
+    requiredKey: String = "error.required",
+    wholeNumberKey: String = "error.wholeNumber",
+    nonNumericKey: String = "error.nonNumeric"
+  ): FieldMapping[BigInt] =
+    of(bigIntFormatter(requiredKey, wholeNumberKey, nonNumericKey))
+
   protected def int(
     requiredKey: String = "error.required",
     wholeNumberKey: String = "error.wholeNumber",

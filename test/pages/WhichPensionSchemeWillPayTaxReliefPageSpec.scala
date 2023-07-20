@@ -16,7 +16,7 @@
 
 package pages
 
-import models.WhichPensionSchemeWillPayTaxRelief
+import models.{CheckMode, NormalMode, WhichPensionSchemeWillPayTaxRelief}
 
 class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
@@ -27,5 +27,51 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
     beSettable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
 
     beRemovable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
+
+    "must navigate correctly in NormalMode" - {
+
+      "to CYA when Pension scheme b scheme selected" in {
+        val ua     = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            WhichPensionSchemeWillPayTaxRelief.Pensionschemeb
+          )
+          .success
+          .value
+        val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/declarations")
+      }
+
+      "to JourneyRecoveryPage when not selected" in {
+        val ua     = emptyUserAnswers
+        val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA" in {
+        val ua     = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            WhichPensionSchemeWillPayTaxRelief.Pensionschemea
+          )
+          .success
+          .value
+        val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/declarations")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua     = emptyUserAnswers
+        val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
   }
 }
