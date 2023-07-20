@@ -208,18 +208,16 @@ ukAddress.townOrCity.change.hidden = Town or city
 ukAddress.county.change.hidden = County
 ukAddress.postCode.change.hidden = Postcode
 
-legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference?
-legacyPensionSchemeReference.heading = What is your legacy individual pension scheme reference?
+legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference?(optional)
+legacyPensionSchemeReference.heading = What is your legacy individual pension scheme reference?(optional)
 legacyPensionSchemeReference.checkYourAnswersLabel = What is your legacy individual pension scheme reference
-legacyPensionSchemeReference.error.required = Enter your legacy individual pension scheme reference
-legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 100 characters or less
+legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 15 characters
 legacyPensionSchemeReference.change.hidden = What is your legacy individual pension scheme reference
 
-reformPensionSchemeReference.title = What is your reform individual pension scheme reference?
-reformPensionSchemeReference.heading = What is your reform individual pension scheme reference?
+reformPensionSchemeReference.title = What is your reform individual pension scheme reference?(optional)
+reformPensionSchemeReference.heading = What is your reform individual pension scheme reference?(optional)
 reformPensionSchemeReference.checkYourAnswersLabel = What is your reform individual pension scheme reference
-reformPensionSchemeReference.error.required = Enter your reform individual pension scheme reference
-reformPensionSchemeReference.error.length = Reform individual pension scheme reference must be 100 characters or less
+reformPensionSchemeReference.error.length = Reform individual pension scheme reference must be 15 characters or less
 reformPensionSchemeReference.change.hidden = What is your reform individual pension scheme reference
 
 claimingHigherOrAdditionalTaxRateRelief.title = Are you claiming for higher or additional tax rate relief?

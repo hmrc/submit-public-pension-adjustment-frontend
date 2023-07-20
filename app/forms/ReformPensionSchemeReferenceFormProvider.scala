@@ -20,12 +20,15 @@ import javax.inject.Inject
 
 import forms.mappings.Mappings
 import play.api.data.Form
+import play.api.data.Forms.optional
 
 class ReformPensionSchemeReferenceFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[String] =
+  def apply(): Form[Option[String]] =
     Form(
-      "value" -> text("reformPensionSchemeReference.error.required")
-        .verifying(maxLength(100, "reformPensionSchemeReference.error.length"))
+      "value" -> optional(
+        text()
+          .verifying(maxLength(15, "reformPensionSchemeReference.error.length"))
+      )
     )
 }

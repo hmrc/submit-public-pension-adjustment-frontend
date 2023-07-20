@@ -47,7 +47,7 @@ class LegacyPensionSchemeReferenceController @Inject() (
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val preparedForm = request.userAnswers.get(LegacyPensionSchemeReferencePage) match {
       case None        => form
-      case Some(value) => form.fill(value)
+      case Some(value) => form.fill(Some(value))
     }
 
     Ok(view(preparedForm, mode))
@@ -61,7 +61,7 @@ class LegacyPensionSchemeReferenceController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(LegacyPensionSchemeReferencePage, value))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(LegacyPensionSchemeReferencePage, value.getOrElse("")))
               _              <- sessionRepository.set(updatedAnswers)
             } yield Redirect(LegacyPensionSchemeReferencePage.navigate(mode, updatedAnswers))
         )
