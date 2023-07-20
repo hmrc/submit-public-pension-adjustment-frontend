@@ -40,7 +40,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
           .value
         val result = InternationalAddressPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/legacyPensionSchemeReference")
+        checkNavigation(result, "/legacy-pension-scheme-reference")
       }
 
       "to JourneyRecovery when not answered" in {
