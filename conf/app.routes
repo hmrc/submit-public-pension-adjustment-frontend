@@ -126,3 +126,8 @@ GET        /contact-number                       controllers.ContactNumberContro
 POST       /contact-number                       controllers.ContactNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /change-contact-number                controllers.ContactNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-contact-number                controllers.ContactNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /declarations                         controllers.DeclarationsController.onPageLoad
+
+GET        /submission                           controllers.SubmissionController.onPageLoad
+

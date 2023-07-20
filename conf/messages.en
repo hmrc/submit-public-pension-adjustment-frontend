@@ -39,8 +39,10 @@ index.title = Submit Public Pension Adjustment service
 index.heading = Submit Public Pension Adjustment service
 index.guidance = Welcome to Submit Public Pension Adjustment service. Please see the README file for a guide to getting started.
 
-checkYourAnswers.title = Check Your Answers
-checkYourAnswers.heading = Check Your Answers
+checkYourAnswers.title = Check your answers
+checkYourAnswers.heading = Check your answers
+checkYourAnswers.reviewBeforeSubmission = Check your answers before completing your submission.
+checkYourAnswers.continue = Continue
 
 journeyRecovery.continue.title = Sorry, there is a problem with the service
 journeyRecovery.continue.heading = Sorry, there is a problem with the service
@@ -275,3 +277,26 @@ contactNumber.checkYourAnswersLabel = contactNumber
 contactNumber.error.required = Enter contactNumber
 contactNumber.error.length = ContactNumber must be 100 characters or less
 contactNumber.change.hidden = ContactNumber
+
+declarations.title = Declarations
+declarations.heading = Declarations
+declarations.makingDeclarationsFor = By sending a public service pension adjustment, you are making a declaration of:
+declarations.compensation = compensation
+declarations.emailConsent = email consent
+declarations.contactDetails = contact details
+declarations.powerOfAttorney = power of attorney, if applicable
+declarations.confirmInformation = By sending the adjustment you confirm that the information you have given is complete and correct. If you deliberately give the wrong or incomplete information, or you do not report any changes, you may:
+declarations.beProsecuted = be prosecuted
+declarations.financialPenalty = need to pay a financial penalty
+declarations.payBackMoney = need to pay back any money you are overpaid if you are asked to
+declaration.confirm = Confirm
+
+submission.title = Adjustment sent
+submission.heading = Adjustment sent
+submission.adjustmentSent = Your submission for an adjustment has been sent. We have sent you a confirmation email.
+submission.communicateHMRC = For communicating with HMRC, you must use your National Insurance number.
+submission.whatNext = What happens next
+submission.pensionAdministrator = Your pension administrator will contact you to confirm your submission, or to ask for more information.
+submission.receiveCompensation = The process of receiving any compensation you may be owed will take
+submission.link = What did you think of this service?
+submission.takesSecond = (takes 30 seconds)

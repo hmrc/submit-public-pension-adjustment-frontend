@@ -29,14 +29,14 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPage[Boo
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
       case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(NormalMode)
-      case Some(false) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(false) => controllers.routes.DeclarationsController.onPageLoad
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
       case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad
-      case Some(false) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(false) => controllers.routes.DeclarationsController.onPageLoad
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

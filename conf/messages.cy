@@ -41,6 +41,8 @@ index.guidance = cy: Welcome to Submit Public Pension Adjustment service. Please
 
 checkYourAnswers.title = cy: Check Your Answers
 checkYourAnswers.heading = cy: Check Your Answers
+checkYourAnswers.reviewBeforeSubmission = cy: Check your answers before completing your submission.
+checkYourAnswers.continue = cy: Continue
 
 journeyRecovery.continue.title = cy: Sorry, there is a problem with the service
 journeyRecovery.continue.heading = cy: Sorry, there is a problem with the service
@@ -276,3 +278,25 @@ contactNumber.error.required = cy: Enter contactNumber
 contactNumber.error.length = cy: ContactNumber must be 100 characters or less
 contactNumber.change.hidden = cy: ContactNumber
 
+declarations.title = cy: Declarations
+declarations.heading = cy: Declarations
+declarations.makingDeclarationsFor = cy: By sending a public service pension adjustment, you are making a declaration of:
+declarations.compensation = cy: compensation
+declarations.emailConsent = cy: email consent
+declarations.contactDetails = cy: contact details
+declarations.powerOfAttorney = cy: power of attorney, if applicable
+declarations.confirmInformation = cy: By sending the adjustment you confirm that the information you have given is complete and correct. If you deliberately give the wrong or incomplete information, or you do not report any changes, you may:
+declarations.beProsecuted = cy: be prosecuted
+declarations.financialPenalty = cy: need to pay a financial penalty
+declarations.payBackMoney = cy: need to pay back any money you are overpaid if you are asked to
+declaration.confirm = cy: Confirm
+
+submission.title = cy: Adjustment sent
+submission.heading = cy: Adjustment sent
+submission.adjustmentSent = cy: Your submission for an adjustment has been sent. We have sent you a confirmation email.
+submission.communicateHMRC = cy: For communicating with HMRC, you must use your National Insurance number.
+submission.whatNext = cy: What happens next
+submission.pensionAdministrator = cy: Your pension administrator will contact you to confirm your submission, or to ask for more information.
+submission.receiveCompensation = cy: The process of receiving any compensation you may be owed will take
+submission.link = cy: What did you think of this service?
+submission.takesSecond = cy: (takes 30 seconds)

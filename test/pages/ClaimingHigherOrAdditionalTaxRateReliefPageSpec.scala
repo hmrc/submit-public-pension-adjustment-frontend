@@ -40,7 +40,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/declarations")
       }
 
       "to HowMuchTaxReliefPage when answered yes" in {
@@ -89,7 +89,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/declarations")
       }
 
       "to JourneyRecovery when not selected" in {
