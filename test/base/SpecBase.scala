@@ -28,6 +28,8 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 
+import java.time.{Clock, Instant, LocalDate, ZoneId}
+
 trait SpecBase
     extends AnyFreeSpec
     with Matchers
@@ -39,6 +41,9 @@ trait SpecBase
   val userAnswersId: String = "id"
 
   def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId)
+
+  protected val fixedInstant: Instant      = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
+  protected val clockAtFixedInstant: Clock = Clock.fixed(fixedInstant, ZoneId.systemDefault)
 
   def messages(app: Application): Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
 

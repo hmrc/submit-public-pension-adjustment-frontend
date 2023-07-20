@@ -16,9 +16,11 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object AskedPensionSchemeToPayTaxChargePage extends QuestionPage[Boolean] {
 
@@ -35,7 +37,16 @@ case object AskedPensionSchemeToPayTaxChargePage extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AskedPensionSchemeToPayTaxChargePage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(CheckMode)
+      case Some(false) => controllers.routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(CheckMode)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case false => userAnswers.remove(WhenDidYouAskPensionSchemeToPayPage)
+        case true  => userAnswers.remove(WhenWillYouAskPensionSchemeToPayPage)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

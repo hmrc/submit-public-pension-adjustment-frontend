@@ -43,7 +43,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         checkNavigation(result, "/pension-scheme-details")
       }
 
-      "to CYA when public Pension scheme selected" in {
+      "to Asked pension scheme to pay charge page when public Pension scheme selected" in {
         val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage,
@@ -53,7 +53,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/askedPensionSchemeToPayTaxCharge")
+        checkNavigation(result, "/asked-pension-scheme-to-pay-tax-charge")
       }
 
       "to JourneyRecoveryPage when not selected" in {
