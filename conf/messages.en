@@ -138,7 +138,7 @@ whenDidYouAskPensionSchemeToPay.error.required = The date must include {0}
 whenDidYouAskPensionSchemeToPay.error.invalid = Enter the date when you asked your pension scheme to pay into the spaces provided as day, month, year
 whenDidYouAskPensionSchemeToPay.change.hidden = When did you ask your pension scheme to pay
 whenDidYouAskPensionSchemeToPay.error.afterMaximum = You have entered a future date for when you asked your pension scheme to pay
-whenDidYouAskPensionSchemeToPay.error.beforeMinimum = You have entered a date you asked your pension scheme to pay before the remedy period, it must be within the remedy period 6 April 2015 to 5 April 2022
+whenDidYouAskPensionSchemeToPay.error.beforeMinimum = You have entered a date you asked your pension scheme to pay before the remedy period, it must be after the beginning of the remedy period 6 April 2015
 
 whenWillYouAskPensionSchemeToPay.title = When do you think you will ask your pension scheme to pay?
 whenWillYouAskPensionSchemeToPay.heading = When do you think you will ask your pension scheme to pay?
