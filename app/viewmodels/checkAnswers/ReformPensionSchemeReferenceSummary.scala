@@ -29,9 +29,10 @@ object ReformPensionSchemeReferenceSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ReformPensionSchemeReferencePage).map { answer =>
+      val value = if (answer == "" ) "Not answered" else answer
       SummaryListRowViewModel(
         key = "reformPensionSchemeReference.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        value = ValueViewModel(HtmlFormat.escape(value).toString),
         actions = Seq(
           ActionItemViewModel("site.change", routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("reformPensionSchemeReference.change.hidden"))
