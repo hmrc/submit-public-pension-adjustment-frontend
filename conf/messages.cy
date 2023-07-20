@@ -224,9 +224,9 @@ howMuchTaxRelief.title = cy: How much tax relief are you claiming for?
 howMuchTaxRelief.heading = cy: How much tax relief are you claiming for?
 howMuchTaxRelief.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300
 howMuchTaxRelief.checkYourAnswersLabel = cy: How much tax relief are you claiming for
-howMuchTaxRelief.error.nonNumeric = cy: Enter your how much tax relief you are claiming for using numbers
-howMuchTaxRelief.error.required = cy: Enter how much tax relief you are claiming for
-howMuchTaxRelief.error.wholeNumber = cy: Enter how much tax relief you are claiming for using whole numbers
+howMuchTaxRelief.error.nonNumeric = cy: Enter how much you are claiming for as a numerical figure
+howMuchTaxRelief.error.required = cy: Enter how much you are claiming for
+howMuchTaxRelief.error.wholeNumber = cy: Enter how much you are claiming for as a whole number
 howMuchTaxRelief.error.outOfRange = cy: How much tax relief you are claiming for must be between {0} and {1}
 howMuchTaxRelief.change.hidden = cy: How much tax relief are you claiming for
 
