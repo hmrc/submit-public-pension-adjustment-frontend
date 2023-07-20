@@ -40,7 +40,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           .value
         val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/declarations")
       }
 
       "to JourneyRecoveryPage when not selected" in {
@@ -63,7 +63,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           .value
         val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/declarations")
       }
 
       "to JourneyRecovery when not answered" in {
