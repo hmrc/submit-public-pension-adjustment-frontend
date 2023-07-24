@@ -30,7 +30,7 @@ object LegacyPensionSchemeReferenceSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LegacyPensionSchemeReferencePage).map { answer =>
-      val value = if (answer == "" ) messages("checkYourAnswers.notAnswered") else answer
+      val value = if (answer == "") messages("checkYourAnswers.notAnswered") else answer
       SummaryListRowViewModel(
         key = "legacyPensionSchemeReference.checkYourAnswersLabel",
         value = ValueViewModel(HtmlFormat.escape(value).toString),

@@ -73,7 +73,10 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(Some("answer")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(Some("answer")), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

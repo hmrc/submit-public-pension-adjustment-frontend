@@ -61,7 +61,8 @@ class ReformPensionSchemeReferenceController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ReformPensionSchemeReferencePage, value.getOrElse("")))
+              updatedAnswers <-
+                Future.fromTry(request.userAnswers.set(ReformPensionSchemeReferencePage, value.getOrElse("")))
               _              <- sessionRepository.set(updatedAnswers)
             } yield Redirect(ReformPensionSchemeReferencePage.navigate(mode, updatedAnswers))
         )
