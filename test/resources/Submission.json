@@ -1,0 +1,125 @@
+{
+  "calculationInputs": {
+    "resubmission": {
+      "isResubmission": false
+    },
+    "annualAllowance": {
+      "scottishTaxYears": [],
+      "taxYears": [
+        {
+          "pensionInputAmount": 2,
+          "taxYearSchemes": [
+            {
+              "name": "1",
+              "pensionSchemeTaxReference": "00348916RT",
+              "originalPensionInputAmount": 1,
+              "revisedPensionInputAmount": 2,
+              "chargePaidByScheme": 0
+            }
+          ],
+          "totalIncome": 5,
+          "chargePaidByMember": 0,
+          "period": "2016-pre"
+        },
+        {
+          "pensionInputAmount": 4,
+          "taxYearSchemes": [
+            {
+              "name": "1",
+              "pensionSchemeTaxReference": "00348916RT",
+              "originalPensionInputAmount": 3,
+              "revisedPensionInputAmount": 4,
+              "chargePaidByScheme": 0
+            }
+          ],
+          "totalIncome": 5,
+          "chargePaidByMember": 0,
+          "period": "2016-post"
+        },
+        {
+          "pensionInputAmount": 5,
+          "taxYearSchemes": [
+            {
+              "name": "1",
+              "pensionSchemeTaxReference": "00348916RT",
+              "originalPensionInputAmount": 4,
+              "revisedPensionInputAmount": 5,
+              "chargePaidByScheme": 7
+            }
+          ],
+          "totalIncome": 8,
+          "chargePaidByMember": 6,
+          "period": "2017",
+          "income": {
+            "incomeAboveThreshold": true,
+            "adjustedIncome": 7
+          }
+        }
+      ]
+    }
+  },
+  "calculation": {
+    "resubmission": {
+      "isResubmission": false
+    },
+    "totalAmounts": {
+      "outDatesCompensation": 13,
+      "inDatesDebit": 0,
+      "inDatesCredit": 0
+    },
+    "outDates": [
+      {
+        "period": "2016-pre",
+        "directCompensation": 0,
+        "indirectCompensation": 0,
+        "chargePaidByMember": 0,
+        "chargePaidBySchemes": 0,
+        "revisedChargableAmountBeforeTaxRate": 0,
+        "revisedChargableAmountAfterTaxRate": 0,
+        "unusedAnnualAllowance": 40000,
+        "taxYearSchemes": [
+          {
+            "name": "1",
+            "pensionSchemeTaxReference": "00348916RT",
+            "compensation": 0
+          }
+        ]
+      },
+      {
+        "period": "2016-post",
+        "directCompensation": 0,
+        "indirectCompensation": 0,
+        "chargePaidByMember": 0,
+        "chargePaidBySchemes": 0,
+        "revisedChargableAmountBeforeTaxRate": 0,
+        "revisedChargableAmountAfterTaxRate": 0,
+        "unusedAnnualAllowance": 39996,
+        "taxYearSchemes": [
+          {
+            "name": "1",
+            "pensionSchemeTaxReference": "00348916RT",
+            "compensation": 0
+          }
+        ]
+      },
+      {
+        "period": "2017",
+        "directCompensation": 6,
+        "indirectCompensation": 7,
+        "chargePaidByMember": 6,
+        "chargePaidBySchemes": 7,
+        "revisedChargableAmountBeforeTaxRate": 0,
+        "revisedChargableAmountAfterTaxRate": 0,
+        "unusedAnnualAllowance": 79991,
+        "taxYearSchemes": [
+          {
+            "name": "1",
+            "pensionSchemeTaxReference": "00348916RT",
+            "compensation": 7
+          }
+        ]
+      }
+    ],
+    "inDates": []
+  }
+}

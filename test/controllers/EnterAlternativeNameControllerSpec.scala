@@ -26,8 +26,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.EnterAlternativeNameView
 
-import scala.concurrent.Future
-
 class EnterAlternativeNameControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")

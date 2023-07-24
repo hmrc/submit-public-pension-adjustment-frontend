@@ -58,6 +58,7 @@ signedOut.guidance = cy: We did not save your answers.
 
 unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
+unauthorised.guidance = cy: You should access this service by clicking "Continue to sign in" from the Public Pension Adjustment "Calculation results" page.
 
 claimOnBehalf.title =  cy: Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
 claimOnBehalf.heading = cy: Are you making a claim on behalf of a member for whom you have a lasting power of attorney or deputyship?
@@ -309,3 +310,13 @@ submission.pensionAdministrator = cy: Your pension administrator will contact yo
 submission.receiveCompensation = cy: The process of receiving any compensation you may be owed will take
 submission.link = cy: What did you think of this service?
 submission.takesSecond = cy: (takes 30 seconds)
+
+landingPage.title = cy: Submit Public Pension Adjustment
+
+calculationPrerequisite.title = cy: Calculation Prerequisite
+calculationPrerequisite.heading = cy: Calculation Prerequisite
+calculationPrerequisite.guidance = cy: You should access this service by clicking "Continue to sign in" from the Public Pension Adjustment "Calculation results" page.
+
+unauthorised.title = cy: Authorisation failed.
+unauthorised.heading = cy: Authorisation failed.
+unauthorised.guidance = cy: You should access this service by clicking "Continue to sign in" from the Public Pension Adjustment "Calculation results" page.

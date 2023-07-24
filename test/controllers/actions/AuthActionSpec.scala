@@ -20,14 +20,18 @@ import base.SpecBase
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import controllers.routes
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.mvc.{BodyParsers, Results}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.{running, _}
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.authorise.Predicate
-import uk.gov.hmrc.auth.core.retrieve.Retrieval
+import uk.gov.hmrc.auth.core.retrieve.{Name, Retrieval, ~}
 import uk.gov.hmrc.http.HeaderCarrier
 
+import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -55,7 +59,8 @@ class AuthActionSpec extends SpecBase {
             bodyParsers
           )
           val controller = new Harness(authAction)
-          val result     = controller.onPageLoad()(FakeRequest())
+          val result     =
+            controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=12341234-1234-1234-1234-123412341234"))
 
           status(result) mustBe SEE_OTHER
           redirectLocation(result).value must startWith(appConfig.loginUrl)
@@ -79,7 +84,8 @@ class AuthActionSpec extends SpecBase {
             bodyParsers
           )
           val controller = new Harness(authAction)
-          val result     = controller.onPageLoad()(FakeRequest())
+          val result     =
+            controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe SEE_OTHER
           redirectLocation(result).value must startWith(appConfig.loginUrl)
@@ -206,7 +212,198 @@ class AuthActionSpec extends SpecBase {
         }
       }
     }
+
+    "controller should be accessed and return successfully" - {
+
+      "when name, saUtr and date of birth are retrieved" in {
+
+        val mockAuthConnector = mock[AuthConnector]
+
+        val name        = Some(Name(Some("first"), Some("last")))
+        val saUtr       = Some("saUtr")
+        val dateOfBirth = Some(LocalDate.now())
+
+        val retrievals = new ~(
+          new ~(
+            new ~(
+              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              name
+            ),
+            saUtr
+          ),
+          dateOfBirth
+        )
+        whenRetrievalsAre(mockAuthConnector, retrievals)
+
+        controllerShouldBeAccessed(mockAuthConnector)
+      }
+
+      "when name, saUtr but no date of birth are retrieved" in {
+
+        val mockAuthConnector = mock[AuthConnector]
+
+        val name        = Some(Name(Some("first"), Some("last")))
+        val saUtr       = Some("saUtr")
+        val dateOfBirth = None
+
+        val retrievals = new ~(
+          new ~(
+            new ~(
+              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              name
+            ),
+            saUtr
+          ),
+          dateOfBirth
+        )
+        whenRetrievalsAre(mockAuthConnector, retrievals)
+
+        controllerShouldBeAccessed(mockAuthConnector)
+      }
+
+      "when name, but no saUtr or date of birth are retrieved" in {
+
+        val mockAuthConnector = mock[AuthConnector]
+
+        val name        = Some(Name(Some("first"), Some("last")))
+        val saUtr       = None
+        val dateOfBirth = None
+
+        val retrievals = new ~(
+          new ~(
+            new ~(
+              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              name
+            ),
+            saUtr
+          ),
+          dateOfBirth
+        )
+        whenRetrievalsAre(mockAuthConnector, retrievals)
+
+        controllerShouldBeAccessed(mockAuthConnector)
+      }
+    }
+
+    "should be unauthorised" - {
+
+      "if mandatory value cannot be retrieved" in {
+        val mockAuthConnector = mock[AuthConnector]
+
+        val name        = None
+        val saUtr       = None
+        val dateOfBirth = None
+
+        val retrievals = new ~(
+          new ~(
+            new ~(
+              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              name
+            ),
+            saUtr
+          ),
+          dateOfBirth
+        )
+        whenRetrievalsAre(mockAuthConnector, retrievals)
+
+        val application = applicationBuilder(userAnswers = None).build()
+
+        running(application) {
+          val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+          val appConfig   = application.injector.instanceOf[FrontendAppConfig]
+
+          val authAction = new AuthenticatedIdentifierAction(
+            mockAuthConnector,
+            appConfig,
+            bodyParsers
+          )
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
+        }
+      }
+
+      "if nino cannot be retrieved" in {
+        val mockAuthConnector = mock[AuthConnector]
+
+        val name        = Some(Name(Some("first"), Some("last")))
+        val saUtr       = Some("saUtr")
+        val dateOfBirth = Some(LocalDate.now())
+
+        val retrievals = new ~(
+          new ~(
+            new ~(
+              new ~(new ~(new ~(None, Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              name
+            ),
+            saUtr
+          ),
+          dateOfBirth
+        )
+        whenRetrievalsAre(mockAuthConnector, retrievals)
+
+        val application = applicationBuilder(userAnswers = None).build()
+
+        running(application) {
+          val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+          val appConfig   = application.injector.instanceOf[FrontendAppConfig]
+
+          val authAction = new AuthenticatedIdentifierAction(
+            mockAuthConnector,
+            appConfig,
+            bodyParsers
+          )
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
+        }
+      }
+
+    }
   }
+
+  private def controllerShouldBeAccessed(mockAuthConnector: AuthConnector) = {
+    val application = applicationBuilder(userAnswers = None).build()
+
+    running(application) {
+      val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+      val appConfig   = application.injector.instanceOf[FrontendAppConfig]
+
+      val authAction = new AuthenticatedIdentifierAction(
+        mockAuthConnector,
+        appConfig,
+        bodyParsers
+      )
+      val controller = new Harness(authAction)
+      val result     = controller.onPageLoad()(FakeRequest())
+
+      status(result) mustBe OK
+    }
+  }
+
+  private def whenRetrievalsAre(
+    mockAuthConnector: AuthConnector,
+    retrievals: Option[String] ~ Option[String] ~ Option[AffinityGroup] ~ Some[User.type] ~
+      Option[Name] ~ Option[String] ~ Option[LocalDate]
+  ) =
+    when(
+      mockAuthConnector.authorise[
+        Option[String] ~ Option[String] ~ Option[AffinityGroup] ~ Option[CredentialRole] ~
+          Option[Name] ~ Option[String] ~ Option[LocalDate]
+      ](
+        any(),
+        any()
+      )(any(), any())
+    )
+      .thenReturn(
+        Future.successful(
+          retrievals
+        )
+      )
 }
 
 class FakeFailingAuthConnector @Inject() (exceptionToReturn: Throwable) extends AuthConnector {
