@@ -39,8 +39,8 @@ index.title = cy: Submit Public Pension Adjustment service
 index.heading = cy: Submit Public Pension Adjustment service
 index.guidance = cy: Welcome to Submit Public Pension Adjustment service. Please see the README file for a guide to getting started.
 
-checkYourAnswers.title = cy: Check Your Answers
-checkYourAnswers.heading = cy: Check Your Answers
+checkYourAnswers.title = cy: Check your answers
+checkYourAnswers.heading = cy: Check your answers
 checkYourAnswers.notAnswered = cy: Not answered
 checkYourAnswers.reviewBeforeSubmission = cy: Check your answers before completing your submission.
 checkYourAnswers.continue = cy: Continue
