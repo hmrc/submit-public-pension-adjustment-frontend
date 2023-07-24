@@ -33,7 +33,7 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
   "LandingPage Controller" - {
 
     lazy val landingPageRoute =
-      routes.LandingPageController.onPageLoad(UniqueId("12345678-1234-1234-1234-123412341234")).url
+      routes.LandingPageController.onPageLoad(Some(UniqueId("12345678-1234-1234-1234-123412341234"))).url
 
     "must redirect to first data capture page when submission can be retrieved" in {
 
@@ -58,7 +58,7 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to journey recovery when submission cannot be retrieved" in {
+    "must redirect to calculation prerequisite page when submission cannot be retrieved" in {
 
       val mockCalculationDataService = mock[CalculationDataService]
       when(mockCalculationDataService.retrieveSubmission(any(), any())(any()))
@@ -77,14 +77,14 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        checkNavigation(redirectLocation(result).get, "/there-is-a-problem")
+        checkNavigation(redirectLocation(result).get, "/calculation-prerequisite")
       }
     }
 
     "must return bad request and error page if uniqueId is invalid format" in {
 
       lazy val landingPageRoute =
-        routes.LandingPageController.onPageLoad(UniqueId("invalidUniqueId")).url
+        routes.LandingPageController.onPageLoad(Some(UniqueId("invalidUniqueId"))).url
 
       val mockCalculationDataService = mock[CalculationDataService]
       when(mockCalculationDataService.retrieveSubmission(any(), any())(any()))

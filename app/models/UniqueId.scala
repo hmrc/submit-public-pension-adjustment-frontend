@@ -29,19 +29,25 @@ object UniqueId {
   val pattern: Regex =
     "^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$".r.anchored
 
-  implicit def uniqueIdBindable(implicit stringBinder: QueryStringBindable[String]): QueryStringBindable[UniqueId] =
-    new QueryStringBindable[UniqueId] {
+  implicit def uniqueIdBindable(implicit
+    stringBinder: QueryStringBindable[String]
+  ): QueryStringBindable[Option[UniqueId]] =
+    new QueryStringBindable[Option[UniqueId]] {
 
-      override def unbind(key: String, index: UniqueId): String =
-        stringBinder.unbind(key, index.value)
+      override def unbind(key: String, index: Option[UniqueId]): String =
+        index match {
+          case Some(uniqueId: UniqueId) => stringBinder.unbind(key, uniqueId.value)
+          case None                     => "None"
+        }
 
-      override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, UniqueId]] =
+      override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, Option[UniqueId]]] =
         params.get(key) match {
+          case None             => Some(Right(None))
           case Some(Seq(value)) => fromString(value)
           case _                => Some(Left("invalid param"))
         }
     }
 
-  def fromString(uuidString: String): Option[Either[String, UniqueId]] =
-    if (pattern.matches(uuidString)) Some(Right(UniqueId(uuidString))) else Some(Left("invalid param format"))
+  def fromString(uuidString: String): Option[Either[String, Option[UniqueId]]] =
+    if (pattern.matches(uuidString)) Some(Right(Some(UniqueId(uuidString)))) else Some(Left("invalid param format"))
 }

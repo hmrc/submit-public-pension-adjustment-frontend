@@ -17,7 +17,6 @@
 package controllers.actions
 
 import base.SpecBase
-import com.google.inject.Inject
 import config.FrontendAppConfig
 import controllers.routes
 import org.mockito.ArgumentMatchers.any
@@ -27,17 +26,15 @@ import play.api.mvc.{BodyParsers, Results}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{running, _}
 import uk.gov.hmrc.auth.core._
-import uk.gov.hmrc.auth.core.authorise.Predicate
-import uk.gov.hmrc.auth.core.retrieve.{Name, Retrieval, ~}
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.auth.core.retrieve.{Name, ~}
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class AuthActionSpec extends SpecBase {
+class LandingPageAuthActionSpec extends SpecBase {
 
-  class Harness(authAction: IdentifierAction) {
+  class Harness(authAction: LandingPageIdentifierAction) {
     def onPageLoad() = authAction(_ => Results.Ok)
   }
 
@@ -45,7 +42,7 @@ class AuthActionSpec extends SpecBase {
 
     "when the user hasn't logged in" - {
 
-      "must redirect the user to log in " in {
+      "must redirect the user to log in" in {
 
         val application = applicationBuilder(userAnswers = None).build()
 
@@ -53,7 +50,7 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             new FakeFailingAuthConnector(new MissingBearerToken),
             appConfig,
             bodyParsers
@@ -70,7 +67,7 @@ class AuthActionSpec extends SpecBase {
 
     "the user's session has expired" - {
 
-      "must redirect the user to log in " in {
+      "must redirect the user to log in when a submissionUniqueId is specified" in {
 
         val application = applicationBuilder(userAnswers = None).build()
 
@@ -78,17 +75,61 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             new FakeFailingAuthConnector(new BearerTokenExpired),
             appConfig,
             bodyParsers
           )
           val controller = new Harness(authAction)
           val result     =
-            controller.onPageLoad()(FakeRequest())
+            controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=12341234-1234-1234-1234-123412341234"))
 
           status(result) mustBe SEE_OTHER
           redirectLocation(result).value must startWith(appConfig.loginUrl)
+        }
+      }
+
+      "must advise to be accessed from calculation service if no submissionUniqueId" in {
+
+        val application = applicationBuilder(userAnswers = None).build()
+
+        running(application) {
+          val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+          val appConfig   = application.injector.instanceOf[FrontendAppConfig]
+
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
+            new FakeFailingAuthConnector(new BearerTokenExpired),
+            appConfig,
+            bodyParsers
+          )
+          val controller = new Harness(authAction)
+          val result     =
+            controller.onPageLoad()(FakeRequest(GET, ""))
+
+          status(result) mustBe SEE_OTHER
+          redirectLocation(result).value must startWith("/submit-public-pension-adjustment/calculation-prerequisite")
+        }
+      }
+
+      "must be unauthorised if submissionUniqueId is not well formed" in {
+
+        val application = applicationBuilder(userAnswers = None).build()
+
+        running(application) {
+          val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+          val appConfig   = application.injector.instanceOf[FrontendAppConfig]
+
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
+            new FakeFailingAuthConnector(new BearerTokenExpired),
+            appConfig,
+            bodyParsers
+          )
+          val controller = new Harness(authAction)
+          val result     =
+            controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=someInvalidFormat"))
+
+          status(result) mustBe SEE_OTHER
+          redirectLocation(result).value must startWith("/submit-public-pension-adjustment/there-is-a-problem")
         }
       }
     }
@@ -103,7 +144,7 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             new FakeFailingAuthConnector(new InsufficientEnrolments),
             appConfig,
             bodyParsers
@@ -127,7 +168,7 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             new FakeFailingAuthConnector(new InsufficientConfidenceLevel),
             appConfig,
             bodyParsers
@@ -151,7 +192,7 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             new FakeFailingAuthConnector(new UnsupportedAuthProvider),
             appConfig,
             bodyParsers
@@ -175,7 +216,7 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             new FakeFailingAuthConnector(new UnsupportedAffinityGroup),
             appConfig,
             bodyParsers
@@ -199,7 +240,7 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             new FakeFailingAuthConnector(new UnsupportedCredentialRole),
             appConfig,
             bodyParsers
@@ -312,7 +353,7 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             mockAuthConnector,
             appConfig,
             bodyParsers
@@ -350,7 +391,7 @@ class AuthActionSpec extends SpecBase {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
           val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val authAction = new AuthenticatedIdentifierAction(
+          val authAction = new AuthenticatedLandingPageIdentifierAction(
             mockAuthConnector,
             appConfig,
             bodyParsers
@@ -373,7 +414,7 @@ class AuthActionSpec extends SpecBase {
       val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
       val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-      val authAction = new AuthenticatedIdentifierAction(
+      val authAction = new AuthenticatedLandingPageIdentifierAction(
         mockAuthConnector,
         appConfig,
         bodyParsers
@@ -404,14 +445,4 @@ class AuthActionSpec extends SpecBase {
           retrievals
         )
       )
-}
-
-class FakeFailingAuthConnector @Inject() (exceptionToReturn: Throwable) extends AuthConnector {
-  val serviceUrl: String = ""
-
-  override def authorise[A](predicate: Predicate, retrieval: Retrieval[A])(implicit
-    hc: HeaderCarrier,
-    ec: ExecutionContext
-  ): Future[A] =
-    Future.failed(exceptionToReturn)
 }

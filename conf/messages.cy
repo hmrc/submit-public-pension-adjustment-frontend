@@ -309,3 +309,11 @@ submission.link = cy: What did you think of this service?
 submission.takesSecond = cy: (takes 30 seconds)
 
 landingPage.title = cy: Submit Public Pension Adjustment
+
+calculationPrerequisite.title = cy: Calculation Prerequisite
+calculationPrerequisite.heading = cy: Calculation Prerequisite
+calculationPrerequisite.guidance = cy: You should access this service by clicking "Continue to sign in" from the Public Pension Adjustment "Calculation results" page.
+
+unauthorised.title = cy: Authorisation failed.
+unauthorised.heading = cy: Authorisation failed.
+unauthorised.guidance = cy: You should access this service by clicking "Continue to sign in" from the Public Pension Adjustment "Calculation results" page.

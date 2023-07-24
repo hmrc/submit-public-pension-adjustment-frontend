@@ -26,13 +26,13 @@ class UniqueIdTest extends SpecBase {
     "must be constructed when string is valid" in {
       val validUuidString = "12341234-1234-1234-1234-123412341234"
 
-      val uniqueIdOption: Option[Either[String, UniqueId]] = UniqueId.fromString(validUuidString)
+      val uniqueIdOption: Option[Either[String, Option[UniqueId]]] = UniqueId.fromString(validUuidString)
 
-      uniqueIdOption mustBe Some(Right(UniqueId(validUuidString)))
+      uniqueIdOption mustBe Some(Right(Some(UniqueId(validUuidString))))
     }
 
     "must not be constructed when string is invalid" in {
-      val uniqueIdOption: Option[Either[String, UniqueId]] = UniqueId.fromString("invalidUniqueId")
+      val uniqueIdOption: Option[Either[String, Option[UniqueId]]] = UniqueId.fromString("invalidUniqueId")
 
       uniqueIdOption mustBe Some(Left("invalid param format"))
     }

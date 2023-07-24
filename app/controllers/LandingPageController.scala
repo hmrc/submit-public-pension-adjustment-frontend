@@ -29,7 +29,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class LandingPageController @Inject() (
   override val messagesApi: MessagesApi,
-  identify: IdentifierAction,
+  identify: LandingPageIdentifierAction,
   val controllerComponents: MessagesControllerComponents,
   calculationDataService: CalculationDataService
 )(implicit ec: ExecutionContext)
@@ -37,17 +37,19 @@ class LandingPageController @Inject() (
     with I18nSupport
     with Logging {
 
-  def onPageLoad(submissionUniqueId: UniqueId): Action[AnyContent] = identify.async { implicit request =>
-    val submissionRetrievalStatus: Future[Boolean] =
-      calculationDataService.retrieveSubmission(request.userId, submissionUniqueId)
-
+  def onPageLoad(submissionUniqueId: Option[UniqueId] = None): Action[AnyContent] = identify.async { implicit request =>
+    val submissionRetrievalStatus: Future[Boolean] = submissionUniqueId match {
+      case Some(id) => calculationDataService.retrieveSubmission(request.userId, id)
+      case None     => Future.successful(false)
+    }
     submissionRetrievalStatus.map { submissionRetrievalStatus =>
       logger.info(s"submissionUniqueId : $submissionUniqueId - submissionRetrievalStatus : $submissionRetrievalStatus")
 
       if (submissionRetrievalStatus) {
         Redirect(routes.ClaimOnBehalfController.onPageLoad(NormalMode))
       } else {
-        Redirect(routes.JourneyRecoveryController.onPageLoad())
+        logger.error("submission could not be retrieved")
+        Redirect(routes.CalculationPrerequisiteController.onPageLoad())
       }
     }
   }

@@ -33,3 +33,15 @@ class FakeIdentifierAction @Inject() (bodyParsers: PlayBodyParsers) extends Iden
   override protected def executionContext: ExecutionContext =
     scala.concurrent.ExecutionContext.Implicits.global
 }
+
+class FakeLandingPageIdentifierAction @Inject() (bodyParsers: PlayBodyParsers) extends LandingPageIdentifierAction {
+
+  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] =
+    block(IdentifierRequest(request, "id", "nino", None, None, None))
+
+  override def parser: BodyParser[AnyContent] =
+    bodyParsers.default
+
+  override protected def executionContext: ExecutionContext =
+    scala.concurrent.ExecutionContext.Implicits.global
+}

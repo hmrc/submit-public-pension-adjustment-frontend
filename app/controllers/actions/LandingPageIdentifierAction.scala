@@ -19,11 +19,12 @@ package controllers.actions
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import controllers.routes
+import models.UniqueId
 import models.requests.IdentifierRequest
 import play.api.Logging
-import play.api.mvc.Results._
-import play.api.mvc._
-import uk.gov.hmrc.auth.core._
+import play.api.mvc.{ActionBuilder, ActionFunction, AnyContent, BodyParsers, Request, Result}
+import play.api.mvc.Results.Redirect
+import uk.gov.hmrc.auth.core.{AffinityGroup, AuthConnector, AuthorisationException, AuthorisedFunctions, ConfidenceLevel, NoActiveSession, User}
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.http.HeaderCarrier
@@ -31,16 +32,16 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait IdentifierAction
+trait LandingPageIdentifierAction
     extends ActionBuilder[IdentifierRequest, AnyContent]
     with ActionFunction[Request, IdentifierRequest]
 
-class AuthenticatedIdentifierAction @Inject() (
+class AuthenticatedLandingPageIdentifierAction @Inject() (
   override val authConnector: AuthConnector,
   config: FrontendAppConfig,
   val parser: BodyParsers.Default
 )(implicit val executionContext: ExecutionContext)
-    extends IdentifierAction
+    extends LandingPageIdentifierAction
     with AuthorisedFunctions
     with Logging {
 
@@ -71,12 +72,27 @@ class AuthenticatedIdentifierAction @Inject() (
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
     } recover {
       case _: NoActiveSession        =>
-        Redirect(
-          config.loginUrl,
-          Map("continue" -> Seq(s"${config.loginContinueUrl}"))
-        )
+        noActiveSession(request)
       case _: AuthorisationException =>
         Redirect(routes.UnauthorisedController.onPageLoad)
     }
   }
+
+  private def noActiveSession[A](request: Request[A]) =
+    request.getQueryString("submissionUniqueId") match {
+      case Some(submissionUniqueId) =>
+        UniqueId.fromString(submissionUniqueId) match {
+          case Some(Right(Some(UniqueId(_)))) =>
+            Redirect(
+              config.loginUrl,
+              Map("continue" -> Seq(s"${config.landingPageLoginContinueUrl}?submissionUniqueId=$submissionUniqueId"))
+            )
+          case _                              =>
+            logger.error("submissionUniqueId is invalid")
+            Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None))
+        }
+      case None                     =>
+        logger.error("no submissionUniqueId is specified")
+        Redirect(routes.CalculationPrerequisiteController.onPageLoad.url)
+    }
 }
