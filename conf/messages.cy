@@ -41,6 +41,7 @@ index.guidance = cy: Welcome to Submit Public Pension Adjustment service. Please
 
 checkYourAnswers.title = cy: Check Your Answers
 checkYourAnswers.heading = cy: Check Your Answers
+checkYourAnswers.notAnswered = cy: Not answered
 checkYourAnswers.reviewBeforeSubmission = cy: Check your answers before completing your submission.
 checkYourAnswers.continue = cy: Continue
 
@@ -264,25 +265,27 @@ pensionSchemeMemberDOB.error.invalid = cy: Enter a real date of birth.
 pensionSchemeMemberDOB.change.hidden = cy: What is the pension scheme member's date of birth?
 pensionSchemeMemberDOB.caption = cy: Personal details
 
-alternativeName.title = cy: alternativeName
-alternativeName.heading = cy: alternativeName
-alternativeName.checkYourAnswersLabel = cy: alternativeName
-alternativeName.error.required = cy: Select yes if alternativeName
-alternativeName.change.hidden = cy: AlternativeName
+alternativeName.title = cy: Is your name the same one that your pension scheme has?
+alternativeName.heading = cy: Is your name the same one that your pension scheme has?
+alternativeName.checkYourAnswersLabel = cy: Is your name the same one that your pension scheme has?
+alternativeName.error.required = cy: Select yes if your name is the same one that your pension scheme has
+alternativeName.change.hidden = cy: Is your name the same one that your pension scheme has?
 
-enterAlternativeName.title = cy: enterAlternativeName
-enterAlternativeName.heading = cy: enterAlternativeName
-enterAlternativeName.checkYourAnswersLabel = cy: enterAlternativeName
-enterAlternativeName.error.required = cy: Enter enterAlternativeName
-enterAlternativeName.error.length = cy: EnterAlternativeName must be 100 characters or less
-enterAlternativeName.change.hidden = cy: EnterAlternativeName
+enterAlternativeName.title = cy: What is your name?
+enterAlternativeName.heading = cy: What is your name?
+enterAlternativeName.checkYourAnswersLabel = cy: What is your name?
+enterAlternativeName.error.required = cy: Enter your name
+enterAlternativeName.error.length = cy: Your name must be 100 characters or less
+enterAlternativeName.change.hidden = cy: What is your name?
 
-contactNumber.title = cy: contactNumber
-contactNumber.heading = cy: contactNumber
-contactNumber.checkYourAnswersLabel = cy: contactNumber
-contactNumber.error.required = cy: Enter contactNumber
-contactNumber.error.length = cy: ContactNumber must be 100 characters or less
-contactNumber.change.hidden = cy: ContactNumber
+contactNumber.title = cy: Enter your contact number
+contactNumber.heading = cy: Enter your contact number (optional)
+contactNumber.checkYourAnswersLabel = cy: Enter your contact number
+contactNumber.hint = cy: For the international numbers include the country code
+contactNumber.error.invalid = cy: Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192
+contactNumber.error.length = cy: Contact number must be 100 characters or less
+contactNumber.change.hidden = cy: Enter your contact number
+contactNumber.label = cy: (optional)
 
 declarations.title = cy: Declarations
 declarations.heading = cy: Declarations

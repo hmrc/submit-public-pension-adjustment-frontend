@@ -39,8 +39,9 @@ index.title = Submit Public Pension Adjustment service
 index.heading = Submit Public Pension Adjustment service
 index.guidance = Welcome to Submit Public Pension Adjustment service. Please see the README file for a guide to getting started.
 
-checkYourAnswers.title = Check your answers
-checkYourAnswers.heading = Check your answers
+checkYourAnswers.title = Check Your Answers
+checkYourAnswers.heading = Check Your Answers
+checkYourAnswers.notAnswered = Not answered
 checkYourAnswers.reviewBeforeSubmission = Check your answers before completing your submission.
 checkYourAnswers.continue = Continue
 
@@ -264,25 +265,27 @@ pensionSchemeMemberDOB.error.invalid = Enter a real date of birth.
 pensionSchemeMemberDOB.change.hidden =  What is the pension scheme member's date of birth?
 pensionSchemeMemberDOB.caption = Personal details
 
-alternativeName.title = alternativeName
-alternativeName.heading = alternativeName
-alternativeName.checkYourAnswersLabel = alternativeName
-alternativeName.error.required = Select yes if alternativeName
-alternativeName.change.hidden = AlternativeName
+alternativeName.title = Is your name the same one that your pension scheme has?
+alternativeName.heading = Is your name the same one that your pension scheme has?
+alternativeName.checkYourAnswersLabel = Is your name the same one that your pension scheme has?
+alternativeName.error.required = Select yes if your name is the same one that your pension scheme has
+alternativeName.change.hidden = Is your name the same one that your pension scheme has?
 
-enterAlternativeName.title = enterAlternativeName
-enterAlternativeName.heading = enterAlternativeName
-enterAlternativeName.checkYourAnswersLabel = enterAlternativeName
-enterAlternativeName.error.required = Enter enterAlternativeName
-enterAlternativeName.error.length = EnterAlternativeName must be 100 characters or less
-enterAlternativeName.change.hidden = EnterAlternativeName
+enterAlternativeName.title = What is your name?
+enterAlternativeName.heading = What is your name?
+enterAlternativeName.checkYourAnswersLabel = What is your name?
+enterAlternativeName.error.required = Enter your name
+enterAlternativeName.error.length = Your name must be 100 characters or less
+enterAlternativeName.change.hidden = What is your name?
 
-contactNumber.title = contactNumber
-contactNumber.heading = contactNumber
-contactNumber.checkYourAnswersLabel = contactNumber
-contactNumber.error.required = Enter contactNumber
-contactNumber.error.length = ContactNumber must be 100 characters or less
-contactNumber.change.hidden = ContactNumber
+contactNumber.title = Enter your contact number
+contactNumber.heading = Enter your contact number (optional)
+contactNumber.checkYourAnswersLabel = Enter your contact number
+contactNumber.hint = For the international numbers include the country code
+contactNumber.error.invalid = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192
+contactNumber.error.length = Contact number must be 100 characters or less
+contactNumber.change.hidden = Enter your contact number
+contactNumber.label = (optional)
 
 declarations.title = Declarations
 declarations.heading = Declarations

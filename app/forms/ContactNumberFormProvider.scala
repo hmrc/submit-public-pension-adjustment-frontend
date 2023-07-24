@@ -17,15 +17,26 @@
 package forms
 
 import javax.inject.Inject
-
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import forms.mappings.Mappings
 import play.api.data.Form
+import play.api.data.Forms._
+
+import scala.util.Try
 
 class ContactNumberFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[String] =
+  private val util = PhoneNumberUtil.getInstance
+
+  def apply(): Form[Option[String]] =
     Form(
-      "value" -> text("contactNumber.error.required")
-        .verifying(maxLength(100, "contactNumber.error.length"))
+      "value" -> optional(
+        text()
+          .verifying("contactNumber.error.invalid", isValid(_))
+      )
     )
+
+  private def isValid(string: String): Boolean =
+    Try(util.isPossibleNumber(util.parse(string, "GB")))
+      .getOrElse(false)
 }

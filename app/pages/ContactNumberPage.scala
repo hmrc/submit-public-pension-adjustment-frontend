@@ -26,7 +26,6 @@ case object ContactNumberPage extends QuestionPage[String] {
 
   override def toString: String = "contactNumber"
 
-  // TODO Change nav for future pages in journey
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ContactNumberPage) match {
       case Some(_) => routes.AreYouAUKResidentController.onPageLoad(NormalMode)

@@ -10,7 +10,8 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "play-frontend-hmrc"            % "6.8.0-play-28",
     "uk.gov.hmrc"       %% "play-conditional-form-mapping" % "1.12.0-play-28",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-28"    % bootstrapPlay28Version,
-    "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"            % "1.1.0"
+    "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"            % "1.1.0",
+    "com.googlecode.libphonenumber" % "libphonenumber"       % "8.13.12"
   )
 
   val test = Seq(
