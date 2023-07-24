@@ -279,7 +279,7 @@ enterAlternativeName.error.length = Your name must be 100 characters or less
 enterAlternativeName.change.hidden = What is your name?
 
 contactNumber.title = Enter your contact number
-contactNumber.heading = Enter your contact number
+contactNumber.heading = Enter your contact number (optional)
 contactNumber.checkYourAnswersLabel = Enter your contact number
 contactNumber.hint = For the international numbers include the country code
 contactNumber.error.invalid = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192
