@@ -122,12 +122,20 @@ class UkAddressFormProviderSpec extends StringFieldBehaviours {
     val fieldName   = "postCode"
     val requiredKey = "ukAddress.error.postCode.required"
     val lengthKey   = "ukAddress.error.postCode.length"
-    val maxLength   = 100
+    val invalidKey  = "ukAddress.error.postCode.invalid"
+    val maxLength   = 8
 
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      stringsWithMaxLength(maxLength)
+      ukPostcode
+    )
+
+    behave like fieldThatDoesNotBindInvalidData(
+      form,
+      fieldName,
+      unsafeInputsWithMaxLength(maxLength),
+      FormError(fieldName, invalidKey, Seq("""[a-zA-Z]{1,2}[0-9][0-9a-zA-Z]? ?[0-9][a-zA-Z]{2}"""))
     )
 
     behave like fieldWithMaxLength(
