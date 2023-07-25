@@ -23,19 +23,13 @@ class LegacyPensionSchemeReferenceFormProviderSpec extends StringFieldBehaviours
 
   val requiredKey = "legacyPensionSchemeReference.error.required"
   val lengthKey   = "legacyPensionSchemeReference.error.length"
-  val maxLength   = 100
+  val maxLength   = 15
 
   val form = new LegacyPensionSchemeReferenceFormProvider()()
 
   ".value" - {
 
     val fieldName = "value"
-
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
 
     behave like fieldWithMaxLength(
       form,
@@ -44,10 +38,5 @@ class LegacyPensionSchemeReferenceFormProviderSpec extends StringFieldBehaviours
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
   }
 }

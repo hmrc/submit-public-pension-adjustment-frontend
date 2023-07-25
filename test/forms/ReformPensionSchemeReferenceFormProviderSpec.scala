@@ -23,7 +23,7 @@ class ReformPensionSchemeReferenceFormProviderSpec extends StringFieldBehaviours
 
   val requiredKey = "reformPensionSchemeReference.error.required"
   val lengthKey   = "reformPensionSchemeReference.error.length"
-  val maxLength   = 100
+  val maxLength   = 15
 
   val form = new ReformPensionSchemeReferenceFormProvider()()
 
@@ -31,23 +31,11 @@ class ReformPensionSchemeReferenceFormProviderSpec extends StringFieldBehaviours
 
     val fieldName = "value"
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
-
     behave like fieldWithMaxLength(
       form,
       fieldName,
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
     )
   }
 }

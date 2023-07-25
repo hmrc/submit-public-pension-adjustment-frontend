@@ -34,7 +34,7 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             ReformPensionSchemeReferencePage,
-            "ripsr"
+            "QT123456123456"
           )
           .success
           .value

@@ -21,6 +21,7 @@ import models.{CheckMode, UserAnswers}
 import pages.LegacyPensionSchemeReferencePage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
@@ -29,9 +30,10 @@ object LegacyPensionSchemeReferenceSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LegacyPensionSchemeReferencePage).map { answer =>
+      val value = if (answer == "") messages("checkYourAnswers.notAnswered") else answer
       SummaryListRowViewModel(
         key = "legacyPensionSchemeReference.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        value = ValueViewModel(HtmlFormat.escape(value).toString),
         actions = Seq(
           ActionItemViewModel("site.change", routes.LegacyPensionSchemeReferenceController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("legacyPensionSchemeReference.change.hidden"))

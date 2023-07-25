@@ -39,8 +39,8 @@ index.title = cy: Submit Public Pension Adjustment service
 index.heading = cy: Submit Public Pension Adjustment service
 index.guidance = cy: Welcome to Submit Public Pension Adjustment service. Please see the README file for a guide to getting started.
 
-checkYourAnswers.title = cy: Check Your Answers
-checkYourAnswers.heading = cy: Check Your Answers
+checkYourAnswers.title = cy: Check your answers
+checkYourAnswers.heading = cy: Check your answers
 checkYourAnswers.notAnswered = cy: Not answered
 checkYourAnswers.reviewBeforeSubmission = cy: Check your answers before completing your submission.
 checkYourAnswers.continue = cy: Continue
@@ -208,19 +208,17 @@ ukAddress.townOrCity.change.hidden = cy: Town or city
 ukAddress.county.change.hidden = cy: County
 ukAddress.postCode.change.hidden = cy: Postcode
 
-legacyPensionSchemeReference.title = cy: What is your legacy individual pension scheme reference?
-legacyPensionSchemeReference.heading = cy: What is your legacy individual pension scheme reference?
-legacyPensionSchemeReference.checkYourAnswersLabel = cy: What is your legacy individual pension scheme reference
-legacyPensionSchemeReference.error.required = cy: Enter your legacy individual pension scheme reference
-legacyPensionSchemeReference.error.length = cy: Legacy individual pension scheme reference must be 100 characters or less
-legacyPensionSchemeReference.change.hidden = cy: What is your legacy individual pension scheme reference
+legacyPensionSchemeReference.title = cy: What is your legacy individual pension scheme reference?(optional)
+legacyPensionSchemeReference.heading = cy: What is your legacy individual pension scheme reference?(optional)
+legacyPensionSchemeReference.checkYourAnswersLabel = cy: What is your legacy individual pension scheme reference?
+legacyPensionSchemeReference.error.length = cy: Legacy individual pension scheme reference must be 15 characters or less
+legacyPensionSchemeReference.change.hidden = cy: What is your legacy individual pension scheme reference?
 
-reformPensionSchemeReference.title = cy: What is your reform individual pension scheme reference?
-reformPensionSchemeReference.heading = cy: What is your reform individual pension scheme reference?
-reformPensionSchemeReference.checkYourAnswersLabel = cy: What is your reform individual pension scheme reference
-reformPensionSchemeReference.error.required = cy: Enter your reform individual pension scheme reference
-reformPensionSchemeReference.error.length = cy: Reform individual pension scheme reference must be 100 characters or less
-reformPensionSchemeReference.change.hidden = cy: What is your reform individual pension scheme reference
+reformPensionSchemeReference.title = cy: What is your reform individual pension scheme reference?(optional)
+reformPensionSchemeReference.heading = cy: What is your reform individual pension scheme reference?(optional)
+reformPensionSchemeReference.checkYourAnswersLabel = cy: What is your reform individual pension scheme reference?
+reformPensionSchemeReference.error.length = cy: Reform individual pension scheme reference must be 15 characters or less
+reformPensionSchemeReference.change.hidden = cy: What is your reform individual pension scheme reference?
 
 claimingHigherOrAdditionalTaxRateRelief.title = cy: Are you claiming for higher or additional tax rate relief?
 claimingHigherOrAdditionalTaxRateRelief.heading = cy: Are you claiming for higher or additional tax rate relief?

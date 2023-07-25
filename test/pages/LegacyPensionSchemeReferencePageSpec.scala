@@ -34,13 +34,13 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             LegacyPensionSchemeReferencePage,
-            "lipsr"
+            "QT123456123456"
           )
           .success
           .value
         val result = LegacyPensionSchemeReferencePage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/reformPensionSchemeReference")
+        checkNavigation(result, "/reform-pension-scheme-reference")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -57,7 +57,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             LegacyPensionSchemeReferencePage,
-            "lipsr"
+            "QT123456123456"
           )
           .success
           .value
