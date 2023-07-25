@@ -17,46 +17,42 @@
 package controllers
 
 import base.SpecBase
-import forms.PensionSchemeMemberNinoFormProvider
-import generators.Generators
+import forms.PensionSchemeMemberResidenceFormProvider
 import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
-import org.scalacheck.Arbitrary.arbitrary
 import org.scalatestplus.mockito.MockitoSugar
-import pages.PensionSchemeMemberNinoPage
+import pages.PensionSchemeMemberResidencePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import uk.gov.hmrc.domain.Nino
-import views.html.PensionSchemeMemberNinoView
+import views.html.PensionSchemeMemberResidenceView
 
 import scala.concurrent.Future
 
-class PensionSchemeMemberNinoControllerSpec extends SpecBase with MockitoSugar with Generators {
+class PensionSchemeMemberResidenceControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider       = new PensionSchemeMemberNinoFormProvider()
-  val form               = formProvider()
-  private val ninoSample = arbitrary[Nino].sample.value
+  val formProvider = new PensionSchemeMemberResidenceFormProvider()
+  val form         = formProvider()
 
-  lazy val pensionSchemeMemberNinoRoute = routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode).url
+  lazy val pensionSchemeMemberResidenceRoute = routes.PensionSchemeMemberResidenceController.onPageLoad(NormalMode).url
 
-  "PensionSchemeMemberNino Controller" - {
+  "PensionSchemeMemberResidence Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, pensionSchemeMemberNinoRoute)
+        val request = FakeRequest(GET, pensionSchemeMemberResidenceRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[PensionSchemeMemberNinoView]
+        val view = application.injector.instanceOf[PensionSchemeMemberResidenceView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -65,22 +61,19 @@ class PensionSchemeMemberNinoControllerSpec extends SpecBase with MockitoSugar w
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PensionSchemeMemberNinoPage, ninoSample).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(PensionSchemeMemberResidencePage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, pensionSchemeMemberNinoRoute)
+        val request = FakeRequest(GET, pensionSchemeMemberResidenceRoute)
 
-        val view = application.injector.instanceOf[PensionSchemeMemberNinoView]
+        val view = application.injector.instanceOf[PensionSchemeMemberResidenceView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ninoSample), NormalMode)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -91,21 +84,19 @@ class PensionSchemeMemberNinoControllerSpec extends SpecBase with MockitoSugar w
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
           .build()
 
       running(application) {
         val request =
-          FakeRequest(POST, pensionSchemeMemberNinoRoute)
-            .withFormUrlEncodedBody(("value", ninoSample.value))
+          FakeRequest(POST, pensionSchemeMemberResidenceRoute)
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.PensionSchemeMemberTaxReferenceController
+        redirectLocation(result).value mustEqual controllers.routes.PensionSchemeMemberUKAddressController
           .onPageLoad(NormalMode)
           .url
       }
@@ -117,12 +108,12 @@ class PensionSchemeMemberNinoControllerSpec extends SpecBase with MockitoSugar w
 
       running(application) {
         val request =
-          FakeRequest(POST, pensionSchemeMemberNinoRoute)
+          FakeRequest(POST, pensionSchemeMemberResidenceRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[PensionSchemeMemberNinoView]
+        val view = application.injector.instanceOf[PensionSchemeMemberResidenceView]
 
         val result = route(application, request).value
 
@@ -136,7 +127,7 @@ class PensionSchemeMemberNinoControllerSpec extends SpecBase with MockitoSugar w
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, pensionSchemeMemberNinoRoute)
+        val request = FakeRequest(GET, pensionSchemeMemberResidenceRoute)
 
         val result = route(application, request).value
 
@@ -151,8 +142,8 @@ class PensionSchemeMemberNinoControllerSpec extends SpecBase with MockitoSugar w
 
       running(application) {
         val request =
-          FakeRequest(POST, pensionSchemeMemberNinoRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+          FakeRequest(POST, pensionSchemeMemberResidenceRoute)
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 

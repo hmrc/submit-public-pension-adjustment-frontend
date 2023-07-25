@@ -21,6 +21,16 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryPensionSchemeMemberInternationalAddressPage
+    : Arbitrary[PensionSchemeMemberInternationalAddressPage.type] =
+    Arbitrary(PensionSchemeMemberInternationalAddressPage)
+
+  implicit lazy val arbitraryPensionSchemeMemberUKAddressPage: Arbitrary[PensionSchemeMemberUKAddressPage.type] =
+    Arbitrary(PensionSchemeMemberUKAddressPage)
+
+  implicit lazy val arbitraryPensionSchemeMemberResidencePage: Arbitrary[PensionSchemeMemberResidencePage.type] =
+    Arbitrary(PensionSchemeMemberResidencePage)
+
   implicit lazy val arbitraryWhenWillYouAskPensionSchemeToPayPage
     : Arbitrary[WhenWillYouAskPensionSchemeToPayPage.type] =
     Arbitrary(WhenWillYouAskPensionSchemeToPayPage)

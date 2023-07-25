@@ -16,28 +16,30 @@
 
 package forms
 
-import forms.behaviours.StringFieldBehaviours
-import org.scalacheck.Gen
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-class ContactNumberFormProviderSpec extends StringFieldBehaviours {
+class PensionSchemeMemberResidenceFormProviderSpec extends BooleanFieldBehaviours {
 
-  val invalidKey = "contactNumber.error.invalid"
-  val maxLength  = 100
+  val requiredKey = "pensionSchemeMemberResidence.error.required"
+  val invalidKey  = "error.boolean"
 
-  val form = new ContactNumberFormProvider()()
+  val form = new PensionSchemeMemberResidenceFormProvider()()
 
   ".value" - {
 
     val fieldName = "value"
 
-    behave like fieldThatBindsValidData(
+    behave like booleanField(
       form,
       fieldName,
-      Gen.oneOf("07777777777", "+447777777777", "07777777777  ", "+1(111)111-1111", "111.111.1111")
+      invalidError = FormError(fieldName, invalidKey)
     )
 
-    "fail to bind an invalid phone number" in {
-      form.bind(Map(fieldName -> "invalid")).error("value").value.message mustEqual invalidKey
-    }
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
   }
 }

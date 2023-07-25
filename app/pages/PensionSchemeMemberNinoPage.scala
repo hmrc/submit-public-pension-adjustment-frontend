@@ -19,7 +19,7 @@ package pages
 import play.api.libs.json.JsPath
 import uk.gov.hmrc.domain.Nino
 import controllers.routes
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import play.api.mvc.Call
 
 case object PensionSchemeMemberNinoPage extends QuestionPage[Nino] {

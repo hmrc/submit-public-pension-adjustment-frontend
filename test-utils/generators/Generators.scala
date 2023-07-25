@@ -129,4 +129,17 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
       PensionSchemeB,
       PensionSchemeC
     )
+
+  def unsafeInputs: Gen[Char] = Gen.oneOf(
+    Gen.const('<'),
+    Gen.const('>'),
+    Gen.const('='),
+    Gen.const('|')
+  )
+
+  def unsafeInputsWithMaxLength(maxLength: Int): Gen[String] = (for {
+    length      <- choose(2, maxLength)
+    invalidChar <- unsafeInputs
+    validChars  <- listOfN(length - 1, unsafeInputs)
+  } yield (validChars :+ invalidChar).mkString).suchThat(_.trim.nonEmpty)
 }

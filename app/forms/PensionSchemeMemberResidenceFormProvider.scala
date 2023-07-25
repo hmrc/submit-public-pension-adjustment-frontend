@@ -16,28 +16,15 @@
 
 package forms
 
-import forms.behaviours.StringFieldBehaviours
-import org.scalacheck.Gen
+import javax.inject.Inject
 
-class ContactNumberFormProviderSpec extends StringFieldBehaviours {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  val invalidKey = "contactNumber.error.invalid"
-  val maxLength  = 100
+class PensionSchemeMemberResidenceFormProvider @Inject() extends Mappings {
 
-  val form = new ContactNumberFormProvider()()
-
-  ".value" - {
-
-    val fieldName = "value"
-
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      Gen.oneOf("07777777777", "+447777777777", "07777777777  ", "+1(111)111-1111", "111.111.1111")
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("pensionSchemeMemberResidence.error.required")
     )
-
-    "fail to bind an invalid phone number" in {
-      form.bind(Map(fieldName -> "invalid")).error("value").value.message mustEqual invalidKey
-    }
-  }
 }
