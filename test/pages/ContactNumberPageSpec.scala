@@ -54,7 +54,7 @@ class ContactNumberPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/areYouAUKResident")
+    checkNavigation(nextPageUrl, "/residence")
   }
 
   "must redirect to CYA page when user submits answers in check mode" in {
