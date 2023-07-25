@@ -211,7 +211,7 @@ ukAddress.postCode.change.hidden = Postcode
 legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference?(optional)
 legacyPensionSchemeReference.heading = What is your legacy individual pension scheme reference?(optional)
 legacyPensionSchemeReference.checkYourAnswersLabel = What is your legacy individual pension scheme reference
-legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 15 characters
+legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 15 characters or less
 legacyPensionSchemeReference.change.hidden = What is your legacy individual pension scheme reference
 
 reformPensionSchemeReference.title = What is your reform individual pension scheme reference?(optional)
