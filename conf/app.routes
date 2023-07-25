@@ -134,3 +134,13 @@ POST        /change-enter-alternative-name                          controllers.
 GET         /landing-page                                           controllers.LandingPageController.onPageLoad(submissionUniqueId: Option[UniqueId] ?= None)
 
 GET         /calculation-prerequisite                               controllers.CalculationPrerequisiteController.onPageLoad()
+
+GET        /their-nino                                              controllers.PensionSchemeMemberNinoController.onPageLoad(mode: Mode = NormalMode)
+POST       /their-nino                                              controllers.PensionSchemeMemberNinoController.onSubmit(mode: Mode = NormalMode)
+GET        /change-their-nino                                       controllers.PensionSchemeMemberNinoController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-their-nino                                       controllers.PensionSchemeMemberNinoController.onSubmit(mode: Mode = CheckMode)
+
+GET        /their-UTR                                               controllers.PensionSchemeMemberTaxReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /their-UTR                                               controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /change-their-UTR                                        controllers.PensionSchemeMemberTaxReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-their-UTR                                        controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = CheckMode)

@@ -16,7 +16,8 @@
 
 package forms.behaviours
 
-import play.api.data.{Form, FormError}
+import play.api.data.{Field, Form, FormError}
+import org.scalacheck.Gen
 
 trait StringFieldBehaviours extends FieldBehaviours {
 
@@ -26,6 +27,23 @@ trait StringFieldBehaviours extends FieldBehaviours {
       forAll(stringsLongerThan(maxLength) -> "longString") { string =>
         val result = form.bind(Map(fieldName -> string)).apply(fieldName)
         result.errors must contain only lengthError
+      }
+    }
+
+  def fieldThatDoesNotBindInvalidStrings(
+    form: Form[_],
+    fieldName: String,
+    regex: String,
+    gen: Gen[String],
+    invalidKey: String
+  ): Unit =
+    s"must not bind strings which don't match $regex" in {
+
+      val expectedError = FormError(fieldName, invalidKey, Seq(regex))
+
+      forAll(gen.retryUntil(!_.matches(regex))) { invalidString =>
+        val result: Field = form.bind(Map(fieldName -> invalidString)).apply(fieldName)
+        result.errors must contain(expectedError)
       }
     }
 }

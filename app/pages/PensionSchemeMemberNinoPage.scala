@@ -16,22 +16,27 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers}
-
-import java.time.LocalDate
 import play.api.libs.json.JsPath
+import uk.gov.hmrc.domain.Nino
+import controllers.routes
+import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.mvc.Call
 
-case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
+case object PensionSchemeMemberNinoPage extends QuestionPage[Nino] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "pensionSchemeMemberDOB"
+  override def toString: String = "pensionSchemeMemberNino"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
+    answers.get(PensionSchemeMemberNinoPage) match {
+      case Some(_) => routes.PensionSchemeMemberTaxReferenceController.onPageLoad(NormalMode)
+      case _       => routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.routes.CheckYourAnswersController.onPageLoad
-
+    answers.get(PensionSchemeMemberNinoPage) match {
+      case Some(_) => routes.CheckYourAnswersController.onPageLoad
+      case _       => routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

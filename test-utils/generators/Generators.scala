@@ -119,6 +119,10 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     }
   }
 
+  def stringsOfLength(length: Int, charGen: Gen[Char] = arbitrary[Char]): Gen[String] = for {
+    chars <- listOfN(length, charGen)
+  } yield chars.mkString
+
   def publicPensionScheme: Gen[WhichPensionSchemeWillPay] =
     Gen.oneOf(
       PensionSchemeA,

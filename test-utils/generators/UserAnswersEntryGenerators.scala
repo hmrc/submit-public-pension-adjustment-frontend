@@ -91,8 +91,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  // scala fmt ignore
-
   implicit lazy val arbitraryWhichPensionSchemeWillPayTaxReliefUserAnswersEntry
     : Arbitrary[(WhichPensionSchemeWillPayTaxReliefPage.type, JsValue)] =
     Arbitrary {
@@ -203,4 +201,24 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
         value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
       } yield (page, value)
     }
+
+  implicit lazy val arbitraryPensionSchemeMemberTaxReferenceUserAnswersEntry
+    : Arbitrary[(PensionSchemeMemberTaxReferencePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PensionSchemeMemberTaxReferencePage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryPensionSchemeMemberNinoUserAnswersEntry
+    : Arbitrary[(PensionSchemeMemberNinoPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PensionSchemeMemberNinoPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  // scala fmt ignore
 }

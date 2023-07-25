@@ -19,6 +19,7 @@ package generators
 import models._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
+import uk.gov.hmrc.domain.Nino
 
 trait ModelGenerators {
 
@@ -77,4 +78,14 @@ trait ModelGenerators {
         country       <- arbitrary[String]
       } yield InternationalAddress(addressLine1, addressLine2, townOrCity, stateOrRegion, postCode, country)
     }
+
+  implicit lazy val arbitraryNino: Arbitrary[Nino] = Arbitrary {
+    for {
+      firstChar  <- Gen.oneOf('A', 'C', 'E', 'H', 'J', 'L', 'M', 'O', 'P', 'R', 'S', 'W', 'X', 'Y')
+      secondChar <-
+        Gen.oneOf('A', 'B', 'C', 'E', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z')
+      digits     <- Gen.listOfN(6, Gen.numChar)
+      lastChar   <- Gen.oneOf('A', 'B', 'C', 'D')
+    } yield Nino(firstChar.toString + secondChar.toString + digits.mkString + lastChar.toString)
+  }
 }
