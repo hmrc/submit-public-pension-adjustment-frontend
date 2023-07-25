@@ -34,7 +34,7 @@ class CalculateBackendConnectorSpec extends SpecBase with WireMockHelper with Sc
 
   private def application: Application =
     applicationBuilder()
-      .configure("urls.calculateBackend" -> s"http://localhost:${server.port}/calculate-public-pension-adjustment")
+      .configure("microservice.services.calculate-public-pension-adjustment.port" -> server.port)
       .build()
 
   ".submission" - {
