@@ -38,7 +38,7 @@ class CalculateBackendConnector @Inject() (config: FrontendAppConfig, httpClient
 
     httpClient
       .doGet(
-        s"${config.calculateBackendServiceUrl}/submission/${submissionUniqueId.value}",
+        s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/submission/${submissionUniqueId.value}",
         Seq(("Content-Type", "application/json"))
       )
       .flatMap { response =>
