@@ -14,25 +14,18 @@
  * limitations under the License.
  */
 
-package models
+package models.finalsubmission
 
+import models.calculation.inputs.Period
 import play.api.libs.json.{Format, Json}
 
-import scala.util.matching.Regex
+case class PaymentElection(
+  period: Period,
+  personalCharge: Option[PersonalCharge],
+  schemeCharge: Option[SchemeCharge]
+) {}
 
-case class PSTR(value: String)
+object PaymentElection {
 
-object PSTR {
-
-  implicit lazy val formats: Format[PSTR] = Json.format
-
-  val New: String = "New"
-
-  private val pattern: Regex = """(\d{8})[A-Z]{2}""".r.anchored
-
-  def fromString(pstrString: String): Option[PSTR] =
-    pstrString match {
-      case pattern(_) => Some(PSTR(pstrString))
-      case _          => None
-    }
+  implicit lazy val formats: Format[PaymentElection] = Json.format
 }

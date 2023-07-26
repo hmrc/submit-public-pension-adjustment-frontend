@@ -14,25 +14,23 @@
  * limitations under the License.
  */
 
-package models
+package models.finalsubmission
 
-import play.api.libs.json.{Format, Json}
+import models.Enumerable
 
-import scala.util.matching.Regex
+sealed trait OnBehalfOfMemberType
 
-case class PSTR(value: String)
+object OnBehalfOfMemberType extends Enumerable.Implicits {
 
-object PSTR {
+  case object PowerOfAttorney extends OnBehalfOfMemberType
+  case object Deceased extends OnBehalfOfMemberType
 
-  implicit lazy val formats: Format[PSTR] = Json.format
+  val values: Seq[OnBehalfOfMemberType] = Seq(
+    PowerOfAttorney,
+    Deceased
+  )
 
-  val New: String = "New"
+  implicit lazy val enumerable: Enumerable[OnBehalfOfMemberType] =
+    Enumerable(values.map(v => v.toString -> v): _*)
 
-  private val pattern: Regex = """(\d{8})[A-Z]{2}""".r.anchored
-
-  def fromString(pstrString: String): Option[PSTR] =
-    pstrString match {
-      case pattern(_) => Some(PSTR(pstrString))
-      case _          => None
-    }
 }

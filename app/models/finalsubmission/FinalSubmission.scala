@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package models
+package models.finalsubmission
 
+import models.calculation.inputs.CalculationInputs
+import models.calculation.response.CalculationResponse
 import play.api.libs.json.{Format, Json}
 
-import scala.util.matching.Regex
+case class FinalSubmission(
+  calculationInputs: CalculationInputs,
+  calculation: Option[CalculationResponse],
+  submissionInputs: SubmissionInputs
+) {}
 
-case class PSTR(value: String)
+object FinalSubmission {
 
-object PSTR {
-
-  implicit lazy val formats: Format[PSTR] = Json.format
-
-  val New: String = "New"
-
-  private val pattern: Regex = """(\d{8})[A-Z]{2}""".r.anchored
-
-  def fromString(pstrString: String): Option[PSTR] =
-    pstrString match {
-      case pattern(_) => Some(PSTR(pstrString))
-      case _          => None
-    }
+  implicit lazy val formats: Format[FinalSubmission] = Json.format
 }
