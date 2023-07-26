@@ -398,6 +398,16 @@ pensionSchemeMemberInternationalAddress.county.change.hidden = State or region (
 pensionSchemeMemberInternationalAddress.postCode.change.hidden = Postcode (optional)
 pensionSchemeMemberInternationalAddress.error.country.change.hidden = Country
 
+memberDateOfDeath.title = What was their date of death?
+memberDateOfDeath.heading = What was their date of death?
+memberDateOfDeath.hint = For example, 28 3 1965
+memberDateOfDeath.checkYourAnswersLabel = What was their date of death?
+memberDateOfDeath.error.required.all = Enter the member's date of death
+memberDateOfDeath.error.required.two = The member's date of death must include {0} and {1}
+memberDateOfDeath.error.required = The member's date of death must include {0}
+memberDateOfDeath.error.invalid = Enter the member's date of death in the correct format
+memberDateOfDeath.change.hidden = What was their date of death?
+
 bankDetails.title = Enter Bank Details
 bankDetails.heading = Enter Bank Details
 bankDetails.accountName = Name on the account
