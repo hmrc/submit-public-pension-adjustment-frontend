@@ -18,13 +18,15 @@ package controllers.actions
 
 import models.UserAnswers
 import models.requests.{IdentifierRequest, OptionalDataRequest}
+import models.submission.Submission
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class FakeDataRetrievalAction(dataToReturn: Option[UserAnswers]) extends DataRetrievalAction {
+class FakeDataRetrievalAction(dataToReturn: Option[UserAnswers], submission: Option[Submission])
+    extends DataRetrievalAction {
 
   override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] =
-    Future(OptionalDataRequest(request.request, request.userId, "nino", None, None, None, dataToReturn))
+    Future(OptionalDataRequest(request.request, request.userId, "nino", None, None, None, submission, dataToReturn))
 
   override protected implicit val executionContext: ExecutionContext =
     scala.concurrent.ExecutionContext.Implicits.global

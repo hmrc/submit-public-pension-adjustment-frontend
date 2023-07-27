@@ -59,9 +59,16 @@ class SubmissionRepository @Inject() (
 
   private def byUniqueId(uniqueId: String): Bson = Filters.equal("uniqueId", uniqueId)
 
+  private def bySessionId(sessionId: String): Bson = Filters.equal("sessionId", sessionId)
+
   def get(uniqueId: String): Future[Option[Submission]] =
     collection
       .find(byUniqueId(uniqueId))
+      .headOption()
+
+  def getBySessionId(sessionId: String): Future[Option[Submission]] =
+    collection
+      .find(bySessionId(sessionId))
       .headOption()
 
 }
