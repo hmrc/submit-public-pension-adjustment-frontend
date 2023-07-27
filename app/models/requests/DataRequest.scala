@@ -18,6 +18,7 @@ package models.requests
 
 import play.api.mvc.{Request, WrappedRequest}
 import models.UserAnswers
+import models.submission.Submission
 import uk.gov.hmrc.auth.core.retrieve.Name
 
 import java.time.LocalDate
@@ -29,6 +30,7 @@ case class OptionalDataRequest[A](
   name: Option[Name],
   saUtr: Option[String],
   dob: Option[LocalDate],
+  submission: Option[Submission],
   userAnswers: Option[UserAnswers]
 ) extends WrappedRequest[A](request)
 
