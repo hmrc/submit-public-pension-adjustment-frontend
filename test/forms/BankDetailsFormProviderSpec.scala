@@ -25,10 +25,10 @@ class BankDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".accountName" - {
 
-    val fieldName = "accountName"
+    val fieldName   = "accountName"
     val requiredKey = "bankDetails.error.accountName.required"
-    val lengthKey = "bankDetails.invalid.account.name.length"
-    val maxLength = 60
+    val lengthKey   = "bankDetails.invalid.account.name.length"
+    val maxLength   = 60
 
     behave like fieldThatBindsValidData(
       form,
@@ -52,7 +52,7 @@ class BankDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".sortCode" - {
 
-    val fieldName = "sortCode"
+    val fieldName   = "sortCode"
     val requiredKey = "bankDetails.error.sortCode.required"
 
     behave like fieldThatBindsValidData(
@@ -70,7 +70,7 @@ class BankDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".accountNumber" - {
 
-    val fieldName = "accountNumber"
+    val fieldName   = "accountNumber"
     val requiredKey = "bankDetails.error.accountNumber.required"
 
     behave like fieldThatBindsValidData(

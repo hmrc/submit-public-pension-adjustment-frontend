@@ -21,7 +21,7 @@ import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 trait Constraints {
   private val validAccountNameRegex: String = """^[a-z0-9A-Z &`\-'.\^]*$"""
-  private val validSortCodeRegex: String = "^[0-9]{2}[-\\s]?[0-9]{2}[-\\s]?[0-9]{2}$"
+  private val validSortCodeRegex: String    = "^[0-9]{2}[-\\s]?[0-9]{2}[-\\s]?[0-9]{2}$"
 
   protected def firstError[A](constraints: Constraint[A]*): Constraint[A] =
     Constraint { input =>

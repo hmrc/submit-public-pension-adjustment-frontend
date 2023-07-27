@@ -144,18 +144,19 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
   } yield (validChars :+ invalidChar).mkString).suchThat(_.trim.nonEmpty)
 
   def validAccountName: Gen[String] = {
-    val allowedChars = Gen.oneOf(('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9') ++ Seq(' ', '&', '`', '-', '\'', '.', '^'))
+    val allowedChars =
+      Gen.oneOf(('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9') ++ Seq(' ', '&', '`', '-', '\'', '.', '^'))
     for {
       length <- Gen.choose(0, 60)
-      chars <- Gen.listOfN(length, allowedChars)
+      chars  <- Gen.listOfN(length, allowedChars)
     } yield chars.mkString
   }
 
   def validSortCode: Gen[String] = for {
-    firstPair <- Gen.listOfN(2, Gen.numChar).map(_.mkString)
+    firstPair  <- Gen.listOfN(2, Gen.numChar).map(_.mkString)
     secondPair <- Gen.listOfN(2, Gen.numChar).map(_.mkString)
-    thirdPair <- Gen.listOfN(2, Gen.numChar).map(_.mkString)
-    separator <- Gen.oneOf("-", " ", "")
+    thirdPair  <- Gen.listOfN(2, Gen.numChar).map(_.mkString)
+    separator  <- Gen.oneOf("-", " ", "")
   } yield s"$firstPair$separator$secondPair$separator$thirdPair"
 
   def validAccountNumber: Gen[String] = Gen.listOfN(8, Gen.numChar).map(_.mkString)
