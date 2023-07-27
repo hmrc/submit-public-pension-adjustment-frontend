@@ -113,5 +113,4 @@ class BankDetailsController @Inject() (
       case _                                                                                   =>
         handleFormWithWithBarsError(accountNumberNotWellFormatted, mode)
     }
-
 }
