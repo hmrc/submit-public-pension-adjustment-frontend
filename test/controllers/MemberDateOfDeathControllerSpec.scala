@@ -86,7 +86,10 @@ class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+          getRequest,
+          messages(application)
+        ).toString
       }
     }
 
@@ -105,7 +108,9 @@ class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, postRequest).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual controllers.routes.PensionSchemeMemberNinoController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

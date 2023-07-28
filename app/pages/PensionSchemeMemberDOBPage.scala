@@ -32,10 +32,10 @@ case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(StatusOfUserPage) match {
       case Some(Deputyship) => controllers.routes.MemberDateOfDeathController.onPageLoad(NormalMode)
-      case Some(_) => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
+      case Some(_)          => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
     }
 
-    override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.routes.CheckYourAnswersController.onPageLoad
 
 }

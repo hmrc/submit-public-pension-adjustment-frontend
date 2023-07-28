@@ -54,11 +54,10 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
   def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
     FakeRequest(POST, pensionSchemeMemberDOBRoute)
       .withFormUrlEncodedBody(
-        "value.day" -> validAnswer.getDayOfMonth.toString,
+        "value.day"   -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
-        "value.year" -> validAnswer.getYear.toString
+        "value.year"  -> validAnswer.getYear.toString
       )
-
 
   "PensionSchemeMemberDOB Controller" - {
 
@@ -101,13 +100,12 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-      val application = {
+      val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
-      }
       running(application) {
         val result = route(application, postRequest).value
         if (StatusOfUser == StatusOfUser.Deputyship) {
@@ -120,20 +118,18 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-
     "must redirect to the Pension Scheme Member Nino page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-      val application = {
+      val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
-      }
       running(application) {
         val result = route(application, postRequest).value
         if (StatusOfUser == StatusOfUser.PowerOfAttorney) {
