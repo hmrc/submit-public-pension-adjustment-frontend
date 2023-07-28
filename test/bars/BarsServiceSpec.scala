@@ -34,8 +34,8 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
 
   val barsConnector         = mock[BarsConnector]
   val headerCarrier         = new HeaderCarrier()
-  val bankAccount           = BarsBankAccount.normalise("207102", "44311655")
-  val subject               = BarsSubject(None, Some("Teddy Dickson"), None, None, None, None)
+  val bankAccount           = BarsBankAccount.normalise("111111", "11111111")
+  val subject               = BarsSubject(None, Some("Testuser One"), None, None, None, None)
   val validValidateResponse = BarsValidateResponse(Yes, Yes, Yes, Some(Yes))
 
   "BarsService" - {
@@ -108,7 +108,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
       "should return VerifyResponse when BarsConnector returns a valid response and first and last name are separate" in {
         val barsService = new BarsService(barsConnector)
 
-        val separateSubject = BarsSubject(None, None, Some("Teddy"), Some("Dixon"), None, None)
+        val separateSubject = BarsSubject(None, None, Some("Test"), Some("Userone"), None, None)
 
         val validResponse = BarsVerifyResponse(Yes, Yes, Yes, Yes, Yes, Yes, Yes, None, None, None)
         when(barsConnector.verifyPersonal(any())(any())).thenReturn(Future.successful(validResponse))

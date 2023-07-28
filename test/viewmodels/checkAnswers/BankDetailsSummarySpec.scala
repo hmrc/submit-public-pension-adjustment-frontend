@@ -36,13 +36,13 @@ class BankDetailsSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           BankDetailsPage,
-          models.BankDetails("Teddy Dickson", "207102", "44311655")
+          models.BankDetails("Testuser One", "111111", "11111111")
         )
         .get
       BankDetailsSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "bankDetails.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("Teddy Dickson<br/>207102<br/>44311655")),
+          value = ValueViewModel(HtmlContent("Testuser One<br/>111111<br/>11111111")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

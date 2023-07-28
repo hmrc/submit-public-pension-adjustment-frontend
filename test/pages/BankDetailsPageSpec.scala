@@ -34,7 +34,7 @@ class BankDetailsPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             BankDetailsPage,
-            BankDetails("Teddy Dickson", "207102", "44311655")
+            BankDetails("Testuser One", "111111", "11111111")
           )
           .success
           .value
@@ -57,7 +57,7 @@ class BankDetailsPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             BankDetailsPage,
-            BankDetails("Teddy Dickson", "207102", "44311655")
+            BankDetails("Testuser One", "111111", "11111111")
           )
           .success
           .value
