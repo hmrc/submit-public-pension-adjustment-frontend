@@ -17,7 +17,7 @@
 package pages
 
 import java.time.LocalDate
-import models.UserAnswers
+import models.{NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.routes
@@ -30,7 +30,7 @@ case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     answers.get(MemberDateOfDeathPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
       case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }

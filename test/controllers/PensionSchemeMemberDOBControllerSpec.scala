@@ -17,10 +17,10 @@
 package controllers
 
 import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import forms.PensionSchemeMemberDOBFormProvider
-import models.{NormalMode, UserAnswers}
+import models.StatusOfUser.{Deputyship, PowerOfAttorney}
+import models.{NormalMode, StatusOfUser, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -37,6 +37,7 @@ import scala.concurrent.Future
 class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new PensionSchemeMemberDOBFormProvider()
+
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
@@ -53,10 +54,11 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
   def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
     FakeRequest(POST, pensionSchemeMemberDOBRoute)
       .withFormUrlEncodedBody(
-        "value.day"   -> validAnswer.getDayOfMonth.toString,
+        "value.day" -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
-        "value.year"  -> validAnswer.getYear.toString
+        "value.year" -> validAnswer.getYear.toString
       )
+
 
   "PensionSchemeMemberDOB Controller" - {
 
@@ -93,26 +95,54 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the Member Date Of Death page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-      val application =
+      val application = {
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
-
+      }
       running(application) {
         val result = route(application, postRequest).value
+        if (StatusOfUser == StatusOfUser.Deputyship) {
+          status(result) mustEqual SEE_OTHER
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode).url
+          redirectLocation(
+            result
+          ).value mustEqual routes.MemberDateOfDeathController.onPageLoad(NormalMode).url
+        }
+      }
+    }
+
+
+    "must redirect to the Pension Scheme Member Nino page when valid data is submitted" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application = {
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+      }
+      running(application) {
+        val result = route(application, postRequest).value
+        if (StatusOfUser == StatusOfUser.PowerOfAttorney) {
+          status(result) mustEqual SEE_OTHER
+
+          redirectLocation(
+            result
+          ).value mustEqual routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode).url
+        }
       }
     }
 
