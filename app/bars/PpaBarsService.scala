@@ -16,7 +16,7 @@
 
 package bars
 
-import bars.PsprBarsService._
+import bars.PpaBarsService._
 import bars.barsmodel.request.{BarsBankAccount, BarsSubject}
 import bars.barsmodel.response.VerifyResponse.accountDoesNotExist
 import bars.barsmodel.response._
@@ -26,7 +26,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PsprBarsService @Inject() (
+class PpaBarsService @Inject() (
   barsService: BarsService
 ) {
 
@@ -71,7 +71,7 @@ class PsprBarsService @Inject() (
   }
 }
 
-object PsprBarsService {
+object PpaBarsService {
 
   def toBarsBankAccount(bankDetails: BankDetails): BarsBankAccount =
     BarsBankAccount.normalise(bankDetails.sortCode, bankDetails.accountNumber)

@@ -27,7 +27,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, OK}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, UpstreamErrorResponse}
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class BarsServiceSpec extends SpecBase with MockitoSugar {

@@ -105,7 +105,7 @@ trait Constraints {
     }
 
   def accountNameFormatConstraint: Constraint[String] = Constraint[String]("constraint.accountname.format") { an =>
-    if (an.length > 60) Invalid(ValidationError("bankDetails.invalid.account.name.length"))
+    if (an.length > 70) Invalid(ValidationError("bankDetails.invalid.account.name.length"))
     else if (an.isEmpty) Invalid(ValidationError("bankDetails.invalid.account.name.empty"))
     else if (!an.matches(validAccountNameRegex)) Invalid(ValidationError("bankDetails.invalid.account.name"))
     else Valid

@@ -28,11 +28,11 @@ import utils.HttpResponseUtils.HttpResponseOps
 
 import javax.inject.Inject
 import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext
 
 class BarsService @Inject() (
   barsConnector: BarsConnector
-) {
+                            )(implicit ec: ExecutionContext) {
 
   def validateBankAccount(bankAccount: BarsBankAccount)(implicit hc: HeaderCarrier): Future[BarsResponse] =
     barsConnector.validateBankDetails(request.BarsValidateRequest(bankAccount)).map { httpResponse: HttpResponse =>

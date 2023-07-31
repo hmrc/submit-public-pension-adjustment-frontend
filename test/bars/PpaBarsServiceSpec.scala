@@ -28,9 +28,9 @@ import uk.gov.hmrc.http.HeaderCarrier
 import scala.concurrent.ExecutionContext.global
 import scala.concurrent.Future
 
-class PsprBarsServiceSpec extends SpecBase with MockitoSugar {
+class PpaBarsServiceSpec extends SpecBase with MockitoSugar {
 
-  "PsprBarsService" - {
+  "PpaBarsService" - {
     "should return Left(BarsError) when underlying BarsService returns an error response" in {
       val headerCarrier = new HeaderCarrier()
       val barsService   = mock[BarsService]
@@ -39,10 +39,10 @@ class PsprBarsServiceSpec extends SpecBase with MockitoSugar {
       val barsResponse  = Left(SortCodeOnDenyListErrorResponse(SortCodeOnDenyList(errorResponse)))
 
       when(barsService.verifyBankDetails(any(), any())(any())).thenReturn(Future.successful(barsResponse))
-      val psprBarsService = new PsprBarsService(barsService)
+      val ppaBarsService = new PpaBarsService(barsService)
 
       val bankAccountDetails = BankDetails("accountName", "sortCode", "accountNumber")
-      val response           = psprBarsService.verifyBankDetails(bankAccountDetails)(headerCarrier, global)
+      val response           = ppaBarsService.verifyBankDetails(bankAccountDetails)(headerCarrier, global)
       response.futureValue shouldBe barsResponse
     }
   }
@@ -54,11 +54,11 @@ class PsprBarsServiceSpec extends SpecBase with MockitoSugar {
 
       when(barsService.verifyPersonal(any(), any())(any()))
         .thenReturn(Future.successful(VerifyResponse(aBarsVerifyResponse)))
-      val psprBarsService = new PsprBarsService(barsService)
+      val ppaBarsService = new PpaBarsService(barsService)
 
       val bankAccountDetails = BankDetails("accountName", "sortCode", "accountNumber")
-      val response           = psprBarsService.verifyPersonal(bankAccountDetails)(headerCarrier, global)
-      response.futureValue shouldBe bars.PsprBarsService.Valid
+      val response           = ppaBarsService.verifyPersonal(bankAccountDetails)(headerCarrier, global)
+      response.futureValue shouldBe bars.PpaBarsService.Valid
     }
   }
 

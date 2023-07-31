@@ -28,7 +28,7 @@ class BankDetailsFormProviderSpec extends StringFieldBehaviours {
     val fieldName   = "accountName"
     val requiredKey = "bankDetails.error.accountName.required"
     val lengthKey   = "bankDetails.invalid.account.name.length"
-    val maxLength   = 60
+    val maxLength   = 70
 
     behave like fieldThatBindsValidData(
       form,

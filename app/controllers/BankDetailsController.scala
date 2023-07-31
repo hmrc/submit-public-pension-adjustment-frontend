@@ -16,7 +16,7 @@
 
 package controllers
 
-import bars.PsprBarsService
+import bars.PpaBarsService
 import bars.barsmodel.response._
 import controllers.actions._
 import forms.BankDetailsFormProvider
@@ -39,7 +39,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class BankDetailsController @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
-  psprBarsService: PsprBarsService,
+  ppaBarsService: PpaBarsService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -80,7 +80,7 @@ class BankDetailsController @Inject() (
     request: DataRequest[AnyContent]
   ): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrier()
-    psprBarsService.verifyBankDetails(value).flatMap {
+    ppaBarsService.verifyBankDetails(value).flatMap {
       case Right(_) =>
         for {
           updatedAnswers <- Future.fromTry(userAnswers.set(BankDetailsPage, value))

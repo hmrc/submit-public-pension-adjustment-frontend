@@ -16,7 +16,7 @@
 
 package controllers
 
-import bars.PsprBarsService
+import bars.PpaBarsService
 import bars.barsmodel.response._
 import base.SpecBase
 import forms.BankDetailsFormProvider
@@ -99,13 +99,13 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-      val mcCloudBarsServiceMock: PsprBarsService = whenTheBarsServiceReturnsASuccessResponse()
+      val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsASuccessResponse()
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository),
-            bind[PsprBarsService].toInstance(mcCloudBarsServiceMock)
+            bind[PpaBarsService].toInstance(mcCloudBarsServiceMock)
           )
           .build()
 
@@ -181,7 +181,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
     "must show an error when the sort code is on the deny list" in {
 
       val errorResponseType                       = SortCodeOnDenyListErrorResponse(SortCodeOnDenyList(BarsErrorResponse("code", "desc")))
-      val mcCloudBarsServiceMock: PsprBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
+      val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
       val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
@@ -192,7 +192,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
       val errorResponseType: BarsVerifyError      = NameDoesNotMatch(VerifyResponse(barsVerifyResponse))
-      val mcCloudBarsServiceMock: PsprBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
+      val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
       val expectedErrorMessage                    =
         "Enter the name on the account as it appears on bank statements. Do not copy and paste it"
 
@@ -204,7 +204,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
       val errorResponseType: BarsVerifyError      = AccountNumberNotWellFormatted(VerifyResponse(barsVerifyResponse))
-      val mcCloudBarsServiceMock: PsprBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
+      val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
       val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
@@ -215,7 +215,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
       val errorResponseType: BarsVerifyError      = SortCodeNotPresentOnEiscd(VerifyResponse(barsVerifyResponse))
-      val mcCloudBarsServiceMock: PsprBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
+      val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
       val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
@@ -226,7 +226,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
       val errorResponseType: BarsVerifyError      = ThirdPartyError(VerifyResponse(barsVerifyResponse))
-      val mcCloudBarsServiceMock: PsprBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
+      val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
       val expectedErrorMessage                    = "BARS verify third-party error. BARS response:"
 
       assertThrowsWithMessage[RuntimeException](expectedErrorMessage) {
@@ -239,7 +239,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
       val errorResponseType: BarsVerifyError      = AccountDoesNotExist(VerifyResponse(barsVerifyResponse))
-      val mcCloudBarsServiceMock: PsprBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
+      val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
       val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
@@ -250,7 +250,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
       val errorResponseType: BarsVerifyError      = OtherBarsError(VerifyResponse(barsVerifyResponse))
-      val mcCloudBarsServiceMock: PsprBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
+      val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
       val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
@@ -259,7 +259,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
     "must show an error when no other error caught" in {
       val unexpectedErrorResponseType: BarsVerifyError = mock[BarsVerifyError] // This is a new unexpected error type
 
-      val mcCloudBarsServiceMock: PsprBarsService =
+      val mcCloudBarsServiceMock: PpaBarsService =
         whenTheBarsServiceReturnsAnUnexpectedErrorResponse(unexpectedErrorResponseType)
       val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
 
@@ -268,7 +268,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
   }
 
-  private def submitFormAndCheckErrorMessage(mcCloudBarsServiceMock: PsprBarsService, expectedErrorMessage: String) = {
+  private def submitFormAndCheckErrorMessage(mcCloudBarsServiceMock: PpaBarsService, expectedErrorMessage: String) = {
     val mockSessionRepository = mock[SessionRepository]
 
     when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -277,7 +277,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
       applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(
           bind[SessionRepository].toInstance(mockSessionRepository),
-          bind[PsprBarsService].toInstance(mcCloudBarsServiceMock)
+          bind[PpaBarsService].toInstance(mcCloudBarsServiceMock)
         )
         .build()
 
@@ -299,7 +299,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
   }
 
   private def whenTheBarsServiceReturnsASuccessResponse() = {
-    val mcCloudBarsServiceMock = mock[PsprBarsService]
+    val mcCloudBarsServiceMock = mock[PpaBarsService]
 
     val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
@@ -328,7 +328,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
   }
 
   private def whenTheBarsServiceReturnsAnErrorResponse(errorResponseType: BarsValidateError) = {
-    val mcCloudBarsServiceMock = mock[PsprBarsService]
+    val mcCloudBarsServiceMock = mock[PpaBarsService]
 
     val errorResponse = Left(errorResponseType)
     when(mcCloudBarsServiceMock.verifyBankDetails(any())(any(), any())) thenReturn Future.successful(errorResponse)
@@ -336,7 +336,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
   }
 
   private def whenTheBarsServiceReturnsAnErrorResponse(errorResponseType: BarsVerifyError) = {
-    val mcCloudBarsServiceMock = mock[PsprBarsService]
+    val mcCloudBarsServiceMock = mock[PpaBarsService]
 
     val errorResponse = Left(errorResponseType)
     when(mcCloudBarsServiceMock.verifyBankDetails(any())(any(), any())) thenReturn Future.successful(errorResponse)
@@ -353,7 +353,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
   }
 
   private def whenTheBarsServiceReturnsAnUnexpectedErrorResponse(errorResponseType: BarsVerifyError) = {
-    val mcCloudBarsServiceMock = mock[PsprBarsService]
+    val mcCloudBarsServiceMock = mock[PpaBarsService]
 
     val errorResponse = Left(errorResponseType)
     when(mcCloudBarsServiceMock.verifyBankDetails(any())(any(), any())) thenReturn Future.successful(errorResponse)
