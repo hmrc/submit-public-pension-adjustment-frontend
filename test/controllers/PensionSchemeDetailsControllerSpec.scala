@@ -18,13 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.PensionSchemeDetailsFormProvider
-import models.{NormalMode, PensionSchemeDetails, UserAnswers}
+import models.{NormalMode, PensionSchemeDetails, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.PensionSchemeDetailsPage
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -40,19 +39,14 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new PensionSchemeDetailsFormProvider()
   val form         = formProvider()
 
-  lazy val pensionSchemeDetailsRoute = routes.PensionSchemeDetailsController.onPageLoad(NormalMode).url
+  lazy val pensionSchemeDetailsRoute = routes.PensionSchemeDetailsController.onPageLoad(NormalMode, Period._2020).url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      PensionSchemeDetailsPage.toString -> Json.obj(
-        "pensionSchemeName"         -> "Scheme1",
-        "pensionSchemeTaxReference" -> "00348916RT"
-      )
-    )
-  )
+  val userAnswers = UserAnswers(userAnswersId)
+    .set(PensionSchemeDetailsPage(Period._2020), PensionSchemeDetails("Scheme1", "00348916RT"))
+    .success
+    .value
 
   "PensionSchemeDetails Controller" - {
 
@@ -68,7 +62,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2020)(request, messages(application)).toString
       }
     }
 
@@ -84,7 +78,11 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(PensionSchemeDetails("Scheme1", "00348916RT")), NormalMode)(
+        contentAsString(result) mustEqual view(
+          form.fill(PensionSchemeDetails("Scheme1", "00348916RT")),
+          NormalMode,
+          Period._2020
+        )(
           request,
           messages(application)
         ).toString
@@ -129,7 +127,10 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

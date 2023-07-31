@@ -44,6 +44,10 @@ checkYourAnswers.heading = Check your answers
 checkYourAnswers.notAnswered = Not answered
 checkYourAnswers.reviewBeforeSubmission = Check your answers before completing your submission.
 checkYourAnswers.continue = Continue
+checkYourAnswers.periodDetails.2020 = Details for 2020
+checkYourAnswers.periodDetails.2021 = Details for 2021
+checkYourAnswers.periodDetails.2022 = Details for 2022
+checkYourAnswers.periodDetails.2023 = Details for 2023
 
 journeyRecovery.continue.title = Sorry, there is a problem with the service
 journeyRecovery.continue.heading = Sorry, there is a problem with the service

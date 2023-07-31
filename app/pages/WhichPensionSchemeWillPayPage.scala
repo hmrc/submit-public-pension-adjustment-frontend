@@ -16,26 +16,27 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPay}
+import models.{NormalMode, Period, UserAnswers, WhichPensionSchemeWillPay}
 import models.WhichPensionSchemeWillPay.PrivatePensionScheme
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object WhichPensionSchemeWillPayPage extends QuestionPage[WhichPensionSchemeWillPay] {
+case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[WhichPensionSchemeWillPay] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "whichPensionSchemeWillPay"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(WhichPensionSchemeWillPayPage) match {
-      case Some(PrivatePensionScheme) => controllers.routes.PensionSchemeDetailsController.onPageLoad(NormalMode)
-      case Some(_)                    => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode)
+    answers.get(WhichPensionSchemeWillPayPage(period)) match {
+      case Some(PrivatePensionScheme) =>
+        controllers.routes.PensionSchemeDetailsController.onPageLoad(NormalMode, period)
+      case Some(_)                    => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode, period)
       case _                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(WhichPensionSchemeWillPayPage) match {
+    answers.get(WhichPensionSchemeWillPayPage(period)) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

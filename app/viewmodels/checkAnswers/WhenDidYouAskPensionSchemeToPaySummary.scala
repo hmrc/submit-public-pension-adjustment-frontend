@@ -17,9 +17,8 @@
 package viewmodels.checkAnswers
 
 import java.time.format.DateTimeFormatter
-
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.WhenDidYouAskPensionSchemeToPayPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -28,15 +27,18 @@ import viewmodels.implicits._
 
 object WhenDidYouAskPensionSchemeToPaySummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhenDidYouAskPensionSchemeToPayPage).map { answer =>
+  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(WhenDidYouAskPensionSchemeToPayPage(period)).map { answer =>
       val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
       SummaryListRowViewModel(
         key = "whenDidYouAskPensionSchemeToPay.checkYourAnswersLabel",
         value = ValueViewModel(answer.format(dateFormatter)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(CheckMode).url)
+          ActionItemViewModel(
+            "site.change",
+            routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(CheckMode, period).url
+          )
             .withVisuallyHiddenText(messages("whenDidYouAskPensionSchemeToPay.change.hidden"))
         )
       )

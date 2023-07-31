@@ -16,6 +16,7 @@
 
 package pages
 
+import models.submission.Submission
 import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import play.api.mvc.Call
 
@@ -28,10 +29,21 @@ trait Page {
     case CheckMode  => navigateInCheckMode(answers)
   }
 
+  def navigate(mode: Mode, answers: UserAnswers, submission: Submission): Call = mode match {
+    case NormalMode => navigateInNormalMode(answers, submission)
+    case CheckMode  => navigateInCheckMode(answers, submission)
+  }
+
   protected def navigateInNormalMode(answers: UserAnswers): Call =
     throw new NotImplementedError("navigateInNormalMode is not implemented on this page")
 
   protected def navigateInCheckMode(answers: UserAnswers): Call =
+    throw new NotImplementedError("navigateInCheckMode is not implemented on this page")
+
+  protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
+    throw new NotImplementedError("navigateInNormalMode is not implemented on this page")
+
+  protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     throw new NotImplementedError("navigateInCheckMode is not implemented on this page")
 
 }

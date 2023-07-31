@@ -18,7 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.ClaimOnBehalfFormProvider
-import javax.inject.Inject
 import models.{Mode, UserAnswers}
 import pages.ClaimOnBehalfPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -27,6 +26,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ClaimOnBehalfView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ClaimOnBehalfController @Inject() (
@@ -64,7 +64,11 @@ class ClaimOnBehalfController @Inject() (
             updatedAnswers <-
               Future.fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ClaimOnBehalfPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(ClaimOnBehalfPage.navigate(mode, updatedAnswers))
+          } yield request.submission
+            .map { s =>
+              Redirect(ClaimOnBehalfPage.navigate(mode, updatedAnswers, s))
+            }
+            .getOrElse(Redirect(routes.CalculationPrerequisiteController.onPageLoad.url))
       )
   }
 }

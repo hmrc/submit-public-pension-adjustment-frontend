@@ -16,25 +16,33 @@
 
 package pages
 
+import models.submission.Submission
+
 import java.time.LocalDate
-import models.{NormalMode, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import services.PeriodService
 
-case object WhenDidYouAskPensionSchemeToPayPage extends QuestionPage[LocalDate] {
+case class WhenDidYouAskPensionSchemeToPayPage(period: Period) extends QuestionPage[LocalDate] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "whenDidYouAskPensionSchemeToPay"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(WhenDidYouAskPensionSchemeToPayPage) match {
-      case Some(_) => controllers.routes.AlternativeNameController.onPageLoad(NormalMode)
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(WhenDidYouAskPensionSchemeToPayPage(period)) match {
+      case Some(_) =>
+        val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
+        nextDebitPeriod match {
+          case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(NormalMode, period)
+          case None         => controllers.routes.AlternativeNameController.onPageLoad(NormalMode)
+        }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(WhenDidYouAskPensionSchemeToPayPage) match {
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(WhenDidYouAskPensionSchemeToPayPage(period)) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

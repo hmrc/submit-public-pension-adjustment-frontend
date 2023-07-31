@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.AskedPensionSchemeToPayTaxChargeFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -40,7 +40,7 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
   val form         = formProvider()
 
   lazy val askedPensionSchemeToPayTaxChargeRoute =
-    routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode).url
+    routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode, Period._2020).url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
@@ -58,13 +58,14 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
         val view = application.injector.instanceOf[AskedPensionSchemeToPayTaxChargeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2020)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(AskedPensionSchemeToPayTaxChargePage, true).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(AskedPensionSchemeToPayTaxChargePage(Period._2020), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
@@ -76,7 +77,10 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2020)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -118,7 +122,10 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

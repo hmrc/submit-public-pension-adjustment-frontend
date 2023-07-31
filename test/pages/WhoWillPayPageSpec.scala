@@ -16,49 +16,64 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, WhoWillPay}
+import models.calculation.inputs.CalculationInputs
+import models.submission.Submission
+import models.{CheckMode, NormalMode, Period, WhoWillPay}
+import org.mockito.MockitoSugar.mock
 
 class WhoWillPayPageSpec extends PageBehaviours {
 
   "WhoWillPayPage" - {
 
-    beRetrievable[WhoWillPay](WhoWillPayPage)
+    beRetrievable[WhoWillPay](WhoWillPayPage(Period._2020))
 
-    beSettable[WhoWillPay](WhoWillPayPage)
+    beSettable[WhoWillPay](WhoWillPayPage(Period._2020))
 
-    beRemovable[WhoWillPay](WhoWillPayPage)
+    beRemovable[WhoWillPay](WhoWillPayPage(Period._2020))
+
+    val mockCalculationInputs = mock[CalculationInputs]
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputs,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
 
     "must navigate correctly in NormalMode" - {
 
       "to WhichPensionSchemeWillPayPage when PensionScheme selected" in {
-        val ua     = emptyUserAnswers
+        val ua = emptyUserAnswers
           .set(
-            WhoWillPayPage,
+            WhoWillPayPage(Period._2020),
             WhoWillPay.PensionScheme
           )
           .success
           .value
-        val result = WhoWillPayPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/which-pension-scheme-will-pay")
+        val result = WhoWillPayPage(Period._2020).navigate(NormalMode, ua, submission).url
+
+        checkNavigation(result, "/which-pension-scheme-will-pay/2020")
       }
 
-      "to AlternativeNamePage when You selected" in {
-        val ua     = emptyUserAnswers
+      "to AlternativeNamePage when You selected and no more debit periods" in {
+        val ua = emptyUserAnswers
           .set(
-            WhoWillPayPage,
+            WhoWillPayPage(Period._2022),
             WhoWillPay.You
           )
           .success
           .value
-        val result = WhoWillPayPage.navigate(NormalMode, ua).url
+
+        val result = WhoWillPayPage(Period._2022).navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/alternative-name")
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua     = emptyUserAnswers
-        val result = WhoWillPayPage.navigate(NormalMode, ua).url
+        val ua = emptyUserAnswers
+
+        val result = WhoWillPayPage(Period._2020).navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -67,21 +82,23 @@ class WhoWillPayPageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when selected" in {
-        val ua     = emptyUserAnswers
+        val ua = emptyUserAnswers
           .set(
-            WhoWillPayPage,
+            WhoWillPayPage(Period._2020),
             WhoWillPay.You
           )
           .success
           .value
-        val result = WhoWillPayPage.navigate(CheckMode, ua).url
+
+        val result = WhoWillPayPage(Period._2020).navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua     = emptyUserAnswers
-        val result = WhoWillPayPage.navigate(CheckMode, ua).url
+        val ua = emptyUserAnswers
+
+        val result = WhoWillPayPage(Period._2020).navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

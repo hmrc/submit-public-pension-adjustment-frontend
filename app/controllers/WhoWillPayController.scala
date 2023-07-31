@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.WhoWillPayFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, Period}
 import pages.WhoWillPayPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -45,27 +46,28 @@ class WhoWillPayController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] =
-    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(WhoWillPayPage) match {
+  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData) {
+    implicit request =>
+      val preparedForm = request.userAnswers.get(WhoWillPayPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, period))
     }
 
-  def onSubmit(mode: Mode): Action[AnyContent] =
+  def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(WhoWillPayPage, value))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(WhoWillPayPage(period), value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(WhoWillPayPage.navigate(mode, updatedAnswers))
+            } yield Redirect(WhoWillPayPage(period).navigate(mode, updatedAnswers, request.submission))
         )
     }
 }

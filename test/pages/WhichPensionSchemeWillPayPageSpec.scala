@@ -16,49 +16,49 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, WhichPensionSchemeWillPay}
+import models.{CheckMode, NormalMode, Period, WhichPensionSchemeWillPay}
 
 class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
 
   "WhichPensionSchemeWillPayPage" - {
 
-    beRetrievable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage)
+    beRetrievable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage(Period._2020))
 
-    beSettable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage)
+    beSettable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage(Period._2020))
 
-    beRemovable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage)
+    beRemovable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage(Period._2020))
 
     "must navigate correctly in NormalMode" - {
 
       "to PensionSchemeDetails when Private pension scheme selected" in {
         val ua     = emptyUserAnswers
           .set(
-            WhichPensionSchemeWillPayPage,
+            WhichPensionSchemeWillPayPage(Period._2020),
             WhichPensionSchemeWillPay.PrivatePensionScheme
           )
           .success
           .value
-        val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
+        val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/pension-scheme-details")
+        checkNavigation(result, "/pension-scheme-details/2020")
       }
 
       "to Asked pension scheme to pay charge page when public Pension scheme selected" in {
         val ua     = emptyUserAnswers
           .set(
-            WhichPensionSchemeWillPayPage,
+            WhichPensionSchemeWillPayPage(Period._2020),
             publicPensionScheme.sample.value
           )
           .success
           .value
-        val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
+        val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/asked-pension-scheme-to-pay-tax-charge")
+        checkNavigation(result, "/asked-pension-scheme-to-pay-tax-charge/2020")
       }
 
       "to JourneyRecoveryPage when not selected" in {
         val ua     = emptyUserAnswers
-        val result = WhichPensionSchemeWillPayPage.navigate(NormalMode, ua).url
+        val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -69,19 +69,19 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
       "to CYA" in {
         val ua     = emptyUserAnswers
           .set(
-            WhichPensionSchemeWillPayPage,
+            WhichPensionSchemeWillPayPage(Period._2020),
             WhichPensionSchemeWillPay.PensionSchemeA
           )
           .success
           .value
-        val result = WhichPensionSchemeWillPayPage.navigate(CheckMode, ua).url
+        val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not answered" in {
         val ua     = emptyUserAnswers
-        val result = WhichPensionSchemeWillPayPage.navigate(CheckMode, ua).url
+        val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

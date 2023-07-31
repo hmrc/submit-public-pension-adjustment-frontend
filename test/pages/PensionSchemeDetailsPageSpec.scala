@@ -16,37 +16,37 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, PensionSchemeDetails}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period}
 
 class PensionSchemeDetailsPageSpec extends PageBehaviours {
 
   "PensionSchemeDetailsPage" - {
 
-    beRetrievable[PensionSchemeDetails](PensionSchemeDetailsPage)
+    beRetrievable[PensionSchemeDetails](PensionSchemeDetailsPage(Period._2020))
 
-    beSettable[PensionSchemeDetails](PensionSchemeDetailsPage)
+    beSettable[PensionSchemeDetails](PensionSchemeDetailsPage(Period._2020))
 
-    beRemovable[PensionSchemeDetails](PensionSchemeDetailsPage)
+    beRemovable[PensionSchemeDetails](PensionSchemeDetailsPage(Period._2020))
 
     "must navigate correctly in NormalMode" - {
 
       "to AskedPensionSchemeToPayTaxChargePage when questions answered" in {
         val ua     = emptyUserAnswers
           .set(
-            PensionSchemeDetailsPage,
+            PensionSchemeDetailsPage(Period._2020),
             PensionSchemeDetails("name", "pstr")
           )
           .success
           .value
-        val result = PensionSchemeDetailsPage.navigate(NormalMode, ua).url
+        val result = PensionSchemeDetailsPage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/asked-pension-scheme-to-pay-tax-charge")
+        checkNavigation(result, "/asked-pension-scheme-to-pay-tax-charge/2020")
       }
 
       "to JourneyRecoveryPage when not answered" in {
         val ua = emptyUserAnswers
 
-        val result = PensionSchemeDetailsPage.navigate(NormalMode, ua).url
+        val result = PensionSchemeDetailsPage(Period._2020).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -57,19 +57,19 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
       "to CYA when answered" in {
         val ua     = emptyUserAnswers
           .set(
-            PensionSchemeDetailsPage,
+            PensionSchemeDetailsPage(Period._2020),
             PensionSchemeDetails("name", "pstr")
           )
           .success
           .value
-        val result = PensionSchemeDetailsPage.navigate(CheckMode, ua).url
+        val result = PensionSchemeDetailsPage(Period._2020).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not answered" in {
         val ua     = emptyUserAnswers
-        val result = PensionSchemeDetailsPage.navigate(CheckMode, ua).url
+        val result = PensionSchemeDetailsPage(Period._2020).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

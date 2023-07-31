@@ -18,8 +18,10 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions._
+import models.calculation.response.CalculationResponse
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.PeriodService
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
@@ -39,23 +41,37 @@ class CheckYourAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
-      val rows: Seq[Option[SummaryListRow]] = Seq(
+      val firstRowBlock: Seq[Option[SummaryListRow]] = Seq(
         ClaimOnBehalfSummary.row(request.userAnswers),
         StatusOfUserSummary.row(request.userAnswers),
         PensionSchemeMemberNameSummary.row(request.userAnswers),
         PensionSchemeMemberDOBSummary.row(request.userAnswers),
         MemberDateOfDeathSummary.row(request.userAnswers),
         PensionSchemeMemberNinoSummary.row(request.userAnswers),
-        PensionSchemeMemberTaxReferenceSummary.row(request.userAnswers),
-        PensionSchemeMemberResidenceSummary.row(request.userAnswers),
-        PensionSchemeMemberUKAddressSummary.row(request.userAnswers),
-        PensionSchemeMemberInternationalAddressSummary.row(request.userAnswers),
-        WhoWillPaySummary.row(request.userAnswers),
-        WhichPensionSchemeWillPaySummary.row(request.userAnswers),
-        PensionSchemeDetailsSummary.row(request.userAnswers),
-        AskedPensionSchemeToPayTaxChargeSummary.row(request.userAnswers),
-        WhenWillYouAskPensionSchemeToPaySummary.row(request.userAnswers),
-        WhenDidYouAskPensionSchemeToPaySummary.row(request.userAnswers),
+      PensionSchemeMemberTaxReferenceSummary.row(request.userAnswers),
+      PensionSchemeMemberResidenceSummary.row(request.userAnswers),
+      PensionSchemeMemberUKAddressSummary.row(request.userAnswers),
+      PensionSchemeMemberInternationalAddressSummary.row(request.userAnswers)
+    )
+
+    val mayBePeriodRowBlock: Option[List[Option[SummaryListRow]]] = for {
+      submission  <- request.submission
+      calculation <- submission.calculation
+    } yield PeriodService
+      .orderedInDateDebitPeriods(calculation)
+      .flatMap(period =>
+        Seq(
+          PeriodDetailsSummary.row(period),
+          WhoWillPaySummary.row(request.userAnswers, period),
+          WhichPensionSchemeWillPaySummary.row(request.userAnswers, period),
+          PensionSchemeDetailsSummary.row(request.userAnswers, period),
+          AskedPensionSchemeToPayTaxChargeSummary.row(request.userAnswers, period),
+          WhenWillYouAskPensionSchemeToPaySummary.row(request.userAnswers, period),
+          WhenDidYouAskPensionSchemeToPaySummary.row(request.userAnswers, period)
+        )
+      )
+
+    val finalRowBlock: Seq[Option[SummaryListRow]] = Seq(
         AlternativeNameSummary.row(request.userAnswers),
         EnterAlternativeNameSummary.row(request.userAnswers),
         ContactNumberSummary.row(request.userAnswers),
@@ -68,7 +84,12 @@ class CheckYourAnswersController @Inject() (
         HowMuchTaxReliefSummary.row(request.userAnswers),
         WhichPensionSchemeWillPayTaxReliefSummary.row(request.userAnswers),
         BankDetailsSummary.row(request.userAnswers)
-      )
-      Ok(view(SummaryListViewModel(rows.flatten)))
+    )
+
+    val periodRowBlock = mayBePeriodRowBlock.getOrElse(Seq())
+
+    val allRows = firstRowBlock ++ periodRowBlock ++ finalRowBlock
+
+    Ok(view(SummaryListViewModel(allRows.flatten)))
   }
 }

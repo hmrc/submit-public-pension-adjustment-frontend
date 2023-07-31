@@ -40,18 +40,12 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(UkAddressPage.type, JsValue)] ::
       arbitrary[(InternationalAddressPage.type, JsValue)] ::
       arbitrary[(AreYouAUKResidentPage.type, JsValue)] ::
-      arbitrary[(WhenWillYouAskPensionSchemeToPayPage.type, JsValue)] ::
-      arbitrary[(WhenDidYouAskPensionSchemeToPayPage.type, JsValue)] ::
-      arbitrary[(AskedPensionSchemeToPayTaxChargePage.type, JsValue)] ::
       arbitrary[(StatusOfUserPage.type, JsValue)] ::
       arbitrary[(ClaimOnBehalfPage.type, JsValue)] ::
       arbitrary[(PensionSchemeMemberDOBPage.type, JsValue)] ::
       arbitrary[(PensionSchemeMemberNamePage.type, JsValue)] ::
       arbitrary[(PensionSchemeMemberTaxReferencePage.type, JsValue)] ::
       arbitrary[(PensionSchemeMemberNinoPage.type, JsValue)] ::
-      arbitrary[(WhichPensionSchemeWillPayPage.type, JsValue)] ::
-      arbitrary[(PensionSchemeDetailsPage.type, JsValue)] ::
-      arbitrary[(WhoWillPayPage.type, JsValue)] ::
       arbitrary[(ContactNumberPage.type, JsValue)] ::
       arbitrary[(EnterAlternativeNamePage.type, JsValue)] ::
       arbitrary[(AlternativeNamePage.type, JsValue)] ::

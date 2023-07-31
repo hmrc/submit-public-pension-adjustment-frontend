@@ -16,37 +16,37 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
 import scala.util.Try
 
-case object AskedPensionSchemeToPayTaxChargePage extends QuestionPage[Boolean] {
+case class AskedPensionSchemeToPayTaxChargePage(period: Period) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "askedPensionSchemeToPayTaxCharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(AskedPensionSchemeToPayTaxChargePage) match {
-      case Some(true)  => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode)
-      case Some(false) => controllers.routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(NormalMode)
+    answers.get(AskedPensionSchemeToPayTaxChargePage(period)) match {
+      case Some(true)  => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode, period)
+      case Some(false) => controllers.routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(AskedPensionSchemeToPayTaxChargePage) match {
-      case Some(true)  => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(CheckMode)
-      case Some(false) => controllers.routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(CheckMode)
+    answers.get(AskedPensionSchemeToPayTaxChargePage(period)) match {
+      case Some(true)  => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(CheckMode, period)
+      case Some(false) => controllers.routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(CheckMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case false => userAnswers.remove(WhenDidYouAskPensionSchemeToPayPage)
-        case true  => userAnswers.remove(WhenWillYouAskPensionSchemeToPayPage)
+        case false => userAnswers.remove(WhenDidYouAskPensionSchemeToPayPage(period))
+        case true  => userAnswers.remove(WhenWillYouAskPensionSchemeToPayPage(period))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

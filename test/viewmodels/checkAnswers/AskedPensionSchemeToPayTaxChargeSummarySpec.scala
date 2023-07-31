@@ -17,12 +17,13 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.AskedPensionSchemeToPayTaxChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -35,19 +36,19 @@ class AskedPensionSchemeToPayTaxChargeSummarySpec extends AnyFreeSpec with Match
 
       val userAnswers = UserAnswers("id")
         .set(
-          AskedPensionSchemeToPayTaxChargePage,
+          AskedPensionSchemeToPayTaxChargePage(Period._2020),
           true
         )
         .get
 
-      AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers) shouldBe Some(
+      AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "askedPensionSchemeToPayTaxCharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode).url
+              routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, Period._2020).url
             )
               .withVisuallyHiddenText("askedPensionSchemeToPayTaxCharge.change.hidden")
           )
@@ -60,19 +61,19 @@ class AskedPensionSchemeToPayTaxChargeSummarySpec extends AnyFreeSpec with Match
 
       val userAnswers = UserAnswers("id")
         .set(
-          AskedPensionSchemeToPayTaxChargePage,
+          AskedPensionSchemeToPayTaxChargePage(Period._2020),
           false
         )
         .get
 
-      AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers) shouldBe Some(
+      AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "askedPensionSchemeToPayTaxCharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode).url
+              routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, Period._2020).url
             )
               .withVisuallyHiddenText("askedPensionSchemeToPayTaxCharge.change.hidden")
           )
@@ -84,6 +85,6 @@ class AskedPensionSchemeToPayTaxChargeSummarySpec extends AnyFreeSpec with Match
 
   "when answer unavailable, return empty" in {
     val userAnswers = UserAnswers("id")
-    AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers) shouldBe None
+    AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) shouldBe None
   }
 }
