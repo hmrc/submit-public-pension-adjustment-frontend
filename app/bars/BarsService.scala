@@ -32,7 +32,7 @@ import scala.concurrent.ExecutionContext
 
 class BarsService @Inject() (
   barsConnector: BarsConnector
-                            )(implicit ec: ExecutionContext) {
+)(implicit ec: ExecutionContext) {
 
   def validateBankAccount(bankAccount: BarsBankAccount)(implicit hc: HeaderCarrier): Future[BarsResponse] =
     barsConnector.validateBankDetails(request.BarsValidateRequest(bankAccount)).map { httpResponse: HttpResponse =>

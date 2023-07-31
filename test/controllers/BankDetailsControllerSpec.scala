@@ -180,9 +180,9 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
     "must show an error when the sort code is on the deny list" in {
 
-      val errorResponseType                       = SortCodeOnDenyListErrorResponse(SortCodeOnDenyList(BarsErrorResponse("code", "desc")))
+      val errorResponseType                      = SortCodeOnDenyListErrorResponse(SortCodeOnDenyList(BarsErrorResponse("code", "desc")))
       val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
-      val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
+      val expectedErrorMessage                   = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
     }
@@ -191,9 +191,9 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
-      val errorResponseType: BarsVerifyError      = NameDoesNotMatch(VerifyResponse(barsVerifyResponse))
+      val errorResponseType: BarsVerifyError     = NameDoesNotMatch(VerifyResponse(barsVerifyResponse))
       val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
-      val expectedErrorMessage                    =
+      val expectedErrorMessage                   =
         "Enter the name on the account as it appears on bank statements. Do not copy and paste it"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
@@ -203,9 +203,9 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
-      val errorResponseType: BarsVerifyError      = AccountNumberNotWellFormatted(VerifyResponse(barsVerifyResponse))
+      val errorResponseType: BarsVerifyError     = AccountNumberNotWellFormatted(VerifyResponse(barsVerifyResponse))
       val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
-      val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
+      val expectedErrorMessage                   = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
     }
@@ -214,9 +214,9 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
-      val errorResponseType: BarsVerifyError      = SortCodeNotPresentOnEiscd(VerifyResponse(barsVerifyResponse))
+      val errorResponseType: BarsVerifyError     = SortCodeNotPresentOnEiscd(VerifyResponse(barsVerifyResponse))
       val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
-      val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
+      val expectedErrorMessage                   = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
     }
@@ -225,9 +225,9 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
-      val errorResponseType: BarsVerifyError      = ThirdPartyError(VerifyResponse(barsVerifyResponse))
+      val errorResponseType: BarsVerifyError     = ThirdPartyError(VerifyResponse(barsVerifyResponse))
       val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
-      val expectedErrorMessage                    = "BARS verify third-party error. BARS response:"
+      val expectedErrorMessage                   = "BARS verify third-party error. BARS response:"
 
       assertThrowsWithMessage[RuntimeException](expectedErrorMessage) {
         submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, "")
@@ -238,9 +238,9 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
-      val errorResponseType: BarsVerifyError      = AccountDoesNotExist(VerifyResponse(barsVerifyResponse))
+      val errorResponseType: BarsVerifyError     = AccountDoesNotExist(VerifyResponse(barsVerifyResponse))
       val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
-      val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
+      val expectedErrorMessage                   = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
     }
@@ -249,9 +249,9 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       val barsVerifyResponse: BarsVerifyResponse = aBarsVerifyResponse
 
-      val errorResponseType: BarsVerifyError      = OtherBarsError(VerifyResponse(barsVerifyResponse))
+      val errorResponseType: BarsVerifyError     = OtherBarsError(VerifyResponse(barsVerifyResponse))
       val mcCloudBarsServiceMock: PpaBarsService = whenTheBarsServiceReturnsAnErrorResponse(errorResponseType)
-      val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
+      val expectedErrorMessage                   = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
     }
@@ -261,7 +261,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       val mcCloudBarsServiceMock: PpaBarsService =
         whenTheBarsServiceReturnsAnUnexpectedErrorResponse(unexpectedErrorResponseType)
-      val expectedErrorMessage                    = "Enter a valid combination of bank account number and sort code"
+      val expectedErrorMessage                   = "Enter a valid combination of bank account number and sort code"
 
       submitFormAndCheckErrorMessage(mcCloudBarsServiceMock, expectedErrorMessage)
     }
