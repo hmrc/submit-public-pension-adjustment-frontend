@@ -88,13 +88,13 @@ class BankDetailsController @Inject() (
         } yield Redirect(BankDetailsPage.navigate(mode, updatedAnswers))
 
       case Left(error) =>
-        handleBankDetailsError(form, mode, value, error)
+        handleBankDetailsError(mode, error)
     }
   }
 
-  private def handleBankDetailsError(form: Form[BankDetails], mode: Mode, value: BankDetails, error: BarsError)(implicit
+  private def handleBankDetailsError(mode: Mode, error: BarsError)(implicit
     request: DataRequest[AnyContent]
-  ): Future[Result] =
+  ): Future[Result] = {
     error match {
       case ThirdPartyError(resp)                                                               =>
         throw new RuntimeException(s"BARS verify third-party error. BARS response: $resp")
@@ -113,4 +113,5 @@ class BankDetailsController @Inject() (
       case _                                                                                   =>
         handleFormWithWithBarsError(accountNumberNotWellFormatted, mode)
     }
+  }
 }

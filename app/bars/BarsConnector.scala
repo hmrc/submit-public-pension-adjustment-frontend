@@ -16,11 +16,11 @@
 
 package bars
 
-import bars.barsmodel.request.{BarsValidateRequest, BarsVerifyPersonalRequest}
-import bars.barsmodel.response.BarsVerifyResponse
+import bars.barsmodel.request.BarsVerifyPersonalRequest
 import config.BarsConfig
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
+import play.api.http.HeaderNames
 import uk.gov.hmrc.http.HttpReads.Implicits._
+import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -34,12 +34,6 @@ class BarsConnector @Inject() (
 
   val baseUrl: String = barsConfig.baseUrl
 
-  /** "The Validate Bank Details endpoint combines several functions to provide an aggregated validation result"
-    */
-  private val validateUrl: String = s"$baseUrl/validate/bank-details"
-
-  def validateBankDetails(barsValidateRequest: BarsValidateRequest)(implicit hc: HeaderCarrier): Future[HttpResponse] =
-    httpClient.POST[BarsValidateRequest, HttpResponse](validateUrl, barsValidateRequest)
 
   /** "This endpoint checks the likely correctness of a given personal bank account and it's likely connection to the
     * given account holder (aka the subject)"
@@ -47,10 +41,8 @@ class BarsConnector @Inject() (
   private val verifyPersonalUrl: String = s"$baseUrl/verify/personal"
 
   def verifyPersonal(
-    barsVerifyPersonalRequest: BarsVerifyPersonalRequest
-  )(implicit hc: HeaderCarrier): Future[BarsVerifyResponse] =
+                          barsVerifyPersonalRequest: BarsVerifyPersonalRequest
+                        )(implicit hc: HeaderCarrier): Future[HttpResponse] =
     httpClient
-      .POST[BarsVerifyPersonalRequest, HttpResponse](verifyPersonalUrl, barsVerifyPersonalRequest)
-      .map(response => response.json.as[BarsVerifyResponse])
-
+      .POST[BarsVerifyPersonalRequest, HttpResponse](verifyPersonalUrl, barsVerifyPersonalRequest, headers = Seq(HeaderNames.USER_AGENT -> "calculate-public-pension-adjustment"))
 }

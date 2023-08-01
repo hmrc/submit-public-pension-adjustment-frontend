@@ -18,7 +18,6 @@ package bars
 
 import bars.PpaBarsService._
 import bars.barsmodel.request.{BarsBankAccount, BarsSubject}
-import bars.barsmodel.response.VerifyResponse.accountDoesNotExist
 import bars.barsmodel.response._
 import models.BankDetails
 import uk.gov.hmrc.http.HeaderCarrier
@@ -31,8 +30,8 @@ class PpaBarsService @Inject() (
 ) {
 
   def verifyBankDetails(
-    bankAccountDetails: BankDetails
-  )(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[BarsError, VerifyResponse]] = {
+                         bankAccountDetails: BankDetails
+                       )(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[BarsError, VerifyResponse]] = {
 
     val resp =
       barsService
@@ -41,36 +40,14 @@ class PpaBarsService @Inject() (
           subject = toBarsSubject(bankAccountDetails)
         )
         .flatMap {
-          case result @ (Right(_) | Left(_: BarsValidateError)) =>
-            // don't update the verify count on success or validate error
+          case result@(Right(_) | Left(_: BarsValidateError)) =>
             Future.successful(result)
-          case result @ Left(bve: BarsVerifyError)              =>
+          case result@Left(bve: BarsVerifyError) =>
             Future.successful(result)
         }
     resp
   }
-
-  def verifyPersonal(
-    bankAccountDetails: BankDetails
-  )(implicit
-    hc: HeaderCarrier,
-    ec: ExecutionContext
-  ): Future[ValidationResult] = {
-
-    val resp =
-      barsService.verifyPersonal(
-        bankAccount = BarsBankAccount
-          .normalise(sortCode = bankAccountDetails.sortCode, accountNumber = bankAccountDetails.accountNumber),
-        subject = toBarsSubject(bankAccountDetails)
-      )
-
-    resp.map {
-      case accountDoesNotExist() => Invalid
-      case VerifyResponse(_)     => Valid
-    }
-  }
 }
-
 object PpaBarsService {
 
   def toBarsBankAccount(bankDetails: BankDetails): BarsBankAccount =
@@ -89,5 +66,5 @@ object PpaBarsService {
 
   case object Valid extends ValidationResult
   case object Invalid extends ValidationResult
-  case object InvalidAsSortCodeOnDenyList extends ValidationResult
+
 }

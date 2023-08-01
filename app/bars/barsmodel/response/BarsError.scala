@@ -31,9 +31,6 @@ final case class SortCodeNotPresentOnEiscdValidateResponse(barsResponse: Validat
 final case class SortCodeDoesNotSupportDirectDebitValidateResponse(barsResponse: ValidateResponse)
     extends BarsValidateError
 
-// TODO DPP remove once the barsVerifyEnabled flag has been removed
-final case class LegacyBarsValidateErrorResponse(barsResponse: ValidateResponse) extends BarsValidateError
-
 final case class SortCodeOnDenyListErrorResponse(barsResponse: SortCodeOnDenyList) extends SortCodeOnDenyListError
 
 final case class AccountNumberNotWellFormatted(barsResponse: BarsResponse) extends BarsVerifyError

@@ -31,11 +31,10 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 
 class BarsService @Inject() (
-  barsConnector: BarsConnector
-)(implicit ec: ExecutionContext) {
-
-  def validateBankAccount(bankAccount: BarsBankAccount)(implicit hc: HeaderCarrier): Future[BarsResponse] =
-    barsConnector.validateBankDetails(request.BarsValidateRequest(bankAccount)).map { httpResponse: HttpResponse =>
+                              barsConnector: BarsConnector
+                            )(implicit ec: ExecutionContext) {
+  def handleHttpResponse(barsResponse: Future[HttpResponse])(implicit hc: HeaderCarrier): Future[BarsResponse] =
+    barsResponse.map { httpResponse: HttpResponse =>
       httpResponse.status match {
         case OK =>
           httpResponse
@@ -47,7 +46,7 @@ class BarsService @Inject() (
           httpResponse.json.validate[BarsErrorResponse] match {
             case JsSuccess(barsErrorResponse, _) if barsErrorResponse.code == "SORT_CODE_ON_DENY_LIST" =>
               SortCodeOnDenyList(barsErrorResponse)
-            case _                                                                                     =>
+            case _ =>
               throw UpstreamErrorResponse(httpResponse.body, httpResponse.status)
           }
 
@@ -56,25 +55,27 @@ class BarsService @Inject() (
       }
     }
 
-  def verifyPersonal(bankAccount: BarsBankAccount, subject: BarsSubject)(implicit
-    hc: HeaderCarrier
+  def verifyPersonal(barsResponse: Future[HttpResponse])(implicit
+                                                                         hc: HeaderCarrier
   ): Future[VerifyResponse] =
-    barsConnector.verifyPersonal(BarsVerifyPersonalRequest(bankAccount, subject)).map(VerifyResponse.apply)
+    barsResponse.map(response => response.json.as[BarsVerifyResponse]).map(VerifyResponse.apply)
 
   def verifyBankDetails(
-    bankAccount: BarsBankAccount,
-    subject: BarsSubject
-  )(implicit hc: HeaderCarrier): Future[Either[BarsError, VerifyResponse]] =
-    validateBankAccount(bankAccount).flatMap {
+                         bankAccount: BarsBankAccount,
+                         subject: BarsSubject
+                       )(implicit hc: HeaderCarrier): Future[Either[BarsError, VerifyResponse]] = {
+    val barsResponse = barsConnector.verifyPersonal(request.BarsVerifyPersonalRequest(bankAccount, subject))
+    handleHttpResponse(barsResponse).flatMap {
       case validateResponse @ validateFailure() =>
-        Future.successful(Left(handleValidateErrorResponse(validateResponse)))
+        Future.successful(Left(handlePreVerifiedErrorResponse(validateResponse)))
       case response: SortCodeOnDenyList         =>
         Future.successful(Left(SortCodeOnDenyListErrorResponse(response)))
       case _                                    =>
-        verifyPersonal(bankAccount, subject).map(handleVerifyResponse)
+        verifyPersonal(barsResponse).map(handleVerifyResponse)
     }
+  }
 
-  private def handleValidateErrorResponse(response: ValidateResponse): BarsError = {
+  private def handlePreVerifiedErrorResponse(response: ValidateResponse): BarsError = {
     import ValidateResponse._
     response match {
       case accountNumberIsWellFormattedNo() => AccountNumberNotWellFormattedValidateResponse(response)
@@ -100,5 +101,4 @@ class BarsService @Inject() (
       case _                                => Left(OtherBarsError(response))
     }
   }
-
 }
