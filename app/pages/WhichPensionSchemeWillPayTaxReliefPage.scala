@@ -17,6 +17,8 @@
 package pages
 
 import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
+import models.{Mode, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
+import models.submission.Submission
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -37,4 +39,13 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[WhichPen
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  private def isMemberCredit(submission: Submission, mode: Mode): Call = {
+    val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
+    if (memberCredit > 0) {
+      controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode)
+    } else {
+      controllers.routes.DeclarationsController.onPageLoad
+    }
+  }
 }
