@@ -25,15 +25,7 @@ sealed trait BarsError {
 sealed trait BarsPreVerifyError extends BarsError
 sealed trait SortCodeOnDenyListError extends BarsPreVerifyError
 sealed trait BarsVerifyError extends BarsError
-
-final case class AccountNumberNotWellFormattedPreVerifyResponse(barsResponse: PreVerifyResponse)
-    extends BarsPreVerifyError
-final case class SortCodeNotPresentOnEiscdPreVerifyResponse(barsResponse: PreVerifyResponse) extends BarsPreVerifyError
-final case class SortCodeDoesNotSupportDirectDebitPreVerifyResponse(barsResponse: PreVerifyResponse)
-    extends BarsPreVerifyError
-
 final case class SortCodeOnDenyListErrorResponse(barsResponse: SortCodeOnDenyList) extends SortCodeOnDenyListError
-
 final case class AccountNumberNotWellFormatted(barsResponse: BarsResponse) extends BarsVerifyError
 final case class SortCodeNotPresentOnEiscd(barsResponse: BarsResponse) extends BarsVerifyError
 final case class SortCodeDoesNotSupportDirectDebit(barsResponse: BarsResponse) extends BarsVerifyError

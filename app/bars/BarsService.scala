@@ -17,7 +17,6 @@
 package bars
 
 import bars.barsmodel.request._
-import bars.barsmodel.response.PreVerifyResponse.preVerifyFailure
 import bars.barsmodel.response._
 import play.api.http.Status._
 import play.api.libs.json._
@@ -38,8 +37,8 @@ class BarsService @Inject() (
       httpResponse.status match {
         case OK =>
           httpResponse
-            .parseJSON[BarsPreVerifyResponse]
-            .map(PreVerifyResponse.apply)
+            .parseJSON[BarsVerifyResponse]
+            .map(VerifyResponse.apply)
             .getOrElse(throw UpstreamErrorResponse(httpResponse.body, httpResponse.status))
 
         case BAD_REQUEST =>
@@ -66,22 +65,10 @@ class BarsService @Inject() (
   )(implicit hc: HeaderCarrier): Future[Either[BarsError, VerifyResponse]] = {
     val barsResponse = barsConnector.verifyPersonal(request.BarsVerifyPersonalRequest(bankAccount, subject))
     preVerify(barsResponse).flatMap {
-      case preVerifyResponse @ preVerifyFailure() =>
-        Future.successful(Left(handlePreVerifyErrorResponse(preVerifyResponse)))
-      case response: SortCodeOnDenyList           =>
+      case response: SortCodeOnDenyList =>
         Future.successful(Left(SortCodeOnDenyListErrorResponse(response)))
-      case _                                      =>
+      case _                            =>
         verifyPersonal(barsResponse).map(handleVerifyResponse)
-    }
-  }
-
-  private def handlePreVerifyErrorResponse(response: PreVerifyResponse): BarsError = {
-    import PreVerifyResponse._
-    response match {
-      case accountNumberIsWellFormattedNo() => AccountNumberNotWellFormattedPreVerifyResponse(response)
-      case sortCodeIsPresentOnEiscdNo()     => SortCodeNotPresentOnEiscdPreVerifyResponse(response)
-      case sortCodeSupportsDirectDebitNo()  => SortCodeDoesNotSupportDirectDebitPreVerifyResponse(response)
-      case _                                => sys.error("unhandled BARs pre verified error response")
     }
   }
 

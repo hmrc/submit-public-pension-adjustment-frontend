@@ -46,33 +46,4 @@ class PpaBarsServiceSpec extends SpecBase with MockitoSugar {
       response.futureValue shouldBe barsResponse
     }
   }
-
-  "when verifying personal details" - {
-    "should return Valid when underlying BarsService returns a successful VerifyResponse" in {
-      val headerCarrier = new HeaderCarrier()
-      val barsService   = mock[BarsService]
-
-      when(barsService.verifyPersonal(any(), any())(any()))
-        .thenReturn(Future.successful(VerifyResponse(aBarsVerifyResponse)))
-      val ppaBarsService = new PpaBarsService(barsService)
-
-      val bankAccountDetails = BankDetails("accountName", "sortCode", "accountNumber")
-      val response           = ppaBarsService.verifyPersonal(bankAccountDetails)(headerCarrier, global)
-      response.futureValue shouldBe bars.PpaBarsService.Valid
-    }
-  }
-
-  private def aBarsVerifyResponse =
-    BarsVerifyResponse(
-      accountNumberIsWellFormatted = BarsAssessmentType.Yes,
-      accountExists = BarsAssessmentType.Yes,
-      nameMatches = BarsAssessmentType.Yes,
-      nonStandardAccountDetailsRequiredForBacs = BarsAssessmentType.Yes,
-      sortCodeIsPresentOnEISCD = BarsAssessmentType.Yes,
-      sortCodeSupportsDirectDebit = BarsAssessmentType.Yes,
-      sortCodeSupportsDirectCredit = BarsAssessmentType.Yes,
-      accountName = Some("John Smith"),
-      sortCodeBankName = Some("111111"),
-      iban = None
-    )
 }

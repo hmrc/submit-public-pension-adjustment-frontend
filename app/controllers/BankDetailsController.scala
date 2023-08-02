@@ -20,12 +20,11 @@ import bars.PpaBarsService
 import bars.barsmodel.response._
 import controllers.actions._
 import forms.BankDetailsFormProvider
-import forms.BarsOverrides.{accountDoesNotExist, accountNumberNotWellFormatted, nameDoesNotMatch, otherBarsError, sortCodeNotPresentOnEiscd, sortCodeOnDenyList}
+import forms.BarsOverrides._
 import forms.helper.FormErrorWithFieldMessageOverrides
 import models.requests.DataRequest
 import models.{BankDetails, Mode, UserAnswers}
 import pages.BankDetailsPage
-import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
@@ -94,23 +93,25 @@ class BankDetailsController @Inject() (
 
   private def handleBankDetailsError(mode: Mode, error: BarsError)(implicit
     request: DataRequest[AnyContent]
-  ): Future[Result] =
+  ): Future[Result] = {
+    print("aaaaaaaaaaaaaaaaaaaaaaaaa" + error)
     error match {
-      case ThirdPartyError(resp)                                                                =>
+      case ThirdPartyError(resp)              =>
         throw new RuntimeException(s"BARS verify third-party error. BARS response: $resp")
-      case AccountNumberNotWellFormatted(_) | AccountNumberNotWellFormattedPreVerifyResponse(_) =>
+      case AccountNumberNotWellFormatted(_)   =>
         handleFormWithWithBarsError(accountNumberNotWellFormatted, mode)
-      case SortCodeNotPresentOnEiscd(_) | SortCodeNotPresentOnEiscdPreVerifyResponse(_)         =>
+      case SortCodeNotPresentOnEiscd(_)       =>
         handleFormWithWithBarsError(sortCodeNotPresentOnEiscd, mode)
-      case SortCodeOnDenyListErrorResponse(_)                                                   =>
+      case SortCodeOnDenyListErrorResponse(_) =>
         handleFormWithWithBarsError(sortCodeOnDenyList, mode)
-      case NameDoesNotMatch(_)                                                                  =>
+      case NameDoesNotMatch(_)                =>
         handleFormWithWithBarsError(nameDoesNotMatch, mode)
-      case AccountDoesNotExist(_)                                                               =>
+      case AccountDoesNotExist(_)             =>
         handleFormWithWithBarsError(accountDoesNotExist, mode)
-      case OtherBarsError(_)                                                                    =>
+      case OtherBarsError(_)                  =>
         handleFormWithWithBarsError(otherBarsError, mode)
-      case _                                                                                    =>
+      case _                                  =>
         handleFormWithWithBarsError(accountNumberNotWellFormatted, mode)
     }
+  }
 }

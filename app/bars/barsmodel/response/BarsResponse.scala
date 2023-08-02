@@ -20,37 +20,9 @@ import bars.barsmodel.response.BarsAssessmentType._
 
 sealed trait BarsResponse
 
-final case class PreVerifyResponse(barsPreVerifyResponse: BarsPreVerifyResponse) extends BarsResponse
-
 final case class VerifyResponse(barsVerifyResponse: BarsVerifyResponse) extends BarsResponse
 
 final case class SortCodeOnDenyList(error: BarsErrorResponse) extends BarsResponse
-
-object PreVerifyResponse {
-
-  object preVerifyFailure {
-    def unapply(response: PreVerifyResponse): Boolean =
-      response.barsPreVerifyResponse.sortCodeIsPresentOnEISCD == No ||
-        response.barsPreVerifyResponse.accountNumberIsWellFormatted == No ||
-        response.barsPreVerifyResponse.sortCodeSupportsDirectDebit.contains(No)
-  }
-
-  object accountNumberIsWellFormattedNo {
-    def unapply(response: PreVerifyResponse): Boolean =
-      response.barsPreVerifyResponse.accountNumberIsWellFormatted == No
-  }
-
-  object sortCodeIsPresentOnEiscdNo {
-    def unapply(response: PreVerifyResponse): Boolean =
-      response.barsPreVerifyResponse.sortCodeIsPresentOnEISCD == No
-  }
-
-  object sortCodeSupportsDirectDebitNo {
-    def unapply(response: PreVerifyResponse): Boolean =
-      response.barsPreVerifyResponse.sortCodeSupportsDirectDebit.contains(No)
-  }
-
-}
 
 object VerifyResponse {
 

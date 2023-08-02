@@ -16,8 +16,8 @@
 
 package bars
 
-import bars.barsmodel.request.{BarsBankAccount, BarsSubject}
-import bars.barsmodel.response.BarsAssessmentType.{Indeterminate, No, Yes}
+import bars.barsmodel.request.{BarsBankAccount, BarsSubject, BarsVerifyPersonalRequest}
+import bars.barsmodel.response.BarsAssessmentType.{No, Yes}
 import bars.barsmodel.response._
 import base.SpecBase
 import org.mockito.ArgumentMatchers.any
@@ -27,40 +27,41 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, OK}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, UpstreamErrorResponse}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class BarsServiceSpec extends SpecBase with MockitoSugar {
 
-  val barsConnector         = mock[BarsConnector]
-  val headerCarrier         = new HeaderCarrier()
-  val bankAccount           = BarsBankAccount.normalise("111111", "11111111")
-  val subject               = BarsSubject(None, Some("Testuser One"), None, None, None, None)
-  val validValidateResponse = BarsPreVerifyResponse(Yes, Yes, Yes, Some(Yes))
+  val barsConnector = mock[BarsConnector]
+  val headerCarrier = new HeaderCarrier()
+  val bankAccount   = BarsBankAccount.normalise("111111", "11111111")
+  val subject       = BarsSubject(None, Some("Test User"), None, None, None, None)
 
   "BarsService" - {
-    "validateBankAccount" - {
+    "preVerify" - {
 
-      def mockBarsConnectorWithResponse(response: HttpResponse): BarsConnector = {
-        when(barsConnector.validateBankDetails(any())(any())).thenReturn(Future.successful(response))
+      def mockBarsConnectorWithResponse(response: Future[HttpResponse]): BarsConnector = {
+        when(barsConnector.verifyPersonal(any())(any())).thenReturn(response)
         barsConnector
       }
 
       "should return BarsErrorResponse when BarsConnector returns a BadRequest response with SORT_CODE_ON_DENY_LIST code" in {
         val barsErrorResponse  = BarsErrorResponse("SORT_CODE_ON_DENY_LIST", "Some error message")
-        val badRequestResponse = HttpResponse(BAD_REQUEST, Json.toJson(barsErrorResponse).toString())
+        val badRequestResponse = Future.successful(HttpResponse(BAD_REQUEST, Json.toJson(barsErrorResponse).toString()))
         val barsService        = new BarsService(mockBarsConnectorWithResponse(badRequestResponse))
 
-        val response = barsService.validateBankAccount(bankAccount)(headerCarrier)
+        val response = barsService.preVerify(badRequestResponse)(headerCarrier)
 
         response.futureValue shouldBe SortCodeOnDenyList(barsErrorResponse)
       }
 
       "should throw UpstreamErrorResponse when httpResponse status is not OK or BAD_REQUEST" in {
-        val notOKOrBadRequestResponse = HttpResponse(INTERNAL_SERVER_ERROR, "Internal server error occurred")
+        val notOKOrBadRequestResponse =
+          Future.successful(HttpResponse(INTERNAL_SERVER_ERROR, "Internal server error occurred"))
         val barsService               = new BarsService(mockBarsConnectorWithResponse(notOKOrBadRequestResponse))
 
-        val response = barsService.validateBankAccount(bankAccount)(headerCarrier)
+        val response = barsService.preVerify(notOKOrBadRequestResponse)(headerCarrier)
 
         whenReady(response.failed) { e =>
           e                                                shouldBe an[UpstreamErrorResponse]
@@ -69,10 +70,10 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should throw IllegalArgumentException when httpResponse.status is OK but httpResponse body cannot be parsed to BarsValidateResponse" in {
-        val notParsableOkResponse = HttpResponse(OK, "Non parsable JSON")
+        val notParsableOkResponse = Future.successful(HttpResponse(OK, "Non parsable JSON"))
         val barsService           = new BarsService(mockBarsConnectorWithResponse(notParsableOkResponse))
 
-        val response = barsService.validateBankAccount(bankAccount)(headerCarrier)
+        val response = barsService.preVerify(notParsableOkResponse)(headerCarrier)
 
         whenReady(response.failed) { e =>
           e          shouldBe an[IllegalArgumentException]
@@ -81,10 +82,11 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should throw UpstreamErrorResponse when httpResponse.status is BAD_REQUEST but httpResponse body cannot be parsed to BarsErrorResponse" in {
-        val notParsableBadRequestResponse = HttpResponse(BAD_REQUEST, """{ "malformed": "BarsErrorResponse" }""")
+        val notParsableBadRequestResponse =
+          Future.successful(HttpResponse(BAD_REQUEST, """{ "malformed": "BarsErrorResponse" }"""))
         val barsService                   = new BarsService(mockBarsConnectorWithResponse(notParsableBadRequestResponse))
 
-        val response = barsService.validateBankAccount(bankAccount)(headerCarrier)
+        val response = barsService.preVerify(notParsableBadRequestResponse)(headerCarrier)
 
         whenReady(response.failed) { e =>
           e                                                shouldBe an[UpstreamErrorResponse]
@@ -98,9 +100,12 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
         val barsService = new BarsService(barsConnector)
 
         val validResponse = BarsVerifyResponse(Yes, Yes, Yes, Yes, Yes, Yes, Yes, None, None, None)
-        when(barsConnector.verifyPersonal(any())(any())).thenReturn(Future.successful(validResponse))
+        when(barsConnector.verifyPersonal(any())(any()))
+          .thenReturn(Future.successful(HttpResponse(OK, Json.toJson(validResponse).toString())))
 
-        val response = barsService.verifyPersonal(bankAccount, subject)(headerCarrier)
+        val response = barsService.verifyPersonal(
+          barsConnector.verifyPersonal(BarsVerifyPersonalRequest(bankAccount, subject))(headerCarrier)
+        )(headerCarrier)
 
         response.futureValue shouldBe VerifyResponse(validResponse)
       }
@@ -108,168 +113,93 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
       "should return VerifyResponse when BarsConnector returns a valid response and first and last name are separate" in {
         val barsService = new BarsService(barsConnector)
 
-        val separateSubject = BarsSubject(None, None, Some("Test"), Some("Userone"), None, None)
+        val separateSubject = BarsSubject(None, None, Some("Test"), Some("User"), None, None)
 
         val validResponse = BarsVerifyResponse(Yes, Yes, Yes, Yes, Yes, Yes, Yes, None, None, None)
-        when(barsConnector.verifyPersonal(any())(any())).thenReturn(Future.successful(validResponse))
+        when(barsConnector.verifyPersonal(any())(any()))
+          .thenReturn(Future.successful(HttpResponse(OK, Json.toJson(validResponse).toString())))
 
-        val response = barsService.verifyPersonal(bankAccount, separateSubject)(headerCarrier)
+        val response = barsService.verifyPersonal(
+          barsConnector.verifyPersonal(BarsVerifyPersonalRequest(bankAccount, separateSubject))(headerCarrier)
+        )(headerCarrier)
 
         response.futureValue shouldBe VerifyResponse(validResponse)
       }
     }
 
     "verifyBankDetails" - {
-      "should return Left(accountNumberIsWellFormattedNo) when validateBankAccount returns a BarsValidateResponse with no for account well formatted" in {
-        val barsService =
-          new BarsService(mockConnectorWithValidateResponse(BarsPreVerifyResponse(No, Yes, Yes, Some(No))))
+      "should return Right[VerifyResponse] when BarsConnector returns a valid response" in {
+        val barsService = new BarsService(barsConnector)
+
+        val validVerifyResponse = BarsVerifyResponse(Yes, Yes, Yes, Yes, Yes, Yes, Yes, None, None, None)
+
+        val httpResponse = Future.successful(HttpResponse(OK, Json.toJson(validVerifyResponse).toString()))
+
+        when(barsConnector.verifyPersonal(any())(any())).thenReturn(httpResponse)
 
         val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(AccountNumberNotWellFormattedPreVerifyResponse(_)) => }
+
+        response.futureValue shouldBe Right(VerifyResponse(validVerifyResponse))
       }
 
-      "should return Left(sortCodeIsPresentOnEiscdNo) when validateBankAccount returns a BarsValidateResponse with no for sortCodeIsPresentOnEISCD" in {
-        val barsService =
-          new BarsService(mockConnectorWithValidateResponse(BarsPreVerifyResponse(Yes, Yes, No, Some(No))))
+      "should return Left[BarsError] when preVerify returns SortCodeOnDenyList" in {
+        val barsService = new BarsService(barsConnector)
+
+        val barsErrorResponse = BarsErrorResponse("SORT_CODE_ON_DENY_LIST", "Some error message")
+        when(barsConnector.verifyPersonal(any())(any()))
+          .thenReturn(Future.successful(HttpResponse(BAD_REQUEST, Json.toJson(barsErrorResponse).toString())))
 
         val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(SortCodeNotPresentOnEiscdPreVerifyResponse(_)) => }
+
+        response.futureValue shouldBe Left(SortCodeOnDenyListErrorResponse(SortCodeOnDenyList(barsErrorResponse)))
       }
 
-      "should return Left(sortCodeSupportsDirectDebitNo) when validateBankAccount returns a BarsValidateResponse with no for sortCodeSupportsDirectDebit" in {
-        val barsService =
-          new BarsService(mockConnectorWithValidateResponse(BarsPreVerifyResponse(Yes, Yes, Yes, Some(No))))
+      "should return Left[ThirdPartyError] when BarsConnector returns a ThirdPartyError response" in {
+        val barsService = new BarsService(barsConnector)
 
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(SortCodeDoesNotSupportDirectDebitPreVerifyResponse(_)) => }
-      }
-
-      "should return Right(VerifyResponse) when validateBankAccount and verifyPersonal return valid response" in {
-        val verifyResponse = BarsVerifyResponse(Yes, Yes, Yes, Yes, Yes, Yes, Yes, None, None, None)
-
-        val barsService =
-          new BarsService(mockConnectorWithVerifyAndValidateResponse(validValidateResponse, verifyResponse))
-
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Right(VerifyResponse(`verifyResponse`)) => }
-      }
-
-      "should return Left(ThirdPartyError(response)) when verified response is thirdPartyError" in {
-        val verifyResponse =
+        val thirdPartyErrorResponse =
           BarsVerifyResponse(Yes, BarsAssessmentType.Error, Yes, Yes, Yes, Yes, Yes, None, None, None)
+        val httpResponse            = Future.successful(HttpResponse(OK, Json.toJson(thirdPartyErrorResponse).toString()))
 
-        val barsService =
-          new BarsService(mockConnectorWithVerifyAndValidateResponse(validValidateResponse, verifyResponse))
-
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(ThirdPartyError(_)) => }
-      }
-
-      "should return Left(AccountNumberNotWellFormatted(response)) when verified response is accountNumberIsWellFormattedNo" in {
-        val verifyResponse = BarsVerifyResponse(No, Yes, Yes, Yes, Yes, Yes, Yes, None, None, None)
-
-        val barsService =
-          new BarsService(mockConnectorWithVerifyAndValidateResponse(validValidateResponse, verifyResponse))
+        when(barsConnector.verifyPersonal(any())(any())).thenReturn(httpResponse)
 
         val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(AccountNumberNotWellFormatted(_)) => }
+
+        response.futureValue shouldBe Left(ThirdPartyError(VerifyResponse(thirdPartyErrorResponse)))
       }
 
-      "should return Left(SortCodeNotPresentOnEiscd(response)) when verified response is sortCodeIsPresentOnEiscdNo" in {
-        val verifyResponse = BarsVerifyResponse(Yes, Yes, Yes, Yes, No, Yes, Yes, None, None, None)
+      "should return Left[BarsError] for each defined error in verifyPersonal" in {
+        val barsService = new BarsService(barsConnector)
 
-        val barsService =
-          new BarsService(mockConnectorWithVerifyAndValidateResponse(validValidateResponse, verifyResponse))
-
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(SortCodeNotPresentOnEiscd(_)) => }
-      }
-
-      "should return Left(SortCodeDoesNotSupportDirectDebit(response)) when verified response is sortCodeSupportsDirectDebitNo" in {
-        val verifyResponse = BarsVerifyResponse(Yes, Yes, Yes, Yes, Yes, No, Yes, None, None, None)
-
-        val barsService =
-          new BarsService(mockConnectorWithVerifyAndValidateResponse(validValidateResponse, verifyResponse))
-
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(SortCodeDoesNotSupportDirectDebit(_)) => }
-      }
-
-      "should return Left(NameDoesNotMatch(response)) when verified response is nameMatchesNo" in {
-        val verifyResponse = BarsVerifyResponse(Yes, Yes, No, Yes, Yes, Yes, Yes, None, None, None)
-
-        val barsService =
-          new BarsService(mockConnectorWithVerifyAndValidateResponse(validValidateResponse, verifyResponse))
-
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(NameDoesNotMatch(_)) => }
-      }
-
-      "should return Left(AccountDoesNotExist(response)) when verified response is accountDoesNotExist" in {
-        val verifyResponse = BarsVerifyResponse(Yes, No, Yes, Yes, Yes, Yes, Yes, None, None, None)
-
-        val barsService =
-          new BarsService(mockConnectorWithVerifyAndValidateResponse(validValidateResponse, verifyResponse))
-
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(AccountDoesNotExist(_)) => }
-      }
-
-      "should return Left(OtherBarsError) when verifyPersonal returns an unexpected response" in {
-        val verifyResponse = BarsVerifyResponse(
-          Indeterminate,
-          Indeterminate,
-          Indeterminate,
-          Indeterminate,
-          Indeterminate,
-          Indeterminate,
-          Indeterminate,
-          None,
-          None,
-          None
+        val errorResponses = List(
+          BarsVerifyResponse(No, Yes, Yes, Yes, Yes, Yes, Yes, None, None, None) -> AccountNumberNotWellFormatted,
+          BarsVerifyResponse(Yes, Yes, No, Yes, Yes, Yes, Yes, None, None, None) -> NameDoesNotMatch,
+          BarsVerifyResponse(Yes, No, Yes, Yes, Yes, Yes, Yes, None, None, None) -> AccountDoesNotExist,
+          BarsVerifyResponse(Yes, Yes, Yes, Yes, No, Yes, Yes, None, None, None) -> SortCodeNotPresentOnEiscd,
+          BarsVerifyResponse(Yes, Yes, Yes, Yes, Yes, No, Yes, None, None, None) -> SortCodeDoesNotSupportDirectDebit,
+          BarsVerifyResponse(
+            Yes,
+            BarsAssessmentType.Error,
+            Yes,
+            Yes,
+            Yes,
+            Yes,
+            Yes,
+            None,
+            None,
+            None
+          )                                                                      -> ThirdPartyError
         )
 
-        val barsService =
-          new BarsService(mockConnectorWithVerifyAndValidateResponse(validValidateResponse, verifyResponse))
+        for ((barsVerifyResponse, expectedError) <- errorResponses) {
+          val httpResponse = Future.successful(HttpResponse(OK, Json.toJson(barsVerifyResponse).toString()))
+          when(barsConnector.verifyPersonal(any())(any())).thenReturn(httpResponse)
 
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(OtherBarsError(VerifyResponse(`verifyResponse`))) => }
-      }
+          val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
 
-      "should return Left(SortCodeOnDenyListErrorResponse) when validateBankAccount returns SortCodeOnDenyList" in {
-        val barsService       = new BarsService(barsConnector)
-        val barsErrorResponse = BarsErrorResponse("SORT_CODE_ON_DENY_LIST", "Some error message")
-
-        when(barsConnector.validateBankDetails(any())(any()))
-          .thenReturn(
-            Future.successful(
-              HttpResponse(BAD_REQUEST, Json.toJson(barsErrorResponse).toString())
-            )
-          )
-
-        val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(SortCodeOnDenyListErrorResponse(_)) => }
+          response.futureValue shouldBe Left(expectedError(VerifyResponse(barsVerifyResponse)))
+        }
       }
     }
-  }
-
-  def mockConnectorWithValidateResponse(validateResponse: BarsPreVerifyResponse): BarsConnector = {
-    when(barsConnector.validateBankDetails(any())(any()))
-      .thenReturn(
-        Future.successful(HttpResponse(OK, Json.toJson(validateResponse).toString))
-      )
-    barsConnector
-  }
-
-  def mockConnectorWithVerifyAndValidateResponse(
-    validateResponse: BarsPreVerifyResponse,
-    verifyResponse: BarsVerifyResponse
-  ): BarsConnector = {
-    when(barsConnector.validateBankDetails(any())(any()))
-      .thenReturn(
-        Future.successful(HttpResponse(OK, Json.toJson(validateResponse).toString))
-      )
-    when(barsConnector.verifyPersonal(any())(any())).thenReturn(Future.successful(verifyResponse))
-    barsConnector
   }
 }
