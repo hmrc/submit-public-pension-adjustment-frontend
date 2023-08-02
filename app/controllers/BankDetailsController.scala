@@ -94,7 +94,6 @@ class BankDetailsController @Inject() (
   private def handleBankDetailsError(mode: Mode, error: BarsError)(implicit
     request: DataRequest[AnyContent]
   ): Future[Result] = {
-    print("aaaaaaaaaaaaaaaaaaaaaaaaa" + error)
     error match {
       case ThirdPartyError(resp)              =>
         throw new RuntimeException(s"BARS verify third-party error. BARS response: $resp")
