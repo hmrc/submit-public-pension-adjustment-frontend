@@ -93,7 +93,7 @@ class BankDetailsController @Inject() (
 
   private def handleBankDetailsError(mode: Mode, error: BarsError)(implicit
     request: DataRequest[AnyContent]
-  ): Future[Result] = {
+  ): Future[Result] =
     error match {
       case ThirdPartyError(resp)              =>
         throw new RuntimeException(s"BARS verify third-party error. BARS response: $resp")
@@ -112,5 +112,4 @@ class BankDetailsController @Inject() (
       case _                                  =>
         handleFormWithWithBarsError(accountNumberNotWellFormatted, mode)
     }
-  }
 }
