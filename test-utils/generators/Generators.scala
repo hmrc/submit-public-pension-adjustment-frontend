@@ -145,11 +145,13 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
 
   def validAccountName: Gen[String] = {
     val allowedChars =
-      Gen.oneOf(('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9') ++ Seq(' ', '&', '`', '-', '\'', '.', '^'))
+      Gen.oneOf(('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9') ++ Seq('&', '`', '-', '\'', '.', '^'))
     for {
-      length <- Gen.choose(0, 60)
-      chars  <- Gen.listOfN(length, allowedChars)
-    } yield chars.mkString
+      firstPartLength <- Gen.choose(1, 34)
+      secondPartLength <- Gen.choose(1, 35)
+      firstPart <- Gen.listOfN(firstPartLength, allowedChars)
+      secondPart <- Gen.listOfN(secondPartLength, allowedChars)
+    } yield (firstPart.mkString + " " + secondPart.mkString).take(70)
   }
 
   def validSortCode: Gen[String] = for {
