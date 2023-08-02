@@ -19,7 +19,6 @@ package controllers
 import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import forms.PensionSchemeMemberDOBFormProvider
-import models.StatusOfUser.{Deputyship, PowerOfAttorney}
 import models.{NormalMode, StatusOfUser, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
