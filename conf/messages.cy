@@ -407,6 +407,7 @@ memberDateOfDeath.error.required.two = cy:The member's date of death must includ
 memberDateOfDeath.error.required = cy: The member's date of death must include {0}
 memberDateOfDeath.error.invalid = cy: Enter the member's date of death in the correct format
 memberDateOfDeath.change.hidden = cy: What was their date of death?
+
 bankDetails.title = cy: Enter Bank Details
 bankDetails.heading = cy: Enter Bank Details
 bankDetails.accountName = cy: Name on the account
