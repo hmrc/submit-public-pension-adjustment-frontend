@@ -50,7 +50,7 @@ class BarsConnectorSpec extends SpecBase with WireMockHelper {
         bind[SessionRepository].toInstance(sessionRepository),
         bind[DataRequiredAction].toInstance(dataRequiredAction),
         bind[IdentifierAction].to[FakeIdentifierAction],
-        bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(None))
+        bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(None, None))
       )
       .build()
   }
