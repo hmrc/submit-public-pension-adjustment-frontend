@@ -159,3 +159,8 @@ GET        /their-international-address                             controllers.
 POST       /their-international-address                             controllers.PensionSchemeMemberInternationalAddressController.onSubmit(mode: Mode = NormalMode)
 GET        /change-their-international-address                      controllers.PensionSchemeMemberInternationalAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-their-international-address                      controllers.PensionSchemeMemberInternationalAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /bank-details                        controllers.BankDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /bank-details                        controllers.BankDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-bank-details                  controllers.BankDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-bank-details                  controllers.BankDetailsController.onSubmit(mode: Mode = CheckMode)

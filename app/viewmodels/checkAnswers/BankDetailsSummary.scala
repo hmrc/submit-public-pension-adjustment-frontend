@@ -18,24 +18,28 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.LegacyPensionSchemeReferencePage
+import pages.BankDetailsPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object LegacyPensionSchemeReferenceSummary {
+object BankDetailsSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(LegacyPensionSchemeReferencePage).map { answer =>
-      val value = if (answer == "") messages("checkYourAnswers.notAnswered") else answer
+    answers.get(BankDetailsPage).map { answer =>
+      val value = HtmlFormat.escape(answer.accountName).toString + "<br/>" + HtmlFormat
+        .escape(answer.sortCode)
+        .toString + "<br/>" + HtmlFormat.escape(answer.accountNumber).toString
+
       SummaryListRowViewModel(
-        key = "legacyPensionSchemeReference.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(value).toString),
+        key = "bankDetails.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.LegacyPensionSchemeReferenceController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("legacyPensionSchemeReference.change.hidden"))
+          ActionItemViewModel("site.change", routes.BankDetailsController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("bankDetails.change.hidden"))
         )
       )
     }

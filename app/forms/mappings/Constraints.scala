@@ -17,10 +17,11 @@
 package forms.mappings
 
 import java.time.LocalDate
-
-import play.api.data.validation.{Constraint, Invalid, Valid}
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 trait Constraints {
+  private val validAccountNameRegex: String = """^[a-z0-9A-Z &`\-'.\^]*$"""
+  private val validSortCodeRegex: String    = "^[0-9]{2}[-\\s]?[0-9]{2}[-\\s]?[0-9]{2}$"
 
   protected def firstError[A](constraints: Constraint[A]*): Constraint[A] =
     Constraint { input =>
@@ -102,4 +103,25 @@ trait Constraints {
       case _                   =>
         Invalid(errorKey)
     }
+
+  def accountNameFormatConstraint: Constraint[String] = Constraint[String]("constraint.accountname.format") { an =>
+    if (an.length > 70) Invalid(ValidationError("bankDetails.invalid.account.name.length"))
+    else if (an.isEmpty) Invalid(ValidationError("bankDetails.invalid.account.name.empty"))
+    else if (!an.matches(validAccountNameRegex)) Invalid(ValidationError("bankDetails.invalid.account.name"))
+    else Valid
+  }
+
+  def sortCodeFormatConstraint: Constraint[String] = Constraint[String]("constraint.sortcode.format") { sc =>
+    if (sc.count(_.isDigit) == 6 && sc.matches(validSortCodeRegex))
+      Valid
+    else
+      Invalid(ValidationError("bankDetails.invalid.sortcode"))
+  }
+
+  def accountNumberFormatConstraint: Constraint[String] = Constraint[String]("constraint.accountnumber.format") { an =>
+    if (an.length == 8 && an.forall(_.isDigit))
+      Valid
+    else
+      Invalid(ValidationError("bankDetails.invalid.account.number"))
+  }
 }

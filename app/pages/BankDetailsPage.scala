@@ -16,24 +16,24 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
+import models.{BankDetails, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[WhichPensionSchemeWillPayTaxRelief] {
+case object BankDetailsPage extends QuestionPage[BankDetails] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "whichPensionSchemeWillPayTaxRelief"
+  override def toString: String = "bankDetails"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
-      case Some(_) => controllers.routes.BankDetailsController.onPageLoad(NormalMode)
+    answers.get(BankDetailsPage) match {
+      case Some(_) => controllers.routes.DeclarationsController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
+    answers.get(BankDetailsPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

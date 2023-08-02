@@ -16,36 +16,36 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, WhichPensionSchemeWillPayTaxRelief}
+import models.{BankDetails, CheckMode, NormalMode}
 
-class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
+class BankDetailsPageSpec extends PageBehaviours {
 
-  "WhichPensionSchemeWillPayTaxReliefPage" - {
+  "BankDetailsPage" - {
 
-    beRetrievable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
+    beRetrievable[BankDetails](BankDetailsPage)
 
-    beSettable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
+    beSettable[BankDetails](BankDetailsPage)
 
-    beRemovable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
+    beRemovable[BankDetails](BankDetailsPage)
 
     "must navigate correctly in NormalMode" - {
 
       "to CYA when Pension scheme b scheme selected" in {
         val ua     = emptyUserAnswers
           .set(
-            WhichPensionSchemeWillPayTaxReliefPage,
-            WhichPensionSchemeWillPayTaxRelief.Pensionschemeb
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
           )
           .success
           .value
-        val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua).url
+        val result = BankDetailsPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/bank-details")
+        checkNavigation(result, "/declarations")
       }
 
       "to JourneyRecoveryPage when not selected" in {
         val ua     = emptyUserAnswers
-        val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua).url
+        val result = BankDetailsPage.navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -56,19 +56,19 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
       "to CYA" in {
         val ua     = emptyUserAnswers
           .set(
-            WhichPensionSchemeWillPayTaxReliefPage,
-            WhichPensionSchemeWillPayTaxRelief.Pensionschemea
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
           )
           .success
           .value
-        val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua).url
+        val result = BankDetailsPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not answered" in {
         val ua     = emptyUserAnswers
-        val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua).url
+        val result = BankDetailsPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

@@ -12,7 +12,8 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "domain"                        % "8.1.0-play-28",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-28"    % bootstrapPlay28Version,
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"            % "1.1.0",
-    "com.googlecode.libphonenumber" % "libphonenumber"       % "8.13.12"
+    "com.googlecode.libphonenumber" % "libphonenumber"       % "8.13.12",
+    "com.beachape" %% "enumeratum-play" % "1.6.0"
   )
 
   val test = Seq(
