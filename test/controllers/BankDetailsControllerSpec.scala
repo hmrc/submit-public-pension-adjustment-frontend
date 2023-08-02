@@ -327,7 +327,7 @@ class BankDetailsControllerSpec extends SpecBase with MockitoSugar {
     barsVerifyResponse
   }
 
-  private def whenTheBarsServiceReturnsAnErrorResponse(errorResponseType: BarsValidateError) = {
+  private def whenTheBarsServiceReturnsAnErrorResponse(errorResponseType: BarsPreVerifyError) = {
     val mcCloudBarsServiceMock = mock[PpaBarsService]
 
     val errorResponse = Left(errorResponseType)

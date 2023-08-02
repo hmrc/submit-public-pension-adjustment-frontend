@@ -34,15 +34,18 @@ class BarsConnector @Inject() (
 
   val baseUrl: String = barsConfig.baseUrl
 
-
   /** "This endpoint checks the likely correctness of a given personal bank account and it's likely connection to the
     * given account holder (aka the subject)"
     */
   private val verifyPersonalUrl: String = s"$baseUrl/verify/personal"
 
   def verifyPersonal(
-                          barsVerifyPersonalRequest: BarsVerifyPersonalRequest
-                        )(implicit hc: HeaderCarrier): Future[HttpResponse] =
+    barsVerifyPersonalRequest: BarsVerifyPersonalRequest
+  )(implicit hc: HeaderCarrier): Future[HttpResponse] =
     httpClient
-      .POST[BarsVerifyPersonalRequest, HttpResponse](verifyPersonalUrl, barsVerifyPersonalRequest, headers = Seq(HeaderNames.USER_AGENT -> "calculate-public-pension-adjustment"))
+      .POST[BarsVerifyPersonalRequest, HttpResponse](
+        verifyPersonalUrl,
+        barsVerifyPersonalRequest,
+        headers = Seq(HeaderNames.USER_AGENT -> "calculate-public-pension-adjustment")
+      )
 }

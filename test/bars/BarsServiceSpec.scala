@@ -36,7 +36,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
   val headerCarrier         = new HeaderCarrier()
   val bankAccount           = BarsBankAccount.normalise("111111", "11111111")
   val subject               = BarsSubject(None, Some("Testuser One"), None, None, None, None)
-  val validValidateResponse = BarsValidateResponse(Yes, Yes, Yes, Some(Yes))
+  val validValidateResponse = BarsPreVerifyResponse(Yes, Yes, Yes, Some(Yes))
 
   "BarsService" - {
     "validateBankAccount" - {
@@ -122,26 +122,26 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
     "verifyBankDetails" - {
       "should return Left(accountNumberIsWellFormattedNo) when validateBankAccount returns a BarsValidateResponse with no for account well formatted" in {
         val barsService =
-          new BarsService(mockConnectorWithValidateResponse(BarsValidateResponse(No, Yes, Yes, Some(No))))
+          new BarsService(mockConnectorWithValidateResponse(BarsPreVerifyResponse(No, Yes, Yes, Some(No))))
 
         val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(AccountNumberNotWellFormattedValidateResponse(_)) => }
+        response.futureValue should matchPattern { case Left(AccountNumberNotWellFormattedPreVerifyResponse(_)) => }
       }
 
       "should return Left(sortCodeIsPresentOnEiscdNo) when validateBankAccount returns a BarsValidateResponse with no for sortCodeIsPresentOnEISCD" in {
         val barsService =
-          new BarsService(mockConnectorWithValidateResponse(BarsValidateResponse(Yes, Yes, No, Some(No))))
+          new BarsService(mockConnectorWithValidateResponse(BarsPreVerifyResponse(Yes, Yes, No, Some(No))))
 
         val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(SortCodeNotPresentOnEiscdValidateResponse(_)) => }
+        response.futureValue should matchPattern { case Left(SortCodeNotPresentOnEiscdPreVerifyResponse(_)) => }
       }
 
       "should return Left(sortCodeSupportsDirectDebitNo) when validateBankAccount returns a BarsValidateResponse with no for sortCodeSupportsDirectDebit" in {
         val barsService =
-          new BarsService(mockConnectorWithValidateResponse(BarsValidateResponse(Yes, Yes, Yes, Some(No))))
+          new BarsService(mockConnectorWithValidateResponse(BarsPreVerifyResponse(Yes, Yes, Yes, Some(No))))
 
         val response = barsService.verifyBankDetails(bankAccount, subject)(headerCarrier)
-        response.futureValue should matchPattern { case Left(SortCodeDoesNotSupportDirectDebitValidateResponse(_)) => }
+        response.futureValue should matchPattern { case Left(SortCodeDoesNotSupportDirectDebitPreVerifyResponse(_)) => }
       }
 
       "should return Right(VerifyResponse) when validateBankAccount and verifyPersonal return valid response" in {
@@ -253,7 +253,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
     }
   }
 
-  def mockConnectorWithValidateResponse(validateResponse: BarsValidateResponse): BarsConnector = {
+  def mockConnectorWithValidateResponse(validateResponse: BarsPreVerifyResponse): BarsConnector = {
     when(barsConnector.validateBankDetails(any())(any()))
       .thenReturn(
         Future.successful(HttpResponse(OK, Json.toJson(validateResponse).toString))
@@ -262,7 +262,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
   }
 
   def mockConnectorWithVerifyAndValidateResponse(
-    validateResponse: BarsValidateResponse,
+    validateResponse: BarsPreVerifyResponse,
     verifyResponse: BarsVerifyResponse
   ): BarsConnector = {
     when(barsConnector.validateBankDetails(any())(any()))

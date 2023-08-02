@@ -94,24 +94,23 @@ class BankDetailsController @Inject() (
 
   private def handleBankDetailsError(mode: Mode, error: BarsError)(implicit
     request: DataRequest[AnyContent]
-  ): Future[Result] = {
+  ): Future[Result] =
     error match {
-      case ThirdPartyError(resp)                                                               =>
+      case ThirdPartyError(resp)                                                                =>
         throw new RuntimeException(s"BARS verify third-party error. BARS response: $resp")
-      case AccountNumberNotWellFormatted(_) | AccountNumberNotWellFormattedValidateResponse(_) =>
+      case AccountNumberNotWellFormatted(_) | AccountNumberNotWellFormattedPreVerifyResponse(_) =>
         handleFormWithWithBarsError(accountNumberNotWellFormatted, mode)
-      case SortCodeNotPresentOnEiscd(_) | SortCodeNotPresentOnEiscdValidateResponse(_)         =>
+      case SortCodeNotPresentOnEiscd(_) | SortCodeNotPresentOnEiscdPreVerifyResponse(_)         =>
         handleFormWithWithBarsError(sortCodeNotPresentOnEiscd, mode)
-      case SortCodeOnDenyListErrorResponse(_)                                                  =>
+      case SortCodeOnDenyListErrorResponse(_)                                                   =>
         handleFormWithWithBarsError(sortCodeOnDenyList, mode)
-      case NameDoesNotMatch(_)                                                                 =>
+      case NameDoesNotMatch(_)                                                                  =>
         handleFormWithWithBarsError(nameDoesNotMatch, mode)
-      case AccountDoesNotExist(_)                                                              =>
+      case AccountDoesNotExist(_)                                                               =>
         handleFormWithWithBarsError(accountDoesNotExist, mode)
-      case OtherBarsError(_)                                                                   =>
+      case OtherBarsError(_)                                                                    =>
         handleFormWithWithBarsError(otherBarsError, mode)
-      case _                                                                                   =>
+      case _                                                                                    =>
         handleFormWithWithBarsError(accountNumberNotWellFormatted, mode)
     }
-  }
 }

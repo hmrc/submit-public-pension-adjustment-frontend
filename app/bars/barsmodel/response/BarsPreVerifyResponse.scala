@@ -18,7 +18,7 @@ package bars.barsmodel.response
 
 import play.api.libs.json.{Json, OFormat}
 
-final case class BarsValidateResponse(
+final case class BarsPreVerifyResponse(
   accountNumberIsWellFormatted: BarsAssessmentType,
   nonStandardAccountDetailsRequiredForBacs: BarsAssessmentType,
   sortCodeIsPresentOnEISCD: BarsAssessmentType,
@@ -28,6 +28,6 @@ final case class BarsValidateResponse(
   iban: Option[String] = None
 )
 
-object BarsValidateResponse {
-  implicit val format: OFormat[BarsValidateResponse] = Json.format
+object BarsPreVerifyResponse {
+  implicit val format: OFormat[BarsPreVerifyResponse] = Json.format
 }

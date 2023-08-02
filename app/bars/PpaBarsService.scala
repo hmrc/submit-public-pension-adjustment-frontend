@@ -30,8 +30,8 @@ class PpaBarsService @Inject() (
 ) {
 
   def verifyBankDetails(
-                         bankAccountDetails: BankDetails
-                       )(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[BarsError, VerifyResponse]] = {
+    bankAccountDetails: BankDetails
+  )(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[BarsError, VerifyResponse]] = {
 
     val resp =
       barsService
@@ -40,9 +40,10 @@ class PpaBarsService @Inject() (
           subject = toBarsSubject(bankAccountDetails)
         )
         .flatMap {
-          case result@(Right(_) | Left(_: BarsValidateError)) =>
+          case result @ (Right(_) | Left(_: BarsPreVerifyError)) =>
             Future.successful(result)
-          case result@Left(bve: BarsVerifyError) =>
+          case result @ Left(bve: BarsVerifyError)               =>
+            // update verify status here when implementing bars lockout
             Future.successful(result)
         }
     resp
@@ -61,10 +62,4 @@ object PpaBarsService {
     dob = None,
     address = None
   )
-
-  sealed trait ValidationResult
-
-  case object Valid extends ValidationResult
-  case object Invalid extends ValidationResult
-
 }

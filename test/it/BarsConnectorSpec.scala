@@ -18,7 +18,7 @@ package it
 
 import bars.BarsConnector
 import bars.barsmodel.request.{BarsBankAccount, BarsSubject, BarsValidateRequest, BarsVerifyPersonalRequest}
-import bars.barsmodel.response.{BarsAssessmentType, BarsValidateResponse, BarsVerifyResponse}
+import bars.barsmodel.response.{BarsAssessmentType, BarsPreVerifyResponse, BarsVerifyResponse}
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, equalToJson, post, urlMatching}
 import connectors.WireMockHelper
@@ -118,7 +118,7 @@ class BarsConnectorSpec extends SpecBase with WireMockHelper {
     )
 
   private def aBarsValidateResponse =
-    BarsValidateResponse(
+    BarsPreVerifyResponse(
       accountNumberIsWellFormatted = BarsAssessmentType.Yes,
       nonStandardAccountDetailsRequiredForBacs = BarsAssessmentType.Yes,
       sortCodeIsPresentOnEISCD = BarsAssessmentType.Yes,

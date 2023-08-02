@@ -17,7 +17,7 @@
 package bars
 
 import bars.barsmodel.request._
-import bars.barsmodel.response.ValidateResponse.validateFailure
+import bars.barsmodel.response.PreVerifyResponse.preVerifyFailure
 import bars.barsmodel.response._
 import play.api.http.Status._
 import play.api.libs.json._
@@ -31,22 +31,22 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 
 class BarsService @Inject() (
-                              barsConnector: BarsConnector
-                            )(implicit ec: ExecutionContext) {
-  def handleHttpResponse(barsResponse: Future[HttpResponse])(implicit hc: HeaderCarrier): Future[BarsResponse] =
+  barsConnector: BarsConnector
+)(implicit ec: ExecutionContext) {
+  def preVerify(barsResponse: Future[HttpResponse])(implicit hc: HeaderCarrier): Future[BarsResponse] =
     barsResponse.map { httpResponse: HttpResponse =>
       httpResponse.status match {
         case OK =>
           httpResponse
-            .parseJSON[BarsValidateResponse]
-            .map(ValidateResponse.apply)
+            .parseJSON[BarsPreVerifyResponse]
+            .map(PreVerifyResponse.apply)
             .getOrElse(throw UpstreamErrorResponse(httpResponse.body, httpResponse.status))
 
         case BAD_REQUEST =>
           httpResponse.json.validate[BarsErrorResponse] match {
             case JsSuccess(barsErrorResponse, _) if barsErrorResponse.code == "SORT_CODE_ON_DENY_LIST" =>
               SortCodeOnDenyList(barsErrorResponse)
-            case _ =>
+            case _                                                                                     =>
               throw UpstreamErrorResponse(httpResponse.body, httpResponse.status)
           }
 
@@ -56,32 +56,32 @@ class BarsService @Inject() (
     }
 
   def verifyPersonal(barsResponse: Future[HttpResponse])(implicit
-                                                                         hc: HeaderCarrier
+    hc: HeaderCarrier
   ): Future[VerifyResponse] =
     barsResponse.map(response => response.json.as[BarsVerifyResponse]).map(VerifyResponse.apply)
 
   def verifyBankDetails(
-                         bankAccount: BarsBankAccount,
-                         subject: BarsSubject
-                       )(implicit hc: HeaderCarrier): Future[Either[BarsError, VerifyResponse]] = {
+    bankAccount: BarsBankAccount,
+    subject: BarsSubject
+  )(implicit hc: HeaderCarrier): Future[Either[BarsError, VerifyResponse]] = {
     val barsResponse = barsConnector.verifyPersonal(request.BarsVerifyPersonalRequest(bankAccount, subject))
-    handleHttpResponse(barsResponse).flatMap {
-      case validateResponse @ validateFailure() =>
-        Future.successful(Left(handlePreVerifiedErrorResponse(validateResponse)))
-      case response: SortCodeOnDenyList         =>
+    preVerify(barsResponse).flatMap {
+      case preVerifyResponse @ preVerifyFailure() =>
+        Future.successful(Left(handlePreVerifyErrorResponse(preVerifyResponse)))
+      case response: SortCodeOnDenyList           =>
         Future.successful(Left(SortCodeOnDenyListErrorResponse(response)))
-      case _                                    =>
+      case _                                      =>
         verifyPersonal(barsResponse).map(handleVerifyResponse)
     }
   }
 
-  private def handlePreVerifiedErrorResponse(response: ValidateResponse): BarsError = {
-    import ValidateResponse._
+  private def handlePreVerifyErrorResponse(response: PreVerifyResponse): BarsError = {
+    import PreVerifyResponse._
     response match {
-      case accountNumberIsWellFormattedNo() => AccountNumberNotWellFormattedValidateResponse(response)
-      case sortCodeIsPresentOnEiscdNo()     => SortCodeNotPresentOnEiscdValidateResponse(response)
-      case sortCodeSupportsDirectDebitNo()  => SortCodeDoesNotSupportDirectDebitValidateResponse(response)
-      case _                                => sys.error("unhandled BARs validate error response")
+      case accountNumberIsWellFormattedNo() => AccountNumberNotWellFormattedPreVerifyResponse(response)
+      case sortCodeIsPresentOnEiscdNo()     => SortCodeNotPresentOnEiscdPreVerifyResponse(response)
+      case sortCodeSupportsDirectDebitNo()  => SortCodeDoesNotSupportDirectDebitPreVerifyResponse(response)
+      case _                                => sys.error("unhandled BARs pre verified error response")
     }
   }
 

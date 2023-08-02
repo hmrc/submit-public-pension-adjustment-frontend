@@ -20,34 +20,34 @@ import bars.barsmodel.response.BarsAssessmentType._
 
 sealed trait BarsResponse
 
-final case class ValidateResponse(barsValidateResponse: BarsValidateResponse) extends BarsResponse
+final case class PreVerifyResponse(barsPreVerifyResponse: BarsPreVerifyResponse) extends BarsResponse
 
 final case class VerifyResponse(barsVerifyResponse: BarsVerifyResponse) extends BarsResponse
 
 final case class SortCodeOnDenyList(error: BarsErrorResponse) extends BarsResponse
 
-object ValidateResponse {
+object PreVerifyResponse {
 
-  object validateFailure {
-    def unapply(response: ValidateResponse): Boolean =
-      response.barsValidateResponse.sortCodeIsPresentOnEISCD == No ||
-        response.barsValidateResponse.accountNumberIsWellFormatted == No ||
-        response.barsValidateResponse.sortCodeSupportsDirectDebit.contains(No)
+  object preVerifyFailure {
+    def unapply(response: PreVerifyResponse): Boolean =
+      response.barsPreVerifyResponse.sortCodeIsPresentOnEISCD == No ||
+        response.barsPreVerifyResponse.accountNumberIsWellFormatted == No ||
+        response.barsPreVerifyResponse.sortCodeSupportsDirectDebit.contains(No)
   }
 
   object accountNumberIsWellFormattedNo {
-    def unapply(response: ValidateResponse): Boolean =
-      response.barsValidateResponse.accountNumberIsWellFormatted == No
+    def unapply(response: PreVerifyResponse): Boolean =
+      response.barsPreVerifyResponse.accountNumberIsWellFormatted == No
   }
 
   object sortCodeIsPresentOnEiscdNo {
-    def unapply(response: ValidateResponse): Boolean =
-      response.barsValidateResponse.sortCodeIsPresentOnEISCD == No
+    def unapply(response: PreVerifyResponse): Boolean =
+      response.barsPreVerifyResponse.sortCodeIsPresentOnEISCD == No
   }
 
   object sortCodeSupportsDirectDebitNo {
-    def unapply(response: ValidateResponse): Boolean =
-      response.barsValidateResponse.sortCodeSupportsDirectDebit.contains(No)
+    def unapply(response: PreVerifyResponse): Boolean =
+      response.barsPreVerifyResponse.sortCodeSupportsDirectDebit.contains(No)
   }
 
 }
