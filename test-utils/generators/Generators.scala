@@ -147,10 +147,10 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     val allowedChars =
       Gen.oneOf(('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9') ++ Seq('&', '`', '-', '\'', '.', '^'))
     for {
-      firstPartLength <- Gen.choose(1, 34)
+      firstPartLength  <- Gen.choose(1, 34)
       secondPartLength <- Gen.choose(1, 35)
-      firstPart <- Gen.listOfN(firstPartLength, allowedChars)
-      secondPart <- Gen.listOfN(secondPartLength, allowedChars)
+      firstPart        <- Gen.listOfN(firstPartLength, allowedChars)
+      secondPart       <- Gen.listOfN(secondPartLength, allowedChars)
     } yield (firstPart.mkString + " " + secondPart.mkString).take(70)
   }
 

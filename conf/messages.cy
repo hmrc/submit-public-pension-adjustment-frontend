@@ -420,5 +420,5 @@ bankDetails.bars.sortcode.does.not.support.direct.debit = cy: You have entered a
 bankDetails.bars.account.name.no.match = cy: Enter the name on the account as it appears on bank statements. Do not copy and paste it
 bankDetails.invalid.sortcode = cy: Enter a valid sort code
 bankDetails.invalid.account.name = cy: Enter the name on the account
-bankDetails.invalid.account.name.length = cy: Account name must be 60 characters or less
+bankDetails.invalid.account.name.length = cy: Account name must be 70 characters or less
 bankDetails.invalid.account.number = cy: Enter a valid account number
