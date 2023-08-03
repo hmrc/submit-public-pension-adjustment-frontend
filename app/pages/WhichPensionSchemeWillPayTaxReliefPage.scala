@@ -16,9 +16,9 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
-import models.{Mode, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
+import models.{CheckMode, Mode, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
 import models.submission.Submission
+import pages.ClaimingHigherOrAdditionalTaxRateReliefPage.{navigateInCheckMode, navigateInNormalMode}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -28,22 +28,27 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[WhichPen
 
   override def toString: String = "whichPensionSchemeWillPayTaxRelief"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  def navigate(mode: Mode, answers: UserAnswers, submission: Submission): Call = mode match {
+    case NormalMode => navigateInNormalMode(answers, submission)
+    case CheckMode => navigateInCheckMode(answers)
+  }
+
+  protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
-      case Some(_) => controllers.routes.BankDetailsController.onPageLoad(NormalMode)
+      case Some(_) => isMemberCredit(submission, NormalMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => isMemberCredit(submission, CheckMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
     val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
     if (memberCredit > 0) {
-      controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode)
+      controllers.routes.BankDetailsController.onPageLoad(mode)
     } else {
       controllers.routes.DeclarationsController.onPageLoad
     }

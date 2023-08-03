@@ -49,7 +49,7 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPage[Boo
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
     val memberCredit = submission.calculation.map(_.inDates.map (_.memberCredit).sum).getOrElse(0)
     if(memberCredit > 0) {
-      controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(mode)
+      controllers.routes.BankDetailsController.onPageLoad(mode)
     } else {
       controllers.routes.DeclarationsController.onPageLoad
     }
