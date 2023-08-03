@@ -42,11 +42,13 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
   lazy val askedPensionSchemeToPayTaxChargeRoute =
     routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode).url
 
+  lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
+
   "AskedPensionSchemeToPayTaxCharge Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, askedPensionSchemeToPayTaxChargeRoute)
@@ -64,7 +66,7 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
 
       val userAnswers = UserAnswers(userAnswersId).set(AskedPensionSchemeToPayTaxChargePage, true).success.value
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, askedPensionSchemeToPayTaxChargeRoute)
@@ -85,7 +87,7 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
           .build()
 
@@ -102,7 +104,7 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request =
@@ -122,7 +124,7 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
 
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, askedPensionSchemeToPayTaxChargeRoute)
@@ -136,7 +138,7 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
 
     "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
         val request =
@@ -147,6 +149,20 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Calculation Prerequisite for a GET if no submission data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, askedPensionSchemeToPayTaxChargeRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
       }
     }
   }

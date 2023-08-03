@@ -41,6 +41,7 @@ class BankDetailsController @Inject() (
   ppaBarsService: PpaBarsService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
+  requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   formProvider: BankDetailsFormProvider,
   val controllerComponents: MessagesControllerComponents,
@@ -51,24 +52,25 @@ class BankDetailsController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(BankDetailsPage) match {
-      case None        => form
-      case Some(value) => form.fill(value)
+  def onPageLoad(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+      val preparedForm = request.userAnswers.get(BankDetailsPage) match {
+        case None        => form
+        case Some(value) => form.fill(value)
+      }
+
+      Ok(view(preparedForm, mode))
     }
 
-    Ok(view(preparedForm, mode))
-  }
-
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
+  def onSubmit(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value => handleValidForm(value, mode, request.userAnswers)
         )
-  }
+    }
 
   private def handleFormWithWithBarsError(error: FormErrorWithFieldMessageOverrides, mode: Mode)(implicit
     request: DataRequest[AnyContent]

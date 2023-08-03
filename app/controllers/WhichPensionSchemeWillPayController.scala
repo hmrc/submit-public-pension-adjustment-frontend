@@ -34,6 +34,7 @@ class WhichPensionSchemeWillPayController @Inject() (
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
+  requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   formProvider: WhichPensionSchemeWillPayFormProvider,
   val controllerComponents: MessagesControllerComponents,
@@ -44,17 +45,18 @@ class WhichPensionSchemeWillPayController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(WhichPensionSchemeWillPayPage) match {
-      case None        => form
-      case Some(value) => form.fill(value)
+  def onPageLoad(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+      val preparedForm = request.userAnswers.get(WhichPensionSchemeWillPayPage) match {
+        case None        => form
+        case Some(value) => form.fill(value)
+      }
+
+      Ok(view(preparedForm, mode))
     }
 
-    Ok(view(preparedForm, mode))
-  }
-
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
+  def onSubmit(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
@@ -65,5 +67,5 @@ class WhichPensionSchemeWillPayController @Inject() (
               _              <- sessionRepository.set(updatedAnswers)
             } yield Redirect(WhichPensionSchemeWillPayPage.navigate(mode, updatedAnswers))
         )
-  }
+    }
 }

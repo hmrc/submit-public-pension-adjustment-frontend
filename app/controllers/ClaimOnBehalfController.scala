@@ -34,7 +34,7 @@ class ClaimOnBehalfController @Inject() (
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
+  requireCalculationData: CalculationDataRequiredAction,
   formProvider: ClaimOnBehalfFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: ClaimOnBehalfView
@@ -44,13 +44,14 @@ class ClaimOnBehalfController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) { implicit request =>
-    val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(ClaimOnBehalfPage) match {
-      case None        => form
-      case Some(value) => form.fill(value)
-    }
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireCalculationData) {
+    implicit request =>
+      val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(ClaimOnBehalfPage) match {
+        case None        => form
+        case Some(value) => form.fill(value)
+      }
 
-    Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>

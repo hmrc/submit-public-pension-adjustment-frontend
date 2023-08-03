@@ -41,11 +41,13 @@ class PensionSchemeMemberResidenceControllerSpec extends SpecBase with MockitoSu
 
   lazy val pensionSchemeMemberResidenceRoute = routes.PensionSchemeMemberResidenceController.onPageLoad(NormalMode).url
 
+  lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
+
   "PensionSchemeMemberResidence Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, pensionSchemeMemberResidenceRoute)
@@ -63,7 +65,7 @@ class PensionSchemeMemberResidenceControllerSpec extends SpecBase with MockitoSu
 
       val userAnswers = UserAnswers(userAnswersId).set(PensionSchemeMemberResidencePage, true).success.value
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, pensionSchemeMemberResidenceRoute)
@@ -84,7 +86,7 @@ class PensionSchemeMemberResidenceControllerSpec extends SpecBase with MockitoSu
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
           .build()
 
@@ -104,7 +106,7 @@ class PensionSchemeMemberResidenceControllerSpec extends SpecBase with MockitoSu
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request =
@@ -124,7 +126,7 @@ class PensionSchemeMemberResidenceControllerSpec extends SpecBase with MockitoSu
 
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, pensionSchemeMemberResidenceRoute)
@@ -138,7 +140,7 @@ class PensionSchemeMemberResidenceControllerSpec extends SpecBase with MockitoSu
 
     "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
         val request =
@@ -149,6 +151,20 @@ class PensionSchemeMemberResidenceControllerSpec extends SpecBase with MockitoSu
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Calculation Prerequisite for a GET if no submission data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, pensionSchemeMemberResidenceRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
       }
     }
   }
