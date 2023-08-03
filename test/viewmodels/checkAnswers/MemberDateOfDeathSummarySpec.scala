@@ -31,7 +31,7 @@ import scala.xml.Text
 class MemberDateOfDeathSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
-  val validAnswer: LocalDate = LocalDate.of(2019, 4, 6)
+  val validAnswer: LocalDate              = LocalDate.of(2019, 4, 6)
 
   "row" - {
     "when value is entered, return the summary row" in {
