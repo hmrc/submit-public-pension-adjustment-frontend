@@ -17,14 +17,20 @@
 package forms
 
 import java.time.LocalDate
-
 import forms.mappings.Mappings
+
 import javax.inject.Inject
 import play.api.data.Form
 
+import java.time.format.DateTimeFormatter
+
 class MemberDateOfDeathFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[LocalDate] =
+  def apply(): Form[LocalDate] = {
+
+    val max                               = LocalDate.now()
+    val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+
     Form(
       "value" -> localDate(
         invalidKey = "memberDateOfDeath.error.invalid",
@@ -32,5 +38,7 @@ class MemberDateOfDeathFormProvider @Inject() extends Mappings {
         twoRequiredKey = "memberDateOfDeath.error.required.two",
         requiredKey = "memberDateOfDeath.error.required"
       )
+        .verifying(maxDate(max, "memberDateOfDeath.error.max", max.format(dateTimeFormat)))
     )
+  }
 }

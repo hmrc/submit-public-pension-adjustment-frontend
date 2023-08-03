@@ -403,9 +403,10 @@ memberDateOfDeath.heading = cy:  What was their date of death?
 memberDateOfDeath.hint = cy: For example, 28 3 1965
 memberDateOfDeath.checkYourAnswersLabel = cy: What was their date of death?
 memberDateOfDeath.error.required.all = cy: Enter the member's date of death
-memberDateOfDeath.error.required.two = cy:The member's date of death must include {0} and {1}
-memberDateOfDeath.error.required = cy: The member's date of death must include {0}
+memberDateOfDeath.error.required.two = cy:Enter the member's date of death in the correct format
+memberDateOfDeath.error.required = cy: Enter the member's date of death in the correct format
 memberDateOfDeath.error.invalid = cy: Enter the member's date of death in the correct format
+memberDateOfDeath.error.max = The member's date of death must be in the past
 memberDateOfDeath.change.hidden = cy: What was their date of death?
 
 bankDetails.title = cy: Enter Bank Details
