@@ -14,25 +14,20 @@
  * limitations under the License.
  */
 
-package models
+package models.finalsubmission
 
 import play.api.libs.json.{Format, Json}
 
-import scala.util.matching.Regex
+import java.time.LocalDate
 
-case class PSTR(value: String)
+case class SchemeCharge(
+  amount: Int,
+  schemeDetails: SchemeDetails,
+  paymentElectionDate: Option[LocalDate],
+  estimatedPaymentElectionQuarter: Option[String]
+) {}
 
-object PSTR {
+object SchemeCharge {
 
-  implicit lazy val formats: Format[PSTR] = Json.format
-
-  val New: String = "New"
-
-  private val pattern: Regex = """(\d{8})[A-Z]{2}""".r.anchored
-
-  def fromString(pstrString: String): Option[PSTR] =
-    pstrString match {
-      case pattern(_) => Some(PSTR(pstrString))
-      case _          => None
-    }
+  implicit lazy val formats: Format[SchemeCharge] = Json.format
 }

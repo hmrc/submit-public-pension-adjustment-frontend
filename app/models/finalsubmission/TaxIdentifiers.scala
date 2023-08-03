@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-package models
+package models.finalsubmission
 
 import play.api.libs.json.{Format, Json}
 
-import scala.util.matching.Regex
+case class TaxIdentifiers(nino: Option[String], trn: Option[String], utr: Option[String]) {}
 
-case class PSTR(value: String)
+object TaxIdentifiers {
 
-object PSTR {
-
-  implicit lazy val formats: Format[PSTR] = Json.format
-
-  val New: String = "New"
-
-  private val pattern: Regex = """(\d{8})[A-Z]{2}""".r.anchored
-
-  def fromString(pstrString: String): Option[PSTR] =
-    pstrString match {
-      case pattern(_) => Some(PSTR(pstrString))
-      case _          => None
-    }
+  implicit lazy val formats: Format[TaxIdentifiers] = Json.format
 }
