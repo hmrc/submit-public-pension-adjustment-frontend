@@ -27,12 +27,13 @@ class SubmissionInfoController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
+  requireCalculationData: CalculationDataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: SubmissionInfoView
 ) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData) { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData) { implicit request =>
     Ok(view())
   }
 }

@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.IndexView
+import views.html.SubmissionInfoView
 
 class IndexControllerSpec extends SpecBase {
 
@@ -34,7 +34,7 @@ class IndexControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[IndexView]
+        val view = application.injector.instanceOf[SubmissionInfoView]
 
         status(result) mustEqual OK
 

@@ -42,13 +42,15 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
   lazy val pensionSchemeMemberTaxReferenceRoute =
     routes.PensionSchemeMemberTaxReferenceController.onPageLoad(NormalMode).url
 
+  lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
+
   val validAnswer = "1234567890"
 
   "PensionSchemeMemberTaxReference Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, pensionSchemeMemberTaxReferenceRoute)
@@ -67,7 +69,7 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
       val userAnswers =
         UserAnswers(userAnswersId).set(PensionSchemeMemberTaxReferencePage, validAnswer).success.value
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, pensionSchemeMemberTaxReferenceRoute)
@@ -91,7 +93,7 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
@@ -116,7 +118,7 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request =
@@ -130,6 +132,20 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
         status(result) mustEqual BAD_REQUEST
         contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must redirect to Calculation Prerequisite for a GET if no submission data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, pensionSchemeMemberTaxReferenceRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
       }
     }
   }

@@ -47,6 +47,8 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
   lazy val whenDidYouAskPensionSchemeToPayRoute =
     routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode).url
 
+  lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
+
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
@@ -64,7 +66,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val result = route(application, getRequest).value
@@ -80,7 +82,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
 
       val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouAskPensionSchemeToPayPage, validAnswer).success.value
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
       running(application) {
         val view = application.injector.instanceOf[WhenDidYouAskPensionSchemeToPayView]
@@ -102,7 +104,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
           .build()
 
@@ -116,7 +118,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       val request =
         FakeRequest(POST, whenDidYouAskPensionSchemeToPayRoute)
@@ -136,7 +138,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
 
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
         val result = route(application, getRequest).value
@@ -148,13 +150,25 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
 
     "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
         val result = route(application, postRequest).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Calculation Prerequisite for a GET if no submission data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val result = route(application, getRequest).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
       }
     }
   }

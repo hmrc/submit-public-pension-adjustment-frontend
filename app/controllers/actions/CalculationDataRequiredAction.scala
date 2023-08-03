@@ -18,21 +18,26 @@ package controllers.actions
 
 import javax.inject.Inject
 import controllers.routes
-import models.requests.{CalculationDataRequest, DataRequest, OptionalDataRequest}
+import models.requests.{CalculationDataRequest, OptionalDataRequest}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DataRequiredActionImpl @Inject() (implicit val executionContext: ExecutionContext) extends DataRequiredAction {
+class CalculationDataRequiredActionImpl @Inject() (implicit val executionContext: ExecutionContext)
+    extends CalculationDataRequiredAction {
 
-  override protected def refine[A](request: CalculationDataRequest[A]): Future[Either[Result, DataRequest[A]]] =
-    request.userAnswers match {
-      case None       =>
-        Future.successful(Left(Redirect(routes.JourneyRecoveryController.onPageLoad())))
-      case Some(data) =>
-        Future.successful(Right(DataRequest(request.request, request.userId, data, request.submission)))
+  override protected def refine[A](request: OptionalDataRequest[A]): Future[Either[Result, CalculationDataRequest[A]]] =
+    request.submission match {
+      case None             =>
+        Future.successful(Left(Redirect(routes.CalculationPrerequisiteController.onPageLoad.url)))
+      case Some(submission) =>
+        Future.successful(
+          Right(CalculationDataRequest(request.request, request.userId, request.userAnswers, submission))
+        )
+
     }
+
 }
 
-trait DataRequiredAction extends ActionRefiner[CalculationDataRequest, DataRequest]
+trait CalculationDataRequiredAction extends ActionRefiner[OptionalDataRequest, CalculationDataRequest]

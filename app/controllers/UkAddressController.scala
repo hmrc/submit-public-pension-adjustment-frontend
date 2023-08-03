@@ -34,6 +34,7 @@ class UkAddressController @Inject() (
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
+  requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   formProvider: UkAddressFormProvider,
   val controllerComponents: MessagesControllerComponents,
@@ -44,17 +45,18 @@ class UkAddressController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(UkAddressPage) match {
-      case None        => form
-      case Some(value) => form.fill(value)
+  def onPageLoad(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+      val preparedForm = request.userAnswers.get(UkAddressPage) match {
+        case None        => form
+        case Some(value) => form.fill(value)
+      }
+
+      Ok(view(preparedForm, mode))
     }
 
-    Ok(view(preparedForm, mode))
-  }
-
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
+  def onSubmit(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
@@ -65,5 +67,5 @@ class UkAddressController @Inject() (
               _              <- sessionRepository.set(updatedAnswers)
             } yield Redirect(UkAddressPage.navigate(mode, updatedAnswers))
         )
-  }
+    }
 }

@@ -18,6 +18,7 @@ package base
 
 import controllers.actions._
 import models.UserAnswers
+import models.calculation.inputs.{CalculationInputs, Resubmission}
 import models.submission.Submission
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
@@ -41,7 +42,17 @@ trait SpecBase
 
   val userAnswersId: String = "id"
 
+  val sessionId: String = "sessionId"
+
+  val uniqueId: String = "uniqueId"
+
   def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId)
+
+  val resubmission = Resubmission(false, None)
+
+  val calculationInputs = CalculationInputs(resubmission, None, None)
+
+  val submission = Submission(sessionId, uniqueId, calculationInputs, None)
 
   protected val fixedInstant: Instant      = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
   protected val clockAtFixedInstant: Clock = Clock.fixed(fixedInstant, ZoneId.systemDefault)
@@ -55,6 +66,7 @@ trait SpecBase
     new GuiceApplicationBuilder()
       .overrides(
         bind[DataRequiredAction].to[DataRequiredActionImpl],
+        bind[CalculationDataRequiredAction].to[CalculationDataRequiredActionImpl],
         bind[IdentifierAction].to[FakeIdentifierAction],
         bind[LandingPageIdentifierAction].to[FakeLandingPageIdentifierAction],
         bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers, submission))

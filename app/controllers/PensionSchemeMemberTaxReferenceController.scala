@@ -34,6 +34,7 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
+  requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   formProvider: PensionSchemeMemberTaxReferenceFormProvider,
   val controllerComponents: MessagesControllerComponents,
@@ -44,17 +45,18 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(PensionSchemeMemberTaxReferencePage) match {
-      case None        => form
-      case Some(value) => form.fill(Some(value))
+  def onPageLoad(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+      val preparedForm = request.userAnswers.get(PensionSchemeMemberTaxReferencePage) match {
+        case None        => form
+        case Some(value) => form.fill(Some(value))
+      }
+
+      Ok(view(preparedForm, mode))
     }
 
-    Ok(view(preparedForm, mode))
-  }
-
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
+  def onSubmit(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
@@ -66,5 +68,5 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
               _              <- sessionRepository.set(updatedAnswers)
             } yield Redirect(PensionSchemeMemberTaxReferencePage.navigate(mode, updatedAnswers))
         )
-  }
+    }
 }

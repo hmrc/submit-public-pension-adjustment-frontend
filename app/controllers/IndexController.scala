@@ -21,12 +21,12 @@ import javax.inject.Inject
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.IndexView
+import views.html.SubmissionInfoView
 
 class IndexController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
-  view: IndexView
+  view: SubmissionInfoView
 ) extends FrontendBaseController
     with I18nSupport {
 

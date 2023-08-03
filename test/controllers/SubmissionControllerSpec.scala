@@ -23,14 +23,18 @@ import views.html.SubmissionView
 
 class SubmissionControllerSpec extends SpecBase {
 
+  lazy val submissionRoute = routes.SubmissionController.onPageLoad.url
+
+  lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
+
   "Submission Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
-        val request = FakeRequest(GET, routes.SubmissionController.onPageLoad.url)
+        val request = FakeRequest(GET, submissionRoute)
 
         val result = route(application, request).value
 
@@ -38,6 +42,20 @@ class SubmissionControllerSpec extends SpecBase {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view()(request, messages(application)).toString
+      }
+    }
+
+    "must redirect to Calculation Prerequisite for a GET if no submission data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, submissionRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
       }
     }
   }

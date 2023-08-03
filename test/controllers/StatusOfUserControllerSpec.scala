@@ -38,6 +38,8 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val statusOfUserRoute = routes.StatusOfUserController.onPageLoad(NormalMode).url
 
+  lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
+
   val formProvider = new StatusOfUserFormProvider()
   val form         = formProvider()
 
@@ -45,7 +47,7 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, statusOfUserRoute)
@@ -63,7 +65,7 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers = UserAnswers(userAnswersId).set(StatusOfUserPage, StatusOfUser.values.head).success.value
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, statusOfUserRoute)
@@ -87,7 +89,7 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
@@ -111,7 +113,7 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
         val request =
@@ -131,7 +133,7 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
 
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, statusOfUserRoute)
@@ -145,7 +147,7 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to Journey Recovery for a POST if no existing data is found" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
         val request =
@@ -157,6 +159,20 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
 
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Calculation Prerequisite for a GET if no submission data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, statusOfUserRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
       }
     }
   }
