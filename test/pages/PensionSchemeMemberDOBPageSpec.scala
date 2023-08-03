@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, NormalMode, StatusOfUser}
 
 import java.time.LocalDate
 import org.scalacheck.Arbitrary
@@ -38,16 +38,36 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
 
   "must redirect to Pension Scheme Members Nino page when user submits data" in {
 
-    val page = PensionSchemeMemberDOBPage
+    val page   = PensionSchemeMemberDOBPage
+    val status = StatusOfUser
+
+    val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .success
+      .value
+    if (status == status.Deputyship) {
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/their-date-of-death")
+    }
+
+  }
+
+  "must redirect to Members Date of Death page when user submits data" in {
+
+    val page   = PensionSchemeMemberDOBPage
+    val status = StatusOfUser
 
     val userAnswers = emptyUserAnswers
       .set(page, LocalDate.of(1995, 1, 1))
       .success
       .value
 
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+    if (status == status.PowerOfAttorney) {
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-nino")
+      checkNavigation(nextPageUrl, "/their-nino")
+    }
   }
 
   "must redirect to check your answer page when user submits data in check mode" in {

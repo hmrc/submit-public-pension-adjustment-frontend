@@ -16,26 +16,27 @@
 
 package pages
 
-import models.StatusOfUser.Deputyship
-import models.{NormalMode, UserAnswers}
-
 import java.time.LocalDate
+import models.{NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import controllers.routes
 
-case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
+case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "pensionSchemeMemberDOB"
+  override def toString: String = "memberDateOfDeath"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(StatusOfUserPage) match {
-      case Some(Deputyship) => controllers.routes.MemberDateOfDeathController.onPageLoad(NormalMode)
-      case Some(_)          => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
+    answers.get(MemberDateOfDeathPage) match {
+      case Some(_) => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.routes.CheckYourAnswersController.onPageLoad
-
+    answers.get(MemberDateOfDeathPage) match {
+      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

@@ -17,48 +17,48 @@
 package controllers
 
 import java.time.{LocalDate, ZoneOffset}
+
 import base.SpecBase
-import forms.PensionSchemeMemberDOBFormProvider
-import models.{NormalMode, StatusOfUser, UserAnswers}
+import forms.MemberDateOfDeathFormProvider
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.PensionSchemeMemberDOBPage
+import pages.MemberDateOfDeathPage
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.PensionSchemeMemberDOBView
+import views.html.MemberDateOfDeathView
 
 import scala.concurrent.Future
 
-class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
+class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new PensionSchemeMemberDOBFormProvider()
-
+  val formProvider = new MemberDateOfDeathFormProvider()
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-  lazy val pensionSchemeMemberDOBRoute = routes.PensionSchemeMemberDOBController.onPageLoad(NormalMode).url
+  lazy val memberDateOfDeathRoute = routes.MemberDateOfDeathController.onPageLoad(NormalMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest(GET, pensionSchemeMemberDOBRoute)
+    FakeRequest(GET, memberDateOfDeathRoute)
 
   def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, pensionSchemeMemberDOBRoute)
+    FakeRequest(POST, memberDateOfDeathRoute)
       .withFormUrlEncodedBody(
         "value.day"   -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
         "value.year"  -> validAnswer.getYear.toString
       )
 
-  "PensionSchemeMemberDOB Controller" - {
+  "MemberDateOfDeath Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
@@ -67,7 +67,7 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val result = route(application, getRequest).value
 
-        val view = application.injector.instanceOf[PensionSchemeMemberDOBView]
+        val view = application.injector.instanceOf[MemberDateOfDeathView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
@@ -76,12 +76,12 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PensionSchemeMemberDOBPage, validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(MemberDateOfDeathPage, validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val view = application.injector.instanceOf[PensionSchemeMemberDOBView]
+        val view = application.injector.instanceOf[MemberDateOfDeathView]
 
         val result = route(application, getRequest).value
 
@@ -93,7 +93,7 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the Member Date Of Death page when valid data is submitted" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -101,43 +101,16 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
+          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
           .build()
+
       running(application) {
         val result = route(application, postRequest).value
-        if (StatusOfUser == StatusOfUser.Deputyship) {
-          status(result) mustEqual SEE_OTHER
 
-          redirectLocation(
-            result
-          ).value mustEqual routes.MemberDateOfDeathController.onPageLoad(NormalMode).url
-        }
-      }
-    }
-
-    "must redirect to the Pension Scheme Member Nino page when valid data is submitted" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-      running(application) {
-        val result = route(application, postRequest).value
-        if (StatusOfUser == StatusOfUser.PowerOfAttorney) {
-          status(result) mustEqual SEE_OTHER
-
-          redirectLocation(
-            result
-          ).value mustEqual routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode).url
-        }
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.routes.PensionSchemeMemberNinoController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -146,13 +119,13 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       val request =
-        FakeRequest(POST, pensionSchemeMemberDOBRoute)
+        FakeRequest(POST, memberDateOfDeathRoute)
           .withFormUrlEncodedBody(("value", "invalid value"))
 
       running(application) {
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[PensionSchemeMemberDOBView]
+        val view = application.injector.instanceOf[MemberDateOfDeathView]
 
         val result = route(application, request).value
 
