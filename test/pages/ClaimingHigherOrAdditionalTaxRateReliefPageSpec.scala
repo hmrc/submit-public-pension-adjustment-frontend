@@ -16,7 +16,11 @@
 
 package pages
 
+import models.calculation.inputs.CalculationInputs
+import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
+import models.submission.Submission
 import models.{CheckMode, NormalMode}
+import org.mockito.MockitoSugar.mock
 
 class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
@@ -30,35 +34,97 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
     "must navigate correctly in NormalMode" - {
 
-      "to CYA when answered no" in {
-        val ua     = emptyUserAnswers
+      "to BankDetails when answered no and member is in credit" in {
+        val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
             false
           )
           .success
           .value
-        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua).url
+
+        val period: Period = Period._2021
+
+        val mockCalculationInputs = mock[CalculationInputs]
+
+        val calculationResponse    = CalculationResponse(
+          models.calculation.response.Resubmission(false, None),
+          TotalAmounts(0, 1, 0),
+          List.empty,
+          List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
+        )
+        val submission: Submission =
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+        val result                 = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
+
+        checkNavigation(result, "/bank-details")
+      }
+
+      "to Declarations when answered no and member is not in credit" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            false
+          )
+          .success
+          .value
+
+        val period: Period = Period._2021
+
+        val mockCalculationInputs = mock[CalculationInputs]
+
+        val calculationResponse    = CalculationResponse(
+          models.calculation.response.Resubmission(false, None),
+          TotalAmounts(0, 1, 0),
+          List.empty,
+          List(models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty))
+        )
+        val submission: Submission =
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+        val result                 = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/declarations")
       }
 
       "to HowMuchTaxReliefPage when answered yes" in {
-        val ua     = emptyUserAnswers
+        val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
             true
           )
           .success
           .value
-        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua).url
+
+        val mockCalculationInputs = mock[CalculationInputs]
+
+        val calculationResponse    = CalculationResponse(
+          models.calculation.response.Resubmission(false, None),
+          TotalAmounts(0, 1, 0),
+          List.empty,
+          List.empty
+        )
+        val submission: Submission =
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+        val result                 = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/tax-relief-amount")
       }
 
       "to JourneyRecovery when not answered" in {
-        val ua     = emptyUserAnswers
-        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua).url
+        val ua = emptyUserAnswers
+
+        val mockCalculationInputs = mock[CalculationInputs]
+
+        val calculationResponse    = CalculationResponse(
+          models.calculation.response.Resubmission(false, None),
+          TotalAmounts(0, 1, 0),
+          List.empty,
+          List.empty
+        )
+        val submission: Submission =
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -66,35 +132,73 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to CYA when answered yes" in {
-        val ua     = emptyUserAnswers
+      "to HowMuchTaxReliefPage when answered yes and member is not in credit " in {
+        val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
             true
           )
           .success
           .value
-        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        val mockCalculationInputs = mock[CalculationInputs]
+
+        val calculationResponse    = CalculationResponse(
+          models.calculation.response.Resubmission(false, None),
+          TotalAmounts(0, 1, 0),
+          List.empty,
+          List.empty
+        )
+        val submission: Submission =
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submission).url
+
+        checkNavigation(result, "/change-tax-relief-amount")
       }
 
-      "to CYA when answered no" in {
-        val ua     = emptyUserAnswers
+      "to CYA when answered no and member is not in credit" in {
+        val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
             false
           )
           .success
           .value
-        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/declarations")
+        val period: Period = Period._2021
+
+        val mockCalculationInputs = mock[CalculationInputs]
+
+        val calculationResponse    = CalculationResponse(
+          models.calculation.response.Resubmission(false, None),
+          TotalAmounts(0, 1, 0),
+          List.empty,
+          List(models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty))
+        )
+        val submission: Submission =
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submission).url
+
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua     = emptyUserAnswers
-        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua).url
+        val ua = emptyUserAnswers
+
+        val mockCalculationInputs = mock[CalculationInputs]
+
+        val calculationResponse    = CalculationResponse(
+          models.calculation.response.Resubmission(false, None),
+          TotalAmounts(0, 1, 0),
+          List.empty,
+          List.empty
+        )
+        val submission: Submission =
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

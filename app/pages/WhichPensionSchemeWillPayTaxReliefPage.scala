@@ -16,9 +16,8 @@
 
 package pages
 
-import models.{CheckMode, Mode, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
+import models.{Mode, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
 import models.submission.Submission
-import pages.ClaimingHigherOrAdditionalTaxRateReliefPage.{navigateInCheckMode, navigateInNormalMode}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -28,20 +27,15 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[WhichPen
 
   override def toString: String = "whichPensionSchemeWillPayTaxRelief"
 
-  def navigate(mode: Mode, answers: UserAnswers, submission: Submission): Call = mode match {
-    case NormalMode => navigateInNormalMode(answers, submission)
-    case CheckMode => navigateInCheckMode(answers)
-  }
-
-  protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
       case Some(_) => isMemberCredit(submission, NormalMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
-      case Some(_) => isMemberCredit(submission, CheckMode)
+      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
