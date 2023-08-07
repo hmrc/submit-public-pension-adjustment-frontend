@@ -34,7 +34,7 @@ class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
 
   val mockCalculationInputs = mock[CalculationInputs]
 
-  val submission: Submission = Submission(
+  val userWithDebitSubmission: Submission = Submission(
     "sessionId",
     "submissionUniqueId",
     mockCalculationInputs,
@@ -51,7 +51,7 @@ class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
         )
         .success
         .value
-      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2022).navigate(NormalMode, ua, submission).url
+      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2022).navigate(NormalMode, ua, userWithDebitSubmission).url
 
       checkNavigation(result, "/alternative-name")
     }
@@ -64,14 +64,14 @@ class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
         )
         .success
         .value
-      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(NormalMode, ua, submission).url
+      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(NormalMode, ua, userWithDebitSubmission).url
 
       checkNavigation(result, "/who-will-pay/2021")
     }
 
     "to JourneyRecovery when not selected" in {
       val ua     = emptyUserAnswers
-      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(NormalMode, ua, submission).url
+      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(NormalMode, ua, userWithDebitSubmission).url
 
       checkNavigation(result, "/there-is-a-problem")
     }
@@ -87,14 +87,14 @@ class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
         )
         .success
         .value
-      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(CheckMode, ua, submission).url
+      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(CheckMode, ua, userWithDebitSubmission).url
 
       checkNavigation(result, "/check-your-answers")
     }
 
     "to JourneyRecovery when not selected" in {
       val ua     = emptyUserAnswers
-      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(CheckMode, ua, submission).url
+      val result = WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(CheckMode, ua, userWithDebitSubmission).url
 
       checkNavigation(result, "/there-is-a-problem")
     }
