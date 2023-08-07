@@ -36,7 +36,7 @@ object PeriodService {
       case None                      => None
     }
 
-  def orderedInDateDebitPeriods(calculationResponse: CalculationResponse) =
+  def orderedInDateDebitPeriods(calculationResponse: CalculationResponse): Seq[Period] =
     calculationResponse.inDates
       .filter(yearCalculation => yearCalculation.debit > 0)
       .map(debitYearCalculation => debitYearCalculation.period)

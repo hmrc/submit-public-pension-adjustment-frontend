@@ -46,14 +46,13 @@ class AskedPensionSchemeToPayTaxChargeController @Inject() (
   val form = formProvider()
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
-    (identify andThen getData andThen requireCalculationData andThen requireData) {
-      implicit request =>
-        val preparedForm = request.userAnswers.get(AskedPensionSchemeToPayTaxChargePage(period)) match {
-          case None => form
-          case Some(value) => form.fill(value)
-        }
+    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+      val preparedForm = request.userAnswers.get(AskedPensionSchemeToPayTaxChargePage(period)) match {
+        case None        => form
+        case Some(value) => form.fill(value)
+      }
 
-        Ok(view(preparedForm, mode, period))
+      Ok(view(preparedForm, mode, period))
     }
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
@@ -66,7 +65,7 @@ class AskedPensionSchemeToPayTaxChargeController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(AskedPensionSchemeToPayTaxChargePage(period), value))
-              _ <- sessionRepository.set(updatedAnswers)
+              _              <- sessionRepository.set(updatedAnswers)
             } yield Redirect(AskedPensionSchemeToPayTaxChargePage(period).navigate(mode, updatedAnswers))
         )
     }

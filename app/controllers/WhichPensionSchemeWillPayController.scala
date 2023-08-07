@@ -46,8 +46,7 @@ class WhichPensionSchemeWillPayController @Inject() (
   val form = formProvider()
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
-    (identify andThen getData andThen requireCalculationData andThen requireData) {
-    implicit request =>
+    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
       val preparedForm = request.userAnswers.get(WhichPensionSchemeWillPayPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)

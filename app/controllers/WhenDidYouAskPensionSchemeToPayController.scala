@@ -46,8 +46,7 @@ class WhenDidYouAskPensionSchemeToPayController @Inject() (
   def form = formProvider()
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
-    (identify andThen getData andThen requireCalculationData andThen requireData) {
-    implicit request =>
+    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
       val preparedForm = request.userAnswers.get(WhenDidYouAskPensionSchemeToPayPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -67,7 +66,9 @@ class WhenDidYouAskPensionSchemeToPayController @Inject() (
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(WhenDidYouAskPensionSchemeToPayPage(period), value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(WhenDidYouAskPensionSchemeToPayPage(period).navigate(mode, updatedAnswers, request.submission))
+            } yield Redirect(
+              WhenDidYouAskPensionSchemeToPayPage(period).navigate(mode, updatedAnswers, request.submission)
+            )
         )
     }
 }
