@@ -17,7 +17,7 @@
 package pages
 
 import models.StatusOfUser.Deputyship
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 
 import java.time.LocalDate
 import play.api.libs.json.JsPath
@@ -36,6 +36,9 @@ case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.routes.CheckYourAnswersController.onPageLoad
+    answers.get(StatusOfUserPage) match {
+      case Some(Deputyship) => controllers.routes.MemberDateOfDeathController.onPageLoad(CheckMode)
+      case Some(_)          => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
+    }
 
 }

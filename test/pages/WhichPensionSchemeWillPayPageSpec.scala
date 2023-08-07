@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period}
 
 class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
 
@@ -65,7 +65,6 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
     }
 
     "must navigate correctly in CheckMode" - {
-
       "to CYA" in {
         val ua     = emptyUserAnswers
           .set(
@@ -76,7 +75,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
           .value
         val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/change-asked-pension-scheme-to-pay-tax-charge/2020")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -84,6 +83,41 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "clean up" - {
+      "must cleanup correctly when user selects scheme from calculation service" in {
+
+        val ua = emptyUserAnswers
+          .set(WhichPensionSchemeWillPayPage(Period._2020), "Private pension scheme")
+          .success
+          .value
+          .set(PensionSchemeDetailsPage(Period._2020), PensionSchemeDetails("name", "pstr"))
+          .success
+          .value
+
+        val cleanedUserAnswers =
+          WhichPensionSchemeWillPayPage(Period._2020).cleanup(Some("Scheme1 / 00348916RT"), ua).success.value
+
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) mustBe None
+
+      }
+
+      "must clean up correctly when user reselect private pension scheme" in {
+
+        val ua = emptyUserAnswers
+          .set(WhichPensionSchemeWillPayPage(Period._2020), "Private pension scheme")
+          .success
+          .value
+          .set(PensionSchemeDetailsPage(Period._2020), PensionSchemeDetails("name", "pstr"))
+          .success
+          .value
+
+        val cleanedUserAnswers =
+          WhichPensionSchemeWillPayPage(Period._2020).cleanup(Some("Private pension scheme"), ua).success.value
+
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) mustBe Some(PensionSchemeDetails("name", "pstr"))
       }
     }
   }

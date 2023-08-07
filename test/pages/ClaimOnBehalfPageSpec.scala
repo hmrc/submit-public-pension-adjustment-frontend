@@ -16,11 +16,14 @@
 
 package pages
 
+import models.StatusOfUser.Deputyship
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, WhichPensionSchemeWillPay, WhoWillPay}
 import org.mockito.MockitoSugar.mock
+
+import java.time.LocalDate
 
 class ClaimOnBehalfPageSpec extends PageBehaviours {
 
@@ -34,6 +37,9 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
   }
 
   val mockCalculationInputs = mock[CalculationInputs]
+
+  val debitPeriodSubmission =
+    Submission(sessionId, uniqueId, calculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))
 
   "must redirect to status of user page when user selects yes in normal mode" in {
 
@@ -179,5 +185,115 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
+  "cleanup" - {
+
+    "must cleanup correctly when answered no" in {
+      val ua = emptyUserAnswers
+        .set(
+          StatusOfUserPage,
+          Deputyship
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeMemberNamePage,
+          "John Doe"
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeMemberDOBPage,
+          LocalDate.of(1995, 1, 1)
+        )
+        .success
+        .value
+        .set(
+          MemberDateOfDeathPage,
+          LocalDate.of(2022, 1, 1)
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeMemberNinoPage,
+          arbitraryNino.arbitrary.sample.value
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeMemberTaxReferencePage,
+          "1234567890"
+        )
+        .success
+        .value
+        .set(PensionSchemeMemberResidencePage, true)
+        .success
+        .value
+        .set(PensionSchemeMemberUKAddressPage, arbitraryPensionSchemeMemberUKAddress.arbitrary.sample.value)
+        .success
+        .value
+
+      val cleanedUserAnswers = ClaimOnBehalfPage.cleanup(Some(false), ua).success.value
+
+      cleanedUserAnswers.get(StatusOfUserPage) mustBe None
+      cleanedUserAnswers.get(PensionSchemeMemberNamePage) mustBe None
+      cleanedUserAnswers.get(PensionSchemeMemberDOBPage) mustBe None
+      cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe None
+      cleanedUserAnswers.get(PensionSchemeMemberNinoPage) mustBe None
+      cleanedUserAnswers.get(PensionSchemeMemberTaxReferencePage) mustBe None
+      cleanedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe None
+      cleanedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe None
+    }
+
+    "must cleanup correctly when answered yes" in {
+      val ua = emptyUserAnswers
+        .set(
+          WhoWillPayPage(Period._2020),
+          WhoWillPay.You
+        )
+        .success
+        .value
+        .set(
+          WhoWillPayPage(Period._2021),
+          WhoWillPay.PensionScheme
+        )
+        .success
+        .value
+        .set(
+          WhichPensionSchemeWillPayPage(Period._2021),
+          "Private pension scheme"
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeDetailsPage(Period._2021),
+          PensionSchemeDetails("name", "pstr")
+        )
+        .success
+        .value
+        .set(
+          AskedPensionSchemeToPayTaxChargePage(Period._2021),
+          true
+        )
+        .success
+        .value
+        .set(
+          WhenDidYouAskPensionSchemeToPayPage(Period._2021),
+          LocalDate.of(2020, 1, 1)
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers = ClaimOnBehalfPage.cleanup(Some(true), ua).success.value
+
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe None
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe None
+      cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2021)) mustBe None
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) mustBe None
+      cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) mustBe None
+      cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe None
+
+    }
   }
 }

@@ -62,7 +62,6 @@ final case class UserAnswers(
     }
   }
 }
-
 object UserAnswers {
 
   val reads: Reads[UserAnswers] = {

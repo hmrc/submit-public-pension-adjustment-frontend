@@ -82,7 +82,21 @@ class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
 
   "must navigate correctly in CheckMode" - {
 
-    "to CYA when selected" in {
+    "to CYA when no more debit periods when submits" in {
+      val ua     = emptyUserAnswers
+        .set(
+          WhenWillYouAskPensionSchemeToPayPage(Period._2022),
+          WhenWillYouAskPensionSchemeToPay.JanToMar24
+        )
+        .success
+        .value
+      val result =
+        WhenWillYouAskPensionSchemeToPayPage(Period._2022).navigate(CheckMode, ua, userWithDebitSubmission).url
+
+      checkNavigation(result, "/check-your-answers")
+    }
+
+    "to who will pay page when user submits and more debit periods" in {
       val ua     = emptyUserAnswers
         .set(
           WhenWillYouAskPensionSchemeToPayPage(Period._2020),
@@ -93,7 +107,7 @@ class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
       val result =
         WhenWillYouAskPensionSchemeToPayPage(Period._2020).navigate(CheckMode, ua, userWithDebitSubmission).url
 
-      checkNavigation(result, "/check-your-answers")
+      checkNavigation(result, "/change-who-will-pay/2021")
     }
 
     "to JourneyRecovery when not selected" in {

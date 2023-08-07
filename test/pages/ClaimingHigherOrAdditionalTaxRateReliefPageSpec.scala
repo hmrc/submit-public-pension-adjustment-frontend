@@ -19,7 +19,7 @@ package pages
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode}
+import models.{BankDetails, CheckMode, NormalMode, WhichPensionSchemeWillPayTaxRelief}
 import org.mockito.MockitoSugar.mock
 
 class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
@@ -201,6 +201,20 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+    "cleanup" - {
+      "must cleanup correctly when answered no" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = ClaimingHigherOrAdditionalTaxRateReliefPage.cleanup(Some(false), ua).success.value
+        cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe None
       }
     }
   }

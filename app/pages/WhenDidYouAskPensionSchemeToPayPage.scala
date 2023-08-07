@@ -19,7 +19,7 @@ package pages
 import models.submission.Submission
 
 import java.time.LocalDate
-import models.{NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
@@ -43,7 +43,12 @@ case class WhenDidYouAskPensionSchemeToPayPage(period: Period) extends QuestionP
 
   override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhenDidYouAskPensionSchemeToPayPage(period)) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) =>
+        val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
+        nextDebitPeriod match {
+          case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(CheckMode, period)
+          case None         => controllers.routes.CheckYourAnswersController.onPageLoad
+        }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

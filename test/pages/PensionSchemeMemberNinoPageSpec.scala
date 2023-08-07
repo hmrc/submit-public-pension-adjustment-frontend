@@ -43,7 +43,7 @@ class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/their-UTR")
   }
 
-  "must redirect to check your answer page when user submits data in check mode" in {
+  "must redirect to cPension Scheme Members Tax Reference page when user submits data in check mode" in {
 
     val page = PensionSchemeMemberNinoPage
 
@@ -54,7 +54,7 @@ class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+    checkNavigation(nextPageUrl, "/change-their-UTR")
   }
 
   "must redirect to JourneyRecoveryPage when not answered in normal mode" in {

@@ -16,8 +16,10 @@
 
 package pages
 
-import models.StatusOfUser.Deputyship
+import models.StatusOfUser.{Deputyship, PowerOfAttorney}
 import models.{CheckMode, NormalMode, StatusOfUser}
+
+import java.time.LocalDate
 
 class StatusOfUserSpec extends PageBehaviours {
 
@@ -30,7 +32,7 @@ class StatusOfUserSpec extends PageBehaviours {
     beRemovable[StatusOfUser](StatusOfUserPage)
   }
 
-  "must redirect to status of user page when user submits data" in {
+  "must redirect to their name page when user submits data" in {
 
     val page = StatusOfUserPage
 
@@ -44,7 +46,7 @@ class StatusOfUserSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/their-name")
   }
 
-  "must redirect to check your answer page when user submits data in check mode" in {
+  "must redirect to their name page when user submits data in check mode" in {
 
     val page = StatusOfUserPage
 
@@ -55,7 +57,7 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+    checkNavigation(nextPageUrl, "/change-their-name")
   }
 
   "must redirect to JourneyRecoveryPage when not answered in normal mode" in {
@@ -78,5 +80,33 @@ class StatusOfUserSpec extends PageBehaviours {
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
+  val validDate = LocalDate.of(1995, 1, 1)
+
+  "must cleanup member date of death when user selects PoA" in {
+
+    val ua = emptyUserAnswers
+      .set(MemberDateOfDeathPage, validDate)
+      .success
+      .value
+
+    val cleanedUserAnswers = StatusOfUserPage.cleanup(Some(PowerOfAttorney), ua).success.value
+
+    cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe None
+
+  }
+
+  "must cleanup not member date of death when user selects deputyship" in {
+
+    val ua = emptyUserAnswers
+      .set(MemberDateOfDeathPage, validDate)
+      .success
+      .value
+
+    val cleanedUserAnswers = StatusOfUserPage.cleanup(Some(Deputyship), ua).success.value
+
+    cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe Some(validDate)
+
   }
 }

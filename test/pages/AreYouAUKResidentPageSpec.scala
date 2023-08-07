@@ -66,7 +66,7 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to CYA when selected" in {
+      "to uk address page when yes selected" in {
         val ua     = emptyUserAnswers
           .set(
             AreYouAUKResidentPage,
@@ -76,7 +76,20 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
           .value
         val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/change-uk-address")
+      }
+
+      "to international address page when no selected" in {
+        val ua     = emptyUserAnswers
+          .set(
+            AreYouAUKResidentPage,
+            false
+          )
+          .success
+          .value
+        val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/change-international-address")
       }
 
       "to JourneyRecovery when not selected" in {
@@ -84,6 +97,35 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
         val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "cleanup" - {
+
+      "must cleanup correctly when answered no" in {
+        val ua = emptyUserAnswers
+          .set(
+            UkAddressPage,
+            arbitraryUkAddress.arbitrary.sample.value
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = AreYouAUKResidentPage.cleanup(Some(false), ua).success.value
+        cleanedUserAnswers.get(UkAddressPage) mustBe None
+      }
+
+      "must cleanup correctly when answered yes" in {
+        val ua = emptyUserAnswers
+          .set(
+            InternationalAddressPage,
+            arbitraryInternationalAddress.arbitrary.sample.value
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = AreYouAUKResidentPage.cleanup(Some(true), ua).success.value
+        cleanedUserAnswers.get(InternationalAddressPage) mustBe None
       }
     }
   }
