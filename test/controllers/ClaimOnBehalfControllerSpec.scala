@@ -18,6 +18,9 @@ package controllers
 
 import base.SpecBase
 import forms.ClaimOnBehalfFormProvider
+import models.calculation.inputs.CalculationInputs
+import models.calculation.response.{CalculationResponse, TotalAmounts}
+import models.submission.Submission
 import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -27,7 +30,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import repositories.{SessionRepository, SubmissionRepository}
 import views.html.ClaimOnBehalfView
 
 import scala.concurrent.Future
@@ -81,14 +84,26 @@ class ClaimOnBehalfControllerSpec extends SpecBase with MockitoSugar {
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockSessionRepository    = mock[SessionRepository]
+      val mockSubmissionRepository = mock[SubmissionRepository]
+      val mockCalculationInputs    = mock[CalculationInputs]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val calculationResponse    = CalculationResponse(
+        models.calculation.response.Resubmission(false, None),
+        TotalAmounts(0, 1, 0),
+        List.empty,
+        List.empty
+      )
+      val submission: Submission =
+        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[SubmissionRepository].toInstance(mockSubmissionRepository)
           )
           .build()
 
@@ -98,12 +113,11 @@ class ClaimOnBehalfControllerSpec extends SpecBase with MockitoSugar {
             .withFormUrlEncodedBody(("value", "true"))
 
         val userAnswers = emptyUserAnswers.set(ClaimOnBehalfPage, true)
-
-        val result = route(application, request).value
+        val result      = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual ClaimOnBehalfPage
-          .navigate(NormalMode, userAnswers.get)
+          .navigate(NormalMode, userAnswers.get, submission)
           .url
       }
     }

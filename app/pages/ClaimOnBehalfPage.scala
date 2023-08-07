@@ -16,10 +16,12 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
+import controllers.routes
+import models.submission.Submission
+import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.routes
+import services.PeriodService
 
 import scala.util.Try
 
@@ -29,17 +31,43 @@ case object ClaimOnBehalfPage extends QuestionPage[Boolean] {
 
   override def toString: String = "claimOnBehalf"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
       case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
-      case Some(false) => routes.WhoWillPayController.onPageLoad(NormalMode)
+      case Some(false) =>
+        submission.calculation match {
+          case Some(calculation) =>
+            if (calculation.totalAmounts.inDatesDebit > 0) {
+              navigateWhenTotalAmountsHasInDateDebit(submission, NormalMode)
+            } else {
+              routes.AlternativeNameController.onPageLoad(NormalMode)
+            }
+          case None              => routes.JourneyRecoveryController.onPageLoad(None)
+        }
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  private def navigateWhenTotalAmountsHasInDateDebit(submission: Submission, mode: Mode) = {
+    val maybePeriod = PeriodService.getFirstDebitPeriod(submission)
+    maybePeriod match {
+      case Some(period) => routes.WhoWillPayController.onPageLoad(mode, period)
+      case None         => routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  }
+
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
       case Some(true)  => routes.StatusOfUserController.onPageLoad(CheckMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad
+      case Some(false) =>
+        submission.calculation match {
+          case Some(calculation) =>
+            if (calculation.totalAmounts.inDatesDebit > 0) {
+              navigateWhenTotalAmountsHasInDateDebit(submission, CheckMode)
+            } else {
+              routes.CheckYourAnswersController.onPageLoad
+            }
+          case None              => routes.JourneyRecoveryController.onPageLoad(None)
+        }
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

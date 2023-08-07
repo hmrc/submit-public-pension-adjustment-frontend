@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.PensionSchemeDetailsPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,8 +28,8 @@ import viewmodels.implicits._
 
 object PensionSchemeDetailsSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(PensionSchemeDetailsPage).map { answer =>
+  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(PensionSchemeDetailsPage(period)).map { answer =>
       val value = HtmlFormat.escape(answer.pensionSchemeName).toString + " / " + HtmlFormat
         .escape(answer.pensionSchemeTaxReference)
         .toString
@@ -38,7 +38,7 @@ object PensionSchemeDetailsSummary {
         key = "pensionSchemeDetails.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.PensionSchemeDetailsController.onPageLoad(CheckMode).url)
+          ActionItemViewModel("site.change", routes.PensionSchemeDetailsController.onPageLoad(CheckMode, period).url)
             .withVisuallyHiddenText(messages("pensionSchemeDetails.change.hidden"))
         )
       )

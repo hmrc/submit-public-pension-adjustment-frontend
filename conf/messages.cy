@@ -44,6 +44,10 @@ checkYourAnswers.heading = cy: Check your answers
 checkYourAnswers.notAnswered = cy: Not answered
 checkYourAnswers.reviewBeforeSubmission = cy: Check your answers before completing your submission.
 checkYourAnswers.continue = cy: Continue
+checkYourAnswers.periodDetails.2020 = cy: Details for 2020
+checkYourAnswers.periodDetails.2021 = cy: Details for 2021
+checkYourAnswers.periodDetails.2022 = cy: Details for 2022
+checkYourAnswers.periodDetails.2023 = cy: Details for 2023
 
 journeyRecovery.continue.title = cy: Sorry, there is a problem with the service
 journeyRecovery.continue.heading = cy: Sorry, there is a problem with the service

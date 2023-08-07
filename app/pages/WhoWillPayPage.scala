@@ -16,26 +16,33 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers, WhoWillPay}
 import models.WhoWillPay.{PensionScheme, You}
+import models.submission.Submission
+import models.{NormalMode, Period, UserAnswers, WhoWillPay}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import services.PeriodService
 
-case object WhoWillPayPage extends QuestionPage[WhoWillPay] {
+case class WhoWillPayPage(period: Period) extends QuestionPage[WhoWillPay] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "whoWillPay"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(WhoWillPayPage) match {
-      case Some(PensionScheme) => controllers.routes.WhichPensionSchemeWillPayController.onPageLoad(NormalMode)
-      case Some(You)           => controllers.routes.AlternativeNameController.onPageLoad(NormalMode)
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(WhoWillPayPage(period)) match {
+      case Some(PensionScheme) => controllers.routes.WhichPensionSchemeWillPayController.onPageLoad(NormalMode, period)
+      case Some(You)           =>
+        val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
+        nextDebitPeriod match {
+          case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(NormalMode, period)
+          case None         => controllers.routes.AlternativeNameController.onPageLoad(NormalMode)
+        }
       case _                   => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(WhoWillPayPage) match {
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(WhoWillPayPage(period)) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

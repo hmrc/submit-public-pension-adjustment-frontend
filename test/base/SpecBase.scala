@@ -18,6 +18,7 @@ package base
 
 import controllers.actions._
 import models.UserAnswers
+import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, Period, TotalAmounts}
 import models.calculation.inputs.{CalculationInputs, Resubmission}
 import models.submission.Submission
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
@@ -41,6 +42,38 @@ trait SpecBase
     with IntegrationPatience {
 
   val userAnswersId: String = "id"
+
+  def aCalculationResponseWithAnInDateDebitYear = {
+
+    val inDatesYears = List(
+      inDatesTaxYearsCalculation(models.calculation.response.Period._2023, 0),
+      inDatesTaxYearsCalculation(models.calculation.response.Period._2022, 1),
+      inDatesTaxYearsCalculation(models.calculation.response.Period._2020, 1),
+      inDatesTaxYearsCalculation(models.calculation.response.Period._2021, 1)
+    )
+
+    val calculationResponse = CalculationResponse(
+      models.calculation.response.Resubmission(false, None),
+      TotalAmounts(0, 1, 0),
+      List.empty,
+      inDatesYears
+    )
+    calculationResponse
+  }
+
+  private def inDatesTaxYearsCalculation(period1: Period, debitAmount: Int) =
+    InDatesTaxYearsCalculation(
+      period = period1,
+      memberCredit = 0,
+      schemeCredit = 0,
+      debit = debitAmount,
+      chargePaidByMember = 0,
+      chargePaidBySchemes = 0,
+      revisedChargableAmountBeforeTaxRate = 0,
+      revisedChargableAmountAfterTaxRate = 0,
+      unusedAnnualAllowance = 0,
+      taxYearSchemes = List.empty
+    )
 
   val sessionId: String = "sessionId"
 

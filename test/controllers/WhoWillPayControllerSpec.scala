@@ -18,7 +18,10 @@ package controllers
 
 import base.SpecBase
 import forms.WhoWillPayFormProvider
-import models.{NormalMode, UserAnswers, WhoWillPay}
+import models.calculation.inputs.CalculationInputs
+import models.calculation.response.{CalculationResponse, TotalAmounts}
+import models.submission.Submission
+import models.{NormalMode, Period, UserAnswers, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -27,7 +30,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import repositories.{SessionRepository, SubmissionRepository}
 import views.html.WhoWillPayView
 
 import scala.concurrent.Future
@@ -36,7 +39,7 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val whoWillPayRoute = routes.WhoWillPayController.onPageLoad(NormalMode).url
+  lazy val whoWillPayRoute = routes.WhoWillPayController.onPageLoad(NormalMode, Period._2020).url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
@@ -57,13 +60,14 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[WhoWillPayView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2020)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhoWillPayPage, WhoWillPay.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(WhoWillPayPage(Period._2020), WhoWillPay.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
@@ -75,7 +79,7 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhoWillPay.values.head), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(WhoWillPay.values.head), NormalMode, Period._2020)(
           request,
           messages(application)
         ).toString
@@ -84,13 +88,27 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockSessionRepository    = mock[SessionRepository]
+      val mockSubmissionRepository = mock[SubmissionRepository]
+      val mockCalculationInputs    = mock[CalculationInputs]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
+      val calculationResponse    = CalculationResponse(
+        models.calculation.response.Resubmission(false, None),
+        TotalAmounts(0, 1, 0),
+        List.empty,
+        List.empty
+      )
+      val submission: Submission =
+        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
-          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[SubmissionRepository].toInstance(mockSubmissionRepository)
+          )
           .build()
 
       running(application) {
@@ -121,7 +139,10 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

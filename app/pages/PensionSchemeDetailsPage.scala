@@ -16,24 +16,24 @@
 
 package pages
 
-import models.{NormalMode, PensionSchemeDetails, UserAnswers}
+import models.{NormalMode, PensionSchemeDetails, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object PensionSchemeDetailsPage extends QuestionPage[PensionSchemeDetails] {
+case class PensionSchemeDetailsPage(period: Period) extends QuestionPage[PensionSchemeDetails] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "pensionSchemeDetails"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeDetailsPage) match {
-      case Some(_) => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode)
+    answers.get(PensionSchemeDetailsPage(period)) match {
+      case Some(_) => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeDetailsPage) match {
+    answers.get(PensionSchemeDetailsPage(period)) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

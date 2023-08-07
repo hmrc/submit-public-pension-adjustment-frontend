@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.PensionSchemeDetailsPage
@@ -35,18 +35,18 @@ class PensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
     "when value is entered, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          PensionSchemeDetailsPage,
+          PensionSchemeDetailsPage(Period._2020),
           models.PensionSchemeDetails("Some scheme", "08765432TR")
         )
         .get
-      PensionSchemeDetailsSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeDetailsSummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionSchemeDetails.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Some scheme / 08765432TR")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.PensionSchemeDetailsController.onPageLoad(CheckMode).url
+              routes.PensionSchemeDetailsController.onPageLoad(CheckMode, Period._2020).url
             )
               .withVisuallyHiddenText("pensionSchemeDetails.change.hidden")
           )
@@ -56,7 +56,7 @@ class PensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PensionSchemeDetailsSummary.row(userAnswers) shouldBe None
+      PensionSchemeDetailsSummary.row(userAnswers, Period._2020) shouldBe None
     }
   }
 

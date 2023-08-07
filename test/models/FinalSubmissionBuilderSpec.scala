@@ -41,7 +41,7 @@ class FinalSubmissionBuilderSpec extends AnyFreeSpec with Matchers with Logging 
 
         val caseNumber = "TBD"
 
-        val submissionUserAnswers     = submissionAnswers()
+        val submissionUserAnswers     = submissionAnswers(Period._2020)
         val submissionUserAnswersJson = Json.prettyPrint(Json.toJson(submissionUserAnswers))
 
         logger.info(s"submissionUserAnswersJson : $submissionUserAnswersJson")
@@ -61,15 +61,15 @@ class FinalSubmissionBuilderSpec extends AnyFreeSpec with Matchers with Logging 
       }
   }
 
-  def submissionAnswers(): UserAnswers =
+  def submissionAnswers(period: Period): UserAnswers =
     UserAnswers("submissionUserAnswersId")
       .set(ClaimOnBehalfPage, false)
       .get
-      .set(WhoWillPayPage, WhoWillPay.PensionScheme)
+      .set(WhoWillPayPage(period), WhoWillPay.PensionScheme)
       .get
-      .set(WhichPensionSchemeWillPayPage, WhichPensionSchemeWillPay.PensionSchemeA)
+      .set(WhichPensionSchemeWillPayPage(period), WhichPensionSchemeWillPay.PensionSchemeA)
       .get
-      .set(WhenDidYouAskPensionSchemeToPayPage, LocalDate.of(2020, 6, 30))
+      .set(WhenDidYouAskPensionSchemeToPayPage(period), LocalDate.of(2020, 6, 30))
       .get
       .set(ContactNumberPage, "contactNumber")
       .get

@@ -16,49 +16,49 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, NormalMode, Period}
 
 class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
 
   "AskedPensionSchemeToPayTaxChargePage" - {
 
-    beRetrievable[Boolean](AskedPensionSchemeToPayTaxChargePage)
+    beRetrievable[Boolean](AskedPensionSchemeToPayTaxChargePage(Period._2020))
 
-    beSettable[Boolean](AskedPensionSchemeToPayTaxChargePage)
+    beSettable[Boolean](AskedPensionSchemeToPayTaxChargePage(Period._2020))
 
-    beRemovable[Boolean](AskedPensionSchemeToPayTaxChargePage)
+    beRemovable[Boolean](AskedPensionSchemeToPayTaxChargePage(Period._2020))
 
     "must navigate correctly in NormalMode" - {
 
       "to WhenDidYouAskPensionSchemeToPayPage when Yes selected" in {
         val ua     = emptyUserAnswers
           .set(
-            AskedPensionSchemeToPayTaxChargePage,
+            AskedPensionSchemeToPayTaxChargePage(Period._2020),
             true
           )
           .success
           .value
-        val result = AskedPensionSchemeToPayTaxChargePage.navigate(NormalMode, ua).url
+        val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/when-did-you-ask-pension-scheme-to-pay")
+        checkNavigation(result, "/when-did-you-ask-pension-scheme-to-pay/2020")
       }
 
       "to WhenWillYouAskPensionSchemeToPayPage when no selected" in {
         val ua     = emptyUserAnswers
           .set(
-            AskedPensionSchemeToPayTaxChargePage,
+            AskedPensionSchemeToPayTaxChargePage(Period._2020),
             false
           )
           .success
           .value
-        val result = AskedPensionSchemeToPayTaxChargePage.navigate(NormalMode, ua).url
+        val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/when-will-you-ask-pension-scheme-to-pay")
+        checkNavigation(result, "/when-will-you-ask-pension-scheme-to-pay/2020")
       }
 
       "to JourneyRecovery when not selected" in {
         val ua     = emptyUserAnswers
-        val result = AskedPensionSchemeToPayTaxChargePage.navigate(NormalMode, ua).url
+        val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -69,32 +69,32 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
       "to when did you ask pension scheme to charge page in check mode when yes selected" in {
         val ua     = emptyUserAnswers
           .set(
-            AskedPensionSchemeToPayTaxChargePage,
+            AskedPensionSchemeToPayTaxChargePage(Period._2020),
             true
           )
           .success
           .value
-        val result = AskedPensionSchemeToPayTaxChargePage.navigate(CheckMode, ua).url
+        val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/change-when-did-you-ask-pension-scheme-to-pay")
+        checkNavigation(result, "/change-when-did-you-ask-pension-scheme-to-pay/2020")
       }
 
       "to when will you ask pension scheme to charge page in check mode when no selected" in {
         val ua     = emptyUserAnswers
           .set(
-            AskedPensionSchemeToPayTaxChargePage,
+            AskedPensionSchemeToPayTaxChargePage(Period._2020),
             false
           )
           .success
           .value
-        val result = AskedPensionSchemeToPayTaxChargePage.navigate(CheckMode, ua).url
+        val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/change-when-will-you-ask-pension-scheme-to-pay")
+        checkNavigation(result, "/change-when-will-you-ask-pension-scheme-to-pay/2020")
       }
 
       "to JourneyRecovery when not selected" in {
         val ua     = emptyUserAnswers
-        val result = AskedPensionSchemeToPayTaxChargePage.navigate(CheckMode, ua).url
+        val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

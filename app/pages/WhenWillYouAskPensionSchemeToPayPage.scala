@@ -16,24 +16,31 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers, WhenWillYouAskPensionSchemeToPay}
+import models.submission.Submission
+import models.{NormalMode, Period, UserAnswers, WhenWillYouAskPensionSchemeToPay}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import services.PeriodService
 
-case object WhenWillYouAskPensionSchemeToPayPage extends QuestionPage[WhenWillYouAskPensionSchemeToPay] {
+case class WhenWillYouAskPensionSchemeToPayPage(period: Period) extends QuestionPage[WhenWillYouAskPensionSchemeToPay] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "whenWillYouAskPensionSchemeToPay"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(WhenWillYouAskPensionSchemeToPayPage) match {
-      case Some(_) => controllers.routes.AlternativeNameController.onPageLoad(NormalMode)
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(WhenWillYouAskPensionSchemeToPayPage(period)) match {
+      case Some(_) =>
+        val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
+        nextDebitPeriod match {
+          case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(NormalMode, period)
+          case None         => controllers.routes.AlternativeNameController.onPageLoad(NormalMode)
+        }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(WhenWillYouAskPensionSchemeToPayPage) match {
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(WhenWillYouAskPensionSchemeToPayPage(period)) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

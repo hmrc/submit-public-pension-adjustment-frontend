@@ -20,7 +20,10 @@ import java.time.{LocalDate, ZoneOffset}
 
 import base.SpecBase
 import forms.WhenDidYouAskPensionSchemeToPayFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
+import models.calculation.inputs.CalculationInputs
+import models.calculation.response.{CalculationResponse, TotalAmounts}
+import models.submission.Submission
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -29,7 +32,7 @@ import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import repositories.{SessionRepository, SubmissionRepository}
 import views.html.WhenDidYouAskPensionSchemeToPayView
 
 import scala.concurrent.Future
@@ -45,7 +48,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
   lazy val whenDidYouAskPensionSchemeToPayRoute =
-    routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode).url
+    routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode, Period._2020).url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
@@ -74,13 +77,17 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
         val view = application.injector.instanceOf[WhenDidYouAskPensionSchemeToPayView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2020)(
+          getRequest,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhenDidYouAskPensionSchemeToPayPage, validAnswer).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(WhenDidYouAskPensionSchemeToPayPage(Period._2020), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
@@ -90,7 +97,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2020)(
           getRequest,
           messages(application)
         ).toString
@@ -99,13 +106,27 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockSubmissionRepository = mock[SubmissionRepository]
+      val mockCalculationInputs    = mock[CalculationInputs]
+      val mockSessionRepository    = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
+      val calculationResponse    = CalculationResponse(
+        models.calculation.response.Resubmission(false, None),
+        TotalAmounts(0, 1, 0),
+        List.empty,
+        List.empty
+      )
+      val submission: Submission =
+        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
-          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[SubmissionRepository].toInstance(mockSubmissionRepository)
+          )
           .build()
 
       running(application) {
@@ -132,7 +153,10 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

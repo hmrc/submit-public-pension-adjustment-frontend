@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.WhoWillPayPage
@@ -35,18 +35,18 @@ class WhoWillPaySummarySpec extends AnyFreeSpec with Matchers {
     "when You is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          WhoWillPayPage,
+          WhoWillPayPage(Period._2020),
           models.WhoWillPay.You
         )
         .get
-      WhoWillPaySummary.row(userAnswers) shouldBe Some(
+      WhoWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "whoWillPay.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoWillPay.you")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.WhoWillPayController.onPageLoad(CheckMode).url
+              routes.WhoWillPayController.onPageLoad(CheckMode, Period._2020).url
             )
               .withVisuallyHiddenText("whoWillPay.change.hidden")
           )
@@ -57,18 +57,18 @@ class WhoWillPaySummarySpec extends AnyFreeSpec with Matchers {
     "when Scheme is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          WhoWillPayPage,
+          WhoWillPayPage(Period._2020),
           models.WhoWillPay.PensionScheme
         )
         .get
-      WhoWillPaySummary.row(userAnswers) shouldBe Some(
+      WhoWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "whoWillPay.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoWillPay.pensionScheme")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.WhoWillPayController.onPageLoad(CheckMode).url
+              routes.WhoWillPayController.onPageLoad(CheckMode, Period._2020).url
             )
               .withVisuallyHiddenText("whoWillPay.change.hidden")
           )
@@ -78,7 +78,7 @@ class WhoWillPaySummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhoWillPaySummary.row(userAnswers) shouldBe None
+      WhoWillPaySummary.row(userAnswers, Period._2020) shouldBe None
     }
   }
 

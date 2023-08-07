@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.WhenWillYouAskPensionSchemeToPayPage
@@ -36,18 +36,18 @@ class WhenWillYouAskPensionSchemeToPaySummarySpec extends AnyFreeSpec with Match
 
       val userAnswers = UserAnswers("id")
         .set(
-          WhenWillYouAskPensionSchemeToPayPage,
+          WhenWillYouAskPensionSchemeToPayPage(Period._2020),
           models.WhenWillYouAskPensionSchemeToPay.OctToDec23
         )
         .get
-      WhenWillYouAskPensionSchemeToPaySummary.row(userAnswers) shouldBe Some(
+      WhenWillYouAskPensionSchemeToPaySummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "whenWillYouAskPensionSchemeToPay.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whenWillYouAskPensionSchemeToPay.octToDec23")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(CheckMode).url
+              routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(CheckMode, Period._2020).url
             )
               .withVisuallyHiddenText("whenWillYouAskPensionSchemeToPay.change.hidden")
           )
@@ -57,7 +57,7 @@ class WhenWillYouAskPensionSchemeToPaySummarySpec extends AnyFreeSpec with Match
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhenWillYouAskPensionSchemeToPaySummary.row(userAnswers) shouldBe None
+      WhenWillYouAskPensionSchemeToPaySummary.row(userAnswers, Period._2020) shouldBe None
     }
 
   }
