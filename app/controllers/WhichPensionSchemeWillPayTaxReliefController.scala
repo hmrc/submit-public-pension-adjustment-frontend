@@ -18,12 +18,14 @@ package controllers
 
 import controllers.actions._
 import forms.WhichPensionSchemeWillPayTaxReliefFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import pages.WhichPensionSchemeWillPayTaxReliefPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
+import services.SchemeService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.WhichPensionSchemeWillPayTaxReliefView
 
@@ -52,7 +54,7 @@ class WhichPensionSchemeWillPayTaxReliefController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, SchemeService.allSchemeDetailsForTaxRelief(request.submission.calculationInputs)))
     }
 
   def onSubmit(mode: Mode): Action[AnyContent] =
@@ -60,7 +62,7 @@ class WhichPensionSchemeWillPayTaxReliefController @Inject() (
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, SchemeService.allSchemeDetailsForTaxRelief(request.submission.calculationInputs)))),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhichPensionSchemeWillPayTaxReliefPage, value))
