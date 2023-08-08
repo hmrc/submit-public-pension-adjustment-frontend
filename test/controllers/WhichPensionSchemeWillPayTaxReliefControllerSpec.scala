@@ -18,6 +18,9 @@ package controllers
 
 import base.SpecBase
 import forms.WhichPensionSchemeWillPayTaxReliefFormProvider
+import models.calculation.inputs.CalculationInputs
+import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
+import models.submission.Submission
 import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -91,6 +94,19 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val period: Period = Period._2021
+
+      val mockCalculationInputs = mock[CalculationInputs]
+
+      val calculationResponse    = CalculationResponse(
+        models.calculation.response.Resubmission(false, None),
+        TotalAmounts(0, 1, 0),
+        List.empty,
+        List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
+      )
+      val submission: Submission =
+        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))

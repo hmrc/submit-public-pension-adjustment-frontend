@@ -66,7 +66,9 @@ class ClaimingHigherOrAdditionalTaxRateReliefController @Inject() (
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(ClaimingHigherOrAdditionalTaxRateReliefPage, value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(mode, updatedAnswers))
+            } yield Redirect(
+              ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(mode, updatedAnswers, request.submission)
+            )
         )
     }
 }

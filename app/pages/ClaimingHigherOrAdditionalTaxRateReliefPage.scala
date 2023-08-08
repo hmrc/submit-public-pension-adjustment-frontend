@@ -16,9 +16,12 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers}
+import models.submission.Submission
+import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPage[Boolean] {
 
@@ -26,17 +29,34 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPage[Boo
 
   override def toString: String = "claimingHigherOrAdditionalTaxRateRelief"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
       case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(NormalMode)
-      case Some(false) => controllers.routes.DeclarationsController.onPageLoad
+      case Some(false) => isMemberCredit(submission, NormalMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
-      case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad
-      case Some(false) => controllers.routes.DeclarationsController.onPageLoad
+      case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(CheckMode)
+      case Some(false) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  private def isMemberCredit(submission: Submission, mode: Mode): Call = {
+    val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
+    if (memberCredit > 0) {
+      controllers.routes.BankDetailsController.onPageLoad(mode)
+    } else {
+      controllers.routes.DeclarationsController.onPageLoad
+    }
+  }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case true  => super.cleanup(value, userAnswers)
+        case false => userAnswers.remove(HowMuchTaxReliefPage)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

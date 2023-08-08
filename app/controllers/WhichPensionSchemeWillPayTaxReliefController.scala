@@ -65,7 +65,7 @@ class WhichPensionSchemeWillPayTaxReliefController @Inject() (
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhichPensionSchemeWillPayTaxReliefPage, value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(WhichPensionSchemeWillPayTaxReliefPage.navigate(mode, updatedAnswers))
+            } yield Redirect(WhichPensionSchemeWillPayTaxReliefPage.navigate(mode, updatedAnswers, request.submission))
         )
     }
 }
