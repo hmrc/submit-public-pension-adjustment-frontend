@@ -35,7 +35,9 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whenWillYouAskPensionSchemeToPay.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("askedPensionSchemeToPayTaxCharge.heading"),
+                    caption = HmrcSectionCaption(messages("chargeDetails.caption." + period))),
                 items  = WhenWillYouAskPensionSchemeToPay.options
             ).withHint(HintViewModel(messages("whenWillYouAskPensionSchemeToPay.hint")))
         )

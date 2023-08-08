@@ -35,7 +35,9 @@
         @govukDateInput(
             DateViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whenDidYouAskPensionSchemeToPay.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("whenDidYouAskPensionSchemeToPay.heading"),
+                    caption = HmrcSectionCaption(messages("chargeDetails.caption." + period)))
             )
             .withHint(HintViewModel(messages("whenDidYouAskPensionSchemeToPay.hint")))
         )

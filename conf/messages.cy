@@ -96,6 +96,11 @@ submissionInfo.list.behalf.message1 = cy: National Insurance number
 submissionInfo.list.behalf.message2 = cy: teacher reference number
 submissionInfo.list.behalf.message3 = cy: unique tax reference number
 
+chargeDetails.caption.2020 = cy: Details between 6 April 2019 to 5 April 2020
+chargeDetails.caption.2021 = cy: Details between 6 April 2020 to 5 April 2021
+chargeDetails.caption.2022 = cy: Details between 6 April 2021 to 5 April 2022
+chargeDetails.caption.2023 = cy: Details between 6 April 2022 to 5 April 2023
+
 whoWillPay.title = cy: Who is going to pay the new tax charge?
 whoWillPay.heading = cy: Who is going to pay the new tax charge?
 whoWillPay.you = cy: You

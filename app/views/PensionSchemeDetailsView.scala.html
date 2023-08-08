@@ -35,6 +35,8 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <p class="govuk-caption-xl">@messages("chargeDetails.caption." + period)</p>
+
         <h1 class="govuk-heading-xl">@messages("pensionSchemeDetails.heading")</h1>
 
         @govukInput(
