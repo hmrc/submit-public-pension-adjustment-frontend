@@ -56,13 +56,17 @@ class WhichPensionSchemeWillPayController @Inject() (
       Ok(view(preparedForm, mode, period, SchemeService.allSchemeDetails(request.submission.calculationInputs)))
     }
 
-
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, SchemeService.allSchemeDetails(request.submission.calculationInputs)))),
+          formWithErrors =>
+            Future.successful(
+              BadRequest(
+                view(formWithErrors, mode, period, SchemeService.allSchemeDetails(request.submission.calculationInputs))
+              )
+            ),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhichPensionSchemeWillPayPage(period), value))

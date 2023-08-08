@@ -24,7 +24,7 @@ import models.WhichPensionSchemeWillPay
 
 class WhichPensionSchemeWillPayFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[WhichPensionSchemeWillPay] =
+  def apply(): Form[String] =
     Form(
       "value" -> text("whichPensionSchemeWillPay.error.required")
     )

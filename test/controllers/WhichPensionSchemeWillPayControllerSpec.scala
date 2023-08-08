@@ -58,14 +58,17 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
         val view = application.injector.instanceOf[WhichPensionSchemeWillPayView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2020)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2020, WhichPensionSchemeWillPay(Seq()))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(WhichPensionSchemeWillPayPage(Period._2020), WhichPensionSchemeWillPay.values.head)
+        .set(WhichPensionSchemeWillPayPage(Period._2020), "Scheme1_PSTR")
         .success
         .value
 
@@ -80,9 +83,10 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(WhichPensionSchemeWillPay.values.head),
+          form.fill("Scheme1_PSTR"),
           NormalMode,
-          Period._2020
+          Period._2020,
+          WhichPensionSchemeWillPay(Seq())
         )(
           request,
           messages(application)
@@ -104,7 +108,7 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
       running(application) {
         val request =
           FakeRequest(POST, whichPensionSchemeWillPayRoute)
-            .withFormUrlEncodedBody(("value", WhichPensionSchemeWillPay.values.head.toString))
+            .withFormUrlEncodedBody(("value", "Scheme1_PSTR"))
 
         val result = route(application, request).value
 
@@ -119,16 +123,16 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
       running(application) {
         val request =
           FakeRequest(POST, whichPensionSchemeWillPayRoute)
-            .withFormUrlEncodedBody(("value", "invalid value"))
+            .withFormUrlEncodedBody(("value", ""))
 
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map("value" -> ""))
 
         val view = application.injector.instanceOf[WhichPensionSchemeWillPayView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020, WhichPensionSchemeWillPay(Seq()))(
           request,
           messages(application)
         ).toString
@@ -156,7 +160,7 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
       running(application) {
         val request =
           FakeRequest(POST, whichPensionSchemeWillPayRoute)
-            .withFormUrlEncodedBody(("value", WhichPensionSchemeWillPay.values.head.toString))
+            .withFormUrlEncodedBody(("value", "Scheme1_PSTR"))
 
         val result = route(application, request).value
 

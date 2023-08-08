@@ -20,16 +20,16 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
-case class WhichPensionSchemeWillPay(pensionSchemeDetails:List[(String, String)]) {
+case class WhichPensionSchemeWillPay(values: Seq[String]) {
 
   implicit val format: OFormat[WhichPensionSchemeWillPay] = Json.format[WhichPensionSchemeWillPay]
 
   def options(): Seq[RadioItem] =
-    pensionSchemeDetails.map { case (name, pstr) =>
+    values.zipWithIndex.map { case (value, index) =>
       RadioItem(
-        content = Text(s"$name/$pstr"),
-        value = Some(s"$pstr"),
-        id = Some(s"value_$pstr")
+        content = Text(s"${value.toString}"),
+        value = Some(value.toString),
+        id = Some(s"value_$index")
       )
     }
 

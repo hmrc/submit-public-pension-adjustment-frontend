@@ -36,13 +36,13 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           WhichPensionSchemeWillPayPage(Period._2020),
-          models.WhichPensionSchemeWillPay.PensionSchemeA
+          "Scheme1_PSTR"
         )
         .get
       WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("whichPensionSchemeWillPay.pensionSchemeA")),
+          value = ValueViewModel(HtmlContent("whichPensionSchemeWillPay.Scheme1_PSTR")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -58,13 +58,13 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           WhichPensionSchemeWillPayPage(Period._2020),
-          models.WhichPensionSchemeWillPay.PrivatePensionScheme
+          "PrivatePensionScheme"
         )
         .get
       WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("whichPensionSchemeWillPay.privatePensionScheme")),
+          value = ValueViewModel(HtmlContent("whichPensionSchemeWillPay.PrivatePensionScheme")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

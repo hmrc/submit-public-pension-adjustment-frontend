@@ -19,6 +19,7 @@ package services
 import models.{PSTR, PensionSchemeDetails, Period, UserAnswers, WhichPensionSchemeWillPay}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.inputs.TaxYear2016To2023
+import models.calculation.response.TaxYearScheme
 
 object SchemeService {
 
@@ -65,15 +66,15 @@ object SchemeService {
 //  private def allSchemeIndices: Seq[SchemeIndex] = 0.to(4).map(i => SchemeIndex(i))
 
   def allSchemeDetails(calculationInputs: CalculationInputs): WhichPensionSchemeWillPay = {
-    val pensionSchemeDetails: List[(String, String)] = calculationInputs.annualAllowance
+    val pensionSchemeDetails: Seq[String] = calculationInputs.annualAllowance
       .map {
         _.taxYears flatMap {
-          case TaxYear2016To2023.NormalTaxYear(_, taxYearSchemes, _, _, _, _) =>
-            List(taxYearSchemes.map(ps => (ps.name, ps.pensionSchemeTaxReference)))
+          case TaxYear2016To2023.NormalTaxYear(_, taxYearSchemes, _, _, _, _)                           =>
+            List(taxYearSchemes.map(ps => nameAndReference(ps)))
           case TaxYear2016To2023.InitialFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _, _, _) =>
-            List(taxYearSchemes.map(ps => (ps.name, ps.pensionSchemeTaxReference)))
-          case TaxYear2016To2023.PostFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _) =>
-            List(taxYearSchemes.map(ps => (ps.name, ps.pensionSchemeTaxReference)))
+            List(taxYearSchemes.map(ps => nameAndReference(ps)))
+          case TaxYear2016To2023.PostFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _)          =>
+            List(taxYearSchemes.map(ps => nameAndReference(ps)))
         }
       }
       .getOrElse(Nil)
@@ -83,4 +84,6 @@ object SchemeService {
 
   }
 
+  private def nameAndReference(ps: TaxYearScheme) =
+    s"${ps.name} / ${ps.pensionSchemeTaxReference}"
 }

@@ -17,7 +17,6 @@
 package generators
 
 import models.WhichPensionSchemeWillPay
-import models.WhichPensionSchemeWillPay.{PensionSchemeA, PensionSchemeB, PensionSchemeC}
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Gen._
 import org.scalacheck.{Gen, Shrink}
@@ -122,13 +121,6 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
   def stringsOfLength(length: Int, charGen: Gen[Char] = arbitrary[Char]): Gen[String] = for {
     chars <- listOfN(length, charGen)
   } yield chars.mkString
-
-  def publicPensionScheme: Gen[WhichPensionSchemeWillPay] =
-    Gen.oneOf(
-      PensionSchemeA,
-      PensionSchemeB,
-      PensionSchemeC
-    )
 
   def unsafeInputs: Gen[Char] = Gen.oneOf(
     Gen.const('<'),

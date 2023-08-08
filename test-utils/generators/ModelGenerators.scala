@@ -52,11 +52,6 @@ trait ModelGenerators {
       Gen.oneOf(StatusOfUser.values.toSeq)
     }
 
-  implicit lazy val arbitraryWhichPensionSchemeWillPay: Arbitrary[WhichPensionSchemeWillPay] =
-    Arbitrary {
-      Gen.oneOf(WhichPensionSchemeWillPay.values.toSeq)
-    }
-
   implicit lazy val arbitraryPensionSchemeDetails: Arbitrary[PensionSchemeDetails] =
     Arbitrary {
       for {
