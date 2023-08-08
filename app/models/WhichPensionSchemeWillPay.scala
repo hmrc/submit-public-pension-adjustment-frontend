@@ -16,34 +16,21 @@
 
 package models
 
-import play.api.i18n.Messages
+import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
-sealed trait WhichPensionSchemeWillPay
+case class WhichPensionSchemeWillPay(pensionSchemeDetails:List[(String, String)]) {
 
-object WhichPensionSchemeWillPay extends Enumerable.Implicits {
+  implicit val format: OFormat[WhichPensionSchemeWillPay] = Json.format[WhichPensionSchemeWillPay]
 
-  case object PensionSchemeA extends WithName("pensionSchemeA") with WhichPensionSchemeWillPay
-  case object PensionSchemeB extends WithName("pensionSchemeB") with WhichPensionSchemeWillPay
-  case object PensionSchemeC extends WithName("pensionSchemeC") with WhichPensionSchemeWillPay
-  case object PrivatePensionScheme extends WithName("privatePensionScheme") with WhichPensionSchemeWillPay
+  def options(): Seq[RadioItem] =
+    pensionSchemeDetails.map { case (name, pstr) =>
+      RadioItem(
+        content = Text(s"$name/$pstr"),
+        value = Some(s"$pstr"),
+        id = Some(s"value_$pstr")
+      )
+    }
 
-  val values: Seq[WhichPensionSchemeWillPay] = Seq(
-    PensionSchemeA,
-    PensionSchemeB,
-    PensionSchemeC,
-    PrivatePensionScheme
-  )
-
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
-    RadioItem(
-      content = Text(messages(s"whichPensionSchemeWillPay.${value.toString}")),
-      value = Some(value.toString),
-      id = Some(s"value_$index")
-    )
-  }
-
-  implicit val enumerable: Enumerable[WhichPensionSchemeWillPay] =
-    Enumerable(values.map(v => v.toString -> v): _*)
 }

@@ -26,6 +26,6 @@ class WhichPensionSchemeWillPayFormProvider @Inject() extends Mappings {
 
   def apply(): Form[WhichPensionSchemeWillPay] =
     Form(
-      "value" -> enumerable[WhichPensionSchemeWillPay]("whichPensionSchemeWillPay.error.required")
+      "value" -> text("whichPensionSchemeWillPay.error.required")
     )
 }
