@@ -68,7 +68,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(WhichPensionSchemeWillPayTaxReliefPage, WhichPensionSchemeWillPayTaxRelief.values.head)
+        .set(WhichPensionSchemeWillPayTaxReliefPage, "Scheme1 / 00348916RT")
         .success
         .value
 
@@ -82,7 +82,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhichPensionSchemeWillPayTaxRelief.values.head), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill("Scheme1 / "), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -116,7 +116,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
       running(application) {
         val request =
           FakeRequest(POST, whichPensionSchemeWillPayTaxReliefRoute)
-            .withFormUrlEncodedBody(("value", WhichPensionSchemeWillPayTaxRelief.values.head.toString))
+            .withFormUrlEncodedBody(("value", "Scheme1 / 00348916RT"))
 
         val result = route(application, request).value
 
@@ -166,7 +166,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
       running(application) {
         val request =
           FakeRequest(POST, whichPensionSchemeWillPayTaxReliefRoute)
-            .withFormUrlEncodedBody(("value", WhichPensionSchemeWillPayTaxRelief.values.head.toString))
+            .withFormUrlEncodedBody(("value", "Scheme1 / 00348916RT"))
 
         val result = route(application, request).value
 

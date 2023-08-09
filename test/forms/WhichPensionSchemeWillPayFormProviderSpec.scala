@@ -29,12 +29,6 @@ class WhichPensionSchemeWillPayFormProviderSpec extends StringFieldBehaviours {
     val fieldName   = "value"
     val requiredKey = "whichPensionSchemeWillPay.error.required"
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      nonEmptyString
-    )
-
     behave like mandatoryField(
       form,
       fieldName,

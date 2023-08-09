@@ -46,6 +46,7 @@ object SchemeService {
             List(taxYearSchemes.map(psd => schemeNameAndReference(psd)))
           case TaxYear2016To2023.PostFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _) =>
             List(taxYearSchemes.map(psd => schemeNameAndReference(psd)))
+          case _ => Nil
         }
       }
       .getOrElse(Nil)

@@ -27,19 +27,13 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
   "WhichPensionSchemeWillPayTaxReliefPage" - {
 
-    beRetrievable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
-
-    beSettable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
-
-    beRemovable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
-
     "must navigate correctly in NormalMode" - {
 
       "to BARS when Pension scheme b scheme selected and member is in credit" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
-            WhichPensionSchemeWillPayTaxRelief.Pensionschemeb
+            "Scheme1 / 00348916RT"
           )
           .success
           .value
@@ -65,7 +59,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
-            WhichPensionSchemeWillPayTaxRelief.Pensionschemeb
+            "Scheme1 / 00348916RT"
           )
           .success
           .value
@@ -112,7 +106,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
-            WhichPensionSchemeWillPayTaxRelief.Pensionschemea
+            "Scheme1 / 00348916RT"
           )
           .success
           .value

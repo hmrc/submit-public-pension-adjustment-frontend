@@ -34,28 +34,19 @@ class WhichPensionSchemeWillPayTaxReliefSpec
 
     "must deserialise valid values" in {
 
-      val gen = Gen.oneOf(WhichPensionSchemeWillPayTaxRelief.values.toSeq)
+      val gen = Gen.oneOf(Seq("Scheme1 / 00348916RT"))
 
       forAll(gen) { whichPensionSchemeWillPayTaxRelief =>
         JsString(whichPensionSchemeWillPayTaxRelief.toString)
-          .validate[WhichPensionSchemeWillPayTaxRelief]
+          .validate[String]
           .asOpt
           .value mustEqual whichPensionSchemeWillPayTaxRelief
       }
     }
 
-    "must fail to deserialise invalid values" in {
-
-      val gen = arbitrary[String] suchThat (!WhichPensionSchemeWillPayTaxRelief.values.map(_.toString).contains(_))
-
-      forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[WhichPensionSchemeWillPayTaxRelief] mustEqual JsError("error.invalid")
-      }
-    }
-
     "must serialise" in {
 
-      val gen = Gen.oneOf(WhichPensionSchemeWillPayTaxRelief.values.toSeq)
+      val gen = Gen.oneOf(Seq("Scheme1 / 00348916RT"))
 
       forAll(gen) { whichPensionSchemeWillPayTaxRelief =>
         Json.toJson(whichPensionSchemeWillPayTaxRelief) mustEqual JsString(whichPensionSchemeWillPayTaxRelief.toString)

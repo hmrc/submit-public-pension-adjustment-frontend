@@ -81,7 +81,7 @@ class FinalSubmissionBuilderSpec extends AnyFreeSpec with Matchers with Logging 
       .get
       .set(HowMuchTaxReliefPage, BigInt(123))
       .get
-      .set(WhichPensionSchemeWillPayTaxReliefPage, WhichPensionSchemeWillPayTaxRelief.Pensionschemea)
+      .set(WhichPensionSchemeWillPayTaxReliefPage, "Scheme1 / 00348916RT")
       .get
 
   def readRetrieveSubmissionResponse(calculationResponseFile: String): RetrieveSubmissionResponse = {
