@@ -32,7 +32,7 @@ object WhichPensionSchemeWillPayTaxReliefSummary {
     answers.get(WhichPensionSchemeWillPayTaxReliefPage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
-          HtmlFormat.escape(messages(s"whichPensionSchemeWillPayTaxRelief.$answer"))
+          HtmlFormat.escape(messages(s"$answer"))
         )
       )
 

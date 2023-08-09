@@ -32,7 +32,7 @@ object WhichPensionSchemeWillPaySummary {
     answers.get(WhichPensionSchemeWillPayPage(period)).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
-          HtmlFormat.escape(messages(s"whichPensionSchemeWillPay.$answer"))
+          HtmlFormat.escape(messages(s"$answer"))
         )
       )
 

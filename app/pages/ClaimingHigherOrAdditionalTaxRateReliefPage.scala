@@ -57,6 +57,7 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPage[Boo
       .map {
         case true  => super.cleanup(value, userAnswers)
         case false => userAnswers.remove(HowMuchTaxReliefPage)
+          .flatMap(_.remove(WhichPensionSchemeWillPayTaxReliefPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
