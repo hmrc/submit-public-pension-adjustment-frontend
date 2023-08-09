@@ -65,7 +65,7 @@ class HowMuchTaxReliefController @Inject() (
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(HowMuchTaxReliefPage, value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(HowMuchTaxReliefPage.navigate(mode, updatedAnswers))
+            } yield Redirect(HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission))
         )
     }
 }

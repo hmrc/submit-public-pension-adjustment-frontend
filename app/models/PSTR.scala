@@ -26,7 +26,7 @@ object PSTR {
 
   implicit lazy val formats: Format[PSTR] = Json.format
 
-  val New: String = "New"
+  val New: String = "Private pension scheme"
 
   private val pattern: Regex = """(\d{8})[A-Z]{2}""".r.anchored
 

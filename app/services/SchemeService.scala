@@ -33,6 +33,9 @@ object SchemeService {
     WhichPensionSchemeWillPayTaxRelief(pensionSchemeDetails)
   }
 
+  def allSchemeDetailsForTaxReliefLength(calculationInputs: CalculationInputs): Int =
+    getAllPensionSchemeDetails(calculationInputs).length
+
   private def getAllPensionSchemeDetails(calculationInputs: CalculationInputs) = {
     calculationInputs.annualAllowance
       .map {

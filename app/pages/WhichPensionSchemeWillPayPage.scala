@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{NormalMode, Period, UserAnswers, WhichPensionSchemeWillPay}
+import models.{NormalMode, PSTR, Period, UserAnswers, WhichPensionSchemeWillPay}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -29,7 +29,7 @@ case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[St
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     val selectedScheme: Option[String] = answers.get(WhichPensionSchemeWillPayPage(period))
     selectedScheme match {
-      case Some("PrivatePensionScheme") =>
+      case Some(PSTR.New) =>
         controllers.routes.PensionSchemeDetailsController.onPageLoad(NormalMode, period)
       case Some(_)                      => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode, period)
       case _                            => controllers.routes.JourneyRecoveryController.onPageLoad(None)
