@@ -53,6 +53,9 @@ case object HowMuchTaxReliefPage extends QuestionPage[BigInt] {
         controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
       }
     } else {
+      if (numberOfSchemes == 1) {
+        answers.set(WhichPensionSchemeWillPayTaxReliefPage, schemeDetails.values.head)
+      }
       controllers.routes.DeclarationsController.onPageLoad
     }
 
