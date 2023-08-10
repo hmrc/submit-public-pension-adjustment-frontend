@@ -16,7 +16,6 @@
 
 package models
 
-import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import org.scalatest.freespec.AnyFreeSpec
@@ -30,10 +29,10 @@ class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with Scala
 
     "must deserialise valid values" in {
 
-      val gen = Gen.oneOf(WhichPensionSchemeWillPay(Seq("Scheme1_PSTR")).values.toSeq)
+      val gen = Gen.oneOf(WhichPensionSchemeWillPay(Seq("Scheme1 / 00348916RT")).values.toSeq)
 
       forAll(gen) { whichPensionSchemeWillPay =>
-        JsString(whichPensionSchemeWillPay.toString)
+        JsString(whichPensionSchemeWillPay)
           .validate[String]
           .asOpt
           .value mustEqual whichPensionSchemeWillPay
@@ -42,10 +41,10 @@ class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with Scala
 
     "must serialise" in {
 
-      val gen = Gen.oneOf(WhichPensionSchemeWillPay(Seq("Scheme1_PSTR")).values.toSeq)
+      val gen = Gen.oneOf(WhichPensionSchemeWillPay(Seq("Scheme1 / 00348916RT")).values.toSeq)
 
       forAll(gen) { whichPensionSchemeWillPay =>
-        Json.toJson(whichPensionSchemeWillPay) mustEqual JsString(whichPensionSchemeWillPay.toString)
+        Json.toJson(whichPensionSchemeWillPay) mustEqual JsString(whichPensionSchemeWillPay)
       }
     }
   }

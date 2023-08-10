@@ -22,6 +22,12 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
 
   "WhichPensionSchemeWillPayPage" - {
 
+    beRetrievable[String](WhichPensionSchemeWillPayPage(Period._2020))
+
+    beSettable[String](WhichPensionSchemeWillPayPage(Period._2020))
+
+    beRemovable[String](WhichPensionSchemeWillPayPage(Period._2020))
+
     "must navigate correctly in NormalMode" - {
 
       "to PensionSchemeDetails when Private pension scheme selected" in {
@@ -41,7 +47,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage(Period._2020),
-            "Scheme1_PSTR"
+            "Scheme1 / 00348916RT"
           )
           .success
           .value
@@ -64,7 +70,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage(Period._2020),
-            "Scheme1_PSTR"
+            "Scheme1 / 00348916RT"
           )
           .success
           .value
