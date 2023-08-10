@@ -18,12 +18,14 @@ package controllers
 
 import controllers.actions._
 import forms.HowMuchTaxReliefFormProvider
+
 import javax.inject.Inject
-import models.Mode
-import pages.HowMuchTaxReliefPage
+import models.{Mode, WhichPensionSchemeWillPayTaxRelief}
+import pages.{HowMuchTaxReliefPage, WhichPensionSchemeWillPayTaxReliefPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
+import services.SchemeService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.HowMuchTaxReliefView
 
@@ -57,15 +59,29 @@ class HowMuchTaxReliefController @Inject() (
 
   def onSubmit(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+      val numberOfSchemes: Int                              = SchemeService.allSchemeDetailsForTaxReliefLength(request.submission.calculationInputs)
+      val schemeDetails: WhichPensionSchemeWillPayTaxRelief =
+        SchemeService.allSchemeDetailsForTaxRelief(request.submission.calculationInputs)
       form
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
-            for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(HowMuchTaxReliefPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(HowMuchTaxReliefPage.navigate(mode, updatedAnswers))
+            if (numberOfSchemes == 1) {
+              for {
+                updatedAnswers <- Future.fromTry(
+                                    request.userAnswers
+                                      .set(HowMuchTaxReliefPage, value)
+                                      .flatMap(_.set(WhichPensionSchemeWillPayTaxReliefPage, schemeDetails.values.head))
+                                  )
+                _              <- sessionRepository.set(updatedAnswers)
+              } yield Redirect(HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission))
+            } else {
+              for {
+                updatedAnswers <- Future.fromTry(request.userAnswers.set(HowMuchTaxReliefPage, value))
+                _              <- sessionRepository.set(updatedAnswers)
+              } yield Redirect(HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission))
+            }
         )
     }
 }

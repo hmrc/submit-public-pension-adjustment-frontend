@@ -16,11 +16,10 @@
 
 package forms
 
-import forms.behaviours.OptionFieldBehaviours
-import models.WhichPensionSchemeWillPay
+import forms.behaviours.StringFieldBehaviours
 import play.api.data.FormError
 
-class WhichPensionSchemeWillPayFormProviderSpec extends OptionFieldBehaviours {
+class WhichPensionSchemeWillPayFormProviderSpec extends StringFieldBehaviours {
 
   val form = new WhichPensionSchemeWillPayFormProvider()()
 
@@ -28,13 +27,6 @@ class WhichPensionSchemeWillPayFormProviderSpec extends OptionFieldBehaviours {
 
     val fieldName   = "value"
     val requiredKey = "whichPensionSchemeWillPay.error.required"
-
-    behave like optionsField[WhichPensionSchemeWillPay](
-      form,
-      fieldName,
-      validValues = WhichPensionSchemeWillPay.values,
-      invalidError = FormError(fieldName, "error.invalid")
-    )
 
     behave like mandatoryField(
       form,

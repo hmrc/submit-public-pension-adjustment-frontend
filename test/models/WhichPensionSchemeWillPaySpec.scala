@@ -22,7 +22,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues
-import play.api.libs.json.{JsError, JsString, Json}
+import play.api.libs.json.{JsString, Json}
 
 class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues {
 
@@ -30,28 +30,19 @@ class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with Scala
 
     "must deserialise valid values" in {
 
-      val gen = Gen.oneOf(WhichPensionSchemeWillPay.values.toSeq)
+      val gen = Gen.oneOf(WhichPensionSchemeWillPay(Seq("Scheme1_PSTR")).values.toSeq)
 
       forAll(gen) { whichPensionSchemeWillPay =>
         JsString(whichPensionSchemeWillPay.toString)
-          .validate[WhichPensionSchemeWillPay]
+          .validate[String]
           .asOpt
           .value mustEqual whichPensionSchemeWillPay
       }
     }
 
-    "must fail to deserialise invalid values" in {
-
-      val gen = arbitrary[String] suchThat (!WhichPensionSchemeWillPay.values.map(_.toString).contains(_))
-
-      forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[WhichPensionSchemeWillPay] mustEqual JsError("error.invalid")
-      }
-    }
-
     "must serialise" in {
 
-      val gen = Gen.oneOf(WhichPensionSchemeWillPay.values.toSeq)
+      val gen = Gen.oneOf(WhichPensionSchemeWillPay(Seq("Scheme1_PSTR")).values.toSeq)
 
       forAll(gen) { whichPensionSchemeWillPay =>
         Json.toJson(whichPensionSchemeWillPay) mustEqual JsString(whichPensionSchemeWillPay.toString)

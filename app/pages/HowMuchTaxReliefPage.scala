@@ -16,9 +16,11 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers}
+import models.submission.Submission
+import models.{Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import services.SchemeService
 
 case object HowMuchTaxReliefPage extends QuestionPage[BigInt] {
 
@@ -26,15 +28,40 @@ case object HowMuchTaxReliefPage extends QuestionPage[BigInt] {
 
   override def toString: String = "howMuchTaxRelief"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(HowMuchTaxReliefPage) match {
-      case Some(_) => controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(NormalMode)
+      case Some(_) => isSchemePageValid(answers, submission, NormalMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(HowMuchTaxReliefPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  private def isSchemePageValid(answers: UserAnswers, submission: Submission, mode: Mode): Call = {
+    val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
+    val memberCredit         = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
+
+    if (memberCredit > 0) {
+      whenMemberIsInCredit(mode, numberOfSchemes)
+    } else {
+      whenMemberIsNotInCredit(mode, numberOfSchemes)
+    }
+  }
+
+  private def whenMemberIsNotInCredit(mode: Mode, numberOfSchemes: Int) =
+    if (numberOfSchemes == 1) {
+      controllers.routes.DeclarationsController.onPageLoad
+    } else {
+      controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
+    }
+
+  private def whenMemberIsInCredit(mode: Mode, numberOfSchemes: Int) =
+    if (numberOfSchemes == 1) {
+      controllers.routes.BankDetailsController.onPageLoad(mode)
+    } else {
+      controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
     }
 }

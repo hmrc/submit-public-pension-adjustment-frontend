@@ -134,15 +134,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWhichPensionSchemeWillPayTaxReliefUserAnswersEntry
-    : Arbitrary[(WhichPensionSchemeWillPayTaxReliefPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhichPensionSchemeWillPayTaxReliefPage.type]
-        value <- arbitrary[WhichPensionSchemeWillPayTaxRelief].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
   implicit lazy val arbitraryHowMuchTaxReliefUserAnswersEntry: Arbitrary[(HowMuchTaxReliefPage.type, JsValue)] =
     Arbitrary {
       for {
@@ -199,15 +190,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       for {
         page  <- arbitrary[AreYouAUKResidentPage.type]
         value <- arbitrary[Boolean].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryWhichPensionSchemeWillPayUserAnswersEntry
-    : Arbitrary[(WhichPensionSchemeWillPayPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhichPensionSchemeWillPayPage.type]
-        value <- arbitrary[WhichPensionSchemeWillPay].map(Json.toJson(_))
       } yield (page, value)
     }
 

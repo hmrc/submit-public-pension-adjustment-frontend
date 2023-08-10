@@ -20,7 +20,6 @@ import java.time.LocalDate
 import models.{NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.routes
 
 case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
 

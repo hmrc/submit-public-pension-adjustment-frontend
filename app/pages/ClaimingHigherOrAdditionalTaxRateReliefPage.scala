@@ -44,7 +44,7 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPage[Boo
     }
 
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
-    val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
+    val memberCredit: Int = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
     if (memberCredit > 0) {
       controllers.routes.BankDetailsController.onPageLoad(mode)
     } else {
@@ -56,7 +56,10 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPage[Boo
     value
       .map {
         case true  => super.cleanup(value, userAnswers)
-        case false => userAnswers.remove(HowMuchTaxReliefPage)
+        case false =>
+          userAnswers
+            .remove(HowMuchTaxReliefPage)
+            .flatMap(_.remove(WhichPensionSchemeWillPayTaxReliefPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -16,22 +16,24 @@
 
 package pages
 
-import models.{Mode, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
+import models.{Mode, NormalMode, UserAnswers}
 import models.submission.Submission
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[WhichPensionSchemeWillPayTaxRelief] {
+case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "whichPensionSchemeWillPayTaxRelief"
 
-  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
-    answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call = {
+    val selectedScheme: Option[String] = answers.get(WhichPensionSchemeWillPayTaxReliefPage)
+    selectedScheme match {
       case Some(_) => isMemberCredit(submission, NormalMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {

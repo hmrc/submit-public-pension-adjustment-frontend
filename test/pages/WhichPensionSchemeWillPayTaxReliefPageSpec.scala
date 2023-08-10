@@ -20,18 +20,12 @@ import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.calculation.response.Period
-import models.{CheckMode, NormalMode, WhichPensionSchemeWillPayTaxRelief}
+import models.{CheckMode, NormalMode}
 import org.mockito.MockitoSugar.mock
 
 class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
   "WhichPensionSchemeWillPayTaxReliefPage" - {
-
-    beRetrievable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
-
-    beSettable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
-
-    beRemovable[WhichPensionSchemeWillPayTaxRelief](WhichPensionSchemeWillPayTaxReliefPage)
 
     "must navigate correctly in NormalMode" - {
 
@@ -39,7 +33,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
-            WhichPensionSchemeWillPayTaxRelief.Pensionschemeb
+            "Scheme1 / 00348916RT"
           )
           .success
           .value
@@ -65,7 +59,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
-            WhichPensionSchemeWillPayTaxRelief.Pensionschemeb
+            "Scheme1 / 00348916RT"
           )
           .success
           .value
@@ -112,7 +106,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
-            WhichPensionSchemeWillPayTaxRelief.Pensionschemea
+            "Scheme1 / 00348916RT"
           )
           .success
           .value

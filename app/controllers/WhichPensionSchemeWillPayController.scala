@@ -24,6 +24,7 @@ import pages.WhichPensionSchemeWillPayPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
+import services.SchemeService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.WhichPensionSchemeWillPayView
 
@@ -52,7 +53,7 @@ class WhichPensionSchemeWillPayController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period))
+      Ok(view(preparedForm, mode, period, SchemeService.allSchemeDetails(request.submission.calculationInputs)))
     }
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
@@ -60,7 +61,12 @@ class WhichPensionSchemeWillPayController @Inject() (
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
+          formWithErrors =>
+            Future.successful(
+              BadRequest(
+                view(formWithErrors, mode, period, SchemeService.allSchemeDetails(request.submission.calculationInputs))
+              )
+            ),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhichPensionSchemeWillPayPage(period), value))

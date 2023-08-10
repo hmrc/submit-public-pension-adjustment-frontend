@@ -20,12 +20,11 @@ import javax.inject.Inject
 
 import forms.mappings.Mappings
 import play.api.data.Form
-import models.WhichPensionSchemeWillPay
 
 class WhichPensionSchemeWillPayFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[WhichPensionSchemeWillPay] =
+  def apply(): Form[String] =
     Form(
-      "value" -> enumerable[WhichPensionSchemeWillPay]("whichPensionSchemeWillPay.error.required")
+      "value" -> text("whichPensionSchemeWillPay.error.required")
     )
 }

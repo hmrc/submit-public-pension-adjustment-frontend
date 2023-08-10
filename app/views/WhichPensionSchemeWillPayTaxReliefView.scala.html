@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, whichPensionSchemeWillPayTaxRelief: WhichPensionSchemeWillPayTaxRelief)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("whichPensionSchemeWillPayTaxRelief.title"))) {
 
@@ -36,7 +36,7 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = LegendViewModel(messages("whichPensionSchemeWillPayTaxRelief.heading")).asPageHeading(),
-                items  = WhichPensionSchemeWillPayTaxRelief.options
+                items  = whichPensionSchemeWillPayTaxRelief.options
             ).withHint(HintViewModel(messages("whichPensionSchemeWillPayTaxRelief.hint")))
         )
 

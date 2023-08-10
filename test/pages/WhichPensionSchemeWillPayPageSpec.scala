@@ -16,17 +16,11 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, Period, WhichPensionSchemeWillPay}
+import models.{CheckMode, NormalMode, Period}
 
 class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
 
   "WhichPensionSchemeWillPayPage" - {
-
-    beRetrievable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage(Period._2020))
-
-    beSettable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage(Period._2020))
-
-    beRemovable[WhichPensionSchemeWillPay](WhichPensionSchemeWillPayPage(Period._2020))
 
     "must navigate correctly in NormalMode" - {
 
@@ -34,7 +28,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage(Period._2020),
-            WhichPensionSchemeWillPay.PrivatePensionScheme
+            "Private pension scheme"
           )
           .success
           .value
@@ -47,7 +41,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage(Period._2020),
-            publicPensionScheme.sample.value
+            "Scheme1_PSTR"
           )
           .success
           .value
@@ -70,7 +64,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage(Period._2020),
-            WhichPensionSchemeWillPay.PensionSchemeA
+            "Scheme1_PSTR"
           )
           .success
           .value
