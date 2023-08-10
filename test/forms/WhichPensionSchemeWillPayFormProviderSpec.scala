@@ -16,8 +16,7 @@
 
 package forms
 
-import forms.behaviours.{OptionFieldBehaviours, StringFieldBehaviours}
-import models.WhichPensionSchemeWillPay
+import forms.behaviours.StringFieldBehaviours
 import play.api.data.FormError
 
 class WhichPensionSchemeWillPayFormProviderSpec extends StringFieldBehaviours {

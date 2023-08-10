@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{NormalMode, PSTR, Period, UserAnswers, WhichPensionSchemeWillPay}
+import models.{NormalMode, PSTR, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 

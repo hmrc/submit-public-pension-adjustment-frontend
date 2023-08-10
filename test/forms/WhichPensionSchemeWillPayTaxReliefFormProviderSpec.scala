@@ -16,11 +16,10 @@
 
 package forms
 
-import forms.behaviours.OptionFieldBehaviours
-import models.WhichPensionSchemeWillPayTaxRelief
+import forms.behaviours.StringFieldBehaviours
 import play.api.data.FormError
 
-class WhichPensionSchemeWillPayTaxReliefFormProviderSpec extends OptionFieldBehaviours {
+class WhichPensionSchemeWillPayTaxReliefFormProviderSpec extends StringFieldBehaviours {
 
   val form = new WhichPensionSchemeWillPayTaxReliefFormProvider()()
 

@@ -20,7 +20,7 @@ import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.calculation.response.Period
-import models.{CheckMode, NormalMode, WhichPensionSchemeWillPayTaxRelief}
+import models.{CheckMode, NormalMode}
 import org.mockito.MockitoSugar.mock
 
 class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {

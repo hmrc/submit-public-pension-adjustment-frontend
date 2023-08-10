@@ -65,12 +65,6 @@ trait ModelGenerators {
       Gen.oneOf(WhoWillPay.values.toSeq)
     }
 
-  implicit lazy val arbitraryWhichPensionSchemeWillPayTaxRelief: Arbitrary[String] = {
-    val data = Seq("Scheme1 / 00348916RT", "Scheme1 / 00348916RU")
-    Arbitrary {
-      Gen.oneOf(data)
-    }
-  }
 
   implicit lazy val arbitraryUkAddress: Arbitrary[UkAddress] =
     Arbitrary {

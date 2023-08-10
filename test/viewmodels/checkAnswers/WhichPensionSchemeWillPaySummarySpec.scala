@@ -42,7 +42,7 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
       WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("whichPensionSchemeWillPay.Scheme1_PSTR")),
+          value = ValueViewModel(HtmlContent("Scheme1_PSTR")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -64,7 +64,7 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
       WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
         SummaryListRowViewModel(
           key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("whichPensionSchemeWillPay.PrivatePensionScheme")),
+          value = ValueViewModel(HtmlContent("PrivatePensionScheme")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

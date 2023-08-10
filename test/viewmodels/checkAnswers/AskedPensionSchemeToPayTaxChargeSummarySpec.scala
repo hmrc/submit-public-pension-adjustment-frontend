@@ -23,7 +23,6 @@ import org.scalatest.matchers.should.Matchers
 import pages.AskedPensionSchemeToPayTaxChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 

@@ -17,7 +17,7 @@
 package pages
 
 import models.submission.Submission
-import models.{Mode, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
+import models.{Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.SchemeService

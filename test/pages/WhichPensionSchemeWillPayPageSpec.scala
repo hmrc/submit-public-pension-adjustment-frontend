@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, Period, WhichPensionSchemeWillPay}
+import models.{CheckMode, NormalMode, Period}
 
 class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
 
@@ -28,7 +28,7 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayPage(Period._2020),
-            "PrivatePensionScheme"
+            "Private pension scheme"
           )
           .success
           .value
