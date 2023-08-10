@@ -42,7 +42,7 @@ case object HowMuchTaxReliefPage extends QuestionPage[BigInt] {
 
   private def isSchemePageValid(answers: UserAnswers, submission: Submission, mode: Mode): Call = {
     val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
-    val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
+    val memberCredit         = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
 
     if (memberCredit > 0) {
       whenMemberIsInCredit(mode, numberOfSchemes)
@@ -51,19 +51,17 @@ case object HowMuchTaxReliefPage extends QuestionPage[BigInt] {
     }
   }
 
-  private def whenMemberIsNotInCredit(mode: Mode, numberOfSchemes: Int) = {
+  private def whenMemberIsNotInCredit(mode: Mode, numberOfSchemes: Int) =
     if (numberOfSchemes == 1) {
       controllers.routes.DeclarationsController.onPageLoad
     } else {
       controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
     }
-  }
 
-  private def whenMemberIsInCredit(mode: Mode, numberOfSchemes: Int) = {
+  private def whenMemberIsInCredit(mode: Mode, numberOfSchemes: Int) =
     if (numberOfSchemes == 1) {
       controllers.routes.BankDetailsController.onPageLoad(mode)
     } else {
       controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
     }
-  }
 }

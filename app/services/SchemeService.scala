@@ -25,7 +25,7 @@ object SchemeService {
 
   def allSchemeDetails(calculationInputs: CalculationInputs): WhichPensionSchemeWillPay = {
     val pensionSchemeDetails: Seq[String] = getAllPensionSchemeDetails(calculationInputs)
-    WhichPensionSchemeWillPay(pensionSchemeDetails:+ PSTR.New)
+    WhichPensionSchemeWillPay(pensionSchemeDetails :+ PSTR.New)
   }
 
   def allSchemeDetailsForTaxRelief(calculationInputs: CalculationInputs): WhichPensionSchemeWillPayTaxRelief = {
@@ -36,23 +36,22 @@ object SchemeService {
   def allSchemeDetailsForTaxReliefLength(calculationInputs: CalculationInputs): Int =
     getAllPensionSchemeDetails(calculationInputs).length
 
-  private def getAllPensionSchemeDetails(calculationInputs: CalculationInputs) = {
+  private def getAllPensionSchemeDetails(calculationInputs: CalculationInputs) =
     calculationInputs.annualAllowance
       .map {
         _.taxYears flatMap {
-          case TaxYear2016To2023.NormalTaxYear(_, taxYearSchemes, _, _, _, _) =>
+          case TaxYear2016To2023.NormalTaxYear(_, taxYearSchemes, _, _, _, _)                           =>
             List(taxYearSchemes.map(psd => schemeNameAndReference(psd)))
           case TaxYear2016To2023.InitialFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _, _, _) =>
             List(taxYearSchemes.map(psd => schemeNameAndReference(psd)))
-          case TaxYear2016To2023.PostFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _) =>
+          case TaxYear2016To2023.PostFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _)          =>
             List(taxYearSchemes.map(psd => schemeNameAndReference(psd)))
-          case _ => Nil
+          case _                                                                                        => Nil
         }
       }
       .getOrElse(Nil)
       .flatten
       .distinct
-  }
 
   private def schemeNameAndReference(pensionSchemeDetails: TaxYearScheme) =
     s"${pensionSchemeDetails.name} / ${pensionSchemeDetails.pensionSchemeTaxReference}"

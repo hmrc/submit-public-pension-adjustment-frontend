@@ -31,8 +31,8 @@ case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[St
     selectedScheme match {
       case Some(PSTR.New) =>
         controllers.routes.PensionSchemeDetailsController.onPageLoad(NormalMode, period)
-      case Some(_)                      => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode, period)
-      case _                            => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_)        => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode, period)
+      case _              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 

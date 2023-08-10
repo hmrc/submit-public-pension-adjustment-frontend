@@ -16,7 +16,7 @@
 
 package pages
 
-import models.calculation.inputs.{AnnualAllowance, Period, CalculationInputs}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Period}
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.response.{TaxYearScheme, TotalAmounts}

@@ -58,7 +58,12 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
         val view = application.injector.instanceOf[WhichPensionSchemeWillPayView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2020, WhichPensionSchemeWillPay(Seq("Private pension scheme")))(
+        contentAsString(result) mustEqual view(
+          form,
+          NormalMode,
+          Period._2020,
+          WhichPensionSchemeWillPay(Seq("Private pension scheme"))
+        )(
           request,
           messages(application)
         ).toString

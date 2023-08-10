@@ -31,7 +31,7 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[String] 
     val selectedScheme: Option[String] = answers.get(WhichPensionSchemeWillPayTaxReliefPage)
     selectedScheme match {
       case Some(_) => isMemberCredit(submission, NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 

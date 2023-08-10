@@ -62,7 +62,16 @@ class WhichPensionSchemeWillPayTaxReliefController @Inject() (
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, SchemeService.allSchemeDetailsForTaxRelief(request.submission.calculationInputs)))),
+          formWithErrors =>
+            Future.successful(
+              BadRequest(
+                view(
+                  formWithErrors,
+                  mode,
+                  SchemeService.allSchemeDetailsForTaxRelief(request.submission.calculationInputs)
+                )
+              )
+            ),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhichPensionSchemeWillPayTaxReliefPage, value))

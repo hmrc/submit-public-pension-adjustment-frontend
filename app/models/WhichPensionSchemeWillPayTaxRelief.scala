@@ -26,11 +26,11 @@ case class WhichPensionSchemeWillPayTaxRelief(values: Seq[String]) {
 
   def options(): Seq[RadioItem] =
     values.zipWithIndex.map { case (value, index) =>
-      RadioItem (
-        content = Text (s"${value.toString}"),
-        value = Some (value.toString),
-        id = Some (s"value_$index")
+      RadioItem(
+        content = Text(s"${value.toString}"),
+        value = Some(value.toString),
+        id = Some(s"value_$index")
       )
-  }
+    }
 
 }

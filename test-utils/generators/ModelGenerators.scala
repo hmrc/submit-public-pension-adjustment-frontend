@@ -65,7 +65,6 @@ trait ModelGenerators {
       Gen.oneOf(WhoWillPay.values.toSeq)
     }
 
-
   implicit lazy val arbitraryUkAddress: Arbitrary[UkAddress] =
     Arbitrary {
       for {
