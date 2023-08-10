@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, PSTR, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.LegacyPensionSchemeReferencePage
@@ -36,18 +36,18 @@ class LegacyPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
     "when value is entered, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          LegacyPensionSchemeReferencePage,
+          LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
           "QT123456123456"
         )
         .get
-      LegacyPensionSchemeReferenceSummary.row(userAnswers) shouldBe Some(
+      LegacyPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
         SummaryListRowViewModel(
           key = "legacyPensionSchemeReference.checkYourAnswersLabel",
           value = ValueViewModel(Text("QT123456123456").toString()),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.LegacyPensionSchemeReferenceController.onPageLoad(CheckMode).url
+              routes.LegacyPensionSchemeReferenceController.onPageLoad(CheckMode, PSTR("12345678AB")).url
             )
               .withVisuallyHiddenText("legacyPensionSchemeReference.change.hidden")
           )
@@ -58,18 +58,18 @@ class LegacyPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
         .set(
-          LegacyPensionSchemeReferencePage,
+          LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
           ""
         )
         .get
-      LegacyPensionSchemeReferenceSummary.row(userAnswers) shouldBe Some(
+      LegacyPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
         SummaryListRowViewModel(
           key = "legacyPensionSchemeReference.checkYourAnswersLabel",
           value = ValueViewModel(Text(messages("checkYourAnswers.notAnswered")).toString()),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.LegacyPensionSchemeReferenceController.onPageLoad(CheckMode).url
+              routes.LegacyPensionSchemeReferenceController.onPageLoad(CheckMode, PSTR("12345678AB")).url
             )
               .withVisuallyHiddenText("legacyPensionSchemeReference.change.hidden")
           )

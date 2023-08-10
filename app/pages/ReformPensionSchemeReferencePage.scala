@@ -16,23 +16,44 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers}
+import models.submission.Submission
+import models.{NormalMode, PSTR, PensionSchemeDetails, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-case object ReformPensionSchemeReferencePage extends QuestionPage[String] {
+import services.SchemeService
 
-  override def path: JsPath = JsPath \ toString
+case class ReformPensionSchemeReferencePage(pstr: PSTR, schemeName: String) extends QuestionPage[String] {
+
+  override def path: JsPath = JsPath \ "aa" \ "schemes" \ pstr.value \ toString
 
   override def toString: String = "reformPensionSchemeReference"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(ReformPensionSchemeReferencePage) match {
-      case Some(_) => controllers.routes.ClaimingHigherOrAdditionalTaxRateReliefController.onPageLoad(NormalMode)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call = {
+    val allschemeDetails: Seq[PensionSchemeDetails] =
+      SchemeService.allPensionSchemeDetails(submission.calculationInputs)
+    answers.get(
+      ReformPensionSchemeReferencePage(pstr, SchemeService.schemeName(pstr, submission.calculationInputs))
+    ) match {
+      case Some(_) =>
+        val lastPstr = allschemeDetails.last.pensionSchemeTaxReference
+        if (pstr.value == lastPstr) {
+          controllers.routes.ClaimingHigherOrAdditionalTaxRateReliefController.onPageLoad(NormalMode)
+        } else {
+          val allPstrs = allschemeDetails.map(psd => psd.pensionSchemeTaxReference)
+          val index    = allPstrs.indexOf(pstr.value)
+          val nextPstr = allPstrs(index + 1)
+          controllers.routes.LegacyPensionSchemeReferenceController
+            .onPageLoad(NormalMode, PSTR(nextPstr))
+        }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(ReformPensionSchemeReferencePage) match {
+      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  }
+
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(
+      ReformPensionSchemeReferencePage(pstr, SchemeService.schemeName(pstr, submission.calculationInputs))
+    ) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

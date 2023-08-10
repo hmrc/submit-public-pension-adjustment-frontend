@@ -77,15 +77,15 @@ POST       /uk-address                                              controllers.
 GET        /change-uk-address                                       controllers.UkAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-uk-address                                       controllers.UkAddressController.onSubmit(mode: Mode = CheckMode)
 
-GET        /legacy-pension-scheme-reference                         controllers.LegacyPensionSchemeReferenceController.onPageLoad(mode: Mode = NormalMode)
-POST       /legacy-pension-scheme-reference                         controllers.LegacyPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode)
-GET        /change-legacy-pension-scheme-reference                  controllers.LegacyPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-legacy-pension-scheme-reference                  controllers.LegacyPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode)
+GET        /legacy-pension-scheme-reference/:pstr            controllers.LegacyPensionSchemeReferenceController.onPageLoad(mode: Mode = NormalMode, pstr: PSTR)
+POST       /legacy-pension-scheme-reference/:pstr            controllers.LegacyPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode, pstr: PSTR)
+GET        /change-legacy-pension-scheme-reference/:pstr     controllers.LegacyPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode, pstr: PSTR)
+POST       /change-legacy-pension-scheme-reference/:pstr     controllers.LegacyPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode, pstr: PSTR)
 
-GET        /reform-pension-scheme-reference                         controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = NormalMode)
-POST       /reform-pension-scheme-reference                         controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode)
-GET        /change-reform-pension-scheme-reference                  controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-reform-pension-scheme-reference                  controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode)
+GET        /reform-pension-scheme-reference/:pstr            controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = NormalMode, pstr: PSTR)
+POST       /reform-pension-scheme-reference/:pstr            controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = NormalMode, pstr: PSTR)
+GET        /change-reform-pension-scheme-reference/:pstr     controllers.ReformPensionSchemeReferenceController.onPageLoad(mode: Mode = CheckMode, pstr: PSTR)
+POST       /change-reform-pension-scheme-reference/:pstr     controllers.ReformPensionSchemeReferenceController.onSubmit(mode: Mode = CheckMode, pstr: PSTR)
 
 GET         /claiming-additional-tax-rate-relief                    controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onPageLoad(mode: Mode = NormalMode)
 POST        /claiming-additional-tax-rate-relief                    controllers.ClaimingHigherOrAdditionalTaxRateReliefController.onSubmit(mode: Mode = NormalMode)

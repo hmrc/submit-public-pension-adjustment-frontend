@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, PSTR, UserAnswers}
 import pages.LegacyPensionSchemeReferencePage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -27,14 +27,17 @@ import viewmodels.implicits._
 
 object LegacyPensionSchemeReferenceSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(LegacyPensionSchemeReferencePage).map { answer =>
+  def row(answers: UserAnswers, pstr: PSTR, schemeName: String)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(LegacyPensionSchemeReferencePage(pstr, schemeName)).map { answer =>
       val value = if (answer == "") messages("checkYourAnswers.notAnswered") else answer
       SummaryListRowViewModel(
         key = "legacyPensionSchemeReference.checkYourAnswersLabel",
         value = ValueViewModel(HtmlFormat.escape(value).toString),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.LegacyPensionSchemeReferenceController.onPageLoad(CheckMode).url)
+          ActionItemViewModel(
+            "site.change",
+            routes.LegacyPensionSchemeReferenceController.onPageLoad(CheckMode, pstr).url
+          )
             .withVisuallyHiddenText(messages("legacyPensionSchemeReference.change.hidden"))
         )
       )

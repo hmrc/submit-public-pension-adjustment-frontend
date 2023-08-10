@@ -18,15 +18,16 @@ package controllers
 
 import controllers.actions._
 import forms.ReformPensionSchemeReferenceFormProvider
-import javax.inject.Inject
-import models.Mode
+import models.{Mode, PSTR}
 import pages.ReformPensionSchemeReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
+import services.SchemeService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ReformPensionSchemeReferenceView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ReformPensionSchemeReferenceController @Inject() (
@@ -45,28 +46,49 @@ class ReformPensionSchemeReferenceController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] =
+  def onPageLoad(mode: Mode, pstr: PSTR): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(ReformPensionSchemeReferencePage) match {
+      val preparedForm = request.userAnswers.get(
+        ReformPensionSchemeReferencePage(pstr, SchemeService.schemeName(pstr, request.submission.calculationInputs))
+      ) match {
         case None        => form
         case Some(value) => form.fill(Some(value))
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, pstr, SchemeService.schemeName(pstr, request.submission.calculationInputs)))
     }
 
-  def onSubmit(mode: Mode): Action[AnyContent] =
+  def onSubmit(mode: Mode, pstr: PSTR): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          formWithErrors =>
+            Future.successful(
+              BadRequest(
+                view(formWithErrors, mode, pstr, SchemeService.schemeName(pstr, request.submission.calculationInputs))
+              )
+            ),
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(ReformPensionSchemeReferencePage, value.getOrElse("")))
+                Future
+                  .fromTry(
+                    request.userAnswers.set(
+                      ReformPensionSchemeReferencePage(
+                        pstr,
+                        SchemeService.schemeName(pstr, request.submission.calculationInputs)
+                      ),
+                      value.getOrElse("")
+                    )
+                  )
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(ReformPensionSchemeReferencePage.navigate(mode, updatedAnswers))
+            } yield Redirect(
+              ReformPensionSchemeReferencePage(
+                pstr,
+                SchemeService.schemeName(pstr, request.submission.calculationInputs)
+              ).navigate(mode, updatedAnswers, request.submission)
+            )
         )
     }
 }

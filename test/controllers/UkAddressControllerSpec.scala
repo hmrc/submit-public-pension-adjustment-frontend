@@ -18,6 +18,8 @@ package controllers
 
 import base.SpecBase
 import forms.UkAddressFormProvider
+import models.calculation.response.TaxYearScheme
+import models.submission.Submission
 import models.{NormalMode, UkAddress, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -99,6 +101,9 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val submission: Submission =
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))

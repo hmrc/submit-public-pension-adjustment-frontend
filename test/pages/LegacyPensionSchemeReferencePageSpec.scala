@@ -16,36 +16,46 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
+import models.calculation.response.TaxYearScheme
+import models.submission.Submission
+import models.{CheckMode, NormalMode, PSTR}
 
 class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
 
   "LegacyPensionSchemeReferencePage" - {
 
-    beRetrievable[String](LegacyPensionSchemeReferencePage)
+    beRetrievable[String](LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"))
 
-    beSettable[String](LegacyPensionSchemeReferencePage)
+    beSettable[String](LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"))
 
-    beRemovable[String](LegacyPensionSchemeReferencePage)
+    beRemovable[String](LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"))
 
     "must navigate correctly in NormalMode" - {
 
       "to ReformPensionSchemeReferencePage when answered" in {
+
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+
         val ua     = emptyUserAnswers
           .set(
-            LegacyPensionSchemeReferencePage,
+            LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
             "QT123456123456"
           )
           .success
           .value
-        val result = LegacyPensionSchemeReferencePage.navigate(NormalMode, ua).url
+        val result =
+          LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/reform-pension-scheme-reference")
+        checkNavigation(result, "/reform-pension-scheme-reference/12345678AB")
       }
 
       "to JourneyRecovery when not answered" in {
-        val ua     = emptyUserAnswers
-        val result = LegacyPensionSchemeReferencePage.navigate(NormalMode, ua).url
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+        val ua                     = emptyUserAnswers
+        val result                 =
+          LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -54,21 +64,27 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when answered" in {
-        val ua     = emptyUserAnswers
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+        val ua                     = emptyUserAnswers
           .set(
-            LegacyPensionSchemeReferencePage,
+            LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
             "QT123456123456"
           )
           .success
           .value
-        val result = LegacyPensionSchemeReferencePage.navigate(CheckMode, ua).url
+        val result                 =
+          LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua     = emptyUserAnswers
-        val result = LegacyPensionSchemeReferencePage.navigate(CheckMode, ua).url
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+        val ua                     = emptyUserAnswers
+        val result                 =
+          LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

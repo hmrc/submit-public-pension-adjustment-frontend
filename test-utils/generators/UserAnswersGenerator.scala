@@ -16,7 +16,7 @@
 
 package generators
 
-import models.UserAnswers
+import models.{PSTR, UserAnswers}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalatest.TryValues
@@ -34,8 +34,6 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(BankDetailsPage.type, JsValue)] ::
       arbitrary[(HowMuchTaxReliefPage.type, JsValue)] ::
       arbitrary[(ClaimingHigherOrAdditionalTaxRateReliefPage.type, JsValue)] ::
-      arbitrary[(ReformPensionSchemeReferencePage.type, JsValue)] ::
-      arbitrary[(LegacyPensionSchemeReferencePage.type, JsValue)] ::
       arbitrary[(UkAddressPage.type, JsValue)] ::
       arbitrary[(InternationalAddressPage.type, JsValue)] ::
       arbitrary[(AreYouAUKResidentPage.type, JsValue)] ::

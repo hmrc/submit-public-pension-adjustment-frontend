@@ -19,11 +19,11 @@ package controllers
 import com.google.inject.Inject
 import controllers.actions._
 import models.requests.DataRequest
-import models.{Period, UserAnswers}
+import models.{PSTR, Period, UserAnswers}
 import pages.ClaimOnBehalfPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.PeriodService
+import services.{PeriodService, SchemeService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
@@ -43,8 +43,6 @@ class CheckYourAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
-      val initialBlock: Seq[Option[SummaryListRow]] = initialRowBlock(request)
-
       val relevantPeriods: Option[Seq[Period]] =
         request.submission.calculation.map(calc => PeriodService.orderedInDateDebitPeriods(calc))
 
@@ -53,12 +51,24 @@ class CheckYourAnswersController @Inject() (
         case _                                           => None
       }
 
-      val finalBlock: Seq[Option[SummaryListRow]] = finalRowBlock(request)
-
-      val allRows = initialBlock ++ mayBePeriodRowBlock.getOrElse(Seq()) ++ finalBlock
+      val allRows = initialRowBlock(request) ++ mayBePeriodRowBlock.getOrElse(Seq()) ++ finalRowBlock(request)
 
       Ok(view(SummaryListViewModel(allRows.flatten)))
   }
+
+  private def initialRowBlock(request: DataRequest[AnyContent])(implicit messages: Messages) =
+    Seq(
+      ClaimOnBehalfSummary.row(request.userAnswers),
+      StatusOfUserSummary.row(request.userAnswers),
+      PensionSchemeMemberNameSummary.row(request.userAnswers),
+      PensionSchemeMemberDOBSummary.row(request.userAnswers),
+      MemberDateOfDeathSummary.row(request.userAnswers),
+      PensionSchemeMemberNinoSummary.row(request.userAnswers),
+      PensionSchemeMemberTaxReferenceSummary.row(request.userAnswers),
+      PensionSchemeMemberResidenceSummary.row(request.userAnswers),
+      PensionSchemeMemberUKAddressSummary.row(request.userAnswers),
+      PensionSchemeMemberInternationalAddressSummary.row(request.userAnswers)
+    )
 
   private def periodRowBlock(relevantPeriods: Option[Seq[Period]], userAnswers: UserAnswers)(implicit
     messages: Messages
@@ -77,33 +87,35 @@ class CheckYourAnswersController @Inject() (
       )
     )
 
-  private def finalRowBlock(request: DataRequest[AnyContent])(implicit messages: Messages) =
+  private def finalRowBlock(request: DataRequest[AnyContent])(implicit
+    messages: Messages
+  ): Seq[Option[SummaryListRow]] =
     Seq(
       AlternativeNameSummary.row(request.userAnswers),
       EnterAlternativeNameSummary.row(request.userAnswers),
       ContactNumberSummary.row(request.userAnswers),
       AreYouAUKResidentSummary.row(request.userAnswers),
       UkAddressSummary.row(request.userAnswers),
-      InternationalAddressSummary.row(request.userAnswers),
-      LegacyPensionSchemeReferenceSummary.row(request.userAnswers),
-      ReformPensionSchemeReferenceSummary.row(request.userAnswers),
+      InternationalAddressSummary.row(request.userAnswers)
+    ) ++ referenceRowBlock(request) ++ Seq(
       ClaimingHigherOrAdditionalTaxRateReliefSummary.row(request.userAnswers),
       HowMuchTaxReliefSummary.row(request.userAnswers),
       WhichPensionSchemeWillPayTaxReliefSummary.row(request.userAnswers),
       BankDetailsSummary.row(request.userAnswers)
     )
 
-  private def initialRowBlock(request: DataRequest[AnyContent])(implicit messages: Messages) =
-    Seq(
-      ClaimOnBehalfSummary.row(request.userAnswers),
-      StatusOfUserSummary.row(request.userAnswers),
-      PensionSchemeMemberNameSummary.row(request.userAnswers),
-      PensionSchemeMemberDOBSummary.row(request.userAnswers),
-      MemberDateOfDeathSummary.row(request.userAnswers),
-      PensionSchemeMemberNinoSummary.row(request.userAnswers),
-      PensionSchemeMemberTaxReferenceSummary.row(request.userAnswers),
-      PensionSchemeMemberResidenceSummary.row(request.userAnswers),
-      PensionSchemeMemberUKAddressSummary.row(request.userAnswers),
-      PensionSchemeMemberInternationalAddressSummary.row(request.userAnswers)
-    )
+  private def referenceRowBlock(
+    request: DataRequest[AnyContent]
+  )(implicit messages: Messages): Seq[Option[SummaryListRow]] =
+    SchemeService
+      .allPensionSchemeDetails(request.submission.calculationInputs)
+      .flatMap(psd =>
+        Seq(
+          ReferenceDetailsSummary.row(psd),
+          LegacyPensionSchemeReferenceSummary
+            .row(request.userAnswers, PSTR(psd.pensionSchemeTaxReference), psd.pensionSchemeTaxReference),
+          ReformPensionSchemeReferenceSummary
+            .row(request.userAnswers, PSTR(psd.pensionSchemeTaxReference), psd.pensionSchemeTaxReference)
+        )
+      )
 }

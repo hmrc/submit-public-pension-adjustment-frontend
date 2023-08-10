@@ -17,6 +17,7 @@
 package models
 
 import play.api.libs.json.{Format, Json}
+import play.api.mvc.PathBindable
 
 import scala.util.matching.Regex
 
@@ -35,4 +36,18 @@ object PSTR {
       case pattern(_) => Some(PSTR(pstrString))
       case _          => None
     }
+
+  implicit def pstrPathBindable(implicit stringBinder: PathBindable[String]): PathBindable[PSTR] =
+    new PathBindable[PSTR] {
+
+      override def bind(key: String, indexString: String): Either[String, PSTR] =
+        fromString(indexString) match {
+          case Some(schemeIndex: PSTR) => Right(schemeIndex)
+          case None                    => Left("Invalid pstr")
+        }
+
+      override def unbind(key: String, index: PSTR): String =
+        stringBinder.unbind(key, index.value)
+    }
+
 }
