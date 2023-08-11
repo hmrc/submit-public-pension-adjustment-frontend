@@ -14,8 +14,21 @@
  * limitations under the License.
  */
 
-package models
+package models.finalsubmission
 
-class WithName(string: String) {
-  override def toString: String = string
+import play.api.libs.json.{Format, Json}
+
+import java.time.LocalDate
+
+case class AuthRetrievals(
+  userId: String,
+  nino: String,
+  name: Option[String],
+  saUtr: Option[String],
+  dob: Option[LocalDate]
+)
+
+object AuthRetrievals {
+
+  implicit lazy val formats: Format[AuthRetrievals] = Json.format
 }

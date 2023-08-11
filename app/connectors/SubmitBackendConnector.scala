@@ -18,40 +18,37 @@ package connectors
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import models.UniqueId
-import models.submission.RetrieveSubmissionResponse
+import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
 import play.api.Logging
-import play.api.http.Status._
-import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps, UpstreamErrorResponse}
+import play.api.http.Status.OK
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CalculateBackendConnector @Inject() (
+class SubmitBackendConnector @Inject() (
   config: FrontendAppConfig,
   httpClient2: HttpClientV2
 )(implicit
   ec: ExecutionContext
 ) extends Logging {
 
-  def retrieveSubmission(
-    submissionUniqueId: UniqueId
-  )(implicit hc: HeaderCarrier): Future[RetrieveSubmissionResponse] = {
-
-    logger.info(s"submissionUniqueId : $submissionUniqueId")
-
+  def sendFinalSubmission(finalSubmission: FinalSubmission)(implicit
+    hc: HeaderCarrier
+  ): Future[FinalSubmissionResponse] =
     httpClient2
-      .get(url"${config.cppaBaseUrl}/calculate-public-pension-adjustment/submission/${submissionUniqueId.value}")
+      .post(url"${config.sppaBaseUrl}/submit-public-pension-adjustment/final-submission")
+      .withBody(Json.toJson(finalSubmission))
       .execute
       .flatMap { response =>
         response.status match {
           case OK =>
-            Future.successful(response.json.as[RetrieveSubmissionResponse])
+            Future.successful(response.json.as[FinalSubmissionResponse])
           case _  =>
-            logger.error(s"Unexpected response from backend with status ${response.status}")
-            Future.failed(UpstreamErrorResponse("Unexpected response from backend", response.status))
+            logger.error(s"Unexpected response from Submit backend with status ${response.status}")
+            Future.failed(UpstreamErrorResponse("Unexpected response from Submit backend with status", response.status))
         }
       }
-  }
 
 }

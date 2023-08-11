@@ -33,7 +33,18 @@ class CalculationDataRequiredActionImpl @Inject() (implicit val executionContext
         Future.successful(Left(Redirect(routes.CalculationPrerequisiteController.onPageLoad.url)))
       case Some(submission) =>
         Future.successful(
-          Right(CalculationDataRequest(request.request, request.userId, request.userAnswers, submission))
+          Right(
+            CalculationDataRequest(
+              request.request,
+              request.userId,
+              request.nino,
+              request.name,
+              request.saUtr,
+              request.dob,
+              submission,
+              request.userAnswers
+            )
+          )
         )
 
     }

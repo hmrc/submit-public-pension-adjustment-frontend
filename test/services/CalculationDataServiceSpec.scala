@@ -24,11 +24,14 @@ import models.submission.RetrieveSubmissionResponse
 import org.mockito.ArgumentMatchers.any
 import org.mockito.{ArgumentMatchers, MockitoSugar}
 import repositories.{Done, SubmissionRepository}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
 class CalculationDataServiceSpec extends SpecBase with MockitoSugar {
+
+  implicit lazy val headerCarrier: HeaderCarrier = HeaderCarrier()
 
   private val mockCalculateBackendConnector = mock[CalculateBackendConnector]
   private val mockSubmissionRepository      = mock[SubmissionRepository]
@@ -44,13 +47,18 @@ class CalculationDataServiceSpec extends SpecBase with MockitoSugar {
       val retrieveSubmissionResponse =
         RetrieveSubmissionResponse(CalculationInputs(Resubmission(false, None), None, None), None)
 
-      when(mockCalculateBackendConnector.retrieveSubmission(ArgumentMatchers.eq(submissionUniqueId)))
+      when(
+        mockCalculateBackendConnector.retrieveSubmission(ArgumentMatchers.eq(submissionUniqueId))(
+          ArgumentMatchers.eq(headerCarrier)
+        )
+      )
         .thenReturn(Future.successful(retrieveSubmissionResponse))
 
       when(mockSubmissionRepository.insert(any())).thenReturn(Future.successful(Done))
 
       val result: Future[Boolean] = service.retrieveSubmission("someInternalId", submissionUniqueId)(
-        implicitly[ExecutionContext]
+        implicitly[ExecutionContext],
+        implicitly(headerCarrier)
       )
 
       result.futureValue mustBe true
@@ -63,7 +71,11 @@ class CalculationDataServiceSpec extends SpecBase with MockitoSugar {
       val retrieveSubmissionResponse =
         RetrieveSubmissionResponse(CalculationInputs(Resubmission(false, None), None, None), None)
 
-      when(mockCalculateBackendConnector.retrieveSubmission(ArgumentMatchers.eq(submissionUniqueId)))
+      when(
+        mockCalculateBackendConnector.retrieveSubmission(ArgumentMatchers.eq(submissionUniqueId))(
+          ArgumentMatchers.eq(headerCarrier)
+        )
+      )
         .thenReturn(Future.successful(retrieveSubmissionResponse))
 
       val exception = new RuntimeException("insert failed")
@@ -71,7 +83,8 @@ class CalculationDataServiceSpec extends SpecBase with MockitoSugar {
 
       val result = service
         .retrieveSubmission("someInternalId", submissionUniqueId)(
-          implicitly[ExecutionContext]
+          implicitly[ExecutionContext],
+          implicitly(headerCarrier)
         )
         .futureValue
 
@@ -84,12 +97,17 @@ class CalculationDataServiceSpec extends SpecBase with MockitoSugar {
 
       val exception = new RuntimeException("retrieval failed")
 
-      when(mockCalculateBackendConnector.retrieveSubmission(ArgumentMatchers.eq(submissionUniqueId)))
+      when(
+        mockCalculateBackendConnector.retrieveSubmission(ArgumentMatchers.eq(submissionUniqueId))(
+          ArgumentMatchers.eq(headerCarrier)
+        )
+      )
         .thenReturn(Future.failed(exception))
 
       val result = service
         .retrieveSubmission("someInternalId", submissionUniqueId)(
-          implicitly[ExecutionContext]
+          implicitly[ExecutionContext],
+          implicitly(headerCarrier)
         )
         .futureValue
 

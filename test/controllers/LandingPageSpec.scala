@@ -38,7 +38,7 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
     "must redirect to first data capture page when submission can be retrieved" in {
 
       val mockCalculationDataService = mock[CalculationDataService]
-      when(mockCalculationDataService.retrieveSubmission(any(), any())(any()))
+      when(mockCalculationDataService.retrieveSubmission(any(), any())(any(), any()))
         .thenReturn(Future.successful(true))
 
       val application =
@@ -61,7 +61,7 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
     "must redirect to calculation prerequisite page when submission cannot be retrieved" in {
 
       val mockCalculationDataService = mock[CalculationDataService]
-      when(mockCalculationDataService.retrieveSubmission(any(), any())(any()))
+      when(mockCalculationDataService.retrieveSubmission(any(), any())(any(), any()))
         .thenReturn(Future.successful(false))
 
       val application =
@@ -87,7 +87,7 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
         routes.LandingPageController.onPageLoad(Some(UniqueId("invalidUniqueId"))).url
 
       val mockCalculationDataService = mock[CalculationDataService]
-      when(mockCalculationDataService.retrieveSubmission(any(), any())(any()))
+      when(mockCalculationDataService.retrieveSubmission(any(), any())(any(), any()))
         .thenReturn(Future.successful(true))
 
       val application =

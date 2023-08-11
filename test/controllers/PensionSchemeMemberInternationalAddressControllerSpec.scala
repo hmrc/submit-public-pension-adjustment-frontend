@@ -49,12 +49,12 @@ class PensionSchemeMemberInternationalAddressControllerSpec extends SpecBase wit
     userAnswersId,
     Json.obj(
       PensionSchemeMemberInternationalAddressPage.toString -> Json.obj(
-        "addressLine1" -> "value 1",
-        "addressLine2" -> "value 2",
-        "townOrCity"   -> "town",
-        "county"       -> "county",
-        "postCode"     -> "postCode",
-        "country"      -> "country"
+        "addressLine1"  -> "value 1",
+        "addressLine2"  -> "value 2",
+        "townOrCity"    -> "town",
+        "stateOrRegion" -> "stateOrRegion",
+        "postCode"      -> "postCode",
+        "country"       -> "country"
       )
     )
   )
@@ -95,7 +95,7 @@ class PensionSchemeMemberInternationalAddressControllerSpec extends SpecBase wit
               "value 1",
               Some("value 2"),
               "town",
-              Some("county"),
+              Some("stateOrRegion"),
               Some("postCode"),
               "country"
             )
