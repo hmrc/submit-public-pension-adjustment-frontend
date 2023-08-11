@@ -16,7 +16,7 @@
 
 package models
 
-import models.finalsubmission.{AdministrativeDetails, FinalSubmission}
+import models.finalsubmission.FinalSubmission
 import models.submission.RetrieveSubmissionResponse
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
@@ -75,9 +75,9 @@ class FinalSubmissionBuilderSpec extends AnyFreeSpec with Matchers with Logging 
       .get
       .set(UkAddressPage, UkAddress("addressLine1", None, "town", None, "postcode"))
       .get
-      .set(LegacyPensionSchemeReferencePage, "legacyIndividualSchemeRef")
+      .set(LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"), "legacyIndividualSchemeRef")
       .get
-      .set(ReformPensionSchemeReferencePage, "reformIndividualSchemeRef")
+      .set(ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"), "reformIndividualSchemeRef")
       .get
       .set(HowMuchTaxReliefPage, BigInt(123))
       .get

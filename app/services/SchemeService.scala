@@ -16,36 +16,47 @@
 
 package services
 
-import models.{PSTR, WhichPensionSchemeWillPay, WhichPensionSchemeWillPayTaxRelief}
-import models.calculation.inputs.CalculationInputs
-import models.calculation.inputs.TaxYear2016To2023
+import models.calculation.inputs.{CalculationInputs, TaxYear2016To2023}
 import models.calculation.response.TaxYearScheme
+import models.{PSTR, PensionSchemeDetails, WhichPensionSchemeWillPay, WhichPensionSchemeWillPayTaxRelief}
 
 object SchemeService {
 
+  def schemeName(pstr: PSTR, calculationInputs: CalculationInputs): String = allPensionSchemeDetails(calculationInputs)
+    .find(psd => psd.pensionSchemeTaxReference == pstr.value)
+    .map(identifiedScheme => identifiedScheme.pensionSchemeName)
+    .getOrElse("")
+
+  def allPensionSchemeDetails(calculationInputs: CalculationInputs): Seq[PensionSchemeDetails] =
+    getAllPensionSchemeDetails(calculationInputs).map(taxYearScheme =>
+      PensionSchemeDetails(taxYearScheme.name, taxYearScheme.pensionSchemeTaxReference)
+    )
+
   def allSchemeDetails(calculationInputs: CalculationInputs): WhichPensionSchemeWillPay = {
-    val pensionSchemeDetails: Seq[String] = getAllPensionSchemeDetails(calculationInputs)
+    val pensionSchemeDetails: Seq[String] =
+      getAllPensionSchemeDetails(calculationInputs).map(taxYearScheme => schemeNameAndReference(taxYearScheme))
     WhichPensionSchemeWillPay(pensionSchemeDetails :+ PSTR.New)
   }
 
   def allSchemeDetailsForTaxRelief(calculationInputs: CalculationInputs): WhichPensionSchemeWillPayTaxRelief = {
-    val pensionSchemeDetails: Seq[String] = getAllPensionSchemeDetails(calculationInputs)
+    val pensionSchemeDetails: Seq[String] =
+      getAllPensionSchemeDetails(calculationInputs).map(taxYearScheme => schemeNameAndReference(taxYearScheme))
     WhichPensionSchemeWillPayTaxRelief(pensionSchemeDetails)
   }
 
   def allSchemeDetailsForTaxReliefLength(calculationInputs: CalculationInputs): Int =
     getAllPensionSchemeDetails(calculationInputs).length
 
-  private def getAllPensionSchemeDetails(calculationInputs: CalculationInputs) =
+  private def getAllPensionSchemeDetails(calculationInputs: CalculationInputs): Seq[TaxYearScheme] =
     calculationInputs.annualAllowance
       .map {
         _.taxYears flatMap {
           case TaxYear2016To2023.NormalTaxYear(_, taxYearSchemes, _, _, _, _)                           =>
-            List(taxYearSchemes.map(psd => schemeNameAndReference(psd)))
+            List(taxYearSchemes)
           case TaxYear2016To2023.InitialFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _, _, _) =>
-            List(taxYearSchemes.map(psd => schemeNameAndReference(psd)))
+            List(taxYearSchemes)
           case TaxYear2016To2023.PostFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _)          =>
-            List(taxYearSchemes.map(psd => schemeNameAndReference(psd)))
+            List(taxYearSchemes)
           case _                                                                                        => Nil
         }
       }
@@ -53,6 +64,6 @@ object SchemeService {
       .flatten
       .distinct
 
-  private def schemeNameAndReference(pensionSchemeDetails: TaxYearScheme) =
-    s"${pensionSchemeDetails.name} / ${pensionSchemeDetails.pensionSchemeTaxReference}"
+  private def schemeNameAndReference(taxYearScheme: TaxYearScheme) =
+    s"${taxYearScheme.name} / ${taxYearScheme.pensionSchemeTaxReference}"
 }

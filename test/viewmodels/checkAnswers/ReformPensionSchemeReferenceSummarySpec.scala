@@ -17,10 +17,11 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, PSTR, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.ReformPensionSchemeReferencePage
+
 import scala.xml.Text
 import play.api.i18n.Messages
 import play.api.test.Helpers
@@ -35,18 +36,18 @@ class ReformPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
     "when value is entered, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          ReformPensionSchemeReferencePage,
+          ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
           "AB123456123456"
         )
         .get
-      ReformPensionSchemeReferenceSummary.row(userAnswers) shouldBe Some(
+      ReformPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
         SummaryListRowViewModel(
           key = "reformPensionSchemeReference.checkYourAnswersLabel",
           value = ValueViewModel(Text("AB123456123456").toString()),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode).url
+              routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode, PSTR("12345678AB")).url
             )
               .withVisuallyHiddenText("reformPensionSchemeReference.change.hidden")
           )
@@ -57,18 +58,18 @@ class ReformPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
         .set(
-          ReformPensionSchemeReferencePage,
+          ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
           ""
         )
         .get
-      ReformPensionSchemeReferenceSummary.row(userAnswers) shouldBe Some(
+      ReformPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
         SummaryListRowViewModel(
           key = "reformPensionSchemeReference.checkYourAnswersLabel",
           value = ValueViewModel(Text(messages("checkYourAnswers.notAnswered")).toString()),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode).url
+              routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode, PSTR("12345678AB")).url
             )
               .withVisuallyHiddenText("reformPensionSchemeReference.change.hidden")
           )

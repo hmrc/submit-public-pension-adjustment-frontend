@@ -16,30 +16,28 @@
 
 package viewmodels.checkAnswers
 
-import controllers.routes
-import models.{CheckMode, Period, UserAnswers}
-import pages.AskedPensionSchemeToPayTaxChargePage
+import models.{PensionSchemeDetails, Period}
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object AskedPensionSchemeToPayTaxChargeSummary {
+object ReferenceDetailsSummary {
 
-  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AskedPensionSchemeToPayTaxChargePage(period)).map { answer =>
-      val value = if (answer) "site.yes" else "site.no"
+  def row(pensionSchemeDetails: PensionSchemeDetails)(implicit messages: Messages): Option[SummaryListRow] = {
+    val value = ValueViewModel(
+      HtmlContent("")
+    )
 
+    Some(
       SummaryListRowViewModel(
-        key = "askedPensionSchemeToPayTaxCharge.checkYourAnswersLabel",
-        value = ValueViewModel(value),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, period).url
-          )
-            .withVisuallyHiddenText(messages("askedPensionSchemeToPayTaxCharge.change.hidden"))
-        )
+        key = messages("checkYourAnswers.referenceDetails").replace(
+          "$scheme",
+          pensionSchemeDetails.pensionSchemeName + " / " + pensionSchemeDetails.pensionSchemeTaxReference
+        ),
+        value = value
       )
-    }
+    )
+  }
 }

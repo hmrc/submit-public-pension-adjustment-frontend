@@ -24,11 +24,11 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, pstr: PSTR, schemeName: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("reformPensionSchemeReference.title"))) {
 
-    @formHelper(action = routes.ReformPensionSchemeReferenceController.onSubmit(mode)) {
+    @formHelper(action = routes.ReformPensionSchemeReferenceController.onSubmit(mode, pstr)) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
@@ -37,9 +37,11 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("reformPensionSchemeReference.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("reformPensionSchemeReference.heading"),
+                    caption = messages("reformPensionSchemeReference.caption") + " " + schemeName + " / " + pstr.value
+                )
             )
-            .withWidth(Full)
         )
 
         @govukButton(

@@ -16,9 +16,11 @@
 
 package pages
 
-import models.{NormalMode, UkAddress, UserAnswers}
+import models.submission.Submission
+import models.{NormalMode, PSTR, UkAddress, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import services.SchemeService
 
 case object UkAddressPage extends QuestionPage[UkAddress] {
 
@@ -26,9 +28,13 @@ case object UkAddressPage extends QuestionPage[UkAddress] {
 
   override def toString: String = "ukAddress"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(UkAddressPage) match {
-      case Some(_) => controllers.routes.LegacyPensionSchemeReferenceController.onPageLoad(NormalMode)
+      case Some(_) =>
+        val firstPstr = PSTR(
+          SchemeService.allPensionSchemeDetails(submission.calculationInputs).head.pensionSchemeTaxReference
+        )
+        controllers.routes.LegacyPensionSchemeReferenceController.onPageLoad(NormalMode, firstPstr)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

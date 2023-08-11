@@ -18,8 +18,9 @@ package base
 
 import controllers.actions._
 import models.UserAnswers
-import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, Period, TotalAmounts}
-import models.calculation.inputs.{CalculationInputs, Resubmission}
+import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
+import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, Period, TaxYearScheme, TotalAmounts}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission}
 import models.submission.Submission
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
@@ -86,6 +87,16 @@ trait SpecBase
   val calculationInputs = CalculationInputs(resubmission, None, None)
 
   val submission = Submission(sessionId, uniqueId, calculationInputs, None)
+
+  def submissionRelatingToTaxYearSchemes(taxYearSchemes: List[TaxYearScheme]): Submission = {
+    val resubmission      = Resubmission(false, None)
+    val annualAllowance   = AnnualAllowance(
+      List.empty,
+      List(NormalTaxYear(0, taxYearSchemes, 0, 0, models.calculation.inputs.Period._2017, None))
+    )
+    val calculationInputs = CalculationInputs(resubmission, Some(annualAllowance), None)
+    Submission(sessionId, uniqueId, calculationInputs, None)
+  }
 
   protected val fixedInstant: Instant      = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
   protected val clockAtFixedInstant: Clock = Clock.fixed(fixedInstant, ZoneId.systemDefault)

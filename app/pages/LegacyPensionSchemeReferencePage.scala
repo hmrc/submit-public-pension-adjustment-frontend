@@ -16,23 +16,29 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers}
+import models.submission.Submission
+import models.{NormalMode, PSTR, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-case object LegacyPensionSchemeReferencePage extends QuestionPage[String] {
+import services.SchemeService
+case class LegacyPensionSchemeReferencePage(pstr: PSTR, schemeName: String) extends QuestionPage[String] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "schemes" \ pstr.value \ toString
 
   override def toString: String = "legacyPensionSchemeReference"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(LegacyPensionSchemeReferencePage) match {
-      case Some(_) => controllers.routes.ReformPensionSchemeReferenceController.onPageLoad(NormalMode)
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(
+      LegacyPensionSchemeReferencePage(pstr, SchemeService.schemeName(pstr, submission.calculationInputs))
+    ) match {
+      case Some(_) => controllers.routes.ReformPensionSchemeReferenceController.onPageLoad(NormalMode, pstr)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(LegacyPensionSchemeReferencePage) match {
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+    answers.get(
+      LegacyPensionSchemeReferencePage(pstr, SchemeService.schemeName(pstr, submission.calculationInputs))
+    ) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

@@ -18,7 +18,7 @@ package controllers.actions
 
 import javax.inject.Inject
 import controllers.routes
-import models.requests.{CalculationDataRequest, DataRequest, OptionalDataRequest}
+import models.requests.{CalculationDataRequest, DataRequest}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
 

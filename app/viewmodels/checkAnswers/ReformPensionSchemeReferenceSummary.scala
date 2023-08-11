@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, PSTR, UserAnswers}
 import pages.ReformPensionSchemeReferencePage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -27,14 +27,17 @@ import viewmodels.implicits._
 
 object ReformPensionSchemeReferenceSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ReformPensionSchemeReferencePage).map { answer =>
+  def row(answers: UserAnswers, pstr: PSTR, schemeName: String)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(ReformPensionSchemeReferencePage(pstr, schemeName)).map { answer =>
       val value = if (answer == "") messages("checkYourAnswers.notAnswered") else answer
       SummaryListRowViewModel(
         key = "reformPensionSchemeReference.checkYourAnswersLabel",
         value = ValueViewModel(HtmlFormat.escape(value).toString),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode).url)
+          ActionItemViewModel(
+            "site.change",
+            routes.ReformPensionSchemeReferenceController.onPageLoad(CheckMode, pstr).url
+          )
             .withVisuallyHiddenText(messages("reformPensionSchemeReference.change.hidden"))
         )
       )

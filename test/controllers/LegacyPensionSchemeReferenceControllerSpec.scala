@@ -18,7 +18,9 @@ package controllers
 
 import base.SpecBase
 import forms.LegacyPensionSchemeReferenceFormProvider
-import models.{NormalMode, UserAnswers}
+import models.calculation.response.TaxYearScheme
+import models.submission.Submission
+import models.{NormalMode, PSTR, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -39,7 +41,8 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
   val formProvider = new LegacyPensionSchemeReferenceFormProvider()
   val form         = formProvider()
 
-  lazy val legacyPensionSchemeReferenceRoute = routes.LegacyPensionSchemeReferenceController.onPageLoad(NormalMode).url
+  lazy val legacyPensionSchemeReferenceRoute =
+    routes.LegacyPensionSchemeReferenceController.onPageLoad(NormalMode, PSTR("12345678AB")).url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
@@ -57,13 +60,20 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
         val view = application.injector.instanceOf[LegacyPensionSchemeReferenceView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, PSTR("12345678AB"), "")(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(LegacyPensionSchemeReferencePage, "answer").success.value
+      val userAnswers =
+        UserAnswers(userAnswersId)
+          .set(LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"), "answer")
+          .success
+          .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
@@ -75,7 +85,7 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(Some("answer")), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(Some("answer")), NormalMode, PSTR("12345678AB"), "")(
           request,
           messages(application)
         ).toString
@@ -87,6 +97,9 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val submission: Submission =
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))

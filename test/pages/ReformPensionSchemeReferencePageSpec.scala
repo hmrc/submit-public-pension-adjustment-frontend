@@ -16,36 +16,68 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
+import models.calculation.response.TaxYearScheme
+import models.submission.Submission
+import models.{CheckMode, NormalMode, PSTR}
 
 class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
 
   "ReformPensionSchemeReferencePage" - {
 
-    beRetrievable[String](ReformPensionSchemeReferencePage)
+    beRetrievable[String](ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"))
 
-    beSettable[String](ReformPensionSchemeReferencePage)
+    beSettable[String](ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"))
 
-    beRemovable[String](ReformPensionSchemeReferencePage)
+    beRemovable[String](ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"))
 
     "must navigate correctly in NormalMode" - {
 
-      "to ClaimingHigherOrAdditionalTaxRateReliefPage when answered" in {
+      "to ClaimingHigherOrAdditionalTaxRateReliefPage there are no more schemes" in {
+
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+
         val ua     = emptyUserAnswers
           .set(
-            ReformPensionSchemeReferencePage,
+            ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
             "QT123456123456"
           )
           .success
           .value
-        val result = ReformPensionSchemeReferencePage.navigate(NormalMode, ua).url
+        val result =
+          ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/claiming-additional-tax-rate-relief")
       }
 
-      "to JourneyRecovery when not answered" in {
+      "back to LegacyPensionSchemeReferencePage for next scheme when there are more schemes" in {
+
+        val submission: Submission = submissionRelatingToTaxYearSchemes(
+          List(
+            TaxYearScheme("scheme1", "12345678AB", 0, 0, 0),
+            TaxYearScheme("scheme2", "12345678AC", 0, 0, 0)
+          )
+        )
+
         val ua     = emptyUserAnswers
-        val result = ReformPensionSchemeReferencePage.navigate(NormalMode, ua).url
+          .set(
+            ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
+            "QT123456123456"
+          )
+          .success
+          .value
+        val result =
+          ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
+
+        checkNavigation(result, "/legacy-pension-scheme-reference/12345678AC")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua                     = emptyUserAnswers
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+        val result                 =
+          ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -54,21 +86,28 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when answered" in {
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+
         val ua     = emptyUserAnswers
           .set(
-            ReformPensionSchemeReferencePage,
+            ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
             "ripsr"
           )
           .success
           .value
-        val result = ReformPensionSchemeReferencePage.navigate(CheckMode, ua).url
+        val result =
+          ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua     = emptyUserAnswers
-        val result = ReformPensionSchemeReferencePage.navigate(CheckMode, ua).url
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+        val ua                     = emptyUserAnswers
+        val result                 =
+          ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

@@ -16,6 +16,8 @@
 
 package pages
 
+import models.calculation.response.TaxYearScheme
+import models.submission.Submission
 import models.{CheckMode, NormalMode, UkAddress}
 
 class UkAddressPageSpec extends PageBehaviours {
@@ -31,6 +33,10 @@ class UkAddressPageSpec extends PageBehaviours {
     "must navigate correctly in NormalMode" - {
 
       "to LegacyPensionSchemeReferencePage when answered" in {
+
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+
         val ua     = emptyUserAnswers
           .set(
             UkAddressPage,
@@ -38,14 +44,17 @@ class UkAddressPageSpec extends PageBehaviours {
           )
           .success
           .value
-        val result = UkAddressPage.navigate(NormalMode, ua).url
+        val result = UkAddressPage.navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/legacy-pension-scheme-reference")
+        checkNavigation(result, "/legacy-pension-scheme-reference/12345678AB")
       }
 
       "to JourneyRecovery when not answered" in {
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+
         val ua     = emptyUserAnswers
-        val result = UkAddressPage.navigate(NormalMode, ua).url
+        val result = UkAddressPage.navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }

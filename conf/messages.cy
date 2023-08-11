@@ -48,6 +48,7 @@ checkYourAnswers.periodDetails.2020 = cy: Details for 2020
 checkYourAnswers.periodDetails.2021 = cy: Details for 2021
 checkYourAnswers.periodDetails.2022 = cy: Details for 2022
 checkYourAnswers.periodDetails.2023 = cy: Details for 2023
+checkYourAnswers.referenceDetails = cy : Individual reference details for scheme $scheme
 
 journeyRecovery.continue.title = cy: Sorry, there is a problem with the service
 journeyRecovery.continue.heading = cy: Sorry, there is a problem with the service

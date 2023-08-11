@@ -65,7 +65,7 @@ class InternationalAddressController @Inject() (
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(InternationalAddressPage, value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(InternationalAddressPage.navigate(mode, updatedAnswers))
+            } yield Redirect(InternationalAddressPage.navigate(mode, updatedAnswers, request.submission))
         )
     }
 }
