@@ -62,7 +62,7 @@ object SchemeService {
       }
       .getOrElse(Nil)
       .flatten
-      .distinct
+      .distinctBy(_.pensionSchemeTaxReference)
 
   private def schemeNameAndReference(taxYearScheme: TaxYearScheme) =
     s"${taxYearScheme.name} / ${taxYearScheme.pensionSchemeTaxReference}"
