@@ -17,17 +17,17 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Period, UserAnswers}
+import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.WhichPensionSchemeWillPayPage
+import pages.WhichPensionSchemeWillPayTaxReliefPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
+class WhichPensionSchemeWillPayTaxReliefSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
@@ -35,42 +35,20 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
     "when PensionSchemeA is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          WhichPensionSchemeWillPayPage(Period._2020),
+          WhichPensionSchemeWillPayTaxReliefPage,
           "Scheme1 / 00348916RT"
         )
         .get
-      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
+      WhichPensionSchemeWillPayTaxReliefSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
+          key = "whichPensionSchemeWillPayTaxRelief.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Scheme1 / 00348916RT")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.WhichPensionSchemeWillPayController.onPageLoad(CheckMode, Period._2020).url
+              routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("whichPensionSchemeWillPay.change.hidden")
-          )
-        )
-      )
-    }
-
-    "when Private Scheme is selected, return the summary row" in {
-      val userAnswers = UserAnswers("id")
-        .set(
-          WhichPensionSchemeWillPayPage(Period._2020),
-          "Private pension scheme"
-        )
-        .get
-      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
-        SummaryListRowViewModel(
-          key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("Private pension scheme")),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.WhichPensionSchemeWillPayController.onPageLoad(CheckMode, Period._2020).url
-            )
-              .withVisuallyHiddenText("whichPensionSchemeWillPay.change.hidden")
+              .withVisuallyHiddenText("whichPensionSchemeWillPayTaxRelief.change.hidden")
           )
         )
       )
@@ -78,7 +56,7 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe None
+      WhichPensionSchemeWillPayTaxReliefSummary.row(userAnswers) shouldBe None
     }
   }
 

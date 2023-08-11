@@ -18,6 +18,11 @@ package controllers
 
 import base.SpecBase
 import forms.WhichPensionSchemeWillPayFormProvider
+import models.calculation.inputs.Income.AboveThreshold
+import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
+import models.calculation.inputs.{CalculationInputs, Period}
+import models.calculation.response.{CalculationResponse, TaxYearScheme}
+import models.submission.Submission
 import models.{NormalMode, Period, UserAnswers, WhichPensionSchemeWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -37,7 +42,7 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
   def onwardRoute = Call("GET", "/foo")
 
   lazy val whichPensionSchemeWillPayRoute =
-    routes.WhichPensionSchemeWillPayController.onPageLoad(NormalMode, Period._2020).url
+    routes.WhichPensionSchemeWillPayController.onPageLoad(NormalMode, models.Period._2020).url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
@@ -61,7 +66,7 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
         contentAsString(result) mustEqual view(
           form,
           NormalMode,
-          Period._2020,
+          models.Period._2020,
           WhichPensionSchemeWillPay(Seq("Private pension scheme"))
         )(
           request,
@@ -70,34 +75,75 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-//    "must populate the view correctly on a GET when the question has previously been answered" in {
-//
-//      val userAnswers = UserAnswers(userAnswersId)
-//        .set(WhichPensionSchemeWillPayPage(Period._2020), "Scheme1_PSTR")
-//        .success
-//        .value
-//
-//      val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
-//
-//      running(application) {
-//        val request = FakeRequest(GET, whichPensionSchemeWillPayRoute)
-//
-//        val view = application.injector.instanceOf[WhichPensionSchemeWillPayView]
-//
-//        val result = route(application, request).value
-//
-//        status(result) mustEqual OK
-//        contentAsString(result) mustEqual view(
-//          form.fill("Private pension scheme"),
-//          NormalMode,
-//          Period._2020,
-//          WhichPensionSchemeWillPay(Seq("Private pension scheme"))
-//        )(
-//          request,
-//          messages(application)
-//        ).toString
-//      }
-//    }
+    "must populate the view correctly on a GET when the question has previously been answered" in {
+
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(WhichPensionSchemeWillPayPage(models.Period._2020), "Scheme1 / 00348916RT")
+        .success
+        .value
+
+      val mockCalculationInputs = CalculationInputs(
+        models.calculation.inputs.Resubmission(false, None),
+        Option(
+          models.calculation.inputs.AnnualAllowance(
+            List(),
+            List(
+              NormalTaxYear(
+                2,
+                List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
+                5,
+                0,
+                models.calculation.inputs.Period._2016PreAlignment,
+                None
+              ),
+              NormalTaxYear(
+                4,
+                List(TaxYearScheme("Scheme1", "00348916RT", 3, 4, 0)),
+                5,
+                0,
+                models.calculation.inputs.Period._2016PostAlignment,
+                None
+              ),
+              NormalTaxYear(
+                5,
+                List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
+                8,
+                6,
+                models.calculation.inputs.Period._2017,
+                Some(AboveThreshold(7))
+              )
+            )
+          )
+        ),
+        None
+      )
+
+      val mockCalculationResponse = mock[CalculationResponse]
+
+      val submission: Submission =
+        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Option(mockCalculationResponse))
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, whichPensionSchemeWillPayRoute)
+
+        val view = application.injector.instanceOf[WhichPensionSchemeWillPayView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          form.fill("Scheme1 / 00348916RT"),
+          NormalMode,
+          models.Period._2020,
+          WhichPensionSchemeWillPay(Seq("Scheme1 / 00348916RT", "Private pension scheme"))
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
 
     "must redirect to the next page when valid data is submitted" in {
 
@@ -120,29 +166,6 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
         status(result) mustEqual SEE_OTHER
       }
     }
-
-//    "must return a Bad Request and errors when invalid data is submitted" in {
-//
-//      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
-//
-//      running(application) {
-//        val request =
-//          FakeRequest(POST, whichPensionSchemeWillPayRoute)
-//            .withFormUrlEncodedBody(("value", ""))
-//
-//        val boundForm = form.bind(Map("value" -> ""))
-//
-//        val view = application.injector.instanceOf[WhichPensionSchemeWillPayView]
-//
-//        val result = route(application, request).value
-//
-//        status(result) mustEqual BAD_REQUEST
-//        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020, WhichPensionSchemeWillPay(Seq("")))(
-//          request,
-//          messages(application)
-//        ).toString
-//      }
-//    }
 
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
 

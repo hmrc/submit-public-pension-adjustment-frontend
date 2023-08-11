@@ -36,7 +36,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec
       val gen = Gen.oneOf(Seq("Scheme1 / 00348916RT"))
 
       forAll(gen) { whichPensionSchemeWillPayTaxRelief =>
-        JsString(whichPensionSchemeWillPayTaxRelief.toString)
+        JsString(whichPensionSchemeWillPayTaxRelief)
           .validate[String]
           .asOpt
           .value mustEqual whichPensionSchemeWillPayTaxRelief
@@ -48,7 +48,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec
       val gen = Gen.oneOf(Seq("Scheme1 / 00348916RT"))
 
       forAll(gen) { whichPensionSchemeWillPayTaxRelief =>
-        Json.toJson(whichPensionSchemeWillPayTaxRelief) mustEqual JsString(whichPensionSchemeWillPayTaxRelief.toString)
+        Json.toJson(whichPensionSchemeWillPayTaxRelief) mustEqual JsString(whichPensionSchemeWillPayTaxRelief)
       }
     }
   }
