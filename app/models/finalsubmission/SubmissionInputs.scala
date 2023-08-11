@@ -19,7 +19,6 @@ package models.finalsubmission
 import play.api.libs.json._
 
 case class SubmissionInputs(
-  caseNumber: String,
   administrativeDetails: AdministrativeDetails,
   paymentElections: List[PaymentElection],
   calculationInputSchemeIdentifiers: List[IndividualSchemeIdentifier],

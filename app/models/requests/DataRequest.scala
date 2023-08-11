@@ -34,12 +34,24 @@ case class OptionalDataRequest[A](
   userAnswers: Option[UserAnswers]
 ) extends WrappedRequest[A](request)
 
-case class DataRequest[A](request: Request[A], userId: String, userAnswers: UserAnswers, submission: Submission)
-    extends WrappedRequest[A](request)
+case class DataRequest[A](
+  request: Request[A],
+  userId: String,
+  nino: String,
+  name: Option[Name],
+  saUtr: Option[String],
+  dob: Option[LocalDate],
+  submission: Submission,
+  userAnswers: UserAnswers
+) extends WrappedRequest[A](request)
 
 case class CalculationDataRequest[A](
   request: Request[A],
   userId: String,
-  userAnswers: Option[UserAnswers],
-  submission: Submission
+  nino: String,
+  name: Option[Name],
+  saUtr: Option[String],
+  dob: Option[LocalDate],
+  submission: Submission,
+  userAnswers: Option[UserAnswers]
 ) extends WrappedRequest[A](request)

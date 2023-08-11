@@ -14,16 +14,20 @@
  * limitations under the License.
  *@
 
+@import models.finalsubmission.FinalSubmissionResponse
+
 @this(
         layout: templates.Layout,
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(finalSubmissionResponse: FinalSubmissionResponse)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("submission.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("submission.heading")</h1>
+
+    <h2 class="govuk-heading-m">@finalSubmissionResponse.userSubmissionReference</h2>
 
     <p class="govuk-body">@messages("submission.adjustmentSent")</p>
 

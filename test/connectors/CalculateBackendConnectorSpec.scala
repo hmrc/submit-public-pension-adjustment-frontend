@@ -27,10 +27,13 @@ import play.api.Application
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.util.Try
 
 class CalculateBackendConnectorSpec extends SpecBase with WireMockHelper with ScalaCheckPropertyChecks with Generators {
+
+  implicit lazy val headerCarrier: HeaderCarrier = HeaderCarrier()
 
   private def application: Application =
     applicationBuilder()

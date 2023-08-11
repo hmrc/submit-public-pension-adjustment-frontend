@@ -34,7 +34,7 @@ object PensionSchemeMemberInternationalAddressSummary {
         Some(HtmlFormat.escape(answer.addressLine1).toString),
         answer.addressLine2.map(HtmlFormat.escape),
         Some(HtmlFormat.escape(answer.townOrCity)),
-        answer.county.map(HtmlFormat.escape),
+        answer.stateOrRegion.map(HtmlFormat.escape),
         answer.postCode.map(HtmlFormat.escape),
         Some(HtmlFormat.escape(answer.country).toString)
       ).flatten.mkString("<br/>")

@@ -17,11 +17,20 @@
 package controllers
 
 import base.SpecBase
+import models.finalsubmission.FinalSubmissionResponse
 import play.api.test.FakeRequest
+import play.api.inject.bind
+import org.mockito.ArgumentMatchers.any
+import org.mockito.MockitoSugar
 import play.api.test.Helpers._
+import services.SubmissionService
 import views.html.SubmissionView
 
-class SubmissionControllerSpec extends SpecBase {
+import scala.concurrent.Future
+
+class SubmissionControllerSpec extends SpecBase with MockitoSugar {
+
+  private val mockSubmissionService = mock[SubmissionService]
 
   lazy val submissionRoute = routes.SubmissionController.onPageLoad.url
 
@@ -31,7 +40,16 @@ class SubmissionControllerSpec extends SpecBase {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
+        .overrides(
+          bind[SubmissionService].toInstance(mockSubmissionService)
+        )
+        .build()
+
+      val mockFinalSubmissionResponse = FinalSubmissionResponse("mockSubmissionReference")
+
+      when(mockSubmissionService.sendFinalSubmission(any(), any(), any(), any())(any()))
+        .thenReturn(Future.successful(mockFinalSubmissionResponse))
 
       running(application) {
         val request = FakeRequest(GET, submissionRoute)
@@ -41,7 +59,7 @@ class SubmissionControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[SubmissionView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        contentAsString(result) mustEqual view(mockFinalSubmissionResponse)(request, messages(application)).toString
       }
     }
 

@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
-package models
+package models.finalsubmission
 
-class WithName(string: String) {
-  override def toString: String = string
+import play.api.libs.json.{Json, OFormat}
+
+case class FinalSubmissionResponse(userSubmissionReference: String)
+
+object FinalSubmissionResponse {
+
+  implicit lazy val format: OFormat[FinalSubmissionResponse] = Json.format
 }

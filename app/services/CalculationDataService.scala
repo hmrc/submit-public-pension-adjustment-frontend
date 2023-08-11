@@ -21,6 +21,7 @@ import models.UniqueId
 import models.submission.Submission
 import play.api.Logging
 import repositories.SubmissionRepository
+import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -34,7 +35,7 @@ class CalculationDataService @Inject() (
   def retrieveSubmission(
     internalId: String,
     submissionUniqueId: UniqueId
-  )(implicit executionContext: ExecutionContext): Future[Boolean] =
+  )(implicit executionContext: ExecutionContext, hc: HeaderCarrier): Future[Boolean] =
     calculateBackendConnector.retrieveSubmission(submissionUniqueId).transformWith {
       case Success(submissionResponse) =>
         submissionRepository

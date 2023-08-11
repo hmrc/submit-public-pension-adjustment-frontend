@@ -19,8 +19,10 @@ package bars
 import bars.barsmodel.request.BarsVerifyPersonalRequest
 import config.BarsConfig
 import play.api.http.HeaderNames
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.HttpReads.Implicits._
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps}
+import uk.gov.hmrc.http.client.HttpClientV2
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -28,7 +30,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /** Connects to the Bank Account Reputation Service to validate bank accounts.
   */
 class BarsConnector @Inject() (
-  httpClient: HttpClient,
+  httpClient2: HttpClientV2,
   barsConfig: BarsConfig
 )(implicit ec: ExecutionContext) {
 
@@ -42,10 +44,9 @@ class BarsConnector @Inject() (
   def verifyPersonal(
     barsVerifyPersonalRequest: BarsVerifyPersonalRequest
   )(implicit hc: HeaderCarrier): Future[HttpResponse] =
-    httpClient
-      .POST[BarsVerifyPersonalRequest, HttpResponse](
-        verifyPersonalUrl,
-        barsVerifyPersonalRequest,
-        headers = Seq(HeaderNames.USER_AGENT -> "calculate-public-pension-adjustment")
-      )
+    httpClient2
+      .post(url"$verifyPersonalUrl")
+      .withBody(Json.toJson(barsVerifyPersonalRequest))
+      .setHeader((HeaderNames.USER_AGENT, "calculate-public-pension-adjustment"))
+      .execute
 }

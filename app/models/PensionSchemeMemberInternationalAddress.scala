@@ -22,7 +22,7 @@ case class PensionSchemeMemberInternationalAddress(
   addressLine1: String,
   addressLine2: Option[String],
   townOrCity: String,
-  county: Option[String],
+  stateOrRegion: Option[String],
   postCode: Option[String],
   country: String
 )

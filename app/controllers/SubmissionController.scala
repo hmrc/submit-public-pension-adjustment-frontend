@@ -17,11 +17,16 @@
 package controllers
 
 import controllers.actions._
+import models.finalsubmission.AuthRetrievals
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.SubmissionService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SubmissionView
+
+import scala.concurrent.ExecutionContext
 
 class SubmissionController @Inject() (
   override val messagesApi: MessagesApi,
@@ -30,12 +35,33 @@ class SubmissionController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: SubmissionView
-) extends FrontendBaseController
+  view: SubmissionView,
+  submissionService: SubmissionService
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
-    implicit request =>
-      Ok(view())
-  }
+  def onPageLoad: Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+      val authRetrievals = AuthRetrievals(
+        request.userId,
+        request.nino,
+        request.name.map(n => n.name.getOrElse("") + n.lastName.getOrElse("")),
+        request.saUtr,
+        request.dob
+      )
+
+      submissionService
+        .sendFinalSubmission(
+          authRetrievals,
+          request.submission.calculationInputs,
+          request.submission.calculation,
+          request.userAnswers
+        )
+        .map { finalSubmissionResponse =>
+          Ok(view(finalSubmissionResponse))
+
+        }
+
+    }
 }

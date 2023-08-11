@@ -32,7 +32,6 @@ object FinalSubmissionBuilder {
   ): FinalSubmission = {
 
     val submissionInputs = SubmissionInputs(
-      caseNumber = caseNumber,
       administrativeDetails = buildAdministrativeDetails(submissionUserAnswers),
       paymentElections = buildPaymentElections(submissionUserAnswers),
       calculationInputSchemeIdentifiers = buildCalculationInputSchemeIdentifiers(submissionUserAnswers),
