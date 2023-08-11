@@ -48,8 +48,6 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val sppaBaseUrl: String =
     configuration.get[Service]("microservice.services.submit-public-pension-adjustment").baseUrl
 
-  val internalAuthToken: String = configuration.get[String]("internal-auth.token")
-
   val languageTranslationEnabled: Boolean =
     configuration.get[Boolean]("features.welsh-translation")
 
