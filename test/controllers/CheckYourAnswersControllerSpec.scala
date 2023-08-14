@@ -98,6 +98,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       when(mockCalculationInputs.annualAllowance) thenReturn None
+      when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
 
       val submission: Submission =
         Submission("sessionId", "uniqueId", mockCalculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))

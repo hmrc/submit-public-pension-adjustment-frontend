@@ -17,13 +17,15 @@
 package pages
 
 import models.calculation.inputs.CalculationInputs
-import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.inputs.Income.AboveThreshold
-import models.calculation.response.{TaxYearScheme, TotalAmounts}
-import models.calculation.response.CalculationResponse
+import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
+import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode}
-import org.mockito.MockitoSugar.mock
+import models.{CheckMode, NormalMode, PensionSchemeDetails}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.IdiomaticMockito.StubbingOps
+import org.mockito.MockitoSugar.withObjectMocked
+import services.SchemeService
 
 class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
@@ -35,82 +37,9 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
     beRemovable[BigInt](HowMuchTaxReliefPage)
 
-    "must navigate correctly in NormalMode" - {
+    "must navigate correctly in NormalMode when LTAOnly" - {
 
-      "to WhichPensionSchemeWillPayTaxReliefPage when answered" in {
-        val ua                    = emptyUserAnswers
-          .set(
-            HowMuchTaxReliefPage,
-            BigInt("100")
-          )
-          .success
-          .value
-        val mockCalculationInputs = CalculationInputs(
-          models.calculation.inputs.Resubmission(false, None),
-          Option(
-            models.calculation.inputs.AnnualAllowance(
-              List(),
-              List(
-                NormalTaxYear(
-                  2,
-                  List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
-                  5,
-                  0,
-                  models.calculation.inputs.Period._2016PreAlignment,
-                  None
-                ),
-                NormalTaxYear(
-                  4,
-                  List(TaxYearScheme("Scheme2", "00348916Rl", 3, 4, 0)),
-                  5,
-                  0,
-                  models.calculation.inputs.Period._2016PostAlignment,
-                  None
-                ),
-                NormalTaxYear(
-                  5,
-                  List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
-                  8,
-                  6,
-                  models.calculation.inputs.Period._2017,
-                  Some(AboveThreshold(7))
-                )
-              )
-            )
-          ),
-          None
-        )
-
-        val period: models.calculation.response.Period = models.calculation.response.Period._2021
-        val calculationResponse                        = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
-        )
-
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Option(calculationResponse))
-        val result                 = HowMuchTaxReliefPage.navigate(NormalMode, ua, submission).url
-
-        checkNavigation(result, "/which-pension-scheme-will-pay-tax-relief")
-      }
-
-      "to JourneyRecovery when not answered" in {
-        val ua                      = emptyUserAnswers
-        val mockCalculationInputs   = mock[CalculationInputs]
-        val mockCalculationResponse = mock[CalculationResponse]
-        val submission: Submission  =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Option(mockCalculationResponse))
-        val result                  = HowMuchTaxReliefPage.navigate(NormalMode, ua, submission).url
-
-        checkNavigation(result, "/there-is-a-problem")
-      }
-    }
-
-    "must navigate correctly in CheckMode" - {
-
-      "to CYA when answered" in {
+      "to WhichPensionSchemeWillPayTaxReliefPage when multiple schemes" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -119,68 +48,193 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           .success
           .value
 
-        val mockCalculationInputs = CalculationInputs(
-          models.calculation.inputs.Resubmission(false, None),
-          Option(
-            models.calculation.inputs.AnnualAllowance(
-              List(),
-              List(
-                NormalTaxYear(
-                  2,
-                  List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
-                  5,
-                  0,
-                  models.calculation.inputs.Period._2016PreAlignment,
-                  None
-                ),
-                NormalTaxYear(
-                  4,
-                  List(TaxYearScheme("Scheme2", "00348916Rl", 3, 4, 0)),
-                  5,
-                  0,
-                  models.calculation.inputs.Period._2016PostAlignment,
-                  None
-                ),
-                NormalTaxYear(
-                  5,
-                  List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
-                  8,
-                  6,
-                  models.calculation.inputs.Period._2017,
-                  Some(AboveThreshold(7))
-                )
-              )
-            )
-          ),
-          None
-        )
+        val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, ltaOnlySubmissionWithMultipleSchemes).url
 
-        val period: models.calculation.response.Period = models.calculation.response.Period._2021
-        val calculationResponse                        = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
-        )
+        checkNavigation(result, "/which-pension-scheme-will-pay-tax-relief")
+      }
 
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Option(calculationResponse))
+      "to DeclarationsPage when single scheme" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value
 
-        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submission).url
+        val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, ltaOnlySubmissionWithSingleScheme).url
+
+        checkNavigation(result, "/declarations")
+      }
+    }
+
+    "must navigate correctly in CheckMode when LTAOnly" - {
+
+      "to CheckYourAnswers" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value
+
+        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, ltaOnlySubmissionWithMultipleSchemes).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
+    }
+
+    "must navigate correctly in NormalMode" - {
+
+      "to WhichPensionSchemeWillPayTaxReliefPage" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value
+
+        val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, submissionWithMultipleSchemes).url
+
+        checkNavigation(result, "/which-pension-scheme-will-pay-tax-relief")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua = emptyUserAnswers
+
+        val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, submissionWithMultipleSchemes).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "must navigate correctly in CheckMode" - {
+
+      "to CYA" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value
+
+        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionWithMultipleSchemes).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua                      = emptyUserAnswers
-        val mockCalculationInputs   = mock[CalculationInputs]
-        val mockCalculationResponse = mock[CalculationResponse]
-        val submission: Submission  =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Option(mockCalculationResponse))
-        val result                  = HowMuchTaxReliefPage.navigate(CheckMode, ua, submission).url
+        val ua = emptyUserAnswers
+
+        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionWithMultipleSchemes).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
     }
   }
+
+  private def ltaOnlySubmissionWithMultipleSchemes =
+    Submission("sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithMultipleSchemes, None)
+
+  private def ltaOnlySubmissionWithSingleScheme =
+    Submission("sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithSingleScheme, None)
+
+  private def submissionWithMultipleSchemes = {
+    val calculationResponse = CalculationResponse(
+      models.calculation.response.Resubmission(false, None),
+      TotalAmounts(0, 1, 0),
+      List.empty,
+      List(
+        models.calculation.response
+          .InDatesTaxYearsCalculation(models.calculation.response.Period._2021, 320, 0, 0, 0, 0, 0, 0, 0, List.empty)
+      )
+    )
+
+    val submission: Submission =
+      Submission("sessionId", "submissionUniqueId", calculationInputsWithMultipleSchemes, Option(calculationResponse))
+    submission
+  }
+
+  private def ltaOnlyCalculationInputsWithSingleScheme =
+    CalculationInputs(
+      models.calculation.inputs.Resubmission(false, None),
+      None,
+      Some(TestData.lifeTimeAllowanceWithSingeScheme)
+    )
+
+  private def ltaOnlyCalculationInputsWithMultipleSchemes =
+    CalculationInputs(
+      models.calculation.inputs.Resubmission(false, None),
+      None,
+      Some(TestData.lifeTimeAllowanceWithMultipleSchemes)
+    )
+
+  private def calculationInputsWithMultipleSchemes =
+    CalculationInputs(
+      models.calculation.inputs.Resubmission(false, None),
+      Option(
+        models.calculation.inputs.AnnualAllowance(
+          List(),
+          List(
+            NormalTaxYear(
+              2,
+              List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
+              5,
+              0,
+              models.calculation.inputs.Period._2016PreAlignment,
+              None
+            ),
+            NormalTaxYear(
+              4,
+              List(TaxYearScheme("Scheme2", "00348916Rl", 3, 4, 0)),
+              5,
+              0,
+              models.calculation.inputs.Period._2016PostAlignment,
+              None
+            ),
+            NormalTaxYear(
+              5,
+              List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
+              8,
+              6,
+              models.calculation.inputs.Period._2017,
+              Some(AboveThreshold(7))
+            )
+          )
+        )
+      ),
+      None
+    )
+
+  private def calculationInputsWithSingleScheme =
+    CalculationInputs(
+      models.calculation.inputs.Resubmission(false, None),
+      Option(
+        models.calculation.inputs.AnnualAllowance(
+          List(),
+          List(
+            NormalTaxYear(
+              2,
+              List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
+              5,
+              0,
+              models.calculation.inputs.Period._2016PreAlignment,
+              None
+            ),
+            NormalTaxYear(
+              5,
+              List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
+              8,
+              6,
+              models.calculation.inputs.Period._2017,
+              Some(AboveThreshold(7))
+            )
+          )
+        )
+      ),
+      None
+    )
 }

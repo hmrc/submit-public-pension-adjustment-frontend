@@ -16,14 +16,16 @@
 
 package pages
 
-import models.calculation.inputs.CalculationInputs
-import models.calculation.response.{CalculationResponse, TotalAmounts}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
+import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
-import models.calculation.response.Period
 import models.{CheckMode, NormalMode}
 import org.mockito.MockitoSugar.mock
 
 class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
+
+  val mockCalculationInputsWithAA      = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
+  val mockCalculationInputsWithLTAOnly = CalculationInputs(mock[Resubmission], None, Some(mock[LifeTimeAllowance]))
 
   "WhichPensionSchemeWillPayTaxReliefPage" - {
 
@@ -32,6 +34,49 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
     beSettable[String](WhichPensionSchemeWillPayTaxReliefPage)
 
     beRemovable[String](WhichPensionSchemeWillPayTaxReliefPage)
+
+    "must navigate correctly when LTA Only" - {
+
+      "to Declarations in NormalMode" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "Scheme1 / 00348916RT"
+          )
+          .success
+          .value
+
+        val result = WhichPensionSchemeWillPayTaxReliefPage
+          .navigate(
+            NormalMode,
+            ua,
+            Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithLTAOnly, None)
+          )
+          .url
+
+        checkNavigation(result, "/declarations")
+      }
+
+      "to Declarations in CheckMode" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "Scheme1 / 00348916RT"
+          )
+          .success
+          .value
+
+        val result = WhichPensionSchemeWillPayTaxReliefPage
+          .navigate(
+            CheckMode,
+            ua,
+            Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithLTAOnly, None)
+          )
+          .url
+
+        checkNavigation(result, "/declarations")
+      }
+    }
 
     "must navigate correctly in NormalMode" - {
 
@@ -46,8 +91,6 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
         val period: Period = Period._2021
 
-        val mockCalculationInputs = mock[CalculationInputs]
-
         val calculationResponse    = CalculationResponse(
           models.calculation.response.Resubmission(false, None),
           TotalAmounts(0, 1, 0),
@@ -55,7 +98,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
         )
         val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/bank-details")
@@ -72,8 +115,6 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
         val period: Period = Period._2021
 
-        val mockCalculationInputs = mock[CalculationInputs]
-
         val calculationResponse    = CalculationResponse(
           models.calculation.response.Resubmission(false, None),
           TotalAmounts(0, 1, 0),
@@ -81,7 +122,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           List(models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty))
         )
         val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/declarations")
@@ -90,8 +131,6 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
       "to JourneyRecoveryPage when not selected" in {
         val ua = emptyUserAnswers
 
-        val mockCalculationInputs = mock[CalculationInputs]
-
         val calculationResponse    = CalculationResponse(
           models.calculation.response.Resubmission(false, None),
           TotalAmounts(0, 1, 0),
@@ -99,7 +138,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           List.empty
         )
         val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -117,8 +156,6 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           .success
           .value
 
-        val mockCalculationInputs = mock[CalculationInputs]
-
         val calculationResponse    = CalculationResponse(
           models.calculation.response.Resubmission(false, None),
           TotalAmounts(0, 1, 0),
@@ -126,7 +163,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           List.empty
         )
         val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/check-your-answers")
@@ -135,8 +172,6 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
       "to JourneyRecovery when not answered" in {
         val ua = emptyUserAnswers
 
-        val mockCalculationInputs = mock[CalculationInputs]
-
         val calculationResponse    = CalculationResponse(
           models.calculation.response.Resubmission(false, None),
           TotalAmounts(0, 1, 0),
@@ -144,7 +179,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           List.empty
         )
         val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
         val result = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua, submission).url
 

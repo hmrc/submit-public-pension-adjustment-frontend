@@ -18,13 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.WhichPensionSchemeWillPayTaxReliefFormProvider
-import models.calculation.inputs.{CalculationInputs, Period}
+import models.calculation.inputs.Income.AboveThreshold
+import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Period, Resubmission}
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
 import org.mockito.ArgumentMatchers.any
-import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs.Income.AboveThreshold
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.WhichPensionSchemeWillPayTaxReliefPage
@@ -189,7 +189,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
       val period: models.calculation.response.Period = models.calculation.response.Period._2021
 
-      val mockCalculationInputs = mock[CalculationInputs]
+      val mockCalculationInputsWithAA = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
 
       val calculationResponse    = CalculationResponse(
         models.calculation.response.Resubmission(false, None),
@@ -198,7 +198,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
         List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
       )
       val submission: Submission =
-        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+        Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))

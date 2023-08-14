@@ -23,22 +23,36 @@ import play.api.mvc.Call
 
 import scala.util.Try
 
-case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPage[Boolean] {
+case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPageWithLTAOnlyNavigation[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "claimingHigherOrAdditionalTaxRateRelief"
 
-  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
+  override def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
       case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(NormalMode)
       case Some(false) => isMemberCredit(submission, NormalMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+  override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
       case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(CheckMode)
+      case Some(false) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
+    answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
+      case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(NormalMode)
+      case Some(false) => controllers.routes.DeclarationsController.onPageLoad
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
+    answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
+      case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(NormalMode)
       case Some(false) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

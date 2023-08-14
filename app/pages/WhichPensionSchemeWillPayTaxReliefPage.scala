@@ -16,18 +16,18 @@
 
 package pages
 
-import models.{Mode, NormalMode, UserAnswers}
 import models.submission.Submission
+import models.{Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[String] {
+case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[String] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "whichPensionSchemeWillPayTaxRelief"
 
-  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call = {
+  override def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call = {
     val selectedScheme: Option[String] = answers.get(WhichPensionSchemeWillPayTaxReliefPage)
     selectedScheme match {
       case Some(_) => isMemberCredit(submission, NormalMode)
@@ -35,11 +35,17 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPage[String] 
     }
   }
 
-  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+  override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
+    controllers.routes.DeclarationsController.onPageLoad
+
+  override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
+    controllers.routes.DeclarationsController.onPageLoad
 
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
     val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)

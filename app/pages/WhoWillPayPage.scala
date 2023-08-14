@@ -16,7 +16,7 @@
 
 package pages
 
-import models.WhoWillPay.{PensionScheme, You, values}
+import models.WhoWillPay.{PensionScheme, You}
 import models.submission.Submission
 import models.{CheckMode, NormalMode, Period, UserAnswers, WhoWillPay}
 import play.api.libs.json.JsPath

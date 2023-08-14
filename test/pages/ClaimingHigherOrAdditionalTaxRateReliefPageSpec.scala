@@ -16,13 +16,21 @@
 
 package pages
 
-import models.calculation.inputs.CalculationInputs
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
-import models.{BankDetails, CheckMode, NormalMode, WhichPensionSchemeWillPayTaxRelief}
+import models.{CheckMode, NormalMode}
 import org.mockito.MockitoSugar.mock
 
 class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
+
+  val mockCalculationInputsWithAA = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
+  val ltaOnlySubmission           = Submission(
+    "sessionId",
+    "submissionUniqueId",
+    CalculationInputs(mock[Resubmission], None, Some(mock[LifeTimeAllowance])),
+    None
+  )
 
   "ClaimingHigherOrAdditionalTaxRateReliefPage" - {
 
@@ -34,6 +42,34 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
     "must navigate correctly in NormalMode" - {
 
+      "to how much tax relief when answered yes and LTA only" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            true
+          )
+          .success
+          .value
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, ltaOnlySubmission).url
+
+        checkNavigation(result, "/tax-relief-amount")
+      }
+
+      "to declarations when answered no and LTA only" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            false
+          )
+          .success
+          .value
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, ltaOnlySubmission).url
+
+        checkNavigation(result, "/declarations")
+      }
+
       "to BankDetails when answered no and member is in credit" in {
         val ua = emptyUserAnswers
           .set(
@@ -43,19 +79,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .success
           .value
 
-        val period: Period = Period._2021
-
-        val mockCalculationInputs = mock[CalculationInputs]
-
-        val calculationResponse    = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
-        )
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
-        val result                 = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submissionInCredit).url
 
         checkNavigation(result, "/bank-details")
       }
@@ -69,19 +93,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .success
           .value
 
-        val period: Period = Period._2021
-
-        val mockCalculationInputs = mock[CalculationInputs]
-
-        val calculationResponse    = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List(models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty))
-        )
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
-        val result                 = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submissionNotInCredit).url
 
         checkNavigation(result, "/declarations")
       }
@@ -95,34 +107,13 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .success
           .value
 
-        val mockCalculationInputs = mock[CalculationInputs]
-
-        val calculationResponse    = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List.empty
-        )
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
-        val result                 = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
 
         checkNavigation(result, "/tax-relief-amount")
       }
 
       "to JourneyRecovery when not answered" in {
         val ua = emptyUserAnswers
-
-        val mockCalculationInputs = mock[CalculationInputs]
-
-        val calculationResponse    = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List.empty
-        )
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submission).url
 
@@ -131,6 +122,34 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
     }
 
     "must navigate correctly in CheckMode" - {
+
+      "to change how much tax relief when answered yes and LTA only" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            true
+          )
+          .success
+          .value
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, ltaOnlySubmission).url
+
+        checkNavigation(result, "/tax-relief-amount")
+      }
+
+      "to check your answers when answered no and LTA only" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            false
+          )
+          .success
+          .value
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, ltaOnlySubmission).url
+
+        checkNavigation(result, "/check-your-answers")
+      }
 
       "to HowMuchTaxReliefPage when answered yes and member is not in credit " in {
         val ua = emptyUserAnswers
@@ -141,18 +160,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .success
           .value
 
-        val mockCalculationInputs = mock[CalculationInputs]
-
-        val calculationResponse    = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List.empty
-        )
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
-
-        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submission).url
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionNotInCredit).url
 
         checkNavigation(result, "/change-tax-relief-amount")
       }
@@ -166,20 +174,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .success
           .value
 
-        val period: Period = Period._2021
-
-        val mockCalculationInputs = mock[CalculationInputs]
-
-        val calculationResponse    = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List(models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty))
-        )
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
-
-        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submission).url
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionNotInCredit).url
 
         checkNavigation(result, "/check-your-answers")
       }
@@ -187,22 +182,12 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
       "to JourneyRecovery when not selected" in {
         val ua = emptyUserAnswers
 
-        val mockCalculationInputs = mock[CalculationInputs]
-
-        val calculationResponse    = CalculationResponse(
-          models.calculation.response.Resubmission(false, None),
-          TotalAmounts(0, 1, 0),
-          List.empty,
-          List.empty
-        )
-        val submission: Submission =
-          Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
-
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
     }
+
     "cleanup" - {
       "must cleanup correctly when answered no" in {
         val ua = emptyUserAnswers
@@ -217,5 +202,33 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe None
       }
     }
+  }
+
+  private def submissionInCredit = {
+    val period: Period = Period._2021
+
+    val calculationResponse    = CalculationResponse(
+      models.calculation.response.Resubmission(false, None),
+      TotalAmounts(0, 1, 0),
+      List.empty,
+      List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
+    )
+    val submission: Submission =
+      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+    submission
+  }
+
+  private def submissionNotInCredit = {
+    val period: Period = Period._2021
+
+    val calculationResponse    = CalculationResponse(
+      models.calculation.response.Resubmission(false, None),
+      TotalAmounts(0, 1, 0),
+      List.empty,
+      List(models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty))
+    )
+    val submission: Submission =
+      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+    submission
   }
 }

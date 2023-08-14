@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ClaimOnBehalfFormProvider
-import models.calculation.inputs.CalculationInputs
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission}
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.{NormalMode, UserAnswers}
@@ -84,9 +84,9 @@ class ClaimOnBehalfControllerSpec extends SpecBase with MockitoSugar {
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository    = mock[SessionRepository]
-      val mockSubmissionRepository = mock[SubmissionRepository]
-      val mockCalculationInputs    = mock[CalculationInputs]
+      val mockSessionRepository       = mock[SessionRepository]
+      val mockSubmissionRepository    = mock[SubmissionRepository]
+      val mockCalculationInputsWithAA = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
@@ -97,7 +97,7 @@ class ClaimOnBehalfControllerSpec extends SpecBase with MockitoSugar {
         List.empty
       )
       val submission: Submission =
-        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+        Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
