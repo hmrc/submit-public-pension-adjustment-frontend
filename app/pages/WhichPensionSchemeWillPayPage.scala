@@ -16,9 +16,11 @@
 
 package pages
 
-import models.{NormalMode, PSTR, Period, UserAnswers}
+import models.{CheckMode, NormalMode, PSTR, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[String] {
 
@@ -38,7 +40,16 @@ case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[St
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhichPensionSchemeWillPayPage(period)) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(PSTR.New) =>
+        controllers.routes.PensionSchemeDetailsController.onPageLoad(CheckMode, period)
+      case Some(_)        => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, period)
+      case _              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def cleanup(value: Option[String], userAnswers: UserAnswers): Try[UserAnswers] =
+    value match {
+      case Some("Private pension scheme") => super.cleanup(value, userAnswers)
+      case Some(_)                        => userAnswers.remove(PensionSchemeDetailsPage(period))
+      case None                           => super.cleanup(value, userAnswers)
     }
 }

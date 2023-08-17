@@ -16,12 +16,14 @@
 
 package pages
 
-import models.WhoWillPay.{PensionScheme, You}
+import models.WhoWillPay.{PensionScheme, You, values}
 import models.submission.Submission
-import models.{NormalMode, Period, UserAnswers, WhoWillPay}
+import models.{CheckMode, NormalMode, Period, UserAnswers, WhoWillPay}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
+
+import scala.util.Try
 
 case class WhoWillPayPage(period: Period) extends QuestionPage[WhoWillPay] {
 
@@ -43,7 +45,28 @@ case class WhoWillPayPage(period: Period) extends QuestionPage[WhoWillPay] {
 
   override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhoWillPayPage(period)) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(PensionScheme) => controllers.routes.WhichPensionSchemeWillPayController.onPageLoad(CheckMode, period)
+      case Some(You)           =>
+        val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
+        nextDebitPeriod match {
+          case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(CheckMode, period)
+          case None         => controllers.routes.CheckYourAnswersController.onPageLoad
+        }
+      case _                   => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[WhoWillPay], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case WhoWillPay.You =>
+          userAnswers
+            .remove(WhichPensionSchemeWillPayPage(period))
+            .flatMap(_.remove(PensionSchemeDetailsPage(period)))
+            .flatMap(_.remove(AskedPensionSchemeToPayTaxChargePage(period)))
+            .flatMap(_.remove(WhenWillYouAskPensionSchemeToPayPage(period)))
+            .flatMap(_.remove(WhenDidYouAskPensionSchemeToPayPage(period)))
+
+        case WhoWillPay.PensionScheme => super.cleanup(value, userAnswers)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

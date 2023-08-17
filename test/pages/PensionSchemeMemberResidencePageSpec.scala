@@ -106,4 +106,33 @@ class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
     checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
+
+  "cleanup" - {
+
+    "must cleanup correctly when answered no" in {
+      val ua = emptyUserAnswers
+        .set(
+          PensionSchemeMemberUKAddressPage,
+          arbitraryPensionSchemeMemberUKAddress.arbitrary.sample.value
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers = PensionSchemeMemberResidencePage.cleanup(Some(false), ua).success.value
+      cleanedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe None
+    }
+
+    "must cleanup correctly when answered yes" in {
+      val ua = emptyUserAnswers
+        .set(
+          PensionSchemeMemberInternationalAddressPage,
+          arbitraryPensionSchemeMemberInternationalAddress.arbitrary.sample.value
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers = PensionSchemeMemberResidencePage.cleanup(Some(true), ua).success.value
+      cleanedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) mustBe None
+    }
+  }
 }

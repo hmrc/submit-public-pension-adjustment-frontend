@@ -106,4 +106,20 @@ class AlternativeNamePageSpec extends PageBehaviours {
 
     checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
+
+  "cleanup" - {
+
+    "must cleanup correctly when answered yes" in {
+      val ua = emptyUserAnswers
+        .set(
+          EnterAlternativeNamePage,
+          "John Doe"
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers = AlternativeNamePage.cleanup(Some(true), ua).success.value
+      cleanedUserAnswers.get(EnterAlternativeNamePage) mustBe None
+    }
+  }
 }

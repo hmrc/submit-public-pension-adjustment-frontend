@@ -54,7 +54,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to CYA when answered" in {
+      "to asked pension scheme to pay charge page when answered" in {
         val ua     = emptyUserAnswers
           .set(
             PensionSchemeDetailsPage(Period._2020),
@@ -64,7 +64,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
           .value
         val result = PensionSchemeDetailsPage(Period._2020).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/change-asked-pension-scheme-to-pay-tax-charge/2020")
       }
 
       "to JourneyRecovery when not answered" in {

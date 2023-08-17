@@ -70,17 +70,36 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
     }
   }
 
-  "must redirect to check your answer page when user submits data in check mode" in {
+  "must redirect to Pension Scheme Members Nino page when user submits data in checkmode" in {
 
-    val page = PensionSchemeMemberDOBPage
+    val page   = PensionSchemeMemberDOBPage
+    val status = StatusOfUser
+
+    val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .success
+      .value
+    if (status == status.Deputyship) {
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-their-date-of-death")
+    }
+  }
+
+  "must redirect to Members Date of Death page when user submits data in checkmode" in {
+
+    val page   = PensionSchemeMemberDOBPage
+    val status = StatusOfUser
 
     val userAnswers = emptyUserAnswers
       .set(page, LocalDate.of(1995, 1, 1))
       .success
       .value
 
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+    if (status == status.PowerOfAttorney) {
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+      checkNavigation(nextPageUrl, "/change-their-nino")
+    }
   }
 }

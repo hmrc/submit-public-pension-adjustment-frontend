@@ -16,7 +16,9 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, Period, WhenWillYouAskPensionSchemeToPay}
+
+import java.time.LocalDate
 
 class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
 
@@ -97,6 +99,37 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
         val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "cleanup" - {
+
+      "must cleanup correctly when answered no" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhenDidYouAskPensionSchemeToPayPage(Period._2020),
+            LocalDate.of(2020, 1, 1)
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers =
+          AskedPensionSchemeToPayTaxChargePage(Period._2020).cleanup(Some(false), ua).success.value
+        cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
+      }
+
+      "must cleanup correctly when answered yes" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhenWillYouAskPensionSchemeToPayPage(Period._2020),
+            WhenWillYouAskPensionSchemeToPay.OctToDec23
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers =
+          AskedPensionSchemeToPayTaxChargePage(Period._2020).cleanup(Some(true), ua).success.value
+        cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
       }
     }
   }

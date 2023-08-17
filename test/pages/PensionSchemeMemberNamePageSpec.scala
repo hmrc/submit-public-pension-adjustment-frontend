@@ -16,7 +16,7 @@
 
 package pages
 
-import models.NormalMode
+import models.{CheckMode, NormalMode}
 
 class PensionSchemeMemberNamePageSpec extends PageBehaviours {
 
@@ -41,5 +41,19 @@ class PensionSchemeMemberNamePageSpec extends PageBehaviours {
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/their-dob")
+  }
+
+  "must redirect to Pension Scheme Members DOB page when user submits data in check mode" in {
+
+    val page = PensionSchemeMemberNamePage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, "bob")
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/change-their-dob")
   }
 }

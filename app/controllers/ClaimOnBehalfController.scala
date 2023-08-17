@@ -54,21 +54,20 @@ class ClaimOnBehalfController @Inject() (
       Ok(view(preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
-    form
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-        value =>
-          for {
-            updatedAnswers <-
-              Future.fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ClaimOnBehalfPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield request.submission
-            .map { s =>
-              Redirect(ClaimOnBehalfPage.navigate(mode, updatedAnswers, s))
-            }
-            .getOrElse(Redirect(routes.CalculationPrerequisiteController.onPageLoad.url))
-      )
+  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireCalculationData).async {
+    implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value =>
+            for {
+              updatedAnswers <-
+                Future.fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ClaimOnBehalfPage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(
+              ClaimOnBehalfPage.navigate(mode, updatedAnswers, request.submission)
+            )
+        )
   }
 }

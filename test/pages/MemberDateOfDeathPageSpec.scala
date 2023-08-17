@@ -16,8 +16,9 @@
 
 package pages
 
-import java.time.LocalDate
+import models.{CheckMode, NormalMode}
 
+import java.time.LocalDate
 import org.scalacheck.Arbitrary
 
 class MemberDateOfDeathPageSpec extends PageBehaviours {
@@ -33,5 +34,35 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
     beSettable[LocalDate](MemberDateOfDeathPage)
 
     beRemovable[LocalDate](MemberDateOfDeathPage)
+  }
+
+  "must redirect to Pension Scheme Members Nino page when user submits data in normal mode" in {
+
+    val page = MemberDateOfDeathPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/their-nino")
+
+  }
+
+  "must redirect to Pension Scheme Members Nino page when user submits data in checkmode" in {
+
+    val page = MemberDateOfDeathPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/change-their-nino")
+
   }
 }

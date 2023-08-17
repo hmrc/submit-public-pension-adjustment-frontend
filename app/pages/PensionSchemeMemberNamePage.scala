@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -30,6 +30,6 @@ case object PensionSchemeMemberNamePage extends QuestionPage[String] {
     controllers.routes.PensionSchemeMemberDOBController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.routes.CheckYourAnswersController.onPageLoad
+    controllers.routes.PensionSchemeMemberDOBController.onPageLoad(CheckMode)
 
 }

@@ -18,7 +18,7 @@ package pages
 
 import controllers.routes
 import models.submission.Submission
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
+import models.{CheckMode, Mode, NormalMode, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
@@ -71,14 +71,45 @@ case object ClaimOnBehalfPage extends QuestionPage[Boolean] {
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    val periodsToCleanup = PeriodService.allInDateRemedyPeriods
     value
       .map {
         case false =>
-          for {
-            updated <- userAnswers.remove(StatusOfUserPage)
-          } yield updated
-        case true  => super.cleanup(value, userAnswers)
+          onBehalfOfCleanup(userAnswers)
+
+        case true =>
+          Try(periodPageCleanup(userAnswers, periodsToCleanup))
       }
       .getOrElse(super.cleanup(value, userAnswers))
+  }
+
+  private def onBehalfOfCleanup(userAnswers: UserAnswers) =
+    userAnswers
+      .remove(StatusOfUserPage)
+      .flatMap(_.remove(PensionSchemeMemberNamePage))
+      .flatMap(_.remove(PensionSchemeMemberDOBPage))
+      .flatMap(_.remove(PensionSchemeMemberNinoPage))
+      .flatMap(_.remove(MemberDateOfDeathPage))
+      .flatMap(_.remove(PensionSchemeMemberTaxReferencePage))
+      .flatMap(_.remove(PensionSchemeMemberResidencePage))
+      .flatMap(_.remove(PensionSchemeMemberUKAddressPage))
+      .flatMap(_.remove(PensionSchemeMemberInternationalAddressPage))
+
+  def periodPageCleanup(answers: UserAnswers, periods: Seq[Period]): UserAnswers =
+    periods.headOption match {
+      case Some(period) =>
+        periodPageCleanup(
+          answers
+            .remove(WhoWillPayPage(period))
+            .flatMap(_.remove(WhichPensionSchemeWillPayPage(period)))
+            .flatMap(_.remove(PensionSchemeDetailsPage(period)))
+            .flatMap(_.remove(AskedPensionSchemeToPayTaxChargePage(period)))
+            .flatMap(_.remove(WhenWillYouAskPensionSchemeToPayPage(period)))
+            .flatMap(_.remove(WhenDidYouAskPensionSchemeToPayPage(period)))
+            .get,
+          periods.tail
+        )
+      case None         => answers
+    }
 }
