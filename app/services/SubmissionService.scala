@@ -95,8 +95,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       else
         authRetrievals.name.getOrElse("")
 
-    val alternateName =
-      userAnswers.get(EnterAlternativeNamePage)
+    val alternateName = userAnswers.get(EnterAlternativeNamePage)
 
     val dateOfBirth =
       if (flagClaimOnBehalf)
@@ -104,15 +103,9 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       else
         authRetrievals.dob
 
-    val address = userAnswers
-      .get(PensionSchemeMemberUKAddressPage)
-      .map(ua => UkAddress(ua.addressLine1, ua.addressLine2, ua.townOrCity, ua.county, ua.postCode))
+    val address = userAnswers.get(UkAddressPage)
 
-    val internationalAddress = userAnswers
-      .get(PensionSchemeMemberInternationalAddressPage)
-      .map(ia =>
-        InternationalAddress(ia.addressLine1, ia.addressLine2, ia.townOrCity, ia.stateOrRegion, ia.postCode, ia.country)
-      )
+    val internationalAddress = userAnswers.get(InternationalAddressPage)
 
     val contactPhoneNumber = userAnswers.get(ContactNumberPage)
 
