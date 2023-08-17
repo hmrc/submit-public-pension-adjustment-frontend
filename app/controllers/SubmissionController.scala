@@ -46,7 +46,7 @@ class SubmissionController @Inject() (
       val authRetrievals = AuthRetrievals(
         request.userId,
         request.nino,
-        request.name.map(n => n.name.getOrElse("") + " " + n.lastName.getOrElse("")),
+        request.name.map(n => (n.name.getOrElse("") + " " + n.lastName.getOrElse("")).trim),
         request.saUtr,
         request.dob
       )
