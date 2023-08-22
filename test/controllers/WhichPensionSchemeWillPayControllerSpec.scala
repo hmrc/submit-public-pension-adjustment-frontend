@@ -20,10 +20,10 @@ import base.SpecBase
 import forms.WhichPensionSchemeWillPayFormProvider
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs.{CalculationInputs, Period}
+import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TaxYearScheme}
 import models.submission.Submission
-import models.{NormalMode, Period, UserAnswers, WhichPensionSchemeWillPay}
+import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar

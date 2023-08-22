@@ -224,12 +224,14 @@ legacyPensionSchemeReference.heading = cy: What is your legacy individual pensio
 legacyPensionSchemeReference.checkYourAnswersLabel = cy: What is your legacy individual pension scheme reference?
 legacyPensionSchemeReference.error.length = cy: Legacy individual pension scheme reference must be 15 characters or less
 legacyPensionSchemeReference.change.hidden = cy: What is your legacy individual pension scheme reference?
+legacyPensionSchemeReference.caption = cy: Relating to scheme
 
 reformPensionSchemeReference.title = cy: What is your reform individual pension scheme reference?(optional)
 reformPensionSchemeReference.heading = cy: What is your reform individual pension scheme reference?(optional)
 reformPensionSchemeReference.checkYourAnswersLabel = cy: What is your reform individual pension scheme reference?
 reformPensionSchemeReference.error.length = cy: Reform individual pension scheme reference must be 15 characters or less
 reformPensionSchemeReference.change.hidden = cy: What is your reform individual pension scheme reference?
+reformPensionSchemeReference.caption = cy: Relating to scheme
 
 claimingHigherOrAdditionalTaxRateRelief.title = cy: Are you claiming for higher or additional tax rate relief?
 claimingHigherOrAdditionalTaxRateRelief.heading = cy: Are you claiming for higher or additional tax rate relief?
@@ -299,24 +301,32 @@ contactNumber.label = cy: (optional)
 
 declarations.title = cy: Declarations
 declarations.heading = cy: Declarations
-declarations.makingDeclarationsFor = cy: By sending a public service pension adjustment, you are making a declaration of:
-declarations.compensation = cy: compensation
-declarations.emailConsent = cy: email consent
-declarations.contactDetails = cy: contact details
-declarations.powerOfAttorney = cy: power of attorney, if applicable
-declarations.confirmInformation = cy: By sending the adjustment you confirm that the information you have given is complete and correct. If you deliberately give the wrong or incomplete information, or you do not report any changes, you may:
-declarations.beProsecuted = cy: be prosecuted
-declarations.financialPenalty = cy: need to pay a financial penalty
-declarations.payBackMoney = cy: need to pay back any money you are overpaid if you are asked to
 declaration.confirm = cy: Confirm
+
+declarations.user.makingDeclarationsFor = cy: By sending a public service pension adjustment, I declare that the information I’ve given:
+declarations.user.bullet1 = cy: is correct and complete to the best of my knowledge and belief
+declarations.user.bullet2 = cy: in respect of annual allowance and lifetime allowance for any of the tax years from 2019 to 2020 and 2022 to 2023 is accurate and complete to the best of my knowledge and belief
+declarations.user.bullet3 = cy: on this form relates solely to myself and understand that I may be contacted to provide additional information
+declarations.user.confirmInformation = cy: As a result, I understand that:
+declarations.user.bullet4 = cy: I can only receive compensation for amounts I am entitled to
+declarations.user.bullet5 = cy: I may have to pay financial penalties
+declarations.user.bullet6 = cy: I may face prosecution if I give false information
+
+declarations.member.makingDeclarationsFor = cy: By sending a public service pension adjustment and information on behalf of {0}, I understand that:
+declarations.member.bullet1 = cy: I may be required to provide additional information in support of this form
+declarations.member.bullet2 = cy: I am submitting this information as they are not able to
+declarations.member.confirmInformation = cy: As a result, I understand that if I give false information on {0}’s behalf that:
+declarations.member.bullet3 = cy: I may have to pay financial penalties
+declarations.member.bullet4 = cy: I may face prosecution
 
 submission.title = cy: Adjustment sent
 submission.heading = cy: Adjustment sent
-submission.adjustmentSent = cy: Your submission for an adjustment has been sent. We have sent you a confirmation email.
-submission.communicateHMRC = cy: For communicating with HMRC, you must use your National Insurance number.
+submission.panel.message = cy: Submission reference number:
+submission.adjustmentSent = cy: Your submission for an adjustment has been sent.
+submission.communicateHMRC = cy: For communicating with HMRC, you must use your submission reference number.
 submission.whatNext = cy: What happens next
-submission.pensionAdministrator = cy: Your pension administrator will contact you to confirm your submission, or to ask for more information.
-submission.receiveCompensation = cy: The process of receiving any compensation you may be owed will take
+submission.whatNext.message1 = cy: If you have made an adjustment for the years between 2015 to 2016 and 2018 to 2019, it will be checked by HMRC. Once this has been done, they will send it to your public service pension scheme administrator.
+submission.whatNext.message2= cy: If your adjustment is for the years between 2019 to 2020 and 2022 to 2023, it will be checked and processed by HMRC.
 submission.link = cy: What did you think of this service?
 submission.takesSecond = cy: (takes 30 seconds)
 

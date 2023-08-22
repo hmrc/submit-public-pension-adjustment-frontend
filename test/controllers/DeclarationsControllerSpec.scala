@@ -15,8 +15,8 @@
  */
 
 package controllers
-
 import base.SpecBase
+import pages.{ClaimOnBehalfPage, PensionSchemeMemberNamePage}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.DeclarationsView
@@ -41,7 +41,7 @@ class DeclarationsControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[DeclarationsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        contentAsString(result) mustEqual view(false, "")(request, messages(application)).toString
       }
     }
 
@@ -56,6 +56,69 @@ class DeclarationsControllerSpec extends SpecBase {
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+      }
+    }
+
+    "must return isClaimOnBehalf true when user answers yes in claim on behalf page " in {
+
+      val ua = emptyUserAnswers.set(ClaimOnBehalfPage, true).success.value
+
+      val application = applicationBuilder(userAnswers = Some(ua), submission = Some(submission)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, declarationsRoute)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[DeclarationsView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(isClaimOnBehalf = true, "")(request, messages(application)).toString
+      }
+    }
+
+    "must return isClaimOnBehalf false when user answers no in claim on behalf page " in {
+
+      val ua = emptyUserAnswers.set(ClaimOnBehalfPage, false).success.value
+
+      val application = applicationBuilder(userAnswers = Some(ua), submission = Some(submission)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, declarationsRoute)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[DeclarationsView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(isClaimOnBehalf = false, "")(request, messages(application)).toString
+      }
+    }
+
+    "must retrieve Pension Scheme Member Name from user answers" in {
+
+      val ua = emptyUserAnswers
+        .set(ClaimOnBehalfPage, true)
+        .success
+        .value
+        .set(PensionSchemeMemberNamePage, "John Doe")
+        .success
+        .value
+
+      val application = applicationBuilder(userAnswers = Some(ua), submission = Some(submission)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, declarationsRoute)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[DeclarationsView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(isClaimOnBehalf = true, "John Doe")(
+          request,
+          messages(application)
+        ).toString
       }
     }
   }

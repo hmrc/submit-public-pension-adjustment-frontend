@@ -17,6 +17,8 @@
 package controllers
 
 import controllers.actions._
+import models.UserAnswers
+import pages.{ClaimOnBehalfPage, PensionSchemeMemberNamePage}
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -36,6 +38,15 @@ class DeclarationsController @Inject() (
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
-      Ok(view())
+      val memberName: String = request.userAnswers.get(PensionSchemeMemberNamePage).getOrElse("")
+      Ok(view(isClaimOnBehalf(request.userAnswers), memberName))
   }
+
+  def isClaimOnBehalf(userAnswers: UserAnswers): Boolean =
+    userAnswers.get(ClaimOnBehalfPage) match {
+      case Some(true) => true
+      case _          => false
+      case None       => false
+    }
+
 }
