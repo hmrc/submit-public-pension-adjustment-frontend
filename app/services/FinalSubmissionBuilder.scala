@@ -52,7 +52,9 @@ object FinalSubmissionBuilder {
           dateOfBirth = None,
           address = None,
           internationalAddress = None,
-          contactPhoneNumber = None
+          contactPhoneNumber = None,
+          pensionSchemeMemberAddress = None,
+          pensionSchemeMemberInternationalAddress = None
         ),
         TaxIdentifiers(None, None, None)
       ),
