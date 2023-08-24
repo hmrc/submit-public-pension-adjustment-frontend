@@ -16,7 +16,7 @@
 
 package models.finalsubmission
 
-import models.{InternationalAddress, UkAddress}
+import models.{InternationalAddress, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, UkAddress}
 import play.api.libs.json.{Format, Json}
 
 import java.time.LocalDate
@@ -27,6 +27,8 @@ case class PersonalDetails(
   dateOfBirth: Option[LocalDate],
   address: Option[UkAddress],
   internationalAddress: Option[InternationalAddress],
+  pensionSchemeMemberAddress: Option[PensionSchemeMemberUKAddress],
+  pensionSchemeMemberInternationalAddress: Option[PensionSchemeMemberInternationalAddress],
   contactPhoneNumber: Option[String]
 ) {}
 

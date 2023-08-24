@@ -107,9 +107,35 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
 
     val internationalAddress = userAnswers.get(InternationalAddressPage)
 
+    val pensionSchemeMemberAddress = userAnswers.get(PensionSchemeMemberUKAddressPage)
+
+    val pensionSchemeMemberInternationalAddress = userAnswers.get(PensionSchemeMemberInternationalAddressPage)
+
     val contactPhoneNumber = userAnswers.get(ContactNumberPage)
 
-    PersonalDetails(fullName, alternateName, dateOfBirth, address, internationalAddress, contactPhoneNumber)
+    if (flagClaimOnBehalf)
+      PersonalDetails(
+        fullName,
+        alternateName,
+        dateOfBirth,
+        None,
+        None,
+        pensionSchemeMemberAddress,
+        pensionSchemeMemberInternationalAddress,
+        contactPhoneNumber
+      )
+    else
+      PersonalDetails(
+        fullName,
+        alternateName,
+        dateOfBirth,
+        address,
+        internationalAddress,
+        None,
+        None,
+        contactPhoneNumber
+      )
+
   }
 
   def buildTaxIdentifiers(
