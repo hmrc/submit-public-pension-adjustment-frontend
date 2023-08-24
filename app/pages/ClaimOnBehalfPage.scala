@@ -25,13 +25,13 @@ import services.PeriodService
 
 import scala.util.Try
 
-case object ClaimOnBehalfPage extends QuestionPage[Boolean] {
+case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "claimOnBehalf"
 
-  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
+  override def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
       case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
       case Some(false) =>
@@ -55,9 +55,9 @@ case object ClaimOnBehalfPage extends QuestionPage[Boolean] {
     }
   }
 
-  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+  override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
-      case Some(true)  => routes.StatusOfUserController.onPageLoad(CheckMode)
+      case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
       case Some(false) =>
         submission.calculation match {
           case Some(calculation) =>
@@ -68,6 +68,20 @@ case object ClaimOnBehalfPage extends QuestionPage[Boolean] {
             }
           case None              => routes.JourneyRecoveryController.onPageLoad(None)
         }
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
+    answers.get(ClaimOnBehalfPage) match {
+      case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
+      case Some(false) => routes.AlternativeNameController.onPageLoad(NormalMode)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
+    answers.get(ClaimOnBehalfPage) match {
+      case Some(true)  => routes.StatusOfUserController.onPageLoad(CheckMode)
+      case Some(false) => routes.CheckYourAnswersController.onPageLoad
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -112,4 +126,5 @@ case object ClaimOnBehalfPage extends QuestionPage[Boolean] {
         )
       case None         => answers
     }
+
 }

@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers
 
-import models.{PensionSchemeDetails, Period}
+import models.PensionSchemeDetails
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow

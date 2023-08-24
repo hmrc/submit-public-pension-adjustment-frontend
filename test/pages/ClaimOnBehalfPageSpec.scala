@@ -17,10 +17,11 @@
 package pages
 
 import models.StatusOfUser.Deputyship
-import models.calculation.inputs.CalculationInputs
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, WhichPensionSchemeWillPay, WhoWillPay}
+import org.mockito.Mockito
 import org.mockito.MockitoSugar.mock
 
 import java.time.LocalDate
@@ -36,7 +37,8 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     beRemovable[Boolean](ClaimOnBehalfPage)
   }
 
-  val mockCalculationInputs = mock[CalculationInputs]
+  val mockCalculationInputsWithLTAOnly = CalculationInputs(mock[Resubmission], None, Some(mock[LifeTimeAllowance]))
+  val mockCalculationInputsWithAA      = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
 
   val debitPeriodSubmission =
     Submission(sessionId, uniqueId, calculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))
@@ -50,7 +52,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .success
       .value
 
-    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputs, None)
+    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
     val nextPageUrl: String    = page.navigate(NormalMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/status-of-user")
@@ -68,7 +70,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     val submission: Submission = Submission(
       "sessionId",
       "submissionUniqueId",
-      mockCalculationInputs,
+      mockCalculationInputsWithAA,
       Some(aCalculationResponseWithAnInDateDebitYear)
     )
 
@@ -93,14 +95,14 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       List.empty
     )
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/alternative-name")
   }
 
-  "must redirect user to change status of user when user resubmits yes in check mode" in {
+  "must redirect to set status of user when user submits yes in check mode" in {
 
     val page = ClaimOnBehalfPage
 
@@ -109,11 +111,11 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .success
       .value
 
-    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputs, None)
+    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/change-status-of-user")
+    checkNavigation(nextPageUrl, "/status-of-user")
   }
 
   "must redirect to who paid charge page when user selects no and user is in debit in check mode" in {
@@ -128,7 +130,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     val submission: Submission = Submission(
       "sessionId",
       "submissionUniqueId",
-      mockCalculationInputs,
+      mockCalculationInputsWithAA,
       Some(aCalculationResponseWithAnInDateDebitYear)
     )
 
@@ -154,7 +156,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     )
 
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
@@ -167,7 +169,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
 
-    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputs, None)
+    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
@@ -180,11 +182,95 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
 
-    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputs, None)
+    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
+  "must redirect to alternate name page when LTA only submission and user selects no in normal mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, false)
+      .success
+      .value
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputsWithLTAOnly,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/alternative-name")
+  }
+
+  "must redirect to status of user page when LTA only submission and user selects yes in normal mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, true)
+      .success
+      .value
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputsWithLTAOnly,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/status-of-user")
+  }
+
+  "must redirect to check your answers when LTA only submission and user selects no in check mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, false)
+      .success
+      .value
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputsWithLTAOnly,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/check-your-answers")
+  }
+
+  "must redirect to change status of user when LTA only submission and user selects yes in check mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, true)
+      .success
+      .value
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputsWithLTAOnly,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/status-of-user")
   }
 
   "cleanup" - {

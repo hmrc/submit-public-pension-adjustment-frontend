@@ -16,8 +16,7 @@
 
 package services
 
-import models.calculation.inputs.{CalculationInputs, TaxYear2016To2023}
-import models.calculation.response.TaxYearScheme
+import models.calculation.inputs.{CalculationInputs, LifeTimeAllowance, TaxYear2016To2023}
 import models.{PSTR, PensionSchemeDetails, WhichPensionSchemeWillPay, WhichPensionSchemeWillPayTaxRelief}
 
 object SchemeService {
@@ -29,7 +28,7 @@ object SchemeService {
 
   def allPensionSchemeDetails(calculationInputs: CalculationInputs): Seq[PensionSchemeDetails] =
     getAllPensionSchemeDetails(calculationInputs).map(taxYearScheme =>
-      PensionSchemeDetails(taxYearScheme.name, taxYearScheme.pensionSchemeTaxReference)
+      PensionSchemeDetails(taxYearScheme.pensionSchemeName, taxYearScheme.pensionSchemeTaxReference)
     )
 
   def allSchemeDetails(calculationInputs: CalculationInputs): WhichPensionSchemeWillPay = {
@@ -47,7 +46,10 @@ object SchemeService {
   def allSchemeDetailsForTaxReliefLength(calculationInputs: CalculationInputs): Int =
     getAllPensionSchemeDetails(calculationInputs).length
 
-  private def getAllPensionSchemeDetails(calculationInputs: CalculationInputs): Seq[TaxYearScheme] =
+  private def getAllPensionSchemeDetails(calculationInputs: CalculationInputs): Seq[PensionSchemeDetails] =
+    schemesFromAAInputs(calculationInputs) ++ schemesFromLtaInputs(calculationInputs)
+
+  private def schemesFromAAInputs(calculationInputs: CalculationInputs) =
     calculationInputs.annualAllowance
       .map {
         _.taxYears flatMap {
@@ -63,7 +65,21 @@ object SchemeService {
       .getOrElse(Nil)
       .flatten
       .distinctBy(_.pensionSchemeTaxReference)
+      .map(t => PensionSchemeDetails(t.name, t.pensionSchemeTaxReference))
 
-  private def schemeNameAndReference(taxYearScheme: TaxYearScheme) =
-    s"${taxYearScheme.name} / ${taxYearScheme.pensionSchemeTaxReference}"
+  private def schemesFromLtaInputs(calculationInputs: CalculationInputs) = {
+    val maybeLta: Option[LifeTimeAllowance] = calculationInputs.lifeTimeAllowance
+
+    Seq(
+      maybeLta
+        .flatMap(lta => lta.previousLifetimeAllowanceChargeSchemeNameAndTaxRef)
+        .map(nameAndRef => PensionSchemeDetails(nameAndRef.name, nameAndRef.taxRef)),
+      maybeLta
+        .flatMap(lta => lta.newLifetimeAllowanceChargeSchemeNameAndTaxRef)
+        .map(nameAndRef => PensionSchemeDetails(nameAndRef.name, nameAndRef.taxRef))
+    ).flatten
+  }
+
+  private def schemeNameAndReference(taxYearScheme: PensionSchemeDetails) =
+    s"${taxYearScheme.pensionSchemeName} / ${taxYearScheme.pensionSchemeTaxReference}"
 }
