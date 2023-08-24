@@ -23,7 +23,7 @@ import models.WhoWillPay.{PensionScheme, You}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, Period}
 import models.finalsubmission._
-import models.{InternationalAddress, PSTR, UkAddress, UserAnswers, WhenWillYouAskPensionSchemeToPay}
+import models.{InternationalAddress, PSTR, UkAddress, UserAnswers}
 import pages._
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier

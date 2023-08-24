@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.WhichPensionSchemeWillPayTaxReliefFormProvider
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Period, TaxYear}
+import models.calculation.inputs.{CalculationInputs, Period}
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}

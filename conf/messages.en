@@ -301,24 +301,32 @@ contactNumber.label = (optional)
 
 declarations.title = Declarations
 declarations.heading = Declarations
-declarations.makingDeclarationsFor = By sending a public service pension adjustment, you are making a declaration of:
-declarations.compensation = compensation
-declarations.emailConsent = email consent
-declarations.contactDetails = contact details
-declarations.powerOfAttorney = power of attorney, if applicable
-declarations.confirmInformation = By sending the adjustment you confirm that the information you have given is complete and correct. If you deliberately give the wrong or incomplete information, or you do not report any changes, you may:
-declarations.beProsecuted = be prosecuted
-declarations.financialPenalty = need to pay a financial penalty
-declarations.payBackMoney = need to pay back any money you are overpaid if you are asked to
 declaration.confirm = Confirm
+
+declarations.user.makingDeclarationsFor = By sending a public service pension adjustment, I declare that the information I’ve given:
+declarations.user.bullet1 = is correct and complete to the best of my knowledge and belief
+declarations.user.bullet2 = in respect of annual allowance and lifetime allowance for any of the tax years from 2019 to 2020 and 2022 to 2023 is accurate and complete to the best of my knowledge and belief
+declarations.user.bullet3 = on this form relates solely to myself and understand that I may be contacted to provide additional information
+declarations.user.confirmInformation = As a result, I understand that:
+declarations.user.bullet4 = I can only receive compensation for amounts I am entitled to
+declarations.user.bullet5 = I may have to pay financial penalties
+declarations.user.bullet6 = I may face prosecution if I give false information
+
+declarations.member.makingDeclarationsFor = By sending a public service pension adjustment and information on behalf of {0}, I understand that:
+declarations.member.bullet1 = I may be required to provide additional information in support of this form
+declarations.member.bullet2 = I am submitting this information as they are not able to
+declarations.member.confirmInformation = As a result, I understand that if I give false information on {0}’s behalf that:
+declarations.member.bullet3 = I may have to pay financial penalties
+declarations.member.bullet4 = I may face prosecution
 
 submission.title = Adjustment sent
 submission.heading = Adjustment sent
-submission.adjustmentSent = Your submission for an adjustment has been sent. We have sent you a confirmation email.
-submission.communicateHMRC = For communicating with HMRC, you must use your National Insurance number.
+submission.panel.message = Submission reference number:
+submission.adjustmentSent = Your submission for an adjustment has been sent.
+submission.communicateHMRC = For communicating with HMRC, you must use your submission reference number.
 submission.whatNext = What happens next
-submission.pensionAdministrator = Your pension administrator will contact you to confirm your submission, or to ask for more information.
-submission.receiveCompensation = The process of receiving any compensation you may be owed will take
+submission.whatNext.message1 = If you have made an adjustment for the years between 2015 to 2016 and 2018 to 2019, it will be checked by HMRC. Once this has been done, they will send it to your public service pension scheme administrator.
+submission.whatNext.message2= If your adjustment is for the years between 2019 to 2020 and 2022 to 2023, it will be checked and processed by HMRC.
 submission.link = What did you think of this service?
 submission.takesSecond = (takes 30 seconds)
 

@@ -18,16 +18,16 @@
 
 @this(
         layout: templates.Layout,
-        govukButton: GovukButton
+        govukButton: GovukButton,
+        govukPanel : GovukPanel
 )
 
 @(finalSubmissionResponse: FinalSubmissionResponse)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("submission.title"))) {
 
-    <h1 class="govuk-heading-xl">@messages("submission.heading")</h1>
+    @govukPanel(Panel(title = messages("submission.heading"), content = Text(messages("submission.panel.message") + " " + finalSubmissionResponse.userSubmissionReference)))
 
-    <h2 class="govuk-heading-m">@finalSubmissionResponse.userSubmissionReference</h2>
 
     <p class="govuk-body">@messages("submission.adjustmentSent")</p>
 
@@ -37,9 +37,9 @@
 
     <h2 class="govuk-heading-m">@messages("submission.whatNext")</h2>
 
-    <p class="govuk-body">@messages("submission.pensionAdministrator")</p>
+    <p class="govuk-body">@messages("submission.whatNext.message1")</p>
 
-    <p class="govuk-body">@messages("submission.receiveCompensation")</p>
+    <p class="govuk-body">@messages("submission.whatNext.message2")</p>
 
     <p class="govuk-body">
         <a class="govuk-link" href="" rel="noreferrer noopener" target="_blank">

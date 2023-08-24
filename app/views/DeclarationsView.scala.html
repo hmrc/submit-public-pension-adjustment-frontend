@@ -19,27 +19,47 @@
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(isClaimOnBehalf: Boolean, memberName: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("declarations.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("declarations.heading")</h1>
 
-    <p class="govuk-body">@messages("declarations.makingDeclarationsFor")</p>
+    @if(isClaimOnBehalf == false) {
+
+    <p class="govuk-body">@messages("declarations.user.makingDeclarationsFor")</p>
+
     <ul class="govuk-body">
-        <li>@messages("declarations.compensation")</li>
-        <li>@messages("declarations.emailConsent")</li>
-        <li>@messages("declarations.contactDetails")</li>
-        <li>@messages("declarations.powerOfAttorney")</li>
+        <li>@messages("declarations.user.bullet1")</li>
+        <li>@messages("declarations.user.bullet2")</li>
+        <li>@messages("declarations.user.bullet3")</li>
     </ul>
 
-    <p class="govuk-body">@messages("declarations.confirmInformation")</p>
+    <p class="govuk-body">@messages("declarations.user.confirmInformation")</p>
+
     <ul class="govuk-body">
-        <li>@messages("declarations.beProsecuted")</li>
-        <li>@messages("declarations.financialPenalty")</li>
-        <li>@messages("declarations.payBackMoney")</li>
+        <li>@messages("declarations.user.bullet4")</li>
+        <li>@messages("declarations.user.bullet5")</li>
+        <li>@messages("declarations.user.bullet6")</li>
     </ul>
 
+    } else {
+
+    <p class="govuk-body">@messages("declarations.member.makingDeclarationsFor", memberName )</p>
+
+    <ul class="govuk-body">
+        <li>@messages("declarations.member.bullet1")</li>
+        <li>@messages("declarations.member.bullet2")</li>
+    </ul>
+
+    <p class="govuk-body">@messages("declarations.member.confirmInformation", memberName)</p>
+
+    <ul class="govuk-body">
+        <li>@messages("declarations.member.bullet3")</li>
+        <li>@messages("declarations.member.bullet4")</li>
+    </ul>
+
+    }
 
     <p class="govuk-body">
         @govukButton(
@@ -47,4 +67,5 @@
         .asLink(routes.CheckYourAnswersController.onPageLoad.url)
         )
     </p>
+
 }
