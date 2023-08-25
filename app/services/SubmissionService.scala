@@ -23,7 +23,7 @@ import models.WhoWillPay.{PensionScheme, You}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, Period}
 import models.finalsubmission._
-import models.{InternationalAddress, PSTR, UkAddress, UserAnswers}
+import models.{InternationalAddress, PSTR, StatusOfUser, UkAddress, UserAnswers}
 import pages._
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
@@ -63,25 +63,15 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
     calculationInputs: CalculationInputs,
     calculation: Option[CalculationResponse],
     userAnswers: UserAnswers
-  ): SubmissionInputs = {
-
-    val declarations = Declarations(
-      compensation = true,
-      tax = true,
-      contactDetails = true,
-      powerOfAttorney = Some(true),
-      claimOnBehalfOfDeceased = None
-    )
-
+  ): SubmissionInputs =
     SubmissionInputs(
       buildAdministrativeDetails(authRetrievals, userAnswers),
       buildPaymentElection(userAnswers, calculation),
       buildCalculationInputSchemeIdentifiers(userAnswers, calculationInputs),
       buildSchemeTaxRelief(userAnswers),
       buildBankAccountDetails(userAnswers),
-      declarations
+      buildDeclarations(userAnswers)
     )
-  }
 
   def buildPersonalDetails(
     flagClaimOnBehalf: Boolean,
@@ -269,6 +259,36 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
 
   def buildBankAccountDetails(userAnswers: UserAnswers): Option[BankAccountDetails] =
     userAnswers.get(BankDetailsPage).map(v => BankAccountDetails(v.accountName, v.sortCode, v.accountNumber))
+
+  def buildDeclarations(userAnswers: UserAnswers): Declarations =
+    userAnswers.get(StatusOfUserPage) match {
+      case Some(StatusOfUser.PowerOfAttorney) =>
+        Declarations(
+          compensation = true,
+          tax = true,
+          contactDetails = true,
+          powerOfAttorney = Some(true),
+          claimOnBehalfOfDeceased = None
+        )
+
+      case Some(StatusOfUser.Deputyship) =>
+        Declarations(
+          compensation = true,
+          tax = true,
+          contactDetails = true,
+          powerOfAttorney = None,
+          claimOnBehalfOfDeceased = Some(true)
+        )
+
+      case _ =>
+        Declarations(
+          compensation = true,
+          tax = true,
+          contactDetails = true,
+          powerOfAttorney = None,
+          claimOnBehalfOfDeceased = None
+        )
+    }
 
   def buildCalculationInputSchemeIdentifiers(
     userAnswers: UserAnswers,

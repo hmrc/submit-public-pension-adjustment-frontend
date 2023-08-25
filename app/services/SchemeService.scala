@@ -47,7 +47,9 @@ object SchemeService {
     getAllPensionSchemeDetails(calculationInputs).length
 
   private def getAllPensionSchemeDetails(calculationInputs: CalculationInputs): Seq[PensionSchemeDetails] =
-    schemesFromAAInputs(calculationInputs) ++ schemesFromLtaInputs(calculationInputs)
+    (schemesFromAAInputs(calculationInputs) ++ schemesFromLtaInputs(calculationInputs)).distinctBy(
+      _.pensionSchemeTaxReference
+    )
 
   private def schemesFromAAInputs(calculationInputs: CalculationInputs) =
     calculationInputs.annualAllowance
@@ -77,7 +79,7 @@ object SchemeService {
       maybeLta
         .flatMap(lta => lta.newLifetimeAllowanceChargeSchemeNameAndTaxRef)
         .map(nameAndRef => PensionSchemeDetails(nameAndRef.name, nameAndRef.taxRef))
-    ).flatten
+    ).flatten.distinctBy(_.pensionSchemeTaxReference)
   }
 
   private def schemeNameAndReference(taxYearScheme: PensionSchemeDetails) =
