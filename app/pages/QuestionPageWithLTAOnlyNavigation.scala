@@ -24,7 +24,7 @@ trait QuestionPageWithLTAOnlyNavigation[A] extends QuestionPage[A] {
 
   def ltaOnly(submission: Submission): Boolean = {
     val calculationInputs = submission.calculationInputs
-    calculationInputs.lifeTimeAllowance.isDefined && calculationInputs.annualAllowance.isEmpty
+    calculationInputs.lifeTimeAllowance.isDefined && calculationInputs.annualAllowance.forall(_.taxYears.isEmpty)
   }
 
   override def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
