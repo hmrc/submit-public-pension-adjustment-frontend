@@ -33,7 +33,7 @@
     <p class="govuk-body">
         @govukButton(
         ButtonViewModel(messages("site.continue"))
-        .asLink(routes.SubmissionController.onPageLoad.url)
+        .asLink(routes.CheckYourAnswersController.onSubmit().url)
         )
     </p>
 }
