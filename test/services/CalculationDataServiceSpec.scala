@@ -19,13 +19,14 @@ package services
 import base.SpecBase
 import connectors.CalculateBackendConnector
 import models.UniqueId
-import models.calculation.inputs.{CalculationInputs, Resubmission}
+import models.calculation.inputs.{CalculationInputs, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, ProtectionType, Resubmission, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import models.submission.RetrieveSubmissionResponse
 import org.mockito.ArgumentMatchers.any
 import org.mockito.{ArgumentMatchers, MockitoSugar}
 import repositories.{Done, SubmissionRepository}
 import uk.gov.hmrc.http.HeaderCarrier
 
+import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -46,6 +47,57 @@ class CalculationDataServiceSpec extends SpecBase with MockitoSugar {
 
       val retrieveSubmissionResponse =
         RetrieveSubmissionResponse(CalculationInputs(Resubmission(false, None), None, None), None)
+
+      when(
+        mockCalculateBackendConnector.retrieveSubmission(ArgumentMatchers.eq(submissionUniqueId))(
+          ArgumentMatchers.eq(headerCarrier)
+        )
+      )
+        .thenReturn(Future.successful(retrieveSubmissionResponse))
+
+      when(mockSubmissionRepository.insert(any())).thenReturn(Future.successful(Done))
+
+      val result: Future[Boolean] = service.retrieveSubmission("someInternalId", submissionUniqueId)(
+        implicitly[ExecutionContext],
+        implicitly(headerCarrier)
+      )
+
+      result.futureValue mustBe true
+    }
+
+    "result should true when submission with LTA data can be retrieved and inserted" in {
+
+      val submissionUniqueId = UniqueId("submissionUniqueId")
+
+      val retrieveSubmissionResponse = RetrieveSubmissionResponse(
+        CalculationInputs(
+          Resubmission(false, None),
+          None,
+          Some(
+            LifeTimeAllowance(
+              true,
+              LocalDate.parse("2018-11-28"),
+              true,
+              ChangeInTaxCharge.IncreasedCharge,
+              LtaProtectionOrEnhancements.Protection,
+              ProtectionType.FixedProtection2014,
+              "R41AB678TR23355",
+              true,
+              Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
+              Some("2134567801"),
+              true,
+              Some(ExcessLifetimeAllowancePaid.Annualpayment),
+              Some(20000),
+              Some(WhoPaidLTACharge.PensionScheme),
+              Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
+              30000,
+              Some(WhoPayingExtraLtaCharge.You),
+              None
+            )
+          )
+        ),
+        None
+      )
 
       when(
         mockCalculateBackendConnector.retrieveSubmission(ArgumentMatchers.eq(submissionUniqueId))(

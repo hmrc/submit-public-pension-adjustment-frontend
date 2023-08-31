@@ -20,7 +20,7 @@ import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
 import generators.Generators
 import models.UniqueId
-import models.calculation.inputs.{CalculationInputs, Resubmission}
+import models.calculation.inputs.{CalculationInputs, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, ProtectionType, Resubmission, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import models.submission.RetrieveSubmissionResponse
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Application
@@ -29,6 +29,7 @@ import play.api.libs.json.Json
 import play.api.test.Helpers.running
 import uk.gov.hmrc.http.HeaderCarrier
 
+import java.time.LocalDate
 import scala.util.Try
 
 class CalculateBackendConnectorSpec extends SpecBase with WireMockHelper with ScalaCheckPropertyChecks with Generators {
@@ -51,6 +52,56 @@ class CalculateBackendConnectorSpec extends SpecBase with WireMockHelper with Sc
         val connector = app.injector.instanceOf[CalculateBackendConnector]
 
         val calculationInputs          = CalculationInputs(Resubmission(false, None), None, None)
+        val retrieveSubmissionResponse = Json.toJson(RetrieveSubmissionResponse(calculationInputs, None)).toString
+
+        val submissionUniqueId = "1234"
+
+        server.stubFor(
+          get(urlEqualTo(url + s"/$submissionUniqueId"))
+            .willReturn(aResponse().withStatus(OK).withBody(retrieveSubmissionResponse))
+        )
+
+        val result: RetrieveSubmissionResponse = connector.retrieveSubmission(UniqueId(submissionUniqueId)).futureValue
+
+        result.calculationInputs mustBe calculationInputs
+        result.calculation mustBe None
+      }
+    }
+
+    "must return a RetrieveSubmission response containing LTA data when a known submissionUniqueId is specified" in {
+
+      val url = s"/calculate-public-pension-adjustment/submission"
+      val app = application
+
+      running(app) {
+        val connector = app.injector.instanceOf[CalculateBackendConnector]
+
+        val calculationInputs          = CalculationInputs(
+          Resubmission(false, None),
+          None,
+          Some(
+            LifeTimeAllowance(
+              true,
+              LocalDate.parse("2018-11-28"),
+              true,
+              ChangeInTaxCharge.IncreasedCharge,
+              LtaProtectionOrEnhancements.Protection,
+              ProtectionType.FixedProtection2014,
+              "R41AB678TR23355",
+              true,
+              Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
+              Some("2134567801"),
+              true,
+              Some(ExcessLifetimeAllowancePaid.Annualpayment),
+              Some(20000),
+              Some(WhoPaidLTACharge.PensionScheme),
+              Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
+              30000,
+              Some(WhoPayingExtraLtaCharge.You),
+              None
+            )
+          )
+        )
         val retrieveSubmissionResponse = Json.toJson(RetrieveSubmissionResponse(calculationInputs, None)).toString
 
         val submissionUniqueId = "1234"
