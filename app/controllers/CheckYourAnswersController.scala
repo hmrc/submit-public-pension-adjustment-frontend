@@ -18,17 +18,25 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions._
+import models.finalsubmission.{AuthRetrievals, FinalSubmissionResponse}
 import models.requests.DataRequest
-import models.{PSTR, Period, UserAnswers}
+import models.{PSTR, Period, UserAnswers, UserSubmissionReference}
 import pages.ClaimOnBehalfPage
+import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{PeriodService, SchemeService}
+import repositories.SessionRepository
+import services.{PeriodService, SchemeService, SubmissionService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.binders.RedirectUrl
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class CheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -37,9 +45,12 @@ class CheckYourAnswersController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
+  submissionService: SubmissionService,
+  sessionRepository: SessionRepository,
   view: CheckYourAnswersView
 ) extends FrontendBaseController
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
@@ -54,6 +65,48 @@ class CheckYourAnswersController @Inject() (
       val allRows = initialRowBlock(request) ++ mayBePeriodRowBlock.getOrElse(Seq()) ++ finalRowBlock(request)
 
       Ok(view(SummaryListViewModel(allRows.flatten)))
+  }
+
+  def onSubmit(): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+      val authRetrievals = AuthRetrievals(
+        request.userId,
+        request.nino,
+        request.name.map(n => (n.name.getOrElse("") + " " + n.lastName.getOrElse("")).trim),
+        request.saUtr,
+        request.dob
+      )
+
+      request.userAnswers.get(UserSubmissionReference()) match {
+        case Some(submissionReference) =>
+          logger.warn(s"Attempted repeat submission - submissionReference : $submissionReference")
+          Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
+        case None                      => sendFinalSubmission(request, authRetrievals)
+      }
+    }
+
+  private def sendFinalSubmission(request: DataRequest[AnyContent], authRetrievals: AuthRetrievals)(implicit
+    headerCarrier: HeaderCarrier
+  ) =
+    submissionService
+      .sendFinalSubmission(
+        authRetrievals,
+        request.submission.calculationInputs,
+        request.submission.calculation,
+        request.userAnswers
+      )
+      .map { finalSubmissionResponse =>
+        persistSubmissionReference(request, finalSubmissionResponse)
+        Redirect(controllers.routes.SubmissionController.onPageLoad())
+      }
+
+  private def persistSubmissionReference(
+    request: DataRequest[AnyContent],
+    finalSubmissionResponse: FinalSubmissionResponse
+  ) = {
+    val userSubmissionReference: String = finalSubmissionResponse.userSubmissionReference
+    val updatedAnswers                  = request.userAnswers.set(UserSubmissionReference(), userSubmissionReference)
+    sessionRepository.set(updatedAnswers.get)
   }
 
   private def initialRowBlock(request: DataRequest[AnyContent])(implicit messages: Messages) =

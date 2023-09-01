@@ -17,12 +17,15 @@
 package controllers
 
 import base.SpecBase
+import models.{StatusOfUser, UserAnswers, UserSubmissionReference}
 import models.finalsubmission.FinalSubmissionResponse
-import play.api.test.FakeRequest
-import play.api.inject.bind
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
+import pages.StatusOfUserPage
+import play.api.inject.bind
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import repositories.SessionRepository
 import services.SubmissionService
 import views.html.SubmissionView
 
@@ -32,7 +35,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
   private val mockSubmissionService = mock[SubmissionService]
 
-  lazy val submissionRoute = routes.SubmissionController.onPageLoad.url
+  private val userSubmissionReference: UserSubmissionReference = UserSubmissionReference()
+  lazy val submissionRoute                                     = routes.SubmissionController.onPageLoad.url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
@@ -40,16 +44,14 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
+      val userAnswers =
+        UserAnswers(userAnswersId).set(UserSubmissionReference(), "userSubmissionReference").success.value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission))
         .overrides(
           bind[SubmissionService].toInstance(mockSubmissionService)
         )
         .build()
-
-      val mockFinalSubmissionResponse = FinalSubmissionResponse("mockSubmissionReference")
-
-      when(mockSubmissionService.sendFinalSubmission(any(), any(), any(), any())(any()))
-        .thenReturn(Future.successful(mockFinalSubmissionResponse))
 
       running(application) {
         val request = FakeRequest(GET, submissionRoute)
@@ -59,7 +61,7 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[SubmissionView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(mockFinalSubmissionResponse)(request, messages(application)).toString
+        contentAsString(result) mustEqual view("userSubmissionReference")(request, messages(application)).toString
       }
     }
 

@@ -14,19 +14,17 @@
  * limitations under the License.
  *@
 
-@import models.finalsubmission.FinalSubmissionResponse
-
 @this(
         layout: templates.Layout,
         govukButton: GovukButton,
         govukPanel : GovukPanel
 )
 
-@(finalSubmissionResponse: FinalSubmissionResponse)(implicit request: Request[_], messages: Messages)
+@(userSubmissionReference: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("submission.title"))) {
+@layout(pageTitle = titleNoForm(messages("submission.title")), showBackLink = false) {
 
-    @govukPanel(Panel(title = messages("submission.heading"), content = Text(messages("submission.panel.message") + " " + finalSubmissionResponse.userSubmissionReference)))
+    @govukPanel(Panel(title = messages("submission.heading"), content = Text(messages("submission.panel.message") + " " + userSubmissionReference.value)))
 
 
     <p class="govuk-body">@messages("submission.adjustmentSent")</p>
