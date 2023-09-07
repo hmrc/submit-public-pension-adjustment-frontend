@@ -22,9 +22,9 @@ import controllers.routes
 import models.UniqueId
 import models.requests.IdentifierRequest
 import play.api.Logging
-import play.api.mvc.{ActionBuilder, ActionFunction, AnyContent, BodyParsers, Request, Result}
 import play.api.mvc.Results.Redirect
-import uk.gov.hmrc.auth.core.{AffinityGroup, AuthConnector, AuthorisationException, AuthorisedFunctions, ConfidenceLevel, NoActiveSession, User}
+import play.api.mvc._
+import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.http.HeaderCarrier
@@ -58,7 +58,9 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
 
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
-    authorised(AffinityGroup.Individual and ConfidenceLevel.L250).retrieve(retrievals) {
+    val requiredConfidenceLevel = ConfidenceLevel.fromInt(config.requiredAuthConfidenceLevel.toInt).get
+
+    authorised(AffinityGroup.Individual and requiredConfidenceLevel).retrieve(retrievals) {
       case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ Some(saUtr) ~ Some(
             dob
           ) =>
@@ -71,9 +73,11 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
         logger.warn(s"Incomplete retrievals")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
     } recover {
-      case _: NoActiveSession        =>
+      case _: NoActiveSession             =>
         noActiveSession(request)
-      case _: AuthorisationException =>
+      case _: InsufficientConfidenceLevel =>
+        insufficientConfidence(request)
+      case _: AuthorisationException      =>
         Redirect(routes.UnauthorisedController.onPageLoad)
     }
   }
@@ -95,4 +99,24 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
         logger.error("no submissionUniqueId is specified")
         Redirect(routes.CalculationPrerequisiteController.onPageLoad.url)
     }
+
+  private def insufficientConfidence[A](request: Request[A]) = {
+    val submissionUniqueId = request
+      .getQueryString("submissionUniqueId")
+      .getOrElse(throw AuthorisationException.fromString("missing submissionUniqueId"))
+
+    val upliftUrl     = s"${config.confidenceUpliftUrl}"
+    val completionUrl = s"${config.landingPageLoginContinueUrl}?submissionUniqueId=$submissionUniqueId"
+    val failureUrl    = config.upliftFailureUrl
+
+    Redirect(
+      upliftUrl,
+      Map(
+        "origin"          -> Seq(config.upliftOrigin),
+        "confidenceLevel" -> Seq(config.requiredAuthConfidenceLevel),
+        "completionURL"   -> Seq(completionUrl),
+        "failureURL"      -> Seq(failureUrl)
+      )
+    )
+  }
 }

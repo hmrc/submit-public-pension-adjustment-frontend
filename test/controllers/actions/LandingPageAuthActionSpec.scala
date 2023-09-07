@@ -160,7 +160,7 @@ class LandingPageAuthActionSpec extends SpecBase {
 
     "the user doesn't have sufficient confidence level" - {
 
-      "must redirect the user to the unauthorised page" in {
+      "must redirect the user to iv uplift journey" in {
 
         val application = applicationBuilder(userAnswers = None).build()
 
@@ -174,10 +174,10 @@ class LandingPageAuthActionSpec extends SpecBase {
             bodyParsers
           )
           val controller = new Harness(authAction)
-          val result     = controller.onPageLoad()(FakeRequest())
+          val result     = controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=123"))
 
           status(result) mustBe SEE_OTHER
-          redirectLocation(result).value mustBe routes.UnauthorisedController.onPageLoad.url
+          redirectLocation(result).value must include("/iv-stub/uplift?origin=ppa&confidenceLevel=250")
         }
       }
     }
