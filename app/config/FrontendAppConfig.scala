@@ -36,6 +36,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val loginUrl: String                    = configuration.get[String]("urls.login")
   val confidenceUpliftUrl: String         = configuration.get[String]("urls.confidenceUplift")
+  val upliftCompletionUrl                 = configuration.get[String]("urls.upliftCompletion")
   val upliftFailureUrl                    = configuration.get[String]("urls.upliftFailure")
   val loginContinueUrl: String            = configuration.get[String]("urls.loginContinue")
   val landingPageLoginContinueUrl: String = configuration.get[String]("urls.landingPageLoginContinue")

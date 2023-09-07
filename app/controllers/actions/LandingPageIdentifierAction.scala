@@ -105,17 +105,17 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
       .getQueryString("submissionUniqueId")
       .getOrElse(throw AuthorisationException.fromString("missing submissionUniqueId"))
 
-    val upliftUrl     = s"${config.confidenceUpliftUrl}"
-    val completionUrl = s"${config.landingPageLoginContinueUrl}?submissionUniqueId=$submissionUniqueId"
-    val failureUrl    = config.upliftFailureUrl
+    val upliftUrl           = s"${config.confidenceUpliftUrl}"
+    val upliftCompletionUrl = s"${config.upliftCompletionUrl}?submissionUniqueId=$submissionUniqueId"
+    val upliftFailureUrl    = config.upliftFailureUrl
 
     Redirect(
       upliftUrl,
       Map(
         "origin"          -> Seq(config.upliftOrigin),
         "confidenceLevel" -> Seq(config.requiredAuthConfidenceLevel),
-        "completionURL"   -> Seq(completionUrl),
-        "failureURL"      -> Seq(failureUrl)
+        "completionURL"   -> Seq(upliftCompletionUrl),
+        "failureURL"      -> Seq(upliftFailureUrl)
       )
     )
   }
