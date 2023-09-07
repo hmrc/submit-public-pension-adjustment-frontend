@@ -35,6 +35,4 @@ class PensionSchemeMemberNinoFormProvider @Inject() extends Mappings {
         .transform[Nino](nino => Nino(nino.replaceAll("\\s", "").toUpperCase), nino => nino.toString)
     )
 
-  "value" -> text("pensionSchemeMemberNino.error.required")
-
 }

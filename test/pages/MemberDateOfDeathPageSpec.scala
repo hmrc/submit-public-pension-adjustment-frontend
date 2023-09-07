@@ -47,7 +47,7 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-nino")
+    checkNavigation(nextPageUrl, "/submission-service/national-insurance-number-someone-else")
 
   }
 
@@ -62,7 +62,7 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/change-their-nino")
+    checkNavigation(nextPageUrl, "/submission-service/change-national-insurance-number-someone-else")
 
   }
 }

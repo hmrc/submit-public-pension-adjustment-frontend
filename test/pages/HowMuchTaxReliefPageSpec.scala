@@ -46,7 +46,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, ltaOnlySubmissionWithMultipleSchemes).url
 
-        checkNavigation(result, "/which-pension-scheme-will-pay-tax-relief")
+        checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
       }
 
       "to DeclarationsPage when single scheme" in {
@@ -94,7 +94,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, submissionWithMultipleSchemes).url
 
-        checkNavigation(result, "/which-pension-scheme-will-pay-tax-relief")
+        checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
       }
 
       "to JourneyRecovery when not answered" in {

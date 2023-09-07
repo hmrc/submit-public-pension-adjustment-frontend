@@ -40,7 +40,7 @@ class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-uk-address")
+    checkNavigation(nextPageUrl, "/submission-service/address-someone-else")
   }
 
   "must redirect to enter their international address page when user selects no" in {
@@ -54,7 +54,7 @@ class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-international-address")
+    checkNavigation(nextPageUrl, "/submission-service/international-address-someone-else")
   }
 
   "must redirect to enter their uk address page when user selects yes in check mode" in {
@@ -68,7 +68,7 @@ class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/change-their-uk-address")
+    checkNavigation(nextPageUrl, "/submission-service/change-address-someone-else")
   }
 
   "must redirect to enter their international address page when user selects no in check mode" in {
@@ -82,7 +82,7 @@ class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/change-their-international-address")
+    checkNavigation(nextPageUrl, "/submission-service/change-international-address-someone-else")
   }
 
   "must redirect to JourneyRecoveryPage when not answered in normal mode" in {

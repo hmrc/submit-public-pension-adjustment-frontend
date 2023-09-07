@@ -26,6 +26,10 @@
 
 @(form: Form[_], mode: Mode, pstr: PSTR, schemeName: String)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+<p class="govuk-body">@messages("legacyPensionSchemeReference.message1")</p>
+}
+
 @layout(pageTitle = title(form, messages("legacyPensionSchemeReference.title"))) {
 
     @formHelper(action = routes.LegacyPensionSchemeReferenceController.onSubmit(mode, pstr)) {
@@ -34,6 +38,8 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+
+
         @govukInput(
             InputViewModel(
                 field = form("value"),
@@ -41,8 +47,10 @@
                     content = messages("legacyPensionSchemeReference.heading") ,
                     caption = messages("legacyPensionSchemeReference.caption") + " " + schemeName + " / " + pstr.value
                 )
-            )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
+
+        <p class="govuk-hint">@messages("legacyPensionSchemeReference.hint1")</p>
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

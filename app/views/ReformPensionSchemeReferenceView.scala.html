@@ -26,6 +26,10 @@
 
 @(form: Form[_], mode: Mode, pstr: PSTR, schemeName: String)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+<p class="govuk-body">@messages("reformPensionSchemeReference.message1")</p>
+}
+
 @layout(pageTitle = title(form, messages("reformPensionSchemeReference.title"))) {
 
     @formHelper(action = routes.ReformPensionSchemeReferenceController.onSubmit(mode, pstr)) {
@@ -41,8 +45,10 @@
                     content = messages("reformPensionSchemeReference.heading"),
                     caption = messages("reformPensionSchemeReference.caption") + " " + schemeName + " / " + pstr.value
                 )
-            )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
+
+        <p class="govuk-hint">@messages("reformPensionSchemeReference.hint1")</p>
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

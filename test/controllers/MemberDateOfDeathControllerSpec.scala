@@ -36,7 +36,7 @@ import scala.concurrent.Future
 
 class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new MemberDateOfDeathFormProvider()
+  val formProvider = new MemberDateOfDeathFormProvider(clockAtFixedInstant)
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")

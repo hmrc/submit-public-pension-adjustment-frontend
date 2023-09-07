@@ -40,7 +40,7 @@ class PensionSchemeMemberNamePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-dob")
+    checkNavigation(nextPageUrl, "/submission-service/date-of-birth-someone-else")
   }
 
   "must redirect to Pension Scheme Members DOB page when user submits data in check mode" in {
@@ -54,6 +54,6 @@ class PensionSchemeMemberNamePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/change-their-dob")
+    checkNavigation(nextPageUrl, "/submission-service/change-date-of-birth-someone-else")
   }
 }

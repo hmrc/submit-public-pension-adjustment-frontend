@@ -47,7 +47,7 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
         val result =
           ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/claiming-additional-tax-rate-relief")
+        checkNavigation(result, "/submission-service/claiming-higher-additional-tax-rate-relief")
       }
 
       "back to LegacyPensionSchemeReferencePage for next scheme when there are more schemes" in {
@@ -69,7 +69,7 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
         val result =
           ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/legacy-pension-scheme-reference/12345678AC")
+        checkNavigation(result, "/submission-service/12345678AC/legacy-individual-pension-scheme-reference")
       }
 
       "to JourneyRecovery when not answered" in {

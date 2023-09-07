@@ -24,6 +24,23 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("claimingHigherOrAdditionalTaxRateRelief.message1")</p>
+
+    <ul>
+        <li>
+            <p class="govuk-body">@messages("claimingHigherOrAdditionalTaxRateRelief.bullet1")</p>
+        </li>
+        <li>
+            <p class="govuk-body">@messages("claimingHigherOrAdditionalTaxRateRelief.bullet2")</p>
+        </li>
+    </ul>
+
+    <a class="govuk-link" href="https://www.gov.uk/tax-on-your-private-pension/pension-tax-relief" rel="noreferrer noopener" target="_blank">
+        @messages("claimingHigherOrAdditionalTaxRateRelief.message2")
+    </a>
+}
+
 @layout(pageTitle = title(form, messages("claimingHigherOrAdditionalTaxRateRelief.title"))) {
 
     @formHelper(action = routes.ClaimingHigherOrAdditionalTaxRateReliefController.onSubmit(mode), 'autoComplete -> "off") {
@@ -35,8 +52,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("claimingHigherOrAdditionalTaxRateRelief.heading")).asPageHeading()
-            )
+                legend = HmrcPageHeadingLegend(
+                    content = messages("claimingHigherOrAdditionalTaxRateRelief.heading"),
+                    caption = HmrcSectionCaption(messages("submissionService.caption")))
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(
