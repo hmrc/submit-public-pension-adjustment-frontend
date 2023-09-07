@@ -35,9 +35,14 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
     s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=${SafeRedirectUrl(host + request.uri).encodedUrl}"
 
   val loginUrl: String                    = configuration.get[String]("urls.login")
+  val confidenceUpliftUrl: String         = configuration.get[String]("urls.confidenceUplift")
+  val upliftFailureUrl                    = configuration.get[String]("urls.upliftFailure")
   val loginContinueUrl: String            = configuration.get[String]("urls.loginContinue")
   val landingPageLoginContinueUrl: String = configuration.get[String]("urls.landingPageLoginContinue")
-  val signOutUrl: String                  = configuration.get[String]("urls.signOut")
+  val requiredAuthConfidenceLevel         = configuration.get[String]("required-auth-confidence-level")
+  val upliftOrigin                        = configuration.get[String]("uplift-origin")
+
+  val signOutUrl: String = configuration.get[String]("urls.signOut")
 
   private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
   val exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/submit-public-pension-adjustment-frontend"

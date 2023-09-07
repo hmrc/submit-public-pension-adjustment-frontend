@@ -453,3 +453,7 @@ bankDetails.invalid.sortcode = Enter a valid sort code
 bankDetails.invalid.account.name = Enter the name on the account
 bankDetails.invalid.account.name.length = Account name must be 70 characters or less
 bankDetails.invalid.account.number = Enter a valid account number
+
+upliftFailed.title = Identity verification failed
+upliftFailed.heading = Identity verification failed
+upliftFailed.message = It was not possible to verify your identity sufficiently.

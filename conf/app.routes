@@ -169,3 +169,5 @@ POST        /change-bank-details                                           contr
 GET         /check-your-answers                                            controllers.CheckYourAnswersController.onPageLoad
 GET         /submit-your-answers                                           controllers.CheckYourAnswersController.onSubmit()
 GET         /submission                                                    controllers.SubmissionController.onPageLoad()
+
+GET         /uplift-failed                                                 controllers.UpliftFailedController.onPageLoad()
