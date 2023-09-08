@@ -72,7 +72,9 @@ class CheckYourAnswersController @Inject() (
       val authRetrievals = AuthRetrievals(
         request.userId,
         request.nino,
-        request.name.map(n => (n.name.getOrElse("") + " " + n.lastName.getOrElse("")).trim),
+        request.name.map(n =>
+          (n.givenName.getOrElse("") + " " + n.middleName.getOrElse("") + " " + n.familyName.getOrElse("")).trim
+        ),
         request.saUtr,
         request.dob
       )

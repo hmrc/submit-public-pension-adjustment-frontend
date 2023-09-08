@@ -28,7 +28,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{running, _}
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.authorise.Predicate
-import uk.gov.hmrc.auth.core.retrieve.{Name, Retrieval, ~}
+import uk.gov.hmrc.auth.core.retrieve.{ItmpName, Retrieval, ~}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
@@ -219,7 +219,7 @@ class AuthActionSpec extends SpecBase {
 
         val mockAuthConnector = mock[AuthConnector]
 
-        val name        = Some(Name(Some("first"), Some("last")))
+        val name        = Some(ItmpName(Some("firstN"), Some("middleN"), Some("lastN")))
         val saUtr       = Some("saUtr")
         val dateOfBirth = Some(LocalDate.now())
 
@@ -242,7 +242,7 @@ class AuthActionSpec extends SpecBase {
 
         val mockAuthConnector = mock[AuthConnector]
 
-        val name        = Some(Name(Some("first"), Some("last")))
+        val name        = Some(ItmpName(Some("firstN"), Some("middleN"), Some("lastN")))
         val saUtr       = Some("saUtr")
         val dateOfBirth = None
 
@@ -265,7 +265,7 @@ class AuthActionSpec extends SpecBase {
 
         val mockAuthConnector = mock[AuthConnector]
 
-        val name        = Some(Name(Some("first"), Some("last")))
+        val name        = Some(ItmpName(Some("firstN"), Some("middleN"), Some("lastN")))
         val saUtr       = None
         val dateOfBirth = None
 
@@ -328,7 +328,7 @@ class AuthActionSpec extends SpecBase {
       "if nino cannot be retrieved" in {
         val mockAuthConnector = mock[AuthConnector]
 
-        val name        = Some(Name(Some("first"), Some("last")))
+        val name        = Some(ItmpName(Some("firstN"), Some("middleN"), Some("lastN")))
         val saUtr       = Some("saUtr")
         val dateOfBirth = Some(LocalDate.now())
 
@@ -388,12 +388,12 @@ class AuthActionSpec extends SpecBase {
   private def whenRetrievalsAre(
     mockAuthConnector: AuthConnector,
     retrievals: Option[String] ~ Option[String] ~ Option[AffinityGroup] ~ Some[User.type] ~
-      Option[Name] ~ Option[String] ~ Option[LocalDate]
+      Option[ItmpName] ~ Option[String] ~ Option[LocalDate]
   ) =
     when(
       mockAuthConnector.authorise[
         Option[String] ~ Option[String] ~ Option[AffinityGroup] ~ Option[CredentialRole] ~
-          Option[Name] ~ Option[String] ~ Option[LocalDate]
+          Option[ItmpName] ~ Option[String] ~ Option[LocalDate]
       ](
         any(),
         any()

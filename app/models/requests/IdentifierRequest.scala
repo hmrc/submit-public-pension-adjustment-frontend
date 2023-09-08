@@ -17,7 +17,7 @@
 package models.requests
 
 import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.Name
+import uk.gov.hmrc.auth.core.retrieve.{ItmpName, Name}
 
 import java.time.LocalDate
 
@@ -25,7 +25,7 @@ case class IdentifierRequest[A](
   request: Request[A],
   userId: String,
   nino: String,
-  name: Option[Name],
+  name: Option[ItmpName],
   saUtr: Option[String],
   dateOfBirth: Option[LocalDate]
 ) extends WrappedRequest[A](request)
