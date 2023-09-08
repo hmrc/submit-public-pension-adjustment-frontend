@@ -49,9 +49,9 @@ class AuthenticatedIdentifierAction @Inject() (
       Retrievals.internalId and
       Retrievals.affinityGroup and
       Retrievals.credentialRole and
-      Retrievals.name and
+      Retrievals.itmpName and
       Retrievals.saUtr and
-      Retrievals.dateOfBirth
+      Retrievals.itmpDateOfBirth
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
 

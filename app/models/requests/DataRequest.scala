@@ -19,7 +19,7 @@ package models.requests
 import play.api.mvc.{Request, WrappedRequest}
 import models.UserAnswers
 import models.submission.Submission
-import uk.gov.hmrc.auth.core.retrieve.Name
+import uk.gov.hmrc.auth.core.retrieve.{ItmpName, Name}
 
 import java.time.LocalDate
 
@@ -27,7 +27,7 @@ case class OptionalDataRequest[A](
   request: Request[A],
   userId: String,
   nino: String,
-  name: Option[Name],
+  name: Option[ItmpName],
   saUtr: Option[String],
   dob: Option[LocalDate],
   submission: Option[Submission],
@@ -38,7 +38,7 @@ case class DataRequest[A](
   request: Request[A],
   userId: String,
   nino: String,
-  name: Option[Name],
+  name: Option[ItmpName],
   saUtr: Option[String],
   dob: Option[LocalDate],
   submission: Submission,
@@ -49,7 +49,7 @@ case class CalculationDataRequest[A](
   request: Request[A],
   userId: String,
   nino: String,
-  name: Option[Name],
+  name: Option[ItmpName],
   saUtr: Option[String],
   dob: Option[LocalDate],
   submission: Submission,
