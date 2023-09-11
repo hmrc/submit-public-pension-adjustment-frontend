@@ -16,7 +16,7 @@
 
 package generators
 
-import models.{PSTR, UserAnswers}
+import models.UserAnswers
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalatest.TryValues

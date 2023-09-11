@@ -16,14 +16,14 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import forms.PensionSchemeMemberDOBFormProvider
-import models.{NormalMode, StatusOfUser, UserAnswers}
+import models.StatusOfUser.{Deputyship, PowerOfAttorney}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.PensionSchemeMemberDOBPage
+import pages.{PensionSchemeMemberDOBPage, StatusOfUserPage}
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -31,6 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.PensionSchemeMemberDOBView
 
+import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
 class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
@@ -101,21 +102,21 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
+      val userAnswers = UserAnswers(userAnswersId).set(StatusOfUserPage, Deputyship).success.value
+
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
+        applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
       running(application) {
         val result = route(application, postRequest).value
-        if (StatusOfUser == StatusOfUser.Deputyship) {
-          status(result) mustEqual SEE_OTHER
+        status(result) mustEqual SEE_OTHER
 
-          redirectLocation(
-            result
-          ).value mustEqual routes.MemberDateOfDeathController.onPageLoad(NormalMode).url
-        }
+        redirectLocation(
+          result
+        ).value mustEqual routes.MemberDateOfDeathController.onPageLoad(NormalMode).url
       }
     }
 
@@ -125,21 +126,22 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
+      val userAnswers = UserAnswers(userAnswersId).set(StatusOfUserPage, PowerOfAttorney).success.value
+
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
       running(application) {
         val result = route(application, postRequest).value
-        if (StatusOfUser == StatusOfUser.PowerOfAttorney) {
-          status(result) mustEqual SEE_OTHER
 
-          redirectLocation(
-            result
-          ).value mustEqual routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode).url
-        }
+        status(result) mustEqual SEE_OTHER
+
+        redirectLocation(
+          result
+        ).value mustEqual routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode).url
       }
     }
 

@@ -24,7 +24,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SubmissionView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class SubmissionController @Inject() (
   override val messagesApi: MessagesApi,
@@ -34,8 +33,7 @@ class SubmissionController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: SubmissionView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] =

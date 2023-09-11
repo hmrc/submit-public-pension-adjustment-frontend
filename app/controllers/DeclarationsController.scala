@@ -45,8 +45,8 @@ class DeclarationsController @Inject() (
   def isClaimOnBehalf(userAnswers: UserAnswers): Boolean =
     userAnswers.get(ClaimOnBehalfPage) match {
       case Some(true) => true
-      case _          => false
       case None       => false
+      case _          => false
     }
 
 }

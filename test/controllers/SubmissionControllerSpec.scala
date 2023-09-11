@@ -17,26 +17,19 @@
 package controllers
 
 import base.SpecBase
-import models.{StatusOfUser, UserAnswers, UserSubmissionReference}
-import models.finalsubmission.FinalSubmissionResponse
-import org.mockito.ArgumentMatchers.any
+import models.{UserAnswers, UserSubmissionReference}
 import org.mockito.MockitoSugar
-import pages.StatusOfUserPage
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import services.SubmissionService
 import views.html.SubmissionView
-
-import scala.concurrent.Future
 
 class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
   private val mockSubmissionService = mock[SubmissionService]
 
-  private val userSubmissionReference: UserSubmissionReference = UserSubmissionReference()
-  lazy val submissionRoute                                     = routes.SubmissionController.onPageLoad.url
+  lazy val submissionRoute = routes.SubmissionController.onPageLoad.url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
