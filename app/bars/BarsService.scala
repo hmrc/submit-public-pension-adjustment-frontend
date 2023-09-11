@@ -63,7 +63,7 @@ class BarsService @Inject() (
     bankAccount: BarsBankAccount,
     subject: BarsSubject
   )(implicit hc: HeaderCarrier): Future[Either[BarsError, VerifyResponse]] = {
-    val barsResponse = barsConnector.verifyPersonal(request.BarsVerifyPersonalRequest(bankAccount, subject))
+    val barsResponse = barsConnector.verifyPersonal(request.BarsVerifyPersonalRequest(bankAccount, subject))(hc)
     preVerify(barsResponse).flatMap {
       case response: SortCodeOnDenyList =>
         Future.successful(Left(SortCodeOnDenyListErrorResponse(response)))

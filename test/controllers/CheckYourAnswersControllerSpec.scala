@@ -21,7 +21,6 @@ import models.calculation.inputs.{CalculationInputs, Resubmission}
 import models.finalsubmission.FinalSubmissionResponse
 import models.submission.Submission
 import models.{PensionSchemeDetails, Period, UserAnswers, UserSubmissionReference, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
-import org.mockito.{ArgumentCaptor, Captor}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
 import org.mockito.MockitoSugar.mock

@@ -17,9 +17,9 @@
 package pages
 
 import models.{CheckMode, NormalMode, StatusOfUser}
+import org.scalacheck.Arbitrary
 
 import java.time.LocalDate
-import org.scalacheck.Arbitrary
 
 class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
 
@@ -36,70 +36,67 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
     beRemovable[LocalDate](PensionSchemeMemberDOBPage)
   }
 
-  "must redirect to Pension Scheme Members Nino page when user submits data" in {
-
-    val page   = PensionSchemeMemberDOBPage
-    val status = StatusOfUser
-
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
-    if (status == status.Deputyship) {
-      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
-
-      checkNavigation(nextPageUrl, "/their-date-of-death")
-    }
-
-  }
-
   "must redirect to Members Date of Death page when user submits data" in {
 
-    val page   = PensionSchemeMemberDOBPage
-    val status = StatusOfUser
+    val page = PensionSchemeMemberDOBPage
 
     val userAnswers = emptyUserAnswers
       .set(page, LocalDate.of(1995, 1, 1))
+      .get
+      .set(StatusOfUserPage, StatusOfUser.Deputyship)
       .success
       .value
 
-    if (status == status.PowerOfAttorney) {
-      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/their-nino")
-    }
+    checkNavigation(nextPageUrl, "/their-date-of-death")
   }
 
-  "must redirect to Pension Scheme Members Nino page when user submits data in checkmode" in {
+  "must redirect to Pension Scheme Members Nino page when user submits data" in {
 
-    val page   = PensionSchemeMemberDOBPage
-    val status = StatusOfUser
+    val page = PensionSchemeMemberDOBPage
 
     val userAnswers = emptyUserAnswers
       .set(page, LocalDate.of(1995, 1, 1))
+      .get
+      .set(StatusOfUserPage, StatusOfUser.PowerOfAttorney)
       .success
       .value
-    if (status == status.Deputyship) {
-      val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-their-date-of-death")
-    }
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/their-nino")
   }
 
   "must redirect to Members Date of Death page when user submits data in checkmode" in {
 
-    val page   = PensionSchemeMemberDOBPage
-    val status = StatusOfUser
+    val page = PensionSchemeMemberDOBPage
 
     val userAnswers = emptyUserAnswers
       .set(page, LocalDate.of(1995, 1, 1))
+      .get
+      .set(StatusOfUserPage, StatusOfUser.Deputyship)
       .success
       .value
 
-    if (status == status.PowerOfAttorney) {
-      val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-their-nino")
-    }
+    checkNavigation(nextPageUrl, "/change-their-date-of-death")
+  }
+
+  "must redirect to Pension Scheme Members Nino page when user submits data in checkmode" in {
+
+    val page = PensionSchemeMemberDOBPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .get
+      .set(StatusOfUserPage, StatusOfUser.PowerOfAttorney)
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/change-their-nino")
   }
 }

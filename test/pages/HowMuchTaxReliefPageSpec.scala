@@ -21,11 +21,7 @@ import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode, PensionSchemeDetails}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.IdiomaticMockito.StubbingOps
-import org.mockito.MockitoSugar.withObjectMocked
-import services.SchemeService
+import models.{CheckMode, NormalMode}
 
 class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
@@ -193,35 +189,6 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
               5,
               0,
               models.calculation.inputs.Period._2016PostAlignment,
-              None
-            ),
-            NormalTaxYear(
-              5,
-              List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
-              8,
-              6,
-              models.calculation.inputs.Period._2017,
-              Some(AboveThreshold(7))
-            )
-          )
-        )
-      ),
-      None
-    )
-
-  private def calculationInputsWithSingleScheme =
-    CalculationInputs(
-      models.calculation.inputs.Resubmission(false, None),
-      Option(
-        models.calculation.inputs.AnnualAllowance(
-          List(),
-          List(
-            NormalTaxYear(
-              2,
-              List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
-              5,
-              0,
-              models.calculation.inputs.Period._2016PreAlignment,
               None
             ),
             NormalTaxYear(
