@@ -302,6 +302,29 @@ class LandingPageAuthActionSpec extends SpecBase {
         controllerShouldBeAccessed(mockAuthConnector)
       }
 
+      "when name, date of birth but no saUtr are retrieved" in {
+
+        val mockAuthConnector = mock[AuthConnector]
+
+        val name        = Some(ItmpName(Some("firstN"), Some("middleN"), Some("lastN")))
+        val saUtr       = None
+        val dateOfBirth = Some(LocalDate.now())
+
+        val retrievals = new ~(
+          new ~(
+            new ~(
+              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              name
+            ),
+            saUtr
+          ),
+          dateOfBirth
+        )
+        whenRetrievalsAre(mockAuthConnector, retrievals)
+
+        controllerShouldBeAccessed(mockAuthConnector)
+      }
+
       "when name, but no saUtr or date of birth are retrieved" in {
 
         val mockAuthConnector = mock[AuthConnector]
