@@ -67,6 +67,8 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
         block(IdentifierRequest(request, userId, nino, Some(name), Some(saUtr), Some(dob)))
       case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ Some(saUtr) ~ None =>
         block(IdentifierRequest(request, userId, nino, Some(name), Some(saUtr), None))
+      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ None ~ Some(dob)   =>
+        block(IdentifierRequest(request, userId, nino, Some(name), None, Some(dob)))
       case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ None ~ None        =>
         block(IdentifierRequest(request, userId, nino, Some(name), None, None))
       case _                                                                                                         =>
