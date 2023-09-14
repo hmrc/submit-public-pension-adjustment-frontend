@@ -60,7 +60,7 @@ object TestData {
 
   val authRetrievals =
     AuthRetrievals(
-      "Int-be5a0f40-4aaa-4d26-be19-f884f70d2c5b",
+      "Test UserId",
       "AA000000A",
       Some("Test User"),
       Some("1234567890"),
@@ -341,7 +341,7 @@ object TestData {
     .as[JsObject]
 
   val userAnswers1 = UserAnswers(
-    "Int-be5a0f40-4aaa-4d26-be19-f884f70d2c5b",
+    "Test UserId",
     userAnswerData1
   )
 
@@ -387,7 +387,7 @@ object TestData {
     .as[JsObject]
 
   val userAnswers2 = UserAnswers(
-    "Int-be5a0f40-4aaa-4d26-be19-f884f70d2c5b",
+    "Test UserId",
     userAnswerData2
   )
 
@@ -438,7 +438,7 @@ object TestData {
     .as[JsObject]
 
   val userAnswers3 = UserAnswers(
-    "Int-be5a0f40-4aaa-4d26-be19-f884f70d2c5b",
+    "Test UserId",
     userAnswerData3
   )
 
