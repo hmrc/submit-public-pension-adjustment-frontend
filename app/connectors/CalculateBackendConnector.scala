@@ -22,8 +22,8 @@ import models.UniqueId
 import models.submission.RetrieveSubmissionResponse
 import play.api.Logging
 import play.api.http.Status._
-import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps, UpstreamErrorResponse}
 import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,10 +36,7 @@ class CalculateBackendConnector @Inject() (
 
   def retrieveSubmission(
     submissionUniqueId: UniqueId
-  )(implicit hc: HeaderCarrier): Future[RetrieveSubmissionResponse] = {
-
-    logger.info(s"submissionUniqueId : $submissionUniqueId")
-
+  )(implicit hc: HeaderCarrier): Future[RetrieveSubmissionResponse] =
     httpClient2
       .get(url"${config.cppaBaseUrl}/calculate-public-pension-adjustment/submission/${submissionUniqueId.value}")
       .execute
@@ -48,10 +45,16 @@ class CalculateBackendConnector @Inject() (
           case OK =>
             Future.successful(response.json.as[RetrieveSubmissionResponse])
           case _  =>
-            logger.error(s"Unexpected response from backend with status ${response.status}")
-            Future.failed(UpstreamErrorResponse("Unexpected response from backend", response.status))
+            logger.error(
+              s"Unexpected response from /calculate-public-pension-adjustment/submission/${submissionUniqueId.value} with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from /calculate-public-pension-adjustment/submission/submissionUniqueId",
+                response.status
+              )
+            )
         }
       }
-  }
 
 }

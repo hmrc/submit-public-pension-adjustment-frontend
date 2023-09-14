@@ -43,12 +43,10 @@ class LandingPageController @Inject() (
       case None     => Future.successful(false)
     }
     submissionRetrievalStatus.map { submissionRetrievalStatus =>
-      logger.info(s"submissionUniqueId : $submissionUniqueId - submissionRetrievalStatus : $submissionRetrievalStatus")
-
       if (submissionRetrievalStatus) {
         Redirect(routes.ClaimOnBehalfController.onPageLoad(NormalMode))
       } else {
-        logger.error("submission could not be retrieved")
+        logger.error(s"Submission could not be retrieved with submissionUniqueId : $submissionUniqueId")
         Redirect(routes.CalculationPrerequisiteController.onPageLoad())
       }
     }

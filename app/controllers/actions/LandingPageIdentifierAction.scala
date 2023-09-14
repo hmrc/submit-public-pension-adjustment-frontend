@@ -94,11 +94,11 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
               Map("continue" -> Seq(s"${config.landingPageLoginContinueUrl}?submissionUniqueId=$submissionUniqueId"))
             )
           case _                              =>
-            logger.error("submissionUniqueId is invalid")
+            logger.error("The submissionUniqueId is invalid")
             Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None))
         }
       case None                     =>
-        logger.error("no submissionUniqueId is specified")
+        logger.error("No submissionUniqueId is specified")
         Redirect(routes.CalculationPrerequisiteController.onPageLoad.url)
     }
 

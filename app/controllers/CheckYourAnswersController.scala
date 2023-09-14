@@ -79,10 +79,11 @@ class CheckYourAnswersController @Inject() (
       )
 
       request.userAnswers.get(UserSubmissionReference()) match {
-        case Some(submissionReference) =>
-          logger.warn(s"Attempted repeat submission - submissionReference : $submissionReference")
+        case Some(_) =>
+          val submissionUniqueId = request.submission.uniqueId
+          logger.warn(s"Prevented attempted duplicate submission related to submissionUniqueId : $submissionUniqueId")
           Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
-        case None                      => sendFinalSubmission(request, authRetrievals)
+        case None    => sendFinalSubmission(request, authRetrievals)
       }
     }
 
