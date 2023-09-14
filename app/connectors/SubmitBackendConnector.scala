@@ -46,8 +46,15 @@ class SubmitBackendConnector @Inject() (
           case OK =>
             Future.successful(response.json.as[FinalSubmissionResponse])
           case _  =>
-            logger.error(s"Unexpected response from Submit backend with status ${response.status}")
-            Future.failed(UpstreamErrorResponse("Unexpected response from Submit backend with status", response.status))
+            logger.error(
+              s"Unexpected response from /submit-public-pension-adjustment/final-submission with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from submit-public-pension-adjustment/final-submission",
+                response.status
+              )
+            )
         }
       }
 
