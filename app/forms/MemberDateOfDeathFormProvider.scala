@@ -24,15 +24,14 @@ import play.api.data.Form
 
 import java.time.format.DateTimeFormatter
 
-class MemberDateOfDeathFormProvider @Inject()(clock: Clock) extends Mappings {
+class MemberDateOfDeathFormProvider @Inject() (clock: Clock) extends Mappings {
 
   val max = LocalDate.now(clock)
   val min = LocalDate.now(clock).minusYears(130)
 
   val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
 
-  def apply(): Form[LocalDate] = {
-
+  def apply(): Form[LocalDate] =
     Form(
       "value" -> localDate(
         invalidKey = "memberDateOfDeath.error.invalid",
@@ -43,5 +42,4 @@ class MemberDateOfDeathFormProvider @Inject()(clock: Clock) extends Mappings {
         .verifying(maxDate(max, "memberDateOfDeath.error.max", max.format(dateTimeFormat)))
         .verifying(minDate(min, "memberDateOfDeath.error.min", min.format(dateTimeFormat)))
     )
-  }
 }

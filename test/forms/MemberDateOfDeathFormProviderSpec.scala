@@ -25,13 +25,13 @@ import java.time.format.DateTimeFormatter
 class MemberDateOfDeathFormProviderSpec extends DateBehaviours {
 
   private val fixedInstant = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
-  private val clock = Clock.fixed(fixedInstant, ZoneId.systemDefault)
+  private val clock        = Clock.fixed(fixedInstant, ZoneId.systemDefault)
 
   val form = new MemberDateOfDeathFormProvider(clock)()
 
   private def dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-  private val minDate = LocalDate.now(clock).minusYears(130)
-  private val maxDate = LocalDate.now(clock)
+  private val minDate       = LocalDate.now(clock).minusYears(130)
+  private val maxDate       = LocalDate.now(clock)
 
   ".value" - {
 

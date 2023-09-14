@@ -24,9 +24,9 @@ import play.api.data.Form
 
 import java.time.format.DateTimeFormatter
 
-class PensionSchemeMemberDOBFormProvider @Inject()(clock: Clock) extends Mappings {
+class PensionSchemeMemberDOBFormProvider @Inject() (clock: Clock) extends Mappings {
 
-  val max                               = LocalDate.now(clock)
+  val max = LocalDate.now(clock)
   val min = LocalDate.now(clock).minusYears(130)
 
   val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
