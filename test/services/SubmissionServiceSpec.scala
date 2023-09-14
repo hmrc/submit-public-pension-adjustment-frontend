@@ -162,14 +162,14 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers2
       )
 
-      result mustBe TaxIdentifiers(Some("AB189416C"), None, Some("2134567801"))
+      result mustBe TaxIdentifiers(Some("AB123456C"), None, Some("1234567890"))
     }
 
     "buildBankAccountDetails should return BankAccountDetails for valid inputs" in {
 
       val result = service.buildBankAccountDetails(TestData.userAnswers3)
 
-      result mustBe Some(BankAccountDetails("Teddy Dickson", "207102", "44311655"))
+      result mustBe Some(BankAccountDetails("TestFName TestLName", "012345", "12345678"))
     }
 
     "buildDeclarations with StatusOfUserPage having no PowerOfAttorney and Deputyship should return valid Declarations" in {

@@ -352,8 +352,8 @@ object TestData {
       |  "statusOfUser": "powerOfAttorney",
       |  "pensionSchemeMemberName": "Test SchemeUser",
       |  "pensionSchemeMemberDOB": "1962-10-24",
-      |  "pensionSchemeMemberNino": "AB189416C",
-      |  "pensionSchemeMemberTaxReference": "2134567801",
+      |  "pensionSchemeMemberNino": "AB123456C",
+      |  "pensionSchemeMemberTaxReference": "1234567890",
       |  "pensionSchemeMemberResidence": false,
       |  "pensionSchemeMemberInternationalAddress": {
       |    "addressLine1": "Test Address line 1",
@@ -398,8 +398,8 @@ object TestData {
              |  "statusOfUser": "deputyship",
              |  "pensionSchemeMemberName": "Test SchemeUser",
              |  "pensionSchemeMemberDOB": "1962-10-24",
-             |  "pensionSchemeMemberNino": "AB189416C",
-             |  "pensionSchemeMemberTaxReference": "2134567801",
+             |  "pensionSchemeMemberNino": "AB123456C",
+             |  "pensionSchemeMemberTaxReference": "1234567890",
              |  "pensionSchemeMemberResidence": false,
              |  "pensionSchemeMemberInternationalAddress": {
              |    "addressLine1": "Test Address line 1",
@@ -418,9 +418,9 @@ object TestData {
              |    "postCode": "AB1 2CD"
              |  },
              |  "bankDetails" : {
-             |    "accountName": "Teddy Dickson",
-             |    "sortCode": "207102",
-             |    "accountNumber": "44311655"
+             |    "accountName": "TestFName TestLName",
+             |    "sortCode": "012345",
+             |    "accountNumber": "12345678"
              |  },
              |  "aa": {
              |    "schemes": {
@@ -542,7 +542,7 @@ object TestData {
             ),
             Some("01632 960 001")
           ),
-          TaxIdentifiers(Some("AB189416C"), None, Some("2134567801")),
+          TaxIdentifiers(Some("AB123456C"), None, Some("1234567890")),
           None,
           PowerOfAttorney
         )
