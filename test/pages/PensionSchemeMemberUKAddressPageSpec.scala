@@ -40,7 +40,7 @@ class PensionSchemeMemberUKAddressPageSpec extends PageBehaviours {
 
     val result = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(result, "/alternative-name")
+    checkNavigation(result, "/submission-service/name-pension-scheme-holds")
   }
 
   "must redirect to CYA page when answered in check mode" in {

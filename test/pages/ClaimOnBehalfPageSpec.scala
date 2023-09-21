@@ -54,7 +54,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
     val nextPageUrl: String    = page.navigate(NormalMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/status-of-user")
+    checkNavigation(nextPageUrl, "/submission-service/authority-someone-else")
   }
 
   "must redirect to enter who will pay page when user selects no and user is in debit in normal mode" in {
@@ -75,7 +75,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/who-will-pay/2020")
+    checkNavigation(nextPageUrl, "/submission-service/2020/who-will-pay-new-tax-charge")
   }
 
   "must redirect to enter alternate name page when user selects no and is in credit/direct comp/indirect comp in normal mode" in {
@@ -98,7 +98,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/alternative-name")
+    checkNavigation(nextPageUrl, "/submission-service/name-pension-scheme-holds")
   }
 
   "must redirect to set status of user when user submits yes in check mode" in {
@@ -114,7 +114,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/status-of-user")
+    checkNavigation(nextPageUrl, "/submission-service/authority-someone-else")
   }
 
   "must redirect to who paid charge page when user selects no and user is in debit in check mode" in {
@@ -135,7 +135,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/change-who-will-pay/2020")
+    checkNavigation(nextPageUrl, "/submission-service/2020/change-who-will-pay-new-tax-charge")
   }
 
   "must redirect to check your answers page when user selects no and is in credit/direct comp/indirect comp " in {
@@ -206,7 +206,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/alternative-name")
+    checkNavigation(nextPageUrl, "/submission-service/name-pension-scheme-holds")
   }
 
   "must redirect to status of user page when LTA only submission and user selects yes in normal mode" in {
@@ -227,7 +227,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/status-of-user")
+    checkNavigation(nextPageUrl, "/submission-service/authority-someone-else")
   }
 
   "must redirect to check your answers when LTA only submission and user selects no in check mode" in {
@@ -269,7 +269,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/status-of-user")
+    checkNavigation(nextPageUrl, "/submission-service/authority-someone-else")
   }
 
   "cleanup" - {

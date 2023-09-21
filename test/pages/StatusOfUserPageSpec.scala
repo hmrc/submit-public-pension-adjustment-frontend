@@ -43,7 +43,7 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-name")
+    checkNavigation(nextPageUrl, "/submission-service/name-someone-else")
   }
 
   "must redirect to their name page when user submits data in check mode" in {
@@ -57,7 +57,7 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/change-their-name")
+    checkNavigation(nextPageUrl, "/submission-service/change-name-someone-else")
   }
 
   "must redirect to JourneyRecoveryPage when not answered in normal mode" in {

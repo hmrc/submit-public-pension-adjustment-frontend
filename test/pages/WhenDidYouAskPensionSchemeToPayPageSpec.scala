@@ -63,7 +63,7 @@ class WhenDidYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
       val result =
         WhenDidYouAskPensionSchemeToPayPage(Period._2022).navigate(NormalMode, ua, userWithDebitSubmission).url
 
-      checkNavigation(result, "/alternative-name")
+      checkNavigation(result, "/submission-service/name-pension-scheme-holds")
     }
 
     "to WhoWillPayPage when user submits and user has more debit years to submit" in {
@@ -77,7 +77,7 @@ class WhenDidYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
       val result =
         WhenDidYouAskPensionSchemeToPayPage(Period._2020).navigate(NormalMode, ua, userWithDebitSubmission).url
 
-      checkNavigation(result, "/who-will-pay/2021")
+      checkNavigation(result, "/submission-service/2021/who-will-pay-new-tax-charge")
     }
 
     "to JourneyRecovery when not selected" in {
@@ -118,7 +118,7 @@ class WhenDidYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
       val result =
         WhenDidYouAskPensionSchemeToPayPage(Period._2020).navigate(CheckMode, ua, userWithDebitSubmission).url
 
-      checkNavigation(result, "/change-who-will-pay/2021")
+      checkNavigation(result, "/submission-service/2021/change-who-will-pay-new-tax-charge")
     }
 
     "to JourneyRecovery when not selected" in {

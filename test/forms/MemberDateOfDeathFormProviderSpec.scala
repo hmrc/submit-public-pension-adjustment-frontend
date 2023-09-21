@@ -16,13 +16,22 @@
 
 package forms
 
-import java.time.{LocalDate, ZoneOffset}
-
+import java.time.{Clock, LocalDate, ZoneId, ZoneOffset}
 import forms.behaviours.DateBehaviours
+import play.api.data.FormError
+
+import java.time.format.DateTimeFormatter
 
 class MemberDateOfDeathFormProviderSpec extends DateBehaviours {
 
-  val form = new MemberDateOfDeathFormProvider()()
+  private val fixedInstant = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
+  private val clock        = Clock.fixed(fixedInstant, ZoneId.systemDefault)
+
+  val form = new MemberDateOfDeathFormProvider(clock)()
+
+  private def dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  private val minDate       = LocalDate.now(clock).minusYears(130)
+  private val maxDate       = LocalDate.now(clock)
 
   ".value" - {
 
@@ -34,5 +43,19 @@ class MemberDateOfDeathFormProviderSpec extends DateBehaviours {
     behave like dateField(form, "value", validData)
 
     behave like mandatoryDateField(form, "value", "memberDateOfDeath.error.required.all")
+
+    behave like dateFieldWithMax(
+      form = form,
+      key = "value",
+      max = maxDate,
+      formError = FormError("value", "memberDateOfDeath.error.max", Seq(maxDate.format(dateFormatter)))
+    )
+
+    behave like dateFieldWithMin(
+      form = form,
+      key = "value",
+      min = minDate,
+      formError = FormError("value", "memberDateOfDeath.error.min", Seq(minDate.format(dateFormatter)))
+    )
   }
 }

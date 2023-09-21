@@ -40,7 +40,7 @@ class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-residence")
+    checkNavigation(nextPageUrl, "/submission-service/uk-resident-someone-else")
   }
 
   "must redirect to their residence page page when user submits data in check mode" in {
@@ -54,6 +54,6 @@ class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/change-their-residence")
+    checkNavigation(nextPageUrl, "/submission-service/change-uk-resident-someone-else")
   }
 }

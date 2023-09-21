@@ -40,7 +40,7 @@ class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/their-UTR")
+    checkNavigation(nextPageUrl, "/submission-service/unique-taxpayer-reference-someone-else")
   }
 
   "must redirect to cPension Scheme Members Tax Reference page when user submits data in check mode" in {
@@ -54,7 +54,7 @@ class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/change-their-UTR")
+    checkNavigation(nextPageUrl, "/submission-service/change-unique-taxpayer-reference-someone-else")
   }
 
   "must redirect to JourneyRecoveryPage when not answered in normal mode" in {

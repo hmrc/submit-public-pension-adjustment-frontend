@@ -40,7 +40,7 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
           .value
         val result = AreYouAUKResidentPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/uk-address")
+        checkNavigation(result, "/submission-service/your-address")
       }
 
       "to InternationalAddressPage when no selected" in {
@@ -53,7 +53,7 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
           .value
         val result = AreYouAUKResidentPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/international-address")
+        checkNavigation(result, "/submission-service/your-international-address")
       }
 
       "to JourneyRecovery when not selected" in {
@@ -76,7 +76,7 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
           .value
         val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/change-uk-address")
+        checkNavigation(result, "/submission-service/change-your-address")
       }
 
       "to international address page when no selected" in {
@@ -89,7 +89,7 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
           .value
         val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/change-international-address")
+        checkNavigation(result, "/submission-service/change-your-international-address")
       }
 
       "to JourneyRecovery when not selected" in {

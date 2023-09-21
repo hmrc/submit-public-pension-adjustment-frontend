@@ -40,7 +40,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
           .value
         val result = PensionSchemeDetailsPage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/asked-pension-scheme-to-pay-tax-charge/2020")
+        checkNavigation(result, "/submission-service/2020/asked-pension-scheme-to-pay-tax-charge")
       }
 
       "to JourneyRecoveryPage when not answered" in {
@@ -64,7 +64,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
           .value
         val result = PensionSchemeDetailsPage(Period._2020).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/change-asked-pension-scheme-to-pay-tax-charge/2020")
+        checkNavigation(result, "/submission-service/2020/change-asked-pension-scheme-to-pay-tax-charge")
       }
 
       "to JourneyRecovery when not answered" in {

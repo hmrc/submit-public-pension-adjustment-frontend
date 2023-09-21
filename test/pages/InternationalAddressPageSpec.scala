@@ -46,7 +46,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
           .value
         val result = InternationalAddressPage.navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/legacy-pension-scheme-reference/12345678AB")
+        checkNavigation(result, "/submission-service/12345678AB/legacy-individual-pension-scheme-reference")
       }
 
       "to JourneyRecovery when not answered" in {

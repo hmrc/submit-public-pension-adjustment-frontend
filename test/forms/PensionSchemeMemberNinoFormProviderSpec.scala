@@ -58,7 +58,7 @@ class PensionSchemeMemberNinoFormProviderSpec extends StringFieldBehaviours {
       requiredError = FormError(fieldName, requiredKey)
     )
     "Be accepted only if it is in the right format" in {
-      val result = form.bind(Map(fieldName -> "GB123456A")).apply(fieldName)
+      val result = form.bind(Map(fieldName -> gen.toString)).apply(fieldName)
       result.errors.head mustBe FormError(fieldName, "pensionSchemeMemberNino.error.invalid")
     }
 

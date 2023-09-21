@@ -40,7 +40,7 @@ class EnterAlternativeNamePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/contact-number")
+    checkNavigation(nextPageUrl, "/submission-service/contact-number")
   }
 
   "must redirect to check your answers page when user submits answers in check mode" in {

@@ -30,6 +30,8 @@ class HowMuchTaxReliefFormProvider @Inject() extends Mappings {
         "howMuchTaxRelief.error.wholeNumber",
         "howMuchTaxRelief.error.nonNumeric"
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "howMuchTaxRelief.error.outOfRange"))
+        .verifying(
+          maximumValue[BigInt](BigInt("999999999"), "howMuchTaxRelief.error.maximum")
+        )
     )
 }

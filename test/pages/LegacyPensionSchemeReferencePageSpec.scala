@@ -47,7 +47,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
         val result =
           LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/reform-pension-scheme-reference/12345678AB")
+        checkNavigation(result, "/submission-service/12345678AB/reform-individual-pension-scheme-reference")
       }
 
       "to JourneyRecovery when not answered" in {

@@ -45,12 +45,11 @@ class HowMuchTaxReliefFormProviderSpec extends IntFieldBehaviours {
       wholeNumberError = FormError(fieldName, "howMuchTaxRelief.error.wholeNumber")
     )
 
-    behave like intFieldWithRange(
+    behave like intFieldWithMaximum(
       form,
       fieldName,
-      minimum = minimum,
-      maximum = maximum,
-      expectedError = FormError(fieldName, "howMuchTaxRelief.error.outOfRange", Seq(minimum, maximum))
+      maximum,
+      expectedError = FormError(fieldName, "howMuchTaxRelief.error.maximum", Seq(maximum))
     )
 
     behave like mandatoryField(

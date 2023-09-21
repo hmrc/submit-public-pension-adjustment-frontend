@@ -26,6 +26,10 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+<p>@messages("howMuchTaxRelief.hint1")</p>
+}
+
 @layout(pageTitle = title(form, messages("howMuchTaxRelief.title"))) {
 
     @formHelper(action = routes.HowMuchTaxReliefController.onSubmit(mode), 'autoComplete -> "off") {
@@ -37,13 +41,15 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("howMuchTaxRelief.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("howMuchTaxRelief.heading"),
+                    caption = messages("howMuchTaxRelief.caption")
+                )
             )
-            .withHint(HintViewModel(messages("howMuchTaxRelief.hint")))
             .withWidth(Fixed10)
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
-        )
+            .withHint(HintViewModel(HtmlContent(contentHint))))
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

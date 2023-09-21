@@ -40,7 +40,7 @@ class AlternativeNamePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/enter-alternative-name")
+    checkNavigation(nextPageUrl, "/submission-service/enter-name-pension-scheme-holds")
   }
 
   "must redirect to contact number page when user selects yes" in {
@@ -54,7 +54,7 @@ class AlternativeNamePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/contact-number")
+    checkNavigation(nextPageUrl, "/submission-service/contact-number")
   }
 
   "must redirect user to check their answers when user resubmits yes in check mode" in {
@@ -82,7 +82,7 @@ class AlternativeNamePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/change-enter-alternative-name")
+    checkNavigation(nextPageUrl, "/submission-service/change-enter-name-pension-scheme-holds")
   }
 
   "must redirect to JourneyRecoveryPage when not answered in normal mode" in {

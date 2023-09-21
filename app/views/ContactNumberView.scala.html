@@ -26,9 +26,6 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
-<p>@messages("contactNumber.hint")</p>
-}
 
 @layout(pageTitle = title(form, messages("contactNumber.title"))) {
 
@@ -38,6 +35,8 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <p class="govuk-caption-xl">@messages("submissionService.caption")</p>
+
 
         @govukInput(
             InputViewModel(
@@ -45,7 +44,6 @@
                 label = LabelViewModel(messages("contactNumber.heading")).asPageHeading()
             )
             .withWidth(Full)
-            .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

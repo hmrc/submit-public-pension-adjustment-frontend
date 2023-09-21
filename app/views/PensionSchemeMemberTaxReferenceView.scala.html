@@ -28,6 +28,7 @@
 
 @contentHint = {
 <p>@messages("pensionSchemeMemberTaxReference.hint1")</p>
+<p>@messages("pensionSchemeMemberTaxReference.hint2")</p>
 }
 
 @layout(pageTitle = title(form, messages("pensionSchemeMemberTaxReference.title"))) {
@@ -43,7 +44,6 @@
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
                 content = messages("pensionSchemeMemberTaxReference.heading"),
-                caption = messages("pensionSchemeMemberTaxReference.caption")
                 )
             )
             .withHint(HintViewModel(HtmlContent(contentHint)))

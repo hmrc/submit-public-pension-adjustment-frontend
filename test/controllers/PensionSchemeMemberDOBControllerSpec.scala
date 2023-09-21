@@ -36,13 +36,13 @@ import scala.concurrent.Future
 
 class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new PensionSchemeMemberDOBFormProvider()
+  val formProvider = new PensionSchemeMemberDOBFormProvider(clockAtFixedInstant)
 
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = LocalDate.now(ZoneOffset.UTC)
+  val validAnswer = LocalDate.now(clockAtFixedInstant).minusYears(20)
 
   lazy val pensionSchemeMemberDOBRoute = routes.PensionSchemeMemberDOBController.onPageLoad(NormalMode).url
 

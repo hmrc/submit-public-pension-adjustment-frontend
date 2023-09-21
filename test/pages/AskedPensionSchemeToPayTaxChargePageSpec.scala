@@ -42,7 +42,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
           .value
         val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/when-did-you-ask-pension-scheme-to-pay/2020")
+        checkNavigation(result, "/submission-service/2020/date-asked-pension-scheme-to-pay")
       }
 
       "to WhenWillYouAskPensionSchemeToPayPage when no selected" in {
@@ -55,7 +55,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
           .value
         val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/when-will-you-ask-pension-scheme-to-pay/2020")
+        checkNavigation(result, "/submission-service/2020/date-you-will-ask-pension-scheme-to-pay")
       }
 
       "to JourneyRecovery when not selected" in {
@@ -78,7 +78,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
           .value
         val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/change-when-did-you-ask-pension-scheme-to-pay/2020")
+        checkNavigation(result, "/submission-service/2020/change-date-asked-pension-scheme-to-pay")
       }
 
       "to when will you ask pension scheme to charge page in check mode when no selected" in {
@@ -91,7 +91,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
           .value
         val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/change-when-will-you-ask-pension-scheme-to-pay/2020")
+        checkNavigation(result, "/submission-service/2020/change-date-you-will-ask-pension-scheme-to-pay")
       }
 
       "to JourneyRecovery when not selected" in {

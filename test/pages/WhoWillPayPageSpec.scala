@@ -56,7 +56,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
         val result = WhoWillPayPage(Period._2020).navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/which-pension-scheme-will-pay/2020")
+        checkNavigation(result, "/submission-service/2020/which-pension-scheme-will-pay-tax-charge")
       }
 
       "to AlternativeNamePage when You selected and no more debit periods" in {
@@ -70,7 +70,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
         val result = WhoWillPayPage(Period._2022).navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/alternative-name")
+        checkNavigation(result, "/submission-service/name-pension-scheme-holds")
       }
 
       "to Who Will Pay Page when You selected and  more debit periods" in {
@@ -84,7 +84,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
         val result = WhoWillPayPage(Period._2020).navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/who-will-pay/2021")
+        checkNavigation(result, "/submission-service/2021/who-will-pay-new-tax-charge")
       }
 
       "to JourneyRecovery when not selected" in {
@@ -109,7 +109,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
         val result = WhoWillPayPage(Period._2020).navigate(CheckMode, ua, submission).url
 
-        checkNavigation(result, "/change-who-will-pay/2021")
+        checkNavigation(result, "/submission-service/2021/change-who-will-pay-new-tax-charge")
       }
 
       "to CYA when user selects You and no more debit periods" in {
@@ -137,7 +137,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
         val result = WhoWillPayPage(Period._2022).navigate(CheckMode, ua, submission).url
 
-        checkNavigation(result, "/change-which-pension-scheme-will-pay/2022")
+        checkNavigation(result, "/submission-service/2022/change-which-pension-scheme-will-pay-tax-charge")
       }
 
       "to JourneyRecovery when not selected" in {

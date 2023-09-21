@@ -27,8 +27,8 @@
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-<p>@messages("pensionSchemeMemberNino.hint1")</p>
-<p class = "govuk-body">@messages("pensionSchemeMemberNino.hint2")</p>
+<p class="govuk-body">@messages("pensionSchemeMemberNino.message1")</p>
+<p >@messages("pensionSchemeMemberNino.hint1")</p>
 }
 @layout(pageTitle = title(form, messages("pensionSchemeMemberNino.title"))) {
 
@@ -42,8 +42,7 @@
             InputViewModel(
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
-                content = messages("pensionSchemeMemberNino.heading"),
-                caption = messages("pensionSchemeMemberNino.caption")
+                content = messages("pensionSchemeMemberNino.heading")
                 )
             )
             .withHint(HintViewModel(HtmlContent(contentHint)))

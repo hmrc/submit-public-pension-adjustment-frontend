@@ -16,23 +16,42 @@
 
 package forms
 
-import java.time.{LocalDate, ZoneOffset}
-
+import java.time.{Clock, LocalDate, ZoneId}
 import forms.behaviours.DateBehaviours
+import play.api.data.FormError
+
+import java.time.format.DateTimeFormatter
 
 class PensionSchemeMemberDOBFormProviderSpec extends DateBehaviours {
 
-  val form = new PensionSchemeMemberDOBFormProvider()()
+  private val fixedInstant = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
+  private val clock        = Clock.fixed(fixedInstant, ZoneId.systemDefault)
+
+  val form                  = new PensionSchemeMemberDOBFormProvider(clock)()
+  private def dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  private val minDate       = LocalDate.now(clock).minusYears(130)
+  private val maxDate       = LocalDate.now(clock)
 
   ".value" - {
 
-    val validData = datesBetween(
-      min = LocalDate.of(2000, 1, 1),
-      max = LocalDate.now(ZoneOffset.UTC)
-    )
+    val validData = datesBetween(minDate, maxDate)
 
     behave like dateField(form, "value", validData)
 
     behave like mandatoryDateField(form, "value", "pensionSchemeMemberDOB.error.required.all")
+
+    behave like dateFieldWithMax(
+      form = form,
+      key = "value",
+      max = maxDate,
+      formError = FormError("value", "pensionSchemeMemberDOB.error.max", Seq(maxDate.format(dateFormatter)))
+    )
+
+    behave like dateFieldWithMin(
+      form = form,
+      key = "value",
+      min = minDate,
+      formError = FormError("value", "pensionSchemeMemberDOB.error.min", Seq(minDate.format(dateFormatter)))
+    )
   }
 }
