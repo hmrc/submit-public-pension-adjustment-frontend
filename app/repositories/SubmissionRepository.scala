@@ -20,6 +20,7 @@ import config.FrontendAppConfig
 import models.submission.Submission
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model._
+import uk.gov.hmrc.crypto.{Decrypter, Encrypter}
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
@@ -33,12 +34,12 @@ class SubmissionRepository @Inject() (
   mongoComponent: MongoComponent,
   appConfig: FrontendAppConfig,
   clock: Clock
-)(implicit ec: ExecutionContext)
+)(implicit ec: ExecutionContext, crypto: Encrypter with Decrypter)
     extends PlayMongoRepository[Submission](
       collectionName = "submissions",
       mongoComponent = mongoComponent,
-      domainFormat = Submission.format,
       replaceIndexes = true,
+      domainFormat = Submission.encryptedFormat,
       indexes = Seq(
         IndexModel(
           Indexes.ascending("lastUpdated"),
