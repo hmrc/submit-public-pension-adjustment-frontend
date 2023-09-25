@@ -93,10 +93,8 @@ class CalculateBackendConnectorSpec extends SpecBase with WireMockHelper with Sc
               Some("2134567801"),
               true,
               Some(ExcessLifetimeAllowancePaid.Annualpayment),
-              Some(20000),
               Some(WhoPaidLTACharge.PensionScheme),
               Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-              30000,
               Some(WhoPayingExtraLtaCharge.You),
               None
             )
