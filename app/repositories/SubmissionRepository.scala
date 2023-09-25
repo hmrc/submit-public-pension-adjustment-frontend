@@ -16,6 +16,7 @@
 
 package repositories
 
+import config.FrontendAppConfig
 import models.submission.Submission
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model._
@@ -30,6 +31,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class SubmissionRepository @Inject() (
   mongoComponent: MongoComponent,
+  appConfig: FrontendAppConfig,
   clock: Clock
 )(implicit ec: ExecutionContext)
     extends PlayMongoRepository[Submission](
@@ -41,7 +43,7 @@ class SubmissionRepository @Inject() (
           Indexes.ascending("lastUpdated"),
           IndexOptions()
             .name("lastUpdatedIdx")
-            .expireAfter(1, TimeUnit.DAYS)
+            .expireAfter(appConfig.cacheTtl, TimeUnit.SECONDS)
         ),
         IndexModel(
           Indexes.ascending("uniqueId"),

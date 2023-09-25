@@ -9,6 +9,7 @@ import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
+import config.FrontendAppConfig
 
 import java.time.temporal.ChronoUnit
 import java.time.{Clock, Instant, ZoneId}
@@ -30,11 +31,15 @@ class SubmissionRepositorySpec
 
   private val calculationInputs      = CalculationInputs(Resubmission(false, None), None, None)
   private val submission: Submission = Submission("sessionId", "submissionUniqueId", calculationInputs, None)
+  private val mockAppConfig          = mock[FrontendAppConfig]
 
   protected override val repository = new SubmissionRepository(
     mongoComponent = mongoComponent,
+    appConfig = mockAppConfig,
     clock = stubClock
   )
+
+  when(mockAppConfig.cacheTtl) thenReturn 900
 
   ".insert" - {
 

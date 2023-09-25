@@ -170,4 +170,4 @@ GET         /check-your-answers                                                 
 GET         /submit-your-answers                                                                                        controllers.CheckYourAnswersController.onSubmit()
 GET         /submission                                                                                                 controllers.SubmissionController.onPageLoad()
 
-GET         /uplift-failed                                                                                              controllers.UpliftFailedController.onPageLoad()
+GET         /uplift-failure                                                                                             controllers.UpliftFailedController.onPageLoad()
