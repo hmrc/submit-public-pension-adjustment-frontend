@@ -50,10 +50,8 @@ object TestData {
     newProtectionTypeOrEnhancementReference = Some("newReference"),
     previousLifetimeAllowanceChargeFlag = true,
     previousLifetimeAllowanceChargePaymentMethod = Some(ExcessLifetimeAllowancePaid.Lumpsum),
-    previousLifetimeAllowanceChargeAmount = Some(10000),
     previousLifetimeAllowanceChargePaidBy = Some(WhoPaidLTACharge.You),
     previousLifetimeAllowanceChargeSchemeNameAndTaxRef = Some(SchemeNameAndTaxRef("Scheme1", "pstr1")),
-    newLifetimeAllowanceChargeAmount = 20000,
     newLifetimeAllowanceChargeWillBePaidBy = whoPayingExtra,
     newLifetimeAllowanceChargeSchemeNameAndTaxRef = pensionSchemeDetails
   )
@@ -167,10 +165,8 @@ object TestData {
         Some("2134567801"),
         true,
         Some(ExcessLifetimeAllowancePaid.Annualpayment),
-        Some(10000),
         Some(WhoPaidLTACharge.PensionScheme),
         Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-        20000,
         Some(WhoPayingExtraLtaCharge.You),
         None
       )
@@ -675,10 +671,8 @@ object TestData {
           Some("2134567801"),
           true,
           Some(ExcessLifetimeAllowancePaid.Annualpayment),
-          Some(10000),
           Some(WhoPaidLTACharge.PensionScheme),
           Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-          20000,
           Some(WhoPayingExtraLtaCharge.You),
           None
         )
