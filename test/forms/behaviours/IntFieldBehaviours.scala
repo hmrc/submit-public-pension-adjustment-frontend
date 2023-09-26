@@ -20,6 +20,9 @@ import play.api.data.{Form, FormError}
 
 trait IntFieldBehaviours extends FieldBehaviours {
 
+  implicit val propertyCheckConfiguration: PropertyCheckConfiguration =
+    PropertyCheckConfiguration(maxDiscardedFactor = 10)
+
   def intField(form: Form[_], fieldName: String, nonNumericError: FormError, wholeNumberError: FormError): Unit = {
 
     "not bind non-numeric numbers" in {
