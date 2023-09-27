@@ -192,4 +192,39 @@ class SubmissionRepositorySpec
       }
     }
   }
+
+  ".keepAlive" - {
+
+    "when there is a record for this id" - {
+
+      "must update its lastUpdated to `now` and return true" in {
+
+        val submission = Submission(
+          sessionId,
+          submissionUniqueId,
+          calculationInputs,
+          None,
+          Instant.now(stubClock).truncatedTo(ChronoUnit.MILLIS)
+        )
+
+        insert(submission).futureValue
+
+        val result = repository.keepAlive(submission.sessionId).futureValue
+
+        val expectedSubmission = submission copy (lastUpdated = instant)
+
+        result mustEqual true
+        val updatedAnswers = find(Filters.equal("sessionId", sessionId)).futureValue.headOption.value
+        updatedAnswers mustEqual expectedSubmission
+      }
+    }
+
+    "when there is no record for this id" - {
+
+      "must return true" in {
+
+        repository.keepAlive("id that does not exist").futureValue mustEqual true
+      }
+    }
+  }
 }

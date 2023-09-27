@@ -24,7 +24,7 @@ import uk.gov.hmrc.crypto.{Decrypter, Encrypter}
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
-import java.time.Clock
+import java.time.{Clock, Instant}
 import java.util.concurrent.TimeUnit
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -51,19 +51,37 @@ class SubmissionRepository @Inject() (
           Indexes.ascending("uniqueId"),
           IndexOptions()
             .name("uniqueIdx")
+        ),
+        IndexModel(
+          Indexes.ascending("sessionId"),
+          IndexOptions()
+            .name("sessionIdx")
         )
       )
     ) {
 
   def insert(item: Submission): Future[Done] =
     collection
-      .insertOne(item.copy(lastUpdated = clock.instant()))
-      .toFuture()
+      .replaceOne(
+        filter = bySessionId(item.sessionId),
+        replacement = item.copy(lastUpdated = clock.instant()),
+        options = ReplaceOptions().upsert(true)
+      )
+      .toFuture
       .map(_ => Done)
 
   private def byUniqueId(uniqueId: String): Bson = Filters.equal("uniqueId", uniqueId)
 
   private def bySessionId(sessionId: String): Bson = Filters.equal("sessionId", sessionId)
+
+  def keepAlive(sessionId: String): Future[Boolean] =
+    collection
+      .updateOne(
+        filter = bySessionId(sessionId),
+        update = Updates.set("lastUpdated", Instant.now(clock))
+      )
+      .toFuture
+      .map(_ => true)
 
   def get(uniqueId: String): Future[Option[Submission]] =
     collection
@@ -74,5 +92,4 @@ class SubmissionRepository @Inject() (
     collection
       .find(bySessionId(sessionId))
       .headOption()
-
 }

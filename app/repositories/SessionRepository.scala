@@ -35,7 +35,8 @@ import scala.concurrent.{ExecutionContext, Future}
 class SessionRepository @Inject() (
   mongoComponent: MongoComponent,
   appConfig: FrontendAppConfig,
-  clock: Clock
+  clock: Clock,
+  submissionRepository: SubmissionRepository
 )(implicit ec: ExecutionContext, crypto: Encrypter with Decrypter)
     extends PlayMongoRepository[UserAnswers](
       collectionName = "user-answers",
@@ -75,6 +76,8 @@ class SessionRepository @Inject() (
   def set(answers: UserAnswers): Future[Boolean] = {
 
     val updatedAnswers = answers copy (lastUpdated = Instant.now(clock))
+
+    submissionRepository.keepAlive(updatedAnswers.id)
 
     collection
       .replaceOne(
