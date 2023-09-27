@@ -459,3 +459,11 @@ bankDetails.invalid.sortcode = cy: Enter a valid sort code
 bankDetails.invalid.account.name = cy: Enter the name on the account
 bankDetails.invalid.account.name.length = cy: Account name must be 70 characters or less
 bankDetails.invalid.account.number = cy: Enter a valid account number
+
+upliftFailed.title = cy: Identity verification failed
+upliftFailed.heading = cy: Identity verification failed
+upliftFailed.cannotConfirm = cy: We cannot confirm your identity
+upliftFailed.evidence = cy: If you cannot give us evidence to confirm your identity, you cannot log in and use our online services.
+upliftFailed.contact = cy: You can contact us to access our services and speak to an advisor. Our advisors can help you finish your task and give you information over the phone or via web chat. They cannot complete online identity verification for you.
+upliftFailed.details = cy: Alternatively, give us details from one or two of the evidence types listed, and try again to confirm your identity online.
+upliftFailed.support = cy: We also offer technical support if your details do not match our records.
