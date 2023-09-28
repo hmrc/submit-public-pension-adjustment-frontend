@@ -45,7 +45,7 @@ object TestData {
     lifetimeAllowanceProtectionOrEnhancements = LtaProtectionOrEnhancements.Protection,
     protectionType = ProtectionType.PrimaryProtection,
     protectionReference = "originalReference",
-    protectionTypeOrEnhancementChangedFlag = true,
+    ProtectionEnhancedChanged.Protection,
     newProtectionTypeOrEnhancement = Some(WhatNewProtectionTypeEnhancement.EnhancedProtection),
     newProtectionTypeOrEnhancementReference = Some("newReference"),
     previousLifetimeAllowanceChargeFlag = true,
@@ -53,7 +53,24 @@ object TestData {
     previousLifetimeAllowanceChargePaidBy = Some(WhoPaidLTACharge.You),
     previousLifetimeAllowanceChargeSchemeNameAndTaxRef = Some(SchemeNameAndTaxRef("Scheme1", "pstr1")),
     newLifetimeAllowanceChargeWillBePaidBy = whoPayingExtra,
-    newLifetimeAllowanceChargeSchemeNameAndTaxRef = pensionSchemeDetails
+    newLifetimeAllowanceChargeSchemeNameAndTaxRef = pensionSchemeDetails,
+    NewLifeTimeAllowanceAdditions(
+      false,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None,
+      None
+    )
   )
 
   val authRetrievals =
@@ -160,7 +177,7 @@ object TestData {
         LtaProtectionOrEnhancements.Protection,
         ProtectionType.FixedProtection2014,
         "R41AB678TR23355",
-        true,
+        ProtectionEnhancedChanged.Protection,
         Some(WhatNewProtectionTypeEnhancement.IndividualProtection2014),
         Some("2134567801"),
         true,
@@ -168,7 +185,24 @@ object TestData {
         Some(WhoPaidLTACharge.PensionScheme),
         Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
         Some(WhoPayingExtraLtaCharge.You),
-        None
+        None,
+        NewLifeTimeAllowanceAdditions(
+          false,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None
+        )
       )
     )
   )
@@ -666,7 +700,7 @@ object TestData {
           LtaProtectionOrEnhancements.Protection,
           ProtectionType.FixedProtection2014,
           "R41AB678TR23355",
-          true,
+          ProtectionEnhancedChanged.Protection,
           Some(WhatNewProtectionTypeEnhancement.IndividualProtection2014),
           Some("2134567801"),
           true,
@@ -674,7 +708,24 @@ object TestData {
           Some(WhoPaidLTACharge.PensionScheme),
           Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
           Some(WhoPayingExtraLtaCharge.You),
-          None
+          None,
+          NewLifeTimeAllowanceAdditions(
+            false,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+          )
         )
       )
     ),

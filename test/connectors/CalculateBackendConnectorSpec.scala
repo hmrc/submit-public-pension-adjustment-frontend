@@ -20,7 +20,7 @@ import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
 import generators.Generators
 import models.UniqueId
-import models.calculation.inputs.{CalculationInputs, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, ProtectionType, Resubmission, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.calculation.inputs.{CalculationInputs, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, ProtectionEnhancedChanged, ProtectionType, Resubmission, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import models.submission.RetrieveSubmissionResponse
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Application
@@ -88,7 +88,7 @@ class CalculateBackendConnectorSpec extends SpecBase with WireMockHelper with Sc
               LtaProtectionOrEnhancements.Protection,
               ProtectionType.FixedProtection2014,
               "R41AB678TR23355",
-              true,
+              ProtectionEnhancedChanged.Protection,
               Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
               Some("2134567801"),
               true,
@@ -96,7 +96,24 @@ class CalculateBackendConnectorSpec extends SpecBase with WireMockHelper with Sc
               Some(WhoPaidLTACharge.PensionScheme),
               Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
               Some(WhoPayingExtraLtaCharge.You),
-              None
+              None,
+              NewLifeTimeAllowanceAdditions(
+                false,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None
+              )
             )
           )
         )
