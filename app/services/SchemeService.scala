@@ -78,6 +78,9 @@ object SchemeService {
         .map(nameAndRef => PensionSchemeDetails(nameAndRef.name, nameAndRef.taxRef)),
       maybeLta
         .flatMap(lta => lta.newLifetimeAllowanceChargeSchemeNameAndTaxRef)
+        .map(nameAndRef => PensionSchemeDetails(nameAndRef.name, nameAndRef.taxRef)),
+      maybeLta
+        .flatMap(lta => lta.newLifeTimeAllowanceAdditions.userSchemeDetails)
         .map(nameAndRef => PensionSchemeDetails(nameAndRef.name, nameAndRef.taxRef))
     ).flatten.distinctBy(_.pensionSchemeTaxReference)
   }
