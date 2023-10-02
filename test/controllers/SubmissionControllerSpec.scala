@@ -54,7 +54,10 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[SubmissionView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view("userSubmissionReference")(request, messages(application)).toString
+        contentAsString(result) mustEqual view(
+          "userSubmissionReference",
+          "/submit-public-pension-adjustment/account/sign-out-survey"
+        )(request, messages(application)).toString
       }
     }
 

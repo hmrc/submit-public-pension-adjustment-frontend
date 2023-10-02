@@ -20,7 +20,7 @@
         govukPanel : GovukPanel
 )
 
-@(userSubmissionReference: String)(implicit request: Request[_], messages: Messages)
+@(userSubmissionReference: String, feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("submission.title")), showBackLink = false) {
 
@@ -40,7 +40,7 @@
     <p class="govuk-body">@messages("submission.whatNext.message2")</p>
 
     <p class="govuk-body">
-        <a class="govuk-link" href="" rel="noreferrer noopener" target="_blank">
+        <a class="govuk-link" href="@feedbackLinkUrl">
             @messages("submission.link")
         </a>
         @messages("submission.takesSecond")
