@@ -23,7 +23,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import repositories.{SessionRepository, SubmissionRepository}
 
 import scala.concurrent.Future
 
@@ -38,9 +38,13 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
         val mockSessionRepository = mock[SessionRepository]
         when(mockSessionRepository.keepAlive(any())) thenReturn Future.successful(true)
 
+        val mockSubmissionRepository = mock[SubmissionRepository]
+        when(mockSubmissionRepository.keepAlive(any())) thenReturn Future.successful(true)
+
         val application =
           applicationBuilder(Some(emptyUserAnswers))
             .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+            .overrides(bind[SubmissionRepository].toInstance(mockSubmissionRepository))
             .build()
 
         running(application) {
@@ -51,6 +55,7 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
 
           status(result) mustEqual OK
           verify(mockSessionRepository, times(1)).keepAlive(emptyUserAnswers.id)
+          verify(mockSubmissionRepository, times(1)).keepAlive(emptyUserAnswers.id)
         }
       }
     }
@@ -61,6 +66,9 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
 
         val mockSessionRepository = mock[SessionRepository]
         when(mockSessionRepository.keepAlive(any())) thenReturn Future.successful(true)
+
+        val mockSubmissionRepository = mock[SubmissionRepository]
+        when(mockSubmissionRepository.keepAlive(any())) thenReturn Future.successful(true)
 
         val application =
           applicationBuilder(None)
@@ -75,6 +83,7 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
 
           status(result) mustEqual OK
           verify(mockSessionRepository, never()).keepAlive(any())
+          verify(mockSubmissionRepository, never()).keepAlive(any())
         }
       }
     }

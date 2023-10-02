@@ -3,7 +3,8 @@ package repositories
 import com.fasterxml.jackson.core.JsonParseException
 import config.FrontendAppConfig
 import models.UserAnswers
-import org.mockito.Mockito.when
+import org.mockito.Mockito
+import org.mockito.Mockito.{verify, when}
 import org.mongodb.scala.bson.BsonDocument
 import org.mongodb.scala.model.Filters
 import org.scalatest.OptionValues
@@ -47,13 +48,15 @@ class SessionRepositorySpec
 
   private val userAnswers = UserAnswers("id", Json.obj("foo" -> "bar"), Instant.ofEpochSecond(1))
 
-  private val mockAppConfig = mock[FrontendAppConfig]
+  private val mockAppConfig            = mock[FrontendAppConfig]
+  private val mockSubmissionRepository = mock[SubmissionRepository]
   when(mockAppConfig.cacheTtl) thenReturn 1
 
   protected override val repository = new SessionRepository(
     mongoComponent = mongoComponent,
     appConfig = mockAppConfig,
-    clock = stubClock
+    clock = stubClock,
+    submissionRepository = mockSubmissionRepository
   )
 
   ".set" - {
@@ -67,6 +70,12 @@ class SessionRepositorySpec
 
       setResult mustEqual true
       updatedRecord mustEqual expectedResult
+    }
+
+    "must trigger keep alive on submission repository so that the submission does not get removed prematurely" in {
+      Mockito.reset(mockSubmissionRepository)
+      repository.set(userAnswers).futureValue
+      verify(mockSubmissionRepository).keepAlive(userAnswers.id)
     }
 
     "must store the data section as encrypted bytes" in {
