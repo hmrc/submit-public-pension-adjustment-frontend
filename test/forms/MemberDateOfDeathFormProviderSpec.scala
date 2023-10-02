@@ -29,7 +29,7 @@ class MemberDateOfDeathFormProviderSpec extends DateBehaviours {
 
   val form = new MemberDateOfDeathFormProvider(clock)()
 
-  private def dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  private def dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
   private val minDate       = LocalDate.now(clock).minusYears(130)
   private val maxDate       = LocalDate.now(clock)
 
