@@ -92,4 +92,10 @@ class SubmissionRepository @Inject() (
     collection
       .find(bySessionId(sessionId))
       .headOption()
+
+  def clear(sessionId: String): Future[Boolean] =
+    collection
+      .deleteOne(bySessionId(sessionId))
+      .toFuture
+      .map(_ => true)
 }

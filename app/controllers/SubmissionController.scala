@@ -39,7 +39,7 @@ class SubmissionController @Inject() (
   def onPageLoad(): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
       request.userAnswers.get(UserSubmissionReference()) match {
-        case Some(usr) => Ok(view(usr))
+        case Some(usr) => Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
         case None      => Redirect(routes.JourneyRecoveryController.onPageLoad())
       }
     }
