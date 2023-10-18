@@ -88,6 +88,7 @@ object TestData {
       AnnualAllowance(
         List(Period._2021, Period._2019),
         List(
+          TaxYear2011To2015(20000, Period._2011),
           TaxYear2011To2015(50000, Period._2013),
           TaxYear2011To2015(50000, Period._2014),
           TaxYear2011To2015(40000, Period._2015),
@@ -611,6 +612,7 @@ object TestData {
         AnnualAllowance(
           List(Period._2021, Period._2019),
           List(
+            TaxYear2011To2015(20000, Period._2011),
             TaxYear2011To2015(50000, Period._2013),
             TaxYear2011To2015(50000, Period._2014),
             TaxYear2011To2015(40000, Period._2015),
