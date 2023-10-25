@@ -79,7 +79,8 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
         noActiveSession(request)
       case _: InsufficientConfidenceLevel =>
         insufficientConfidence(request)
-      case _: AuthorisationException      =>
+      case ex: AuthorisationException     =>
+        logger.warn(s"User has AuthorisationException. The reason is ${ex.reason} .")
         Redirect(routes.UnauthorisedController.onPageLoad)
     }
   }

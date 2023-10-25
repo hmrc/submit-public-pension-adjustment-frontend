@@ -72,12 +72,13 @@ class AuthenticatedIdentifierAction @Inject() (
         logger.warn(s"Incomplete retrievals")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
     } recover {
-      case _: NoActiveSession        =>
+      case _: NoActiveSession         =>
         Redirect(
           config.loginUrl,
           Map("continue" -> Seq(s"${config.loginContinueUrl}"))
         )
-      case _: AuthorisationException =>
+      case ex: AuthorisationException =>
+        logger.warn(s"User has AuthorisationException. The reason is ${ex.reason} .")
         Redirect(routes.UnauthorisedController.onPageLoad)
     }
   }
