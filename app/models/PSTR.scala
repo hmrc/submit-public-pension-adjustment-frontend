@@ -33,8 +33,9 @@ object PSTR {
 
   def fromString(pstrString: String): Option[PSTR] =
     pstrString match {
-      case pattern(_) => Some(PSTR(pstrString))
-      case _          => None
+      case "00348916RT" => None
+      case pattern(_)   => Some(PSTR(pstrString))
+      case _            => None
     }
 
   implicit def pstrPathBindable(implicit stringBinder: PathBindable[String]): PathBindable[PSTR] =
