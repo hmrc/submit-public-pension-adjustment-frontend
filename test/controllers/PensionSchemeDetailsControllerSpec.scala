@@ -44,7 +44,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
   val userAnswers = UserAnswers(userAnswersId)
-    .set(PensionSchemeDetailsPage(Period._2020), PensionSchemeDetails("Scheme1", "00348916RT"))
+    .set(PensionSchemeDetailsPage(Period._2020), PensionSchemeDetails("Scheme1", "00348916RL"))
     .success
     .value
 
@@ -79,7 +79,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(PensionSchemeDetails("Scheme1", "00348916RT")),
+          form.fill(PensionSchemeDetails("Scheme1", "00348916RL")),
           NormalMode,
           Period._2020
         )(
@@ -103,7 +103,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, pensionSchemeDetailsRoute)
-            .withFormUrlEncodedBody(("pensionSchemeName", "Scheme1"), ("pensionSchemeTaxReference", "00348916RT"))
+            .withFormUrlEncodedBody(("pensionSchemeName", "Scheme1"), ("pensionSchemeTaxReference", "00348916RL"))
 
         val result = route(application, request).value
 
@@ -155,7 +155,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, pensionSchemeDetailsRoute)
-            .withFormUrlEncodedBody(("pensionSchemeName", "Scheme1"), ("pensionSchemeTaxReference", "00348916RT"))
+            .withFormUrlEncodedBody(("pensionSchemeName", "Scheme1"), ("pensionSchemeTaxReference", "00348916RK"))
 
         val result = route(application, request).value
 
