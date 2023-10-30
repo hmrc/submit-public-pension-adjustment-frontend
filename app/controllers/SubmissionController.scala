@@ -20,27 +20,38 @@ import controllers.actions._
 import models.UserSubmissionReference
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.{SessionRepository, SubmissionRepository}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SubmissionView
 
 import javax.inject.Inject
+import scala.concurrent.{ExecutionContext, Future}
 
 class SubmissionController @Inject() (
   override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  submissionRepository: SubmissionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: SubmissionView
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] =
-    (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       request.userAnswers.get(UserSubmissionReference()) match {
-        case Some(usr) => Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
-        case None      => Redirect(routes.JourneyRecoveryController.onPageLoad())
+        case Some(usr) =>
+          sessionRepository.clear(request.userId).flatMap { _ =>
+            submissionRepository.clear(request.userId).map { _ =>
+              Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
+            }
+          }
+
+        case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
       }
     }
 }
