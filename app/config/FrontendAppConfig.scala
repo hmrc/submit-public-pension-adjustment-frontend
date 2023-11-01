@@ -42,8 +42,8 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val landingPageLoginContinueUrl: String = configuration.get[String]("urls.landingPageLoginContinue")
   val requiredAuthConfidenceLevel         = configuration.get[String]("required-auth-confidence-level")
   val upliftOrigin                        = configuration.get[String]("uplift-origin")
-
-  val signOutUrl: String = configuration.get[String]("urls.signOut")
+  val signOutUrl: String                  = configuration.get[String]("urls.signOut")
+  val redirectToStartPage: String         = configuration.get[String]("urls.redirectToStartPage")
 
   private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
   val exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/submit-public-pension-adjustment-frontend"

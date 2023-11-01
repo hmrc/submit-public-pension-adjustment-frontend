@@ -63,7 +63,7 @@ class AuthActionSpec extends SpecBase {
             controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=12341234-1234-1234-1234-123412341234"))
 
           status(result) mustBe SEE_OTHER
-          redirectLocation(result).value must startWith(appConfig.loginUrl)
+          redirectLocation(result).value must startWith(appConfig.redirectToStartPage)
         }
       }
     }
@@ -88,7 +88,7 @@ class AuthActionSpec extends SpecBase {
             controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe SEE_OTHER
-          redirectLocation(result).value must startWith(appConfig.loginUrl)
+          redirectLocation(result).value must startWith(appConfig.redirectToStartPage)
         }
       }
     }
