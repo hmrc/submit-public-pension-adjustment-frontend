@@ -111,6 +111,29 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must return a Bad Request and errors when invalid data 00348916RT is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, pensionSchemeDetailsRoute)
+            .withFormUrlEncodedBody(("value", "00348916RT"))
+
+        val boundForm = form.bind(Map("value" -> "00348916RT"))
+
+        val view = application.injector.instanceOf[PensionSchemeDetailsView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020)(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
     "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
