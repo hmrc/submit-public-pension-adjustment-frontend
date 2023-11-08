@@ -57,6 +57,30 @@ class PensionSchemeMemberTaxReferenceSummarySpec extends AnyFreeSpec with Matche
       )
     }
 
+    "when user does not submit UTR, return the summary row with not answered text" in {
+
+      val userAnswers = UserAnswers("id")
+        .set(
+          PensionSchemeMemberTaxReferencePage,
+          ""
+        )
+        .get
+
+      PensionSchemeMemberTaxReferenceSummary.row(userAnswers) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "pensionSchemeMemberTaxReference.checkYourAnswersLabel",
+          value = ValueViewModel(Messages("checkYourAnswers.notAnswered")),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              routes.PensionSchemeMemberTaxReferenceController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText("pensionSchemeMemberTaxReference.change.hidden")
+          )
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       PensionSchemeMemberTaxReferenceSummary.row(userAnswers) shouldBe None

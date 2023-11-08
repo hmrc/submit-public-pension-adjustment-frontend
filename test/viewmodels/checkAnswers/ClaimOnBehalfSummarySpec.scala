@@ -20,69 +20,68 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.ContactNumberPage
+import pages.ClaimOnBehalfPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-import scala.xml.Text
-
-class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
+class ClaimOnBehalfSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when user enters number, return the summary row" in {
+    "when yes is selected, return the summary row" in {
 
       val userAnswers = UserAnswers("id")
         .set(
-          ContactNumberPage,
-          "07777777777"
+          ClaimOnBehalfPage,
+          true
         )
         .get
-      ContactNumberSummary.row(userAnswers) shouldBe Some(
+
+      ClaimOnBehalfSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "contactNumber.checkYourAnswersLabel",
-          value = ValueViewModel(Text("07777777777").toString()),
+          key = "claimOnBehalf.checkYourAnswersLabel",
+          value = ValueViewModel("site.yes"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ContactNumberController.onPageLoad(CheckMode).url
+              routes.ClaimOnBehalfController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("contactNumber.change.hidden")
+              .withVisuallyHiddenText("claimOnBehalf.change.hidden")
           )
         )
       )
     }
 
-    "when does not enter number, return the summary row with not answered text" in {
+    "when no is selected, return the summary row" in {
 
       val userAnswers = UserAnswers("id")
         .set(
-          ContactNumberPage,
-          ""
+          ClaimOnBehalfPage,
+          false
         )
         .get
-      ContactNumberSummary.row(userAnswers) shouldBe Some(
+
+      ClaimOnBehalfSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "contactNumber.checkYourAnswersLabel",
-          value = ValueViewModel(Messages("checkYourAnswers.notAnswered")),
+          key = "claimOnBehalf.checkYourAnswersLabel",
+          value = ValueViewModel("site.no"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ContactNumberController.onPageLoad(CheckMode).url
+              routes.ClaimOnBehalfController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("contactNumber.change.hidden")
+              .withVisuallyHiddenText("claimOnBehalf.change.hidden")
           )
         )
       )
     }
+  }
 
-    "when answer unavailable, return empty" in {
-      val userAnswers = UserAnswers("id")
-      EnterAlternativeNameSummary.row(userAnswers) shouldBe None
-    }
-
+  "when answer unavailable, return empty" in {
+    val userAnswers = UserAnswers("id")
+    ClaimOnBehalfSummary.row(userAnswers) shouldBe None
   }
 }

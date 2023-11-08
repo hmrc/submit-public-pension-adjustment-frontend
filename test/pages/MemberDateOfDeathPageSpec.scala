@@ -51,6 +51,17 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
   }
 
+  "must redirect to journey recovery when no data submitted in normal mode" in {
+
+    val page = MemberDateOfDeathPage
+
+    val userAnswers = emptyUserAnswers
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
   "must redirect to Pension Scheme Members Nino page when user submits data in checkmode" in {
 
     val page = MemberDateOfDeathPage
@@ -64,5 +75,16 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
     checkNavigation(nextPageUrl, "/submission-service/change-national-insurance-number-someone-else")
 
+  }
+
+  "must redirect to journey recovery when no data submitted in check mode" in {
+
+    val page = MemberDateOfDeathPage
+
+    val userAnswers = emptyUserAnswers
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
 }

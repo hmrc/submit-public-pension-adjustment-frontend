@@ -65,6 +65,20 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
     }
 
     "must navigate correctly in CheckMode" - {
+
+      "to PensionSchemeDetails when Private pension scheme selected" in {
+        val ua     = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayPage(Period._2020),
+            "Private pension scheme"
+          )
+          .success
+          .value
+        val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/submission-service/2020/change-private-scheme-name-reference")
+      }
+
       "to asked pension scheme to pay page" in {
         val ua     = emptyUserAnswers
           .set(

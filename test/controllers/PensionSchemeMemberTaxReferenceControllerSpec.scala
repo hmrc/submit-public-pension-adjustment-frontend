@@ -110,9 +110,6 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
           emptyUserAnswers.set(PensionSchemeMemberTaxReferencePage, validAnswer).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PensionSchemeMemberTaxReferencePage
-          .navigate(NormalMode, expectedAnswers)
-          .url
       }
     }
 

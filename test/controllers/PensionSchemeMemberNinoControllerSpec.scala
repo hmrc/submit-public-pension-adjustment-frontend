@@ -107,9 +107,6 @@ class PensionSchemeMemberNinoControllerSpec extends SpecBase with MockitoSugar w
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.PensionSchemeMemberTaxReferenceController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

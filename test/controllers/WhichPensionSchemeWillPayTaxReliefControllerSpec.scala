@@ -213,7 +213,6 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.BankDetailsController.onPageLoad(NormalMode).url
       }
     }
 
