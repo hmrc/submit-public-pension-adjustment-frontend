@@ -43,7 +43,7 @@ class PensionSchemeMemberTaxReferenceFormProviderSpec extends StringFieldBehavio
     behave like fieldThatDoesNotBindInvalidStrings(
       form = form,
       fieldName = fieldName,
-      regex = """^\d{10}$""",
+      regex = """^(?!1234567890)\d{10}$""",
       gen = stringsOfLength(maxLength),
       invalidKey = invalidKey
     )

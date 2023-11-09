@@ -219,8 +219,8 @@ ukAddress.postCode.change.hidden = Postcode
 
 legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.heading = What is your legacy individual pension scheme reference? (optional)
-legacyPensionSchemeReference.message1 = Legacy public service pension schemes are pensions from before 2015.
-legacyPensionSchemeReference.hint1 = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme. For example, 00348916RT.
+legacyPensionSchemeReference.hint1 = Legacy public service pension schemes are pensions from before 2015.
+legacyPensionSchemeReference.hint2 = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 legacyPensionSchemeReference.checkYourAnswersLabel = What is your legacy individual pension scheme reference?
 legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 15 characters or less
 legacyPensionSchemeReference.change.hidden = submission service legacy individual pension scheme reference
@@ -228,8 +228,8 @@ legacyPensionSchemeReference.caption = Relating to scheme
 
 reformPensionSchemeReference.title = What is your reform individual pension scheme reference? (optional)
 reformPensionSchemeReference.heading = What is your reform individual pension scheme reference? (optional)
-reformPensionSchemeReference.message1 = Reform public service pension schemes are pensions from 2015 onwards.
-reformPensionSchemeReference.hint1 = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme. For example, 00348916RT.
+reformPensionSchemeReference.hint1 = Reform public service pension schemes are pensions from 2015 onwards.
+reformPensionSchemeReference.hint2 = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 reformPensionSchemeReference.checkYourAnswersLabel = What is your reform individual pension scheme reference?
 reformPensionSchemeReference.error.length = Reform individual pension scheme reference must be 15 characters or less
 reformPensionSchemeReference.change.hidden = submission service reform individual pension scheme reference

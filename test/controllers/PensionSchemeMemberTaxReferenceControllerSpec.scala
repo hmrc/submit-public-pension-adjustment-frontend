@@ -44,7 +44,7 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 
-  val validAnswer = "1234567890"
+  val validAnswer = "1234567899"
 
   "PensionSchemeMemberTaxReference Controller" - {
 
@@ -113,6 +113,25 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
         redirectLocation(result).value mustEqual PensionSchemeMemberTaxReferencePage
           .navigate(NormalMode, expectedAnswers)
           .url
+      }
+    }
+
+    "must return a Bad Request and errors when invalid data 1234567890 is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, pensionSchemeMemberTaxReferenceRoute)
+            .withFormUrlEncodedBody(("value", "1234567890"))
+
+        val boundForm = form.bind(Map("value" -> "1234567890"))
+
+        val result = route(application, request).value
+        val view   = application.injector.instanceOf[PensionSchemeMemberTaxReferenceView]
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
