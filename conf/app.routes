@@ -17,6 +17,7 @@ GET         /account/sign-out                                                   
 GET         /account/signed-out                                                                                         controllers.auth.SignedOutController.onPageLoad
 
 GET         /unauthorised                                                                                               controllers.UnauthorisedController.onPageLoad
+GET        /cannot-use-service-not-individual                       controllers.CannotUseServiceNotIndividualController.onPageLoad
 
 GET         /submission-service/submitting-on-behalf-someone-else                                                       controllers.ClaimOnBehalfController.onPageLoad(mode: Mode = NormalMode)
 POST        /submission-service/submitting-on-behalf-someone-else                                                       controllers.ClaimOnBehalfController.onSubmit(mode: Mode = NormalMode)
@@ -171,3 +172,4 @@ GET         /submit-your-answers                                                
 GET         /submission                                                                                                 controllers.SubmissionController.onPageLoad()
 
 GET         /uplift-failure                                                                                             controllers.UpliftFailedController.onPageLoad()
+

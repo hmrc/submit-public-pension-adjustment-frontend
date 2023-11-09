@@ -208,7 +208,7 @@ class LandingPageAuthActionSpec extends SpecBase {
 
     "the user has an unsupported affinity group" - {
 
-      "must redirect the user to the unauthorised page" in {
+      "must redirect the user to the unsupported affinity group page" in {
 
         val application = applicationBuilder(userAnswers = None).build()
 
@@ -225,7 +225,7 @@ class LandingPageAuthActionSpec extends SpecBase {
           val result     = controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe SEE_OTHER
-          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
+          redirectLocation(result) mustBe Some(routes.CannotUseServiceNotIndividualController.onPageLoad.url)
         }
       }
     }

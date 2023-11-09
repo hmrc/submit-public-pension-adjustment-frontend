@@ -79,6 +79,9 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
         noActiveSession(request)
       case _: InsufficientConfidenceLevel =>
         insufficientConfidence(request)
+      case ex: UnsupportedAffinityGroup   =>
+        logger.warn(s"User has UnsupportedAffinityGroup. The reason is ${ex.reason} .")
+        Redirect(routes.CannotUseServiceNotIndividualController.onPageLoad)
       case ex: AuthorisationException     =>
         logger.warn(s"User has AuthorisationException. The reason is ${ex.reason} .")
         Redirect(routes.UnauthorisedController.onPageLoad)

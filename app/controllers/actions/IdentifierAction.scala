@@ -72,9 +72,12 @@ class AuthenticatedIdentifierAction @Inject() (
         logger.warn(s"Incomplete retrievals")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
     } recover {
-      case _: NoActiveSession         =>
+      case _: NoActiveSession           =>
         Redirect(config.redirectToStartPage)
-      case ex: AuthorisationException =>
+      case ex: UnsupportedAffinityGroup =>
+        logger.warn(s"User has UnsupportedAffinityGroup. The reason is ${ex.reason} .")
+        Redirect(routes.CannotUseServiceNotIndividualController.onPageLoad)
+      case ex: AuthorisationException   =>
         logger.warn(s"User has AuthorisationException. The reason is ${ex.reason} .")
         Redirect(routes.UnauthorisedController.onPageLoad)
     }
