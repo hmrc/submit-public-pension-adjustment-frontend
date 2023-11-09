@@ -128,7 +128,7 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
         val boundForm = form.bind(Map("value" -> "1234567890"))
 
         val result = route(application, request).value
-        val view = application.injector.instanceOf[PensionSchemeMemberTaxReferenceView]
+        val view   = application.injector.instanceOf[PensionSchemeMemberTaxReferenceView]
 
         status(result) mustEqual BAD_REQUEST
         contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
