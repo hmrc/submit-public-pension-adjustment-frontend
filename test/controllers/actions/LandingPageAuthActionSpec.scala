@@ -107,7 +107,7 @@ class LandingPageAuthActionSpec extends SpecBase {
             controller.onPageLoad()(FakeRequest(GET, ""))
 
           status(result) mustBe SEE_OTHER
-          redirectLocation(result).value must startWith("/submit-public-pension-adjustment/calculation-prerequisite")
+          redirectLocation(result).value must startWith("/submit-public-pension-adjustment/calculation-not-complete")
         }
       }
 

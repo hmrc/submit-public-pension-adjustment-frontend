@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *@
+[success] Total time: 65 s (01:05), completed 13 Nov 2023, 15:48:56
+
 
 @this(
         layout: templates.Layout,
@@ -25,5 +27,14 @@
 
     <h1 class="govuk-heading-xl">@messages("calculationPrerequisite.heading")</h1>
 
-    <p class="govuk-body">@messages("calculationPrerequisite.guidance")</p>
+    <p class="govuk-body">@messages("calculationPrerequisite.message1")</p>
+
+    <p class="govuk-body">@messages("calculationPrerequisite.message2")</p>
+
+    <p class="govuk-body">
+        @messages("calculationPrerequisite.message2")
+        <a class="govuk-link" href="https://www.gov.uk/guidance/calculate-your-public-service-pension-adjustment">
+            @messages("calculationPrerequisite.link")
+        </a>
+    </p>
 }
