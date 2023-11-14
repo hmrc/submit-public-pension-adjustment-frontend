@@ -356,8 +356,8 @@ pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference of who
 
 landingPage.title = Submit Public Pension Adjustment
 
-calculationPrerequisite.title = Calculation Prerequisite
-calculationPrerequisite.heading = Calculation Prerequisite
+calculationPrerequisite.title = Calculation not complete
+calculationPrerequisite.heading = You cannot use the submission service yet
 calculationPrerequisite.message1 = You can only use the submission service once you have calculated your public service pension adjustment.
 calculationPrerequisite.message2 = To calculate your public service pension adjustment, you can use
 calculationPrerequisite.link = this link.
