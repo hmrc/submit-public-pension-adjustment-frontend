@@ -18,12 +18,16 @@ package controllers
 
 import base.SpecBase
 import models.{UserAnswers, UserSubmissionReference}
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import repositories.{SessionRepository, SubmissionRepository}
 import services.SubmissionService
 import views.html.SubmissionView
+
+import scala.concurrent.Future
 
 class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
@@ -37,12 +41,19 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
     "must return OK and the correct view for a GET" in {
 
+      val mockSessionRepository    = mock[SessionRepository]
+      val mockSubmissionRepository = mock[SubmissionRepository]
+      when(mockSessionRepository.clear(any())) thenReturn Future.successful(true)
+      when(mockSubmissionRepository.clear(any())) thenReturn Future.successful(true)
+
       val userAnswers =
         UserAnswers(userAnswersId).set(UserSubmissionReference(), "userSubmissionReference").success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission))
         .overrides(
-          bind[SubmissionService].toInstance(mockSubmissionService)
+          bind[SubmissionService].toInstance(mockSubmissionService),
+          bind[SessionRepository].toInstance(mockSessionRepository),
+          bind[SubmissionRepository].toInstance(mockSubmissionRepository)
         )
         .build()
 
@@ -58,6 +69,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
           "userSubmissionReference",
           "/submit-public-pension-adjustment/account/sign-out-survey"
         )(request, messages(application)).toString
+        verify(mockSessionRepository, times(1)).clear(eqTo(userAnswersId))
+        verify(mockSubmissionRepository, times(1)).clear(eqTo(userAnswersId))
       }
     }
 
