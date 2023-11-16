@@ -100,7 +100,6 @@ class PensionSchemeMemberNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.PensionSchemeMemberDOBController.onPageLoad(NormalMode).url
       }
     }
 

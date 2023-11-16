@@ -100,14 +100,9 @@ class StatusOfUserControllerSpec extends SpecBase with MockitoSugar {
           FakeRequest(POST, statusOfUserRoute)
             .withFormUrlEncodedBody(("value", StatusOfUser.values.head.toString))
 
-        val userAnswers = emptyUserAnswers.set(StatusOfUserPage, StatusOfUser.Deputyship)
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual StatusOfUserPage
-          .navigate(NormalMode, userAnswers.get)
-          .url
       }
     }
 

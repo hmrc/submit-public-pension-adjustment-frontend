@@ -16,12 +16,14 @@
 
 package pages
 
-import models.calculation.inputs.CalculationInputs
+import models.calculation.inputs.{CalculationInputs, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, ProtectionEnhancedChanged, ProtectionType, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{CheckMode, NormalMode}
+
+import java.time.LocalDate
 
 class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
@@ -64,6 +66,20 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
       }
     }
 
+    "to journey recovery when no schemes" in {
+      val ua = emptyUserAnswers
+        .set(
+          HowMuchTaxReliefPage,
+          BigInt("100")
+        )
+        .success
+        .value
+
+      val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, ltaOnlySubmissionWithNoSchemes).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
+
     "must navigate correctly in CheckMode when LTAOnly" - {
 
       "to CheckYourAnswers" in {
@@ -79,6 +95,15 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         checkNavigation(result, "/check-your-answers")
       }
+    }
+
+    "to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, ltaOnlySubmissionWithMultipleSchemes).url
+
+      checkNavigation(result, "/there-is-a-problem")
     }
 
     "must navigate correctly in NormalMode" - {
@@ -104,6 +129,36 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         checkNavigation(result, "/there-is-a-problem")
       }
+    }
+
+    "to bank details controller when member is in credit and only 1 scheme" in {
+
+      val ua = emptyUserAnswers
+        .set(
+          HowMuchTaxReliefPage,
+          BigInt("100")
+        )
+        .success
+        .value
+
+      val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, submissionInCreditWithOneScheme).url
+
+      checkNavigation(result, "/bank-details")
+    }
+
+    "to declarations controller controller when member is in credit and only 1 scheme" in {
+
+      val ua = emptyUserAnswers
+        .set(
+          HowMuchTaxReliefPage,
+          BigInt("100")
+        )
+        .success
+        .value
+
+      val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, submissionNotInCreditWithOneScheme).url
+
+      checkNavigation(result, "/declarations")
     }
 
     "must navigate correctly in CheckMode" - {
@@ -138,6 +193,9 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
   private def ltaOnlySubmissionWithSingleScheme =
     Submission("sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithSingleScheme, None)
 
+  private def ltaOnlySubmissionWithNoSchemes =
+    Submission("sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithNoSchemes, None)
+
   private def submissionWithMultipleSchemes = {
     val calculationResponse = CalculationResponse(
       models.calculation.response.Resubmission(false, None),
@@ -154,6 +212,38 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     submission
   }
 
+  private def submissionInCreditWithOneScheme = {
+    val calculationResponse = CalculationResponse(
+      models.calculation.response.Resubmission(false, None),
+      TotalAmounts(0, 0, 1),
+      List.empty,
+      List(
+        models.calculation.response
+          .InDatesTaxYearsCalculation(models.calculation.response.Period._2021, 320, 0, 0, 0, 0, 0, 0, 0, List.empty)
+      )
+    )
+
+    val submission: Submission =
+      Submission("sessionId", "submissionUniqueId", calculationInputsWithSingleScheme, Option(calculationResponse))
+    submission
+  }
+
+  private def submissionNotInCreditWithOneScheme = {
+    val calculationResponse = CalculationResponse(
+      models.calculation.response.Resubmission(false, None),
+      TotalAmounts(0, 1, 0),
+      List.empty,
+      List(
+        models.calculation.response
+          .InDatesTaxYearsCalculation(models.calculation.response.Period._2021, 0, 0, 0, 0, 0, 0, 0, 0, List.empty)
+      )
+    )
+
+    val submission: Submission =
+      Submission("sessionId", "submissionUniqueId", calculationInputsWithSingleScheme, Option(calculationResponse))
+    submission
+  }
+
   private def ltaOnlyCalculationInputsWithSingleScheme =
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
@@ -166,6 +256,27 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
       models.calculation.inputs.Resubmission(false, None),
       None,
       Some(TestData.lifeTimeAllowanceWithMultipleSchemes)
+    )
+
+  private def calculationInputsWithSingleScheme =
+    CalculationInputs(
+      models.calculation.inputs.Resubmission(false, None),
+      Option(
+        models.calculation.inputs.AnnualAllowance(
+          List(),
+          List(
+            NormalTaxYear(
+              2,
+              List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
+              5,
+              0,
+              models.calculation.inputs.Period._2021,
+              None
+            )
+          )
+        )
+      ),
+      None
     )
 
   private def calculationInputsWithMultipleSchemes =
@@ -203,5 +314,48 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
         )
       ),
       None
+    )
+
+  private def ltaOnlyCalculationInputsWithNoSchemes =
+    CalculationInputs(
+      models.calculation.inputs.Resubmission(false, None),
+      None,
+      Option(
+        models.calculation.inputs.LifeTimeAllowance(
+          benefitCrystallisationEventFlag = true,
+          benefitCrystallisationEventDate = LocalDate.of(2017, 1, 30),
+          changeInLifetimeAllowancePercentageInformedFlag = true,
+          changeInTaxCharge = ChangeInTaxCharge.NewCharge,
+          lifetimeAllowanceProtectionOrEnhancements = LtaProtectionOrEnhancements.Protection,
+          protectionType = Some(ProtectionType.PrimaryProtection),
+          protectionReference = Some("originalReference"),
+          ProtectionEnhancedChanged.Protection,
+          newProtectionTypeOrEnhancement = Some(WhatNewProtectionTypeEnhancement.EnhancedProtection),
+          newProtectionTypeOrEnhancementReference = Some("newReference"),
+          previousLifetimeAllowanceChargeFlag = true,
+          previousLifetimeAllowanceChargePaymentMethod = Some(ExcessLifetimeAllowancePaid.Lumpsum),
+          previousLifetimeAllowanceChargePaidBy = Some(WhoPaidLTACharge.You),
+          previousLifetimeAllowanceChargeSchemeNameAndTaxRef = None,
+          newLifetimeAllowanceChargeWillBePaidBy = Some(WhoPayingExtraLtaCharge.You),
+          newLifetimeAllowanceChargeSchemeNameAndTaxRef = None,
+          NewLifeTimeAllowanceAdditions(
+            false,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+          )
+        )
+      )
     )
 }

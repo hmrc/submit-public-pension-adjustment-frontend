@@ -78,6 +78,27 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/submission-service/2020/who-will-pay-new-tax-charge")
   }
 
+  "must redirect to journey recover when has in date debit but no listed debit periods in submission in normal mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, false)
+      .success
+      .value
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputsWithAA,
+      Some(aCalculationResponseWithDebitButNoPeriods)
+    )
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
   "must redirect to enter alternate name page when user selects no and is in credit/direct comp/indirect comp in normal mode" in {
 
     val page = ClaimOnBehalfPage
@@ -99,6 +120,40 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/submission-service/name-pension-scheme-holds")
+  }
+
+  "must redirect to journey recovery when AA submission and no submission calculation in normal mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, false)
+      .success
+      .value
+
+    val submission: Submission =
+      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
+  "must redirect to journey recovery when AA submission and no submission calculation in check mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, false)
+      .success
+      .value
+
+    val submission: Submission =
+      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
 
   "must redirect to set status of user when user submits yes in check mode" in {
@@ -251,7 +306,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/check-your-answers")
   }
 
-  "must redirect to change status of user when LTA only submission and user selects yes in check mode" in {
+  "must redirect to change status of user when LTA only submission and user selects yes in Normal mode" in {
 
     val page = ClaimOnBehalfPage
 
@@ -270,6 +325,63 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/submission-service/authority-someone-else")
+  }
+
+  "must redirect to change status of user when LTA only submission and user selects yes in Check mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, true)
+      .success
+      .value
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputsWithLTAOnly,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/submission-service/change-authority-someone-else")
+  }
+
+  "must redirect to journey recover when LTA only submission and no answer in Normal mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputsWithLTAOnly,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
+  "must redirect to journey recover when LTA only submission and no answer in Check mode" in {
+
+    val page = ClaimOnBehalfPage
+
+    val userAnswers = emptyUserAnswers
+
+    val submission: Submission = Submission(
+      "sessionId",
+      "submissionUniqueId",
+      mockCalculationInputsWithLTAOnly,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
 
   "cleanup" - {
@@ -380,5 +492,16 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe None
 
     }
+  }
+
+  private def aCalculationResponseWithDebitButNoPeriods = {
+
+    val calculationResponse = CalculationResponse(
+      models.calculation.response.Resubmission(false, None),
+      TotalAmounts(0, 1, 0),
+      List.empty,
+      List.empty
+    )
+    calculationResponse
   }
 }

@@ -20,7 +20,7 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.ContactNumberPage
+import pages.PensionSchemeMemberNamePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
@@ -28,52 +28,29 @@ import viewmodels.implicits._
 
 import scala.xml.Text
 
-class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
+class PensionSchemeMemberNameSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when user enters number, return the summary row" in {
+    "when user enters name, return the summary row" in {
 
       val userAnswers = UserAnswers("id")
         .set(
-          ContactNumberPage,
-          "07777777777"
+          PensionSchemeMemberNamePage,
+          "John Doe"
         )
         .get
-      ContactNumberSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberNameSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "contactNumber.checkYourAnswersLabel",
-          value = ValueViewModel(Text("07777777777").toString()),
+          key = "pensionSchemeMemberName.checkYourAnswersLabel",
+          value = ValueViewModel(Text("John Doe").toString()),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ContactNumberController.onPageLoad(CheckMode).url
+              routes.PensionSchemeMemberNameController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("contactNumber.change.hidden")
-          )
-        )
-      )
-    }
-
-    "when does not enter number, return the summary row with not answered text" in {
-
-      val userAnswers = UserAnswers("id")
-        .set(
-          ContactNumberPage,
-          ""
-        )
-        .get
-      ContactNumberSummary.row(userAnswers) shouldBe Some(
-        SummaryListRowViewModel(
-          key = "contactNumber.checkYourAnswersLabel",
-          value = ValueViewModel(Messages("checkYourAnswers.notAnswered")),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.ContactNumberController.onPageLoad(CheckMode).url
-            )
-              .withVisuallyHiddenText("contactNumber.change.hidden")
+              .withVisuallyHiddenText("pensionSchemeMemberName.change.hidden")
           )
         )
       )
@@ -81,7 +58,7 @@ class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      EnterAlternativeNameSummary.row(userAnswers) shouldBe None
+      PensionSchemeMemberNameSummary.row(userAnswers) shouldBe None
     }
 
   }

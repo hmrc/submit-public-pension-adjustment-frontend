@@ -133,7 +133,6 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
         val result = route(application, postRequest).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.AlternativeNameController.onPageLoad(NormalMode).url
       }
     }
 

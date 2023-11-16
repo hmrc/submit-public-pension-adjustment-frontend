@@ -17,13 +17,12 @@
 package forms.mappings
 
 import java.time.LocalDate
-
 import generators.Generators
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import play.api.data.validation.{Invalid, Valid}
+import play.api.data.validation.{Invalid, Valid, ValidationResult}
 
 class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with Generators with Constraints {
 
@@ -83,6 +82,21 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
     "must return Invalid for a number above the threshold" in {
       val result = maximumValue(1, "error.max").apply(2)
       result mustEqual Invalid("error.max", 1)
+    }
+  }
+
+  "inRange" - {
+
+    "must return Valid when value is in range" in {
+      val result: ValidationResult = inRange(1, 10, "error.range").apply(5)
+
+      result mustEqual Valid
+    }
+
+    "must return Invalid when value is not in range" in {
+      val result: ValidationResult = inRange(1, 10, "error.range").apply(11)
+
+      result mustEqual Invalid("error.range", 1, 10)
     }
   }
 

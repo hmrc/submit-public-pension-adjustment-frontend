@@ -19,12 +19,18 @@ package controllers
 import base.SpecBase
 import forms.AlternativeNameFormProvider
 import models.{NormalMode, UserAnswers}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.AlternativeNamePage
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import repositories.SessionRepository
 import views.html.AlternativeNameView
+import play.api.inject.bind
+
+import scala.concurrent.Future
 
 class AlternativeNameControllerSpec extends SpecBase with MockitoSugar {
 
@@ -73,23 +79,25 @@ class AlternativeNameControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must return a Bad Request and errors when invalid data is submitted" in {
+    "must redirect to the next page when valid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
+          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .build()
 
       running(application) {
         val request =
           FakeRequest(POST, alternativeNameRoute)
-            .withFormUrlEncodedBody(("value", ""))
-
-        val boundForm = form.bind(Map("value" -> ""))
-
-        val view = application.injector.instanceOf[AlternativeNameView]
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) mustEqual SEE_OTHER
       }
     }
 
@@ -134,6 +142,26 @@ class AlternativeNameControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+      }
+    }
+
+    "must return a Bad Request and errors when invalid data is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, alternativeNameRoute)
+            .withFormUrlEncodedBody(("value", ""))
+
+        val boundForm = form.bind(Map("value" -> ""))
+
+        val view = application.injector.instanceOf[AlternativeNameView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
   }

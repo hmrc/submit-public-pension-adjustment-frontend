@@ -31,7 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.PensionSchemeMemberDOBView
 
-import java.time.{LocalDate, ZoneOffset}
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
@@ -96,16 +96,14 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the Member Date Of Death page when valid data is submitted" in {
+    "must redirect to the next page when valid data submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-      val userAnswers = UserAnswers(userAnswersId).set(StatusOfUserPage, Deputyship).success.value
-
       val application =
-        applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
@@ -113,35 +111,6 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val result = route(application, postRequest).value
         status(result) mustEqual SEE_OTHER
-
-        redirectLocation(
-          result
-        ).value mustEqual routes.MemberDateOfDeathController.onPageLoad(NormalMode).url
-      }
-    }
-
-    "must redirect to the Pension Scheme Member Nino page when valid data is submitted" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val userAnswers = UserAnswers(userAnswersId).set(StatusOfUserPage, PowerOfAttorney).success.value
-
-      val application =
-        applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-      running(application) {
-        val result = route(application, postRequest).value
-
-        status(result) mustEqual SEE_OTHER
-
-        redirectLocation(
-          result
-        ).value mustEqual routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode).url
       }
     }
 

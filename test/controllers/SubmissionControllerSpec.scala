@@ -74,6 +74,24 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must redirect to Journey Controller for a GET if no user found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
+        .overrides(
+          bind[SubmissionService].toInstance(mockSubmissionService)
+        )
+        .build()
+
+      running(application) {
+        val request = FakeRequest(GET, submissionRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
     "must redirect to Calculation Prerequisite for a GET if no submission data is found" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()

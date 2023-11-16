@@ -71,6 +71,20 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/submission-service/date-of-death-someone-else")
   }
 
+  "must redirect to journey recovery when no answer for status of user page in normal mode" in {
+
+    val page = PensionSchemeMemberDOBPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
   "must redirect to Pension Scheme Members Nino page when user submits data in checkmode and has selected power of attorney" in {
 
     val page = PensionSchemeMemberDOBPage
@@ -103,5 +117,19 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/submission-service/change-date-of-death-someone-else")
+  }
+
+  "must redirect to journey recovery when no answer for status of user page in check mode" in {
+
+    val page = PensionSchemeMemberDOBPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
 }
