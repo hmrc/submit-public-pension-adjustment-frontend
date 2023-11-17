@@ -69,12 +69,14 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPageWith
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true  => userAnswers
-          .remove(BankDetailsPage)
+        case true  =>
+          userAnswers
+            .remove(BankDetailsPage)
         case false =>
           userAnswers
             .remove(HowMuchTaxReliefPage)
-            .flatMap(_.remove(WhichPensionSchemeWillPayTaxReliefPage)).flatMap(_.remove(BankDetailsPage))
+            .flatMap(_.remove(WhichPensionSchemeWillPayTaxReliefPage))
+            .flatMap(_.remove(BankDetailsPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

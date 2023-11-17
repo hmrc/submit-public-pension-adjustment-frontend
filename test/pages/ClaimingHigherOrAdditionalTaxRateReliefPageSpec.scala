@@ -212,12 +212,14 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
             BigInt("100")
           )
           .success
-          .value.set(
+          .value
+          .set(
             WhichPensionSchemeWillPayTaxReliefPage,
             "testString"
           )
           .success
-          .value.set(
+          .value
+          .set(
             BankDetailsPage,
             BankDetails("Testuser One", "111111", "11111111")
           )
@@ -237,12 +239,14 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
             BigInt("100")
           )
           .success
-          .value.set(
+          .value
+          .set(
             WhichPensionSchemeWillPayTaxReliefPage,
             "testString"
           )
           .success
-          .value.set(
+          .value
+          .set(
             BankDetailsPage,
             BankDetails("Testuser One", "111111", "11111111")
           )
