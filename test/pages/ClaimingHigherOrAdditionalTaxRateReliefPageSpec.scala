@@ -19,7 +19,7 @@ package pages
 import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode}
+import models.{BankDetails, CheckMode, NormalMode}
 import org.mockito.MockitoSugar.mock
 
 class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
@@ -212,10 +212,47 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
             BigInt("100")
           )
           .success
+          .value.set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "testString"
+          )
+          .success
+          .value.set(
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
+          )
+          .success
           .value
 
         val cleanedUserAnswers = ClaimingHigherOrAdditionalTaxRateReliefPage.cleanup(Some(false), ua).success.value
         cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+      }
+
+      "must cleanup correctly when answered yes" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value.set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "testString"
+          )
+          .success
+          .value.set(
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = ClaimingHigherOrAdditionalTaxRateReliefPage.cleanup(Some(true), ua).success.value
+        cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe Some(100)
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe Some("testString")
+        cleanedUserAnswers.get(BankDetailsPage) mustBe None
       }
     }
   }
