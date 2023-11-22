@@ -358,8 +358,9 @@ landingPage.title = cy: Submit Public Pension Adjustment
 
 calculationPrerequisite.title = cy: Calculation not complete
 calculationPrerequisite.heading = cy: You cannot use the submission service yet
-calculationPrerequisite.message1 = cy: You can only use the submission service once you have calculated your public service pension adjustment.
-calculationPrerequisite.link = Create a Government Gateway account and calculate your public service pension adjustment
+calculationPrerequisite.message1 = cy: You must only use the submission service once you have calculated your public service pension adjustment.
+calculationPrerequisite.message2 = cy: You must
+calculationPrerequisite.link = cy: create a Government Gateway account and calculate your public service pension adjustment.
 
 unauthorised.title = cy: Authorisation failed.
 unauthorised.heading = cy: Authorisation failed.
