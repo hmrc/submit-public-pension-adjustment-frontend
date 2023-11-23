@@ -19,7 +19,7 @@
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(startPageUrl: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("calculationPrerequisite.title"))) {
 
@@ -29,7 +29,7 @@
 
     <p class="govuk-body">
         @messages("calculationPrerequisite.message2")
-        <a class="govuk-link" href="https://www.gov.uk/guidance/calculate-your-public-service-pension-adjustment">
+        <a class="govuk-link" href=@startPageUrl>
             @messages("calculationPrerequisite.link")
         </a>
     </p>

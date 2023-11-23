@@ -17,6 +17,7 @@
 package controllers
 
 import base.SpecBase
+import config.FrontendAppConfig
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.CalculationPrerequisiteView
@@ -30,14 +31,15 @@ class CalculationPrerequisiteControllerSpec extends SpecBase {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, routes.CalculationPrerequisiteController.onPageLoad().url)
+        val request   = FakeRequest(GET, routes.CalculationPrerequisiteController.onPageLoad().url)
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
 
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[CalculationPrerequisiteView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        contentAsString(result) mustEqual view(appConfig.redirectToStartPage)(request, messages(application)).toString
       }
     }
   }
