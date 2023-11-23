@@ -37,11 +37,7 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPageWith
     }
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
-    answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
-      case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(CheckMode)
-      case Some(false) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    navigateInNormalModeAA(answers, submission)
 
   override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
@@ -51,11 +47,7 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPageWith
     }
 
   override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
-      case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(NormalMode)
-      case Some(false) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    navigateInNormalModeLTAOnly(answers, submission)
 
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
     val memberCredit: Int = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)

@@ -35,26 +35,22 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
     }
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
+    navigateInNormalModeAA(answers, submission)
+
+  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     answers.get(HowMuchTaxReliefPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) =>
+        val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
+        numberOfSchemes match {
+          case 0 => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+          case 1 => controllers.routes.DeclarationsController.onPageLoad
+          case _ => controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(NormalMode)
+        }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call = {
-    val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
-
-    numberOfSchemes match {
-      case 0 => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-      case 1 => controllers.routes.DeclarationsController.onPageLoad
-      case _ => controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(NormalMode)
-    }
-  }
 
   override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(HowMuchTaxReliefPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    navigateInNormalModeLTAOnly(answers, submission)
 
   private def isSchemePageValid(answers: UserAnswers, submission: Submission, mode: Mode): Call = {
     val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)

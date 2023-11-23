@@ -147,7 +147,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to CYA" in {
+      "to Declarations" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
@@ -166,7 +166,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua, submission).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/declarations")
       }
 
       "to JourneyRecovery when not answered" in {
