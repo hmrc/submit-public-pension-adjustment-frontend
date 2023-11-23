@@ -20,7 +20,9 @@ import com.google.inject.{Inject, Singleton}
 import play.api.Configuration
 import play.api.i18n.Lang
 import play.api.mvc.RequestHeader
-import uk.gov.hmrc.play.bootstrap.binders.SafeRedirectUrl
+import uk.gov.hmrc.play.bootstrap.binders.RedirectUrl._
+import uk.gov.hmrc.play.bootstrap.binders.RedirectUrlPolicy.Id
+import uk.gov.hmrc.play.bootstrap.binders.{AbsoluteWithHostnameFromAllowlist, RedirectUrl, RedirectUrlPolicy}
 
 @Singleton
 class FrontendAppConfig @Inject() (configuration: Configuration) {
@@ -31,8 +33,13 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   private val contactHost                  = configuration.get[String]("contact-frontend.host")
   private val contactFormServiceIdentifier = "submit-public-pension-adjustment-frontend"
 
-  def feedbackUrl(implicit request: RequestHeader): String =
-    s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=${SafeRedirectUrl(host + request.uri).encodedUrl}"
+  def feedbackUrl(implicit request: RequestHeader): String = {
+    val backUrl: String                  = host + request.uri
+    val allowedRedirectUrls: Seq[String] = configuration.get[Seq[String]]("urls.allowedRedirects")
+    val policy: RedirectUrlPolicy[Id]    = AbsoluteWithHostnameFromAllowlist(allowedRedirectUrls: _*)
+    val safeBackUrl                      = RedirectUrl(backUrl).get(policy).encodedUrl
+    s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=$safeBackUrl"
+  }
 
   val loginUrl: String                    = configuration.get[String]("urls.login")
   val confidenceUpliftUrl: String         = configuration.get[String]("urls.confidenceUplift")
@@ -69,4 +76,5 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val countdown: Int = configuration.get[Int]("timeout-dialog.countdown")
 
   val cacheTtl: Int = configuration.get[Int]("mongodb.timeToLiveInSeconds")
+
 }
