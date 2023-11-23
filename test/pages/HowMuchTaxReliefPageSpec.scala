@@ -82,7 +82,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode when LTAOnly" - {
 
-      "to CheckYourAnswers" in {
+      "to WhichPensionSchemeWillPay" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -93,7 +93,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, ltaOnlySubmissionWithMultipleSchemes).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
       }
     }
 
@@ -163,7 +163,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to CYA" in {
+      "to WhichPensionSchemeWillPay" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -174,7 +174,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionWithMultipleSchemes).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
       }
 
       "to JourneyRecovery when not selected" in {
