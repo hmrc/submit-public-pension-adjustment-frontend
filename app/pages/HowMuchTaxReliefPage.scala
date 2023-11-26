@@ -22,6 +22,8 @@ import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.SchemeService
 
+import scala.util.Try
+
 case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigInt] {
 
   override def path: JsPath = JsPath \ toString
@@ -76,4 +78,13 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
     } else {
       controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
     }
+
+  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { case _ =>
+        userAnswers
+          .remove(WhichPensionSchemeWillPayTaxReliefPage)
+          .flatMap(_.remove(BankDetailsPage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

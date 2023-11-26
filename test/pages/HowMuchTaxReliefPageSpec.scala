@@ -21,7 +21,7 @@ import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode}
+import models.{BankDetails, CheckMode, NormalMode}
 
 import java.time.LocalDate
 
@@ -171,6 +171,22 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           )
           .success
           .value
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "testString"
+          )
+          .success
+          .value
+          .set(
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = HowMuchTaxReliefPage.cleanup(Some(BigInt("100")), ua).success.value
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(BankDetailsPage) mustBe None
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionWithMultipleSchemes).url
 
