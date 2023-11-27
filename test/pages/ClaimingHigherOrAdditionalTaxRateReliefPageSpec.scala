@@ -282,8 +282,8 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
 
         val cleanedUserAnswers = ClaimingHigherOrAdditionalTaxRateReliefPage.cleanup(Some(true), ua).success.value
-        cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe Some(100)
-        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe Some("testString")
+        cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
         cleanedUserAnswers.get(BankDetailsPage) mustBe None
       }
     }
