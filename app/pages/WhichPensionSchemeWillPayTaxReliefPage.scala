@@ -21,6 +21,8 @@ import models.{Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[String] {
 
   override def path: JsPath = JsPath \ toString
@@ -36,16 +38,13 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOn
   }
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
-    answers.get(WhichPensionSchemeWillPayTaxReliefPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    navigateInNormalModeAA(answers, submission)
 
   override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     controllers.routes.DeclarationsController.onPageLoad
 
   override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    controllers.routes.DeclarationsController.onPageLoad
+    navigateInNormalModeLTAOnly(answers, submission)
 
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
     val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
@@ -55,4 +54,11 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOn
       controllers.routes.DeclarationsController.onPageLoad
     }
   }
+
+  override def cleanup(value: Option[String], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { case _ =>
+        userAnswers.remove(BankDetailsPage)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

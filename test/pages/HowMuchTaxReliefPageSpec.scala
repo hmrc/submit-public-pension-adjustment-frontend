@@ -21,7 +21,7 @@ import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode}
+import models.{BankDetails, CheckMode, NormalMode}
 
 import java.time.LocalDate
 
@@ -82,7 +82,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode when LTAOnly" - {
 
-      "to CheckYourAnswers" in {
+      "to WhichPensionSchemeWillPay when there are multiple schemes" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -93,7 +93,21 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, ltaOnlySubmissionWithMultipleSchemes).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
+      }
+
+      "to Declarations when there is a single scheme" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value
+
+        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, ltaOnlySubmissionWithSingleScheme).url
+
+        checkNavigation(result, "/declarations")
       }
     }
 
@@ -163,7 +177,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to CYA" in {
+      "to WhichPensionSchemeWillPay when there are multiple schemes" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -171,10 +185,69 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           )
           .success
           .value
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "testString"
+          )
+          .success
+          .value
+          .set(
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = HowMuchTaxReliefPage.cleanup(Some(BigInt("100")), ua).success.value
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(BankDetailsPage) mustBe None
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionWithMultipleSchemes).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
+      }
+
+      "to BankDetails when there is a single scheme and member is in credit" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "testString"
+          )
+          .success
+          .value
+          .set(
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = HowMuchTaxReliefPage.cleanup(Some(BigInt("100")), ua).success.value
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+
+        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionInCreditWithOneScheme).url
+
+        checkNavigation(result, "/bank-details")
+      }
+
+      "to Declarations when there is a single scheme and member is not in credit" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .get
+
+        val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionNotInCreditWithOneScheme).url
+
+        checkNavigation(result, "/declarations")
       }
 
       "to JourneyRecovery when not selected" in {

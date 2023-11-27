@@ -19,7 +19,7 @@ package pages
 import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode}
+import models.{BankDetails, CheckMode, NormalMode}
 import org.mockito.MockitoSugar.mock
 
 class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
@@ -147,7 +147,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to CYA" in {
+      "to Declarations when member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
@@ -166,7 +166,42 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua, submission).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/declarations")
+      }
+
+      "to BARS when Pension scheme b scheme selected and member is in credit in Check mode" in {
+        val ua = emptyUserAnswers
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "Scheme1 / 00348916RL"
+          )
+          .success
+          .value
+          .set(
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
+          )
+          .success
+          .value
+
+        val period: Period = Period._2021
+
+        val calculationResponse = CalculationResponse(
+          models.calculation.response.Resubmission(false, None),
+          TotalAmounts(0, 1, 0),
+          List.empty,
+          List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
+        )
+
+        val cleanedUserAnswers =
+          WhichPensionSchemeWillPayTaxReliefPage.cleanup(Some("Scheme1 / 00348916RL"), ua).success.value
+        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+
+        val submission: Submission =
+          Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+        val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua, submission).url
+
+        checkNavigation(result, "/bank-details")
       }
 
       "to JourneyRecovery when not answered" in {

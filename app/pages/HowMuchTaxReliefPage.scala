@@ -22,6 +22,8 @@ import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.SchemeService
 
+import scala.util.Try
+
 case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigInt] {
 
   override def path: JsPath = JsPath \ toString
@@ -35,26 +37,22 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
     }
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
+    navigateInNormalModeAA(answers, submission)
+
+  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     answers.get(HowMuchTaxReliefPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) =>
+        val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
+        numberOfSchemes match {
+          case 0 => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+          case 1 => controllers.routes.DeclarationsController.onPageLoad
+          case _ => controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(NormalMode)
+        }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call = {
-    val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
-
-    numberOfSchemes match {
-      case 0 => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-      case 1 => controllers.routes.DeclarationsController.onPageLoad
-      case _ => controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(NormalMode)
-    }
-  }
 
   override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(HowMuchTaxReliefPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    navigateInNormalModeLTAOnly(answers, submission)
 
   private def isSchemePageValid(answers: UserAnswers, submission: Submission, mode: Mode): Call = {
     val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
@@ -80,4 +78,13 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
     } else {
       controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
     }
+
+  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { case _ =>
+        userAnswers
+          .remove(WhichPensionSchemeWillPayTaxReliefPage)
+          .flatMap(_.remove(BankDetailsPage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

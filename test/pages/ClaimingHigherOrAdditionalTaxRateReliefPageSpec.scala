@@ -19,7 +19,7 @@ package pages
 import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode}
+import models.{BankDetails, CheckMode, NormalMode}
 import org.mockito.MockitoSugar.mock
 
 class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
@@ -145,7 +145,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/submission-service/how-much-tax-relief-claiming-for")
       }
 
-      "to check your answers when answered no and LTA only" in {
+      "to Declarations answered no and LTA only" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -156,7 +156,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, ltaOnlySubmission).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/declarations")
       }
 
       "to journey recovery when not answered and LTA only" in {
@@ -167,7 +167,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/there-is-a-problem")
       }
 
-      "to HowMuchTaxReliefPage when answered yes and member is not in credit " in {
+      "to HowMuchTaxReliefPage when answered yes and member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -178,10 +178,24 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionNotInCredit).url
 
-        checkNavigation(result, "/submission-service/change-how-much-tax-relief-claiming-for")
+        checkNavigation(result, "/submission-service/how-much-tax-relief-claiming-for")
       }
 
-      "to CYA when answered no and member is not in credit" in {
+      "to HowMuchTaxReliefPage when answered yes and member is in credit" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            true
+          )
+          .success
+          .value
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionInCredit).url
+
+        checkNavigation(result, "/submission-service/how-much-tax-relief-claiming-for")
+      }
+
+      "to Declarations when answered no and member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -192,7 +206,21 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionNotInCredit).url
 
-        checkNavigation(result, "/check-your-answers")
+        checkNavigation(result, "/declarations")
+      }
+
+      "to BankDetails when answered no and member is in credit" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            false
+          )
+          .success
+          .value
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionInCredit).url
+
+        checkNavigation(result, "/bank-details")
       }
 
       "to JourneyRecovery when not selected" in {
@@ -213,9 +241,50 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           )
           .success
           .value
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "testString"
+          )
+          .success
+          .value
+          .set(
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
+          )
+          .success
+          .value
 
         val cleanedUserAnswers = ClaimingHigherOrAdditionalTaxRateReliefPage.cleanup(Some(false), ua).success.value
         cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+      }
+
+      "must cleanup correctly when answered yes" in {
+        val ua = emptyUserAnswers
+          .set(
+            HowMuchTaxReliefPage,
+            BigInt("100")
+          )
+          .success
+          .value
+          .set(
+            WhichPensionSchemeWillPayTaxReliefPage,
+            "testString"
+          )
+          .success
+          .value
+          .set(
+            BankDetailsPage,
+            BankDetails("Testuser One", "111111", "11111111")
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = ClaimingHigherOrAdditionalTaxRateReliefPage.cleanup(Some(true), ua).success.value
+        cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
+        cleanedUserAnswers.get(BankDetailsPage) mustBe None
       }
     }
   }
