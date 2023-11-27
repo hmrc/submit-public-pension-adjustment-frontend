@@ -167,7 +167,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/there-is-a-problem")
       }
 
-      "to HowMuchTaxReliefPage when answered yes and member is not in credit " in {
+      "to HowMuchTaxReliefPage when answered yes and member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -177,6 +177,20 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionNotInCredit).url
+
+        checkNavigation(result, "/submission-service/how-much-tax-relief-claiming-for")
+      }
+
+      "to HowMuchTaxReliefPage when answered yes and member is in credit" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            true
+          )
+          .success
+          .value
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionInCredit).url
 
         checkNavigation(result, "/submission-service/how-much-tax-relief-claiming-for")
       }
@@ -193,6 +207,20 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionNotInCredit).url
 
         checkNavigation(result, "/declarations")
+      }
+
+      "to BankDetails when answered no and member is in credit" in {
+        val ua = emptyUserAnswers
+          .set(
+            ClaimingHigherOrAdditionalTaxRateReliefPage,
+            false
+          )
+          .success
+          .value
+
+        val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionInCredit).url
+
+        checkNavigation(result, "/bank-details")
       }
 
       "to JourneyRecovery when not selected" in {

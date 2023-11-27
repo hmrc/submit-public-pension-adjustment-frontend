@@ -147,7 +147,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to Declarations" in {
+      "to Declarations when member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
