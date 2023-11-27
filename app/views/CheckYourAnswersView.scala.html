@@ -16,6 +16,7 @@
 
 @this(
     layout: templates.Layout,
+    formHelper: FormWithCSRF,
     govukSummaryList: GovukSummaryList,
     govukButton: GovukButton
 )
@@ -23,6 +24,8 @@
 @(list: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
+
+@formHelper(action = routes.CheckYourAnswersController.onSubmit(), Symbol("autoComplete") -> "off") {
 
     <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 
@@ -32,8 +35,8 @@
 
     <p class="govuk-body">
         @govukButton(
-        ButtonViewModel(messages("site.continue"))
-        .asLink(routes.CheckYourAnswersController.onSubmit().url)
+          ButtonViewModel(messages("site.continue")).preventingDoubleClick()
         )
     </p>
+  }
 }
