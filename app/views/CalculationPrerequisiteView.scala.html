@@ -19,11 +19,18 @@
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(startPageUrl: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("calculationPrerequisite.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("calculationPrerequisite.heading")</h1>
 
-    <p class="govuk-body">@messages("calculationPrerequisite.guidance")</p>
+    <p class="govuk-body">@messages("calculationPrerequisite.message1")</p>
+
+    <p class="govuk-body">
+        @messages("calculationPrerequisite.message2")
+        <a class="govuk-link" href=@startPageUrl>
+            @messages("calculationPrerequisite.link")
+        </a>
+    </p>
 }

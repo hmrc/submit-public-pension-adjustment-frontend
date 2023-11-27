@@ -16,6 +16,7 @@
 
 package controllers
 
+import config.FrontendAppConfig
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -25,12 +26,13 @@ import javax.inject.Inject
 
 class CalculationPrerequisiteController @Inject() (
   override val messagesApi: MessagesApi,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: CalculationPrerequisiteView
 ) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
-    Ok(view())
+    Ok(view(config.redirectToStartPage))
   }
 }

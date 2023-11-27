@@ -129,7 +129,7 @@ POST        /submission-service/change-enter-name-pension-scheme-holds          
 
 GET         /landing-page                                                                                               controllers.LandingPageController.onPageLoad(submissionUniqueId: Option[UniqueId] ?= None)
 
-GET         /calculation-prerequisite                                                                                   controllers.CalculationPrerequisiteController.onPageLoad()
+GET         /calculation-not-complete                                                                                   controllers.CalculationPrerequisiteController.onPageLoad()
 
 GET         /submission-service/national-insurance-number-someone-else                                                  controllers.PensionSchemeMemberNinoController.onPageLoad(mode: Mode = NormalMode)
 POST        /submission-service/national-insurance-number-someone-else                                                  controllers.PensionSchemeMemberNinoController.onSubmit(mode: Mode = NormalMode)

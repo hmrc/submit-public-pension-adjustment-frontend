@@ -356,9 +356,11 @@ pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference of who
 
 landingPage.title = Submit Public Pension Adjustment
 
-calculationPrerequisite.title = Calculation Prerequisite
-calculationPrerequisite.heading = Calculation Prerequisite
-calculationPrerequisite.guidance = You should access this service by clicking "Continue to sign in" from the Public Pension Adjustment "Calculation results" page.
+calculationPrerequisite.title = Calculation not complete
+calculationPrerequisite.heading = You cannot use the submission service yet
+calculationPrerequisite.message1 = You must only use the submission service once you have calculated your public service pension adjustment.
+calculationPrerequisite.message2 = You must
+calculationPrerequisite.link = create a Government Gateway account and calculate your public service pension adjustment.
 
 unauthorised.title = Authorisation failed.
 unauthorised.heading = Authorisation failed.
