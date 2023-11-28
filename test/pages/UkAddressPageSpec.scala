@@ -63,6 +63,9 @@ class UkAddressPageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when answered" in {
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+
         val ua     = emptyUserAnswers
           .set(
             UkAddressPage,
@@ -70,14 +73,16 @@ class UkAddressPageSpec extends PageBehaviours {
           )
           .success
           .value
-        val result = UkAddressPage.navigate(CheckMode, ua).url
+        val result = UkAddressPage.navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not selected" in {
-        val ua     = emptyUserAnswers
-        val result = UkAddressPage.navigate(CheckMode, ua).url
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+        val ua                     = emptyUserAnswers
+        val result                 = UkAddressPage.navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
