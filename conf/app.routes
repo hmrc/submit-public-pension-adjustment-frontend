@@ -171,3 +171,4 @@ GET         /submit-your-answers                                                
 GET         /submission                                                                                                 controllers.SubmissionController.onPageLoad()
 
 GET         /uplift-failure                                                                                             controllers.UpliftFailedController.onPageLoad()
+GET        /cannotUseServiceNotIndividual                       controllers.CannotUseServiceNotIndividualController.onPageLoad()
