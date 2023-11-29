@@ -469,3 +469,8 @@ upliftFailed.evidence = cy: If you cannot give us evidence to confirm your ident
 upliftFailed.contact = cy: You can contact us to access our services and speak to an advisor. Our advisors can help you finish your task and give you information over the phone or via web chat. They cannot complete online identity verification for you.
 upliftFailed.details = cy: Alternatively, give us details from one or two of the evidence types listed, and try again to confirm your identity online.
 upliftFailed.support = cy: We also offer technical support if your details do not match our records.
+
+cannotUseServiceNotIndividual.title = cy: Cannot use submission service
+cannotUseServiceNotIndividual.heading = cy: You cannot use the submission service with this account
+cannotUseServiceNotIndividual.message1 = cy: Only individual user accounts can use the submission service. If you signed into the government gateway using an organisation or agent account, you must create a personal account instead.
+cannotUseServiceNotIndividual.link = cy: More information about Government Gateway and creating account
