@@ -63,6 +63,9 @@ class InternationalAddressPageSpec extends PageBehaviours {
     "must navigate correctly in CheckMode" - {
 
       "to CYA when answered" in {
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+
         val ua     = emptyUserAnswers
           .set(
             InternationalAddressPage,
@@ -70,14 +73,17 @@ class InternationalAddressPageSpec extends PageBehaviours {
           )
           .success
           .value
-        val result = InternationalAddressPage.navigate(CheckMode, ua).url
+        val result = InternationalAddressPage.navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not selected" in {
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+
         val ua     = emptyUserAnswers
-        val result = InternationalAddressPage.navigate(CheckMode, ua).url
+        val result = InternationalAddressPage.navigate(CheckMode, ua, submission).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
