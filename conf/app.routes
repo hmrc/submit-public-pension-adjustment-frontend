@@ -14,6 +14,7 @@ GET         /there-is-a-problem                                                 
 
 GET         /account/sign-out-survey                                                                                    controllers.auth.AuthController.signOut
 GET         /account/sign-out                                                                                           controllers.auth.AuthController.signOutNoSurvey
+GET         /account/sign-out-unauthorised                                                                              controllers.auth.AuthController.signOutUnauthorised
 GET         /account/signed-out                                                                                         controllers.auth.SignedOutController.onPageLoad
 
 GET         /unauthorised                                                                                               controllers.UnauthorisedController.onPageLoad

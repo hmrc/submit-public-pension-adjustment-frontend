@@ -19,9 +19,9 @@
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(unauthorisedSignOutUrl: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("upliftFailed.title"))) {
+@layout(pageTitle = titleNoForm(messages("upliftFailed.title")), signOutUrl = unauthorisedSignOutUrl) {
 
     <h1 class="govuk-heading-xl">@messages("upliftFailed.heading")</h1>
 

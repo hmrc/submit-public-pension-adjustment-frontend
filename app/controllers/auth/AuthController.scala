@@ -43,6 +43,10 @@ class AuthController @Inject() (
     } yield Redirect(config.signOutUrl, Map("continue" -> Seq(config.exitSurveyUrl)))
   }
 
+  def signOutUnauthorised(): Action[AnyContent] = Action(
+    Redirect(config.signOutUrl, Map("continue" -> Seq(config.exitSurveyUrl)))
+  )
+
   def signOutNoSurvey(): Action[AnyContent] = identify.async { implicit request =>
     for {
       _ <- sessionRepository.clear(request.userId)

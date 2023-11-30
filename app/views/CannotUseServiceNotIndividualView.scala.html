@@ -19,9 +19,9 @@
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(unauthorisedSignOutUrl: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("cannotUseServiceNotIndividual.title")), showBackLink = false) {
+@layout(pageTitle = titleNoForm(messages("cannotUseServiceNotIndividual.title")), showBackLink = false, signOutUrl = unauthorisedSignOutUrl) {
 
     <h1 class="govuk-heading-xl">@messages("cannotUseServiceNotIndividual.heading")</h1>
 
