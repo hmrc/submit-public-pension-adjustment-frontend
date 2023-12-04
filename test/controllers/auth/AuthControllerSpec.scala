@@ -66,6 +66,28 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
     }
   }
 
+  "signOutUnauthorised" - {
+
+    "must redirect to sign out, specifying the exit survey as the continue URL" in {
+
+      val application = applicationBuilder(None).build()
+
+      running(application) {
+
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, routes.AuthController.signOutUnauthorised.url)
+
+        val result = route(application, request).value
+
+        val encodedContinueUrl  = URLEncoder.encode(appConfig.exitSurveyUrl, "UTF-8")
+        val expectedRedirectUrl = s"${appConfig.signOutUrl}?continue=$encodedContinueUrl"
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual expectedRedirectUrl
+      }
+    }
+  }
+
   "signOutNoSurvey" - {
 
     "must clear users answers and redirect to sign out, specifying SignedOut as the continue URL" in {

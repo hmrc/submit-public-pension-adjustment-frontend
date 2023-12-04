@@ -16,12 +16,12 @@
 
 package controllers
 
-import controllers.actions._
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.CannotUseServiceNotIndividualView
+
+import javax.inject.Inject
 
 class CannotUseServiceNotIndividualController @Inject() (
   override val messagesApi: MessagesApi,
@@ -31,6 +31,6 @@ class CannotUseServiceNotIndividualController @Inject() (
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
-    Ok(view())
+    Ok(view(controllers.auth.routes.AuthController.signOutUnauthorised.url))
   }
 }

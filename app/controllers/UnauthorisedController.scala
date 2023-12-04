@@ -29,6 +29,6 @@ class UnauthorisedController @Inject() (
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
-    Ok(view())
+    Ok(view(controllers.auth.routes.AuthController.signOutUnauthorised.url))
   }
 }

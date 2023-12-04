@@ -18,12 +18,9 @@
     layout: templates.Layout
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(unauthorisedSignOutUrl: String)(implicit request: Request[_], messages: Messages)
 
-@layout(
-    pageTitle = titleNoForm(messages("unauthorised.title")),
-    timeout   = false
-) {
+@layout(pageTitle = titleNoForm(messages("unauthorised.title")), timeout   = false, signOutUrl = unauthorisedSignOutUrl) {
 
     <h1 class="govuk-heading-xl">@messages("unauthorised.heading")</h1>
 
