@@ -20,7 +20,7 @@ import base.SpecBase
 import models.calculation.inputs.{CalculationInputs, Resubmission}
 import models.finalsubmission.FinalSubmissionResponse
 import models.submission.Submission
-import models.{PensionSchemeDetails, Period, UserAnswers, UserSubmissionReference, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
+import models.{NavigationState, PensionSchemeDetails, Period, UserAnswers, UserSubmissionReference, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
 import org.mockito.MockitoSugar.mock
@@ -51,7 +51,9 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
+      val answers        = emptyUserAnswers
+      val answersWithNav = NavigationState.save(answers, NavigationState.checkYourAnswersUrl)
+      val application    = applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, checkYourAnswerRoute)
@@ -109,9 +111,10 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         Submission("sessionId", "uniqueId", mockCalculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))
 
       val ua: UserAnswers = completeUserAnswers
+      val answersWithNav  = NavigationState.save(ua, NavigationState.checkYourAnswersUrl)
 
       val application =
-        applicationBuilder(userAnswers = Some(ua), submission = Some(submission))
+        applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submission))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository),
             bind[SubmissionRepository].toInstance(mockSubmissionRepository)
