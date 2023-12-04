@@ -20,6 +20,7 @@ import play.api.libs.json.JsPath
 import uk.gov.hmrc.domain.Nino
 import controllers.routes
 import models.{CheckMode, NormalMode, UserAnswers}
+import pages.PageValidation.claimingOnBehalf
 import play.api.mvc.Call
 
 case object PensionSchemeMemberNinoPage extends QuestionPage[Nino] {
@@ -39,4 +40,6 @@ case object PensionSchemeMemberNinoPage extends QuestionPage[Nino] {
       case Some(_) => routes.PensionSchemeMemberTaxReferenceController.onPageLoad(CheckMode)
       case _       => routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def isRequired(answers: UserAnswers): Option[Boolean] = claimingOnBehalf(answers)
 }

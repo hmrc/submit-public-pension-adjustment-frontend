@@ -19,6 +19,7 @@ package pages
 import models.WhoWillPay.{PensionScheme, You}
 import models.submission.Submission
 import models.{CheckMode, NormalMode, Period, UserAnswers, WhoWillPay}
+import pages.PageValidation.claimingOnBehalf
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
@@ -69,4 +70,6 @@ case class WhoWillPayPage(period: Period) extends QuestionPage[WhoWillPay] {
         case WhoWillPay.PensionScheme => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
+
+  override def isRequired(answers: UserAnswers): Option[Boolean] = claimingOnBehalf(answers)
 }

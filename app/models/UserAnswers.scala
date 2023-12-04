@@ -16,6 +16,7 @@
 
 package models
 
+import pages.Page
 import play.api.libs.json._
 import queries.{Gettable, Settable}
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
@@ -64,6 +65,17 @@ final case class UserAnswers(
       page.cleanup(None, updatedAnswers)
     }
   }
+
+  def containsAnswerFor(page: Page) =
+    page match {
+      case settable: Settable[_] =>
+        data.removeObject(settable.path) match {
+          case JsSuccess(_, _) => true
+          case JsError(_)      =>
+            false
+        }
+      case _                     => false
+    }
 }
 object UserAnswers {
 

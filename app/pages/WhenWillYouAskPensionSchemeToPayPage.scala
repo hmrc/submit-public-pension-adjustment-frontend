@@ -18,6 +18,7 @@ package pages
 
 import models.submission.Submission
 import models.{CheckMode, NormalMode, Period, UserAnswers, WhenWillYouAskPensionSchemeToPay}
+import pages.PageValidation.{claimingOnBehalf, schemeWillPay}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
@@ -49,4 +50,11 @@ case class WhenWillYouAskPensionSchemeToPayPage(period: Period) extends Question
         }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def isRequired(answers: UserAnswers): Option[Boolean] =
+    for {
+      claimOnBehalf        <- claimingOnBehalf(answers)
+      schemeWillPay        <- schemeWillPay(period, answers)
+      haveAskedSchemeToPay <- answers.get(AskedPensionSchemeToPayTaxChargePage(period))
+    } yield !claimOnBehalf && schemeWillPay && !haveAskedSchemeToPay
 }

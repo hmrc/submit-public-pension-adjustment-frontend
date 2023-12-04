@@ -21,6 +21,7 @@ import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.routes
 import models.StatusOfUser.{Deputyship, PowerOfAttorney}
+import pages.PageValidation.claimingOnBehalf
 
 import scala.util.Try
 
@@ -53,4 +54,5 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
+  override def isRequired(answers: UserAnswers): Option[Boolean] = claimingOnBehalf(answers)
 }

@@ -17,6 +17,7 @@
 package pages
 
 import models.{CheckMode, NormalMode, UserAnswers}
+import pages.PageValidation.claimingOnBehalf
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -32,4 +33,5 @@ case object PensionSchemeMemberNamePage extends QuestionPage[String] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.routes.PensionSchemeMemberDOBController.onPageLoad(CheckMode)
 
+  override def isRequired(answers: UserAnswers): Option[Boolean] = claimingOnBehalf(answers)
 }

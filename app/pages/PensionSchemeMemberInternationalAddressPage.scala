@@ -20,6 +20,7 @@ import models.{NormalMode, PensionSchemeMemberInternationalAddress, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.routes
+import pages.PageValidation.claimingOnBehalf
 
 case object PensionSchemeMemberInternationalAddressPage extends QuestionPage[PensionSchemeMemberInternationalAddress] {
 
@@ -38,4 +39,10 @@ case object PensionSchemeMemberInternationalAddressPage extends QuestionPage[Pen
       case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def isRequired(answers: UserAnswers): Option[Boolean] =
+    for {
+      claimOnBehalf <- claimingOnBehalf(answers)
+      ukMember      <- answers.get(PensionSchemeMemberResidencePage)
+    } yield claimOnBehalf && !ukMember
 }

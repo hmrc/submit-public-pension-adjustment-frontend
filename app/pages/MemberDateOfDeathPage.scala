@@ -17,7 +17,8 @@
 package pages
 
 import java.time.LocalDate
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, StatusOfUser, UserAnswers}
+import pages.PageValidation.claimingOnBehalf
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -37,5 +38,17 @@ case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
     answers.get(MemberDateOfDeathPage) match {
       case Some(_) => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def isRequired(answers: UserAnswers): Option[Boolean] =
+    for {
+      claimOnBehalf <- claimingOnBehalf(answers)
+      deputyship    <- deputyship(answers)
+    } yield !claimOnBehalf && deputyship
+
+  def deputyship(answers: UserAnswers): Option[Boolean] =
+    answers.get(StatusOfUserPage) match {
+      case Some(StatusOfUser.Deputyship) => Some(true)
+      case _                             => None
     }
 }

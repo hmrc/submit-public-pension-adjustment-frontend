@@ -18,6 +18,7 @@ package pages
 
 import models.StatusOfUser.{Deputyship, PowerOfAttorney}
 import models.{CheckMode, NormalMode, UserAnswers}
+import pages.PageValidation.claimingOnBehalf
 
 import java.time.LocalDate
 import play.api.libs.json.JsPath
@@ -43,4 +44,5 @@ case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
       case _                     => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
+  override def isRequired(answers: UserAnswers): Option[Boolean] = claimingOnBehalf(answers)
 }

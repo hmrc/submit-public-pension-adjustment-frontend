@@ -17,6 +17,7 @@
 package pages
 
 import models.{CheckMode, NormalMode, PSTR, Period, UserAnswers}
+import pages.PageValidation.{claimingOnBehalf, schemeWillPay}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -52,4 +53,10 @@ case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[St
       case Some(_)                        => userAnswers.remove(PensionSchemeDetailsPage(period))
       case None                           => super.cleanup(value, userAnswers)
     }
+
+  override def isRequired(answers: UserAnswers): Option[Boolean] =
+    for {
+      claimOnBehalf <- claimingOnBehalf(answers)
+      schemeWillPay <- schemeWillPay(period, answers)
+    } yield !claimOnBehalf && schemeWillPay
 }

@@ -127,4 +127,6 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
       case None         => answers
     }
 
+  override def isRequired(answers: UserAnswers): Option[Boolean] = Some(true)
+
 }

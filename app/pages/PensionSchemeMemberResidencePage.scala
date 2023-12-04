@@ -20,6 +20,7 @@ import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.routes
+import pages.PageValidation.claimingOnBehalf
 
 import scala.util.Try
 
@@ -50,4 +51,6 @@ case object PensionSchemeMemberResidencePage extends QuestionPage[Boolean] {
         case true  => userAnswers.remove(PensionSchemeMemberInternationalAddressPage)
       }
       .getOrElse(super.cleanup(value, userAnswers))
+
+  override def isRequired(answers: UserAnswers): Option[Boolean] = claimingOnBehalf(answers)
 }
