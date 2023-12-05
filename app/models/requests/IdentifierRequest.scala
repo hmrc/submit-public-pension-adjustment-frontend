@@ -25,7 +25,7 @@ case class IdentifierRequest[A](
   request: Request[A],
   userId: String,
   nino: String,
-  name: Option[ItmpName],
+  name: ItmpName,
   saUtr: Option[String],
   dateOfBirth: Option[LocalDate]
 ) extends WrappedRequest[A](request)

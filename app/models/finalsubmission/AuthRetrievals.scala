@@ -23,7 +23,7 @@ import java.time.LocalDate
 case class AuthRetrievals(
   userId: String,
   nino: String,
-  name: Option[String],
+  name: String,
   saUtr: Option[String],
   dob: Option[LocalDate]
 )

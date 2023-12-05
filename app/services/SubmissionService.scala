@@ -83,7 +83,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       if (flagClaimOnBehalf)
         userAnswers.get(PensionSchemeMemberNamePage).getOrElse("")
       else
-        authRetrievals.name.getOrElse("")
+        authRetrievals.name
 
     val alternateName = userAnswers.get(EnterAlternativeNamePage)
 

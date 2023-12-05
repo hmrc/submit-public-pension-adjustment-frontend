@@ -19,6 +19,7 @@ package controllers.actions
 import models.UserAnswers
 import models.requests.{IdentifierRequest, OptionalDataRequest}
 import models.submission.Submission
+import uk.gov.hmrc.auth.core.retrieve.ItmpName
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -26,7 +27,18 @@ class FakeDataRetrievalAction(dataToReturn: Option[UserAnswers], submission: Opt
     extends DataRetrievalAction {
 
   override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] =
-    Future(OptionalDataRequest(request.request, request.userId, "nino", None, None, None, submission, dataToReturn))
+    Future(
+      OptionalDataRequest(
+        request.request,
+        request.userId,
+        "nino",
+        ItmpName(Some("givenName"), None, Some("familyName")),
+        None,
+        None,
+        submission,
+        dataToReturn
+      )
+    )
 
   override protected implicit val executionContext: ExecutionContext =
     scala.concurrent.ExecutionContext.Implicits.global
