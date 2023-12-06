@@ -63,12 +63,6 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
     authorised(AffinityGroup.Individual and requiredConfidenceLevel).retrieve(retrievals) {
       case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
         block(IdentifierRequest(request, userId, nino, name, saUtr, dob))
-      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
-        block(IdentifierRequest(request, userId, nino, name, saUtr, dob))
-      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
-        block(IdentifierRequest(request, userId, nino, name, saUtr, dob))
-      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
-        block(IdentifierRequest(request, userId, nino, name, saUtr, dob))
       case _                                                                                                  =>
         logger.warn(s"Incomplete retrievals")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
