@@ -61,17 +61,9 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
     val requiredConfidenceLevel = ConfidenceLevel.fromInt(config.requiredAuthConfidenceLevel.toInt).get
 
     authorised(AffinityGroup.Individual and requiredConfidenceLevel).retrieve(retrievals) {
-      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ Some(saUtr) ~ Some(
-            dob
-          ) =>
-        block(IdentifierRequest(request, userId, nino, Some(name), Some(saUtr), Some(dob)))
-      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ Some(saUtr) ~ None =>
-        block(IdentifierRequest(request, userId, nino, Some(name), Some(saUtr), None))
-      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ None ~ Some(dob)   =>
-        block(IdentifierRequest(request, userId, nino, Some(name), None, Some(dob)))
-      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ None ~ None        =>
-        block(IdentifierRequest(request, userId, nino, Some(name), None, None))
-      case _                                                                                                         =>
+      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
+        block(IdentifierRequest(request, userId, nino, name, saUtr, dob))
+      case _                                                                                                  =>
         logger.warn(s"Incomplete retrievals")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
     } recover {

@@ -26,6 +26,7 @@ import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.FakeRequest
 import repositories._
+import uk.gov.hmrc.auth.core.retrieve.ItmpName
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -54,7 +55,18 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
         val action = new Harness(sessionRepository, submissionRepository)
 
-        val result = action.callTransform(IdentifierRequest(FakeRequest(), "id", "nino", None, None, None)).futureValue
+        val result = action
+          .callTransform(
+            IdentifierRequest(
+              FakeRequest(),
+              "id",
+              "nino",
+              ItmpName(Some("givenName"), None, Some("familyName")),
+              None,
+              None
+            )
+          )
+          .futureValue
 
         result.userAnswers must not be defined
       }
@@ -76,7 +88,18 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
         val action = new Harness(sessionRepository, submissionRepository)
 
         val result =
-          action.callTransform(new IdentifierRequest(FakeRequest(), "id", "nino", None, None, None)).futureValue
+          action
+            .callTransform(
+              new IdentifierRequest(
+                FakeRequest(),
+                "id",
+                "nino",
+                ItmpName(Some("givenName"), None, Some("familyName")),
+                None,
+                None
+              )
+            )
+            .futureValue
 
         result.userAnswers mustBe defined
       }

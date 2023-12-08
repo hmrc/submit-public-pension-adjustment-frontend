@@ -77,7 +77,7 @@ object TestData {
     AuthRetrievals(
       "Test UserId",
       "AA000000A",
-      Some("Test User"),
+      "Test User",
       Some("1234567890"),
       Some(LocalDate.of(1968, 11, 30))
     )
