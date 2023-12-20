@@ -51,11 +51,13 @@ class SubmissionRepository @Inject() (
           Indexes.ascending("uniqueId"),
           IndexOptions()
             .name("uniqueIdx")
+            .unique(true)
         ),
         IndexModel(
           Indexes.ascending("sessionId"),
           IndexOptions()
             .name("sessionIdx")
+            .unique(true)
         )
       )
     ) {
