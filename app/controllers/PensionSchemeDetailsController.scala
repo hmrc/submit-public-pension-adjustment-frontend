@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.PensionSchemeDetailsFormProvider
+
 import javax.inject.Inject
-import models.{Mode, Period}
+import models.{Mode, NavigationState, Period}
 import pages.PensionSchemeDetailsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -64,8 +65,11 @@ class PensionSchemeDetailsController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PensionSchemeDetailsPage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PensionSchemeDetailsPage(period).navigate(mode, updatedAnswers))
+              redirectUrl =
+                PensionSchemeDetailsPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

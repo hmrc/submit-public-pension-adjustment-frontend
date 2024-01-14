@@ -23,7 +23,7 @@ import forms.BankDetailsFormProvider
 import forms.BarsOverrides._
 import forms.helper.FormErrorWithFieldMessageOverrides
 import models.requests.DataRequest
-import models.{BankDetails, Mode, UserAnswers}
+import models.{BankDetails, Mode, NavigationState, UserAnswers}
 import pages.BankDetailsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -85,8 +85,10 @@ class BankDetailsController @Inject() (
       case Right(_) =>
         for {
           updatedAnswers <- Future.fromTry(userAnswers.set(BankDetailsPage, value))
-          _              <- sessionRepository.set(updatedAnswers)
-        } yield Redirect(BankDetailsPage.navigate(mode, updatedAnswers))
+          redirectUrl = BankDetailsPage.navigate(mode, updatedAnswers).url
+          answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+          _ <- sessionRepository.set(answersWithNav)
+        } yield Redirect(redirectUrl)
 
       case Left(error) =>
         handleBankDetailsError(mode, error)

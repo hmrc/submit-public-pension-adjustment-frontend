@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.LegacyPensionSchemeReferenceFormProvider
-import models.{Mode, PSTR}
+import models.{Mode, NavigationState, PSTR}
 import pages.LegacyPensionSchemeReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -82,13 +82,14 @@ class LegacyPensionSchemeReferenceController @Inject() (
                       value.getOrElse("")
                     )
                   )
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(
-              LegacyPensionSchemeReferencePage(
-                pstr,
-                SchemeService.schemeName(pstr, request.submission.calculationInputs)
-              ).navigate(mode, updatedAnswers, request.submission)
-            )
+              redirectUrl =
+                LegacyPensionSchemeReferencePage(
+                  pstr,
+                  SchemeService.schemeName(pstr, request.submission.calculationInputs)
+                ).navigate(mode, updatedAnswers, request.submission).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

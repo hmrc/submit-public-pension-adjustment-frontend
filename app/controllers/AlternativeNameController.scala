@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.AlternativeNameFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, NavigationState}
 import pages.AlternativeNamePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -64,8 +65,11 @@ class AlternativeNameController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(AlternativeNamePage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(AlternativeNamePage.navigate(mode, updatedAnswers))
+              redirectUrl =
+                AlternativeNamePage.navigate(mode, updatedAnswers).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

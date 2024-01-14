@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.WhoWillPayFormProvider
 
 import javax.inject.Inject
-import models.{Mode, Period}
+import models.{Mode, NavigationState, Period}
 import pages.WhoWillPayPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -65,8 +65,11 @@ class WhoWillPayController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhoWillPayPage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(WhoWillPayPage(period).navigate(mode, updatedAnswers, request.submission))
+              redirectUrl =
+                WhoWillPayPage(period).navigate(mode, updatedAnswers, request.submission).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

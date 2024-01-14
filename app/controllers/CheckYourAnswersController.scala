@@ -20,7 +20,7 @@ import com.google.inject.Inject
 import controllers.actions._
 import models.finalsubmission.{AuthRetrievals, FinalSubmissionResponse}
 import models.requests.DataRequest
-import models.{PSTR, Period, UserAnswers, UserSubmissionReference}
+import models.{NavigationState, PSTR, Period, UserAnswers, UserSubmissionReference}
 import pages.ClaimOnBehalfPage
 import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
@@ -32,7 +32,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
-import views.html.CheckYourAnswersView
+import views.html.{CheckYourAnswersView, IncompleteDataCaptureView}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -45,7 +45,8 @@ class CheckYourAnswersController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   submissionService: SubmissionService,
   sessionRepository: SessionRepository,
-  view: CheckYourAnswersView
+  checkYourAnswersView: CheckYourAnswersView,
+  incompleteDataCaptureView: IncompleteDataCaptureView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport
@@ -53,17 +54,24 @@ class CheckYourAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
-      val relevantPeriods: Option[Seq[Period]] =
-        request.submission.calculation.map(calc => PeriodService.orderedInDateDebitPeriods(calc))
 
-      val mayBePeriodRowBlock: Option[Seq[Option[SummaryListRow]]] = request.userAnswers.get(ClaimOnBehalfPage) match {
-        case Some(claimingOnBehalf) if !claimingOnBehalf => periodRowBlock(relevantPeriods, request.userAnswers)
-        case _                                           => None
-      }
+      if (NavigationState.isDataCaptureComplete(request.userAnswers)) {
+        val relevantPeriods: Option[Seq[Period]] =
+          request.submission.calculation.map(calc => PeriodService.orderedInDateDebitPeriods(calc))
+
+        val mayBePeriodRowBlock: Option[Seq[Option[SummaryListRow]]] = request.userAnswers.get(ClaimOnBehalfPage) match {
+          case Some(claimingOnBehalf) if !claimingOnBehalf => periodRowBlock(relevantPeriods, request.userAnswers)
+          case _ => None
+        }
+
 
       val allRows = initialRowBlock(request) ++ mayBePeriodRowBlock.getOrElse(Seq()) ++ finalRowBlock(request)
 
-      Ok(view(SummaryListViewModel(allRows.flatten)))
+      Ok(checkYourAnswersView(SummaryListViewModel(allRows.flatten)))
+      } else {
+        Ok(incompleteDataCaptureView(NavigationState.getContinuationUrl(request.userAnswers)))
+      }
+
   }
 
   def onSubmit(): Action[AnyContent] =

@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.ClaimOnBehalfFormProvider
-import models.{Mode, UserAnswers}
+import models.{Mode, NavigationState, UserAnswers}
 import pages.ClaimOnBehalfPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -64,10 +64,11 @@ class ClaimOnBehalfController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ClaimOnBehalfPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(
-              ClaimOnBehalfPage.navigate(mode, updatedAnswers, request.submission)
-            )
+              redirectUrl =
+                ClaimOnBehalfPage.navigate(mode, updatedAnswers, request.submission).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.WhenWillYouAskPensionSchemeToPayFormProvider
+
 import javax.inject.Inject
-import models.{Mode, Period}
+import models.{Mode, NavigationState, Period}
 import pages.WhenWillYouAskPensionSchemeToPayPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -65,10 +66,11 @@ class WhenWillYouAskPensionSchemeToPayController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(WhenWillYouAskPensionSchemeToPayPage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(
-              WhenWillYouAskPensionSchemeToPayPage(period).navigate(mode, updatedAnswers, request.submission)
-            )
+              redirectUrl =
+                WhenWillYouAskPensionSchemeToPayPage(period).navigate(mode, updatedAnswers, request.submission).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.PensionSchemeMemberNinoFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, NavigationState}
 import pages.PensionSchemeMemberNinoPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -64,8 +65,11 @@ class PensionSchemeMemberNinoController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberNinoPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PensionSchemeMemberNinoPage.navigate(mode, updatedAnswers))
+              redirectUrl =
+                PensionSchemeMemberNinoPage.navigate(mode, updatedAnswers).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

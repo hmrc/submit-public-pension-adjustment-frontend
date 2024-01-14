@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.ClaimingHigherOrAdditionalTaxRateReliefFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, NavigationState}
 import pages.ClaimingHigherOrAdditionalTaxRateReliefPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -65,10 +66,11 @@ class ClaimingHigherOrAdditionalTaxRateReliefController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(ClaimingHigherOrAdditionalTaxRateReliefPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(
-              ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(mode, updatedAnswers, request.submission)
-            )
+              redirectUrl =
+                ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(mode, updatedAnswers, request.submission).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

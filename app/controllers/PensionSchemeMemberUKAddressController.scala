@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.PensionSchemeMemberUKAddressFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, NavigationState}
 import pages.PensionSchemeMemberUKAddressPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -64,8 +65,11 @@ class PensionSchemeMemberUKAddressController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberUKAddressPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PensionSchemeMemberUKAddressPage.navigate(mode, updatedAnswers))
+              redirectUrl =
+                PensionSchemeMemberUKAddressPage.navigate(mode, updatedAnswers).url
+              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+              _ <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

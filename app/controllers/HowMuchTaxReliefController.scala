@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.HowMuchTaxReliefFormProvider
 
 import javax.inject.Inject
-import models.{Mode, WhichPensionSchemeWillPayTaxRelief}
+import models.{Mode, NavigationState, WhichPensionSchemeWillPayTaxRelief}
 import pages.{HowMuchTaxReliefPage, WhichPensionSchemeWillPayTaxReliefPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -74,13 +74,17 @@ class HowMuchTaxReliefController @Inject() (
                                       .set(HowMuchTaxReliefPage, value)
                                       .flatMap(_.set(WhichPensionSchemeWillPayTaxReliefPage, schemeDetails.values.head))
                                   )
-                _              <- sessionRepository.set(updatedAnswers)
-              } yield Redirect(HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission))
+                redirectUrl = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
+                answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+                _ <- sessionRepository.set(answersWithNav)
+              } yield Redirect(redirectUrl)
             } else {
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(HowMuchTaxReliefPage, value))
-                _              <- sessionRepository.set(updatedAnswers)
-              } yield Redirect(HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission))
+                redirectUrl = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
+                answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
+                _ <- sessionRepository.set(answersWithNav)
+              } yield Redirect(redirectUrl)
             }
         )
     }
