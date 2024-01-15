@@ -474,3 +474,8 @@ cannotUseServiceNotIndividual.title = cy: Cannot use submission service
 cannotUseServiceNotIndividual.heading = cy: You cannot use the submission service with this account
 cannotUseServiceNotIndividual.message1 = cy: Only individual user accounts can use the submission service. If you signed into the government gateway using an organisation or agent account, you must create a personal account instead.
 cannotUseServiceNotIndividual.link = cy: More information about Government Gateway and creating account
+
+incompleteData.title = cy: You did not complete a change you were making
+incompleteData.heading = cy: You did not complete a change you were making
+incompleteData.message1 = cy: You cannot check your answers without completing the remaining questions.
+incompleteData.message2 = cy: You will be sent back to the pages that you did not finish

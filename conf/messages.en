@@ -477,4 +477,5 @@ cannotUseServiceNotIndividual.link = More information about Government Gateway a
 
 incompleteData.title = You did not complete a change you were making
 incompleteData.heading = You did not complete a change you were making
-incompleteData.message1 = You cannot return to check your answers without completing the remaining questions.
+incompleteData.message1 = You cannot check your answers without completing the remaining questions.
+incompleteData.message2 = You will be sent back to the pages that you did not finish
