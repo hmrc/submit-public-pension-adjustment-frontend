@@ -22,7 +22,7 @@
 
 @(continuationUrl : String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("incompleteData.title"))) {
+@layout(pageTitle = titleNoForm(messages("incompleteData.title")), showBackLink = false) {
 
     <h1 class="govuk-heading-xl">@messages("incompleteData.heading")</h1>
 
