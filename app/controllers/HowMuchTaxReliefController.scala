@@ -74,16 +74,16 @@ class HowMuchTaxReliefController @Inject() (
                                       .set(HowMuchTaxReliefPage, value)
                                       .flatMap(_.set(WhichPensionSchemeWillPayTaxReliefPage, schemeDetails.values.head))
                                   )
-                redirectUrl = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
-                answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-                _ <- sessionRepository.set(answersWithNav)
+                redirectUrl     = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
+                answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+                _              <- sessionRepository.set(answersWithNav)
               } yield Redirect(redirectUrl)
             } else {
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(HowMuchTaxReliefPage, value))
-                redirectUrl = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
-                answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-                _ <- sessionRepository.set(answersWithNav)
+                redirectUrl     = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
+                answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+                _              <- sessionRepository.set(answersWithNav)
               } yield Redirect(redirectUrl)
             }
         )

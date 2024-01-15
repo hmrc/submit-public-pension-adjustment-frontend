@@ -65,10 +65,10 @@ class EnterAlternativeNameController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(EnterAlternativeNamePage, value))
-              redirectUrl =
+              redirectUrl     =
                 EnterAlternativeNamePage.navigate(mode, updatedAnswers).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

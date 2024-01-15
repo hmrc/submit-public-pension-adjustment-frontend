@@ -51,9 +51,9 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
     "must return OK and the correct view for a GET" in {
 
-      val answers = emptyUserAnswers
+      val answers        = emptyUserAnswers
       val answersWithNav = NavigationState.save(answers, NavigationState.checkYourAnswersUrl)
-      val application = applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submission)).build()
+      val application    = applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, checkYourAnswerRoute)

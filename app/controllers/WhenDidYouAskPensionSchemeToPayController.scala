@@ -66,10 +66,10 @@ class WhenDidYouAskPensionSchemeToPayController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(WhenDidYouAskPensionSchemeToPayPage(period), value))
-              redirectUrl =
+              redirectUrl     =
                 WhenDidYouAskPensionSchemeToPayPage(period).navigate(mode, updatedAnswers, request.submission).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

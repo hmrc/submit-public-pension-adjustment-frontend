@@ -65,10 +65,10 @@ class WhoWillPayController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhoWillPayPage(period), value))
-              redirectUrl =
+              redirectUrl     =
                 WhoWillPayPage(period).navigate(mode, updatedAnswers, request.submission).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

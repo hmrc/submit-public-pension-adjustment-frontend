@@ -65,10 +65,10 @@ class UkAddressController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(UkAddressPage, value))
-              redirectUrl =
+              redirectUrl     =
                 UkAddressPage.navigate(mode, updatedAnswers, request.submission).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

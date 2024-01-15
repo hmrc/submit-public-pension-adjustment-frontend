@@ -66,10 +66,10 @@ class PensionSchemeMemberInternationalAddressController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeMemberInternationalAddressPage, value))
-              redirectUrl =
+              redirectUrl     =
                 PensionSchemeMemberInternationalAddressPage.navigate(mode, updatedAnswers).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

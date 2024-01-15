@@ -64,10 +64,10 @@ class ClaimOnBehalfController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ClaimOnBehalfPage, value))
-              redirectUrl =
+              redirectUrl     =
                 ClaimOnBehalfPage.navigate(mode, updatedAnswers, request.submission).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }

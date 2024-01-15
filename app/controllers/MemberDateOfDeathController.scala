@@ -65,10 +65,10 @@ class MemberDateOfDeathController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(MemberDateOfDeathPage, value))
-              redirectUrl =
+              redirectUrl     =
                 MemberDateOfDeathPage.navigate(mode, updatedAnswers).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

@@ -85,9 +85,9 @@ class BankDetailsController @Inject() (
       case Right(_) =>
         for {
           updatedAnswers <- Future.fromTry(userAnswers.set(BankDetailsPage, value))
-          redirectUrl = BankDetailsPage.navigate(mode, updatedAnswers).url
-          answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-          _ <- sessionRepository.set(answersWithNav)
+          redirectUrl     = BankDetailsPage.navigate(mode, updatedAnswers).url
+          answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+          _              <- sessionRepository.set(answersWithNav)
         } yield Redirect(redirectUrl)
 
       case Left(error) =>

@@ -66,10 +66,10 @@ class AskedPensionSchemeToPayTaxChargeController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(AskedPensionSchemeToPayTaxChargePage(period), value))
-              redirectUrl =
+              redirectUrl     =
                 AskedPensionSchemeToPayTaxChargePage(period).navigate(mode, updatedAnswers).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

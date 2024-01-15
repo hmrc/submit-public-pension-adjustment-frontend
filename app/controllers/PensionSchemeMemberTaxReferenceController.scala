@@ -66,10 +66,10 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeMemberTaxReferencePage, value.getOrElse("")))
-              redirectUrl =
+              redirectUrl     =
                 PensionSchemeMemberTaxReferencePage.navigate(mode, updatedAnswers).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

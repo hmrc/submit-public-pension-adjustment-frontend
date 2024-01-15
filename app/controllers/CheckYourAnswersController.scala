@@ -54,20 +54,19 @@ class CheckYourAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
-
       if (NavigationState.isDataCaptureComplete(request.userAnswers)) {
         val relevantPeriods: Option[Seq[Period]] =
           request.submission.calculation.map(calc => PeriodService.orderedInDateDebitPeriods(calc))
 
-        val mayBePeriodRowBlock: Option[Seq[Option[SummaryListRow]]] = request.userAnswers.get(ClaimOnBehalfPage) match {
-          case Some(claimingOnBehalf) if !claimingOnBehalf => periodRowBlock(relevantPeriods, request.userAnswers)
-          case _ => None
-        }
+        val mayBePeriodRowBlock: Option[Seq[Option[SummaryListRow]]] =
+          request.userAnswers.get(ClaimOnBehalfPage) match {
+            case Some(claimingOnBehalf) if !claimingOnBehalf => periodRowBlock(relevantPeriods, request.userAnswers)
+            case _                                           => None
+          }
 
+        val allRows = initialRowBlock(request) ++ mayBePeriodRowBlock.getOrElse(Seq()) ++ finalRowBlock(request)
 
-      val allRows = initialRowBlock(request) ++ mayBePeriodRowBlock.getOrElse(Seq()) ++ finalRowBlock(request)
-
-      Ok(checkYourAnswersView(SummaryListViewModel(allRows.flatten)))
+        Ok(checkYourAnswersView(SummaryListViewModel(allRows.flatten)))
       } else {
         Ok(incompleteDataCaptureView(NavigationState.getContinuationUrl(request.userAnswers)))
       }

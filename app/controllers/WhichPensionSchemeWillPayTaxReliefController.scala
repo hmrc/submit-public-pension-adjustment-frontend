@@ -75,10 +75,10 @@ class WhichPensionSchemeWillPayTaxReliefController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhichPensionSchemeWillPayTaxReliefPage, value))
-              redirectUrl =
+              redirectUrl     =
                 WhichPensionSchemeWillPayTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

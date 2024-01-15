@@ -82,13 +82,13 @@ class ReformPensionSchemeReferenceController @Inject() (
                       value.getOrElse("")
                     )
                   )
-              redirectUrl =
+              redirectUrl     =
                 ReformPensionSchemeReferencePage(
                   pstr,
                   SchemeService.schemeName(pstr, request.submission.calculationInputs)
                 ).navigate(mode, updatedAnswers, request.submission).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

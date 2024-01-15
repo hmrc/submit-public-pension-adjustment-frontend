@@ -65,10 +65,10 @@ class PensionSchemeMemberResidenceController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberResidencePage, value))
-              redirectUrl =
+              redirectUrl     =
                 PensionSchemeMemberResidencePage.navigate(mode, updatedAnswers).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

@@ -82,13 +82,13 @@ class LegacyPensionSchemeReferenceController @Inject() (
                       value.getOrElse("")
                     )
                   )
-              redirectUrl =
+              redirectUrl     =
                 LegacyPensionSchemeReferencePage(
                   pstr,
                   SchemeService.schemeName(pstr, request.submission.calculationInputs)
                 ).navigate(mode, updatedAnswers, request.submission).url
-              answersWithNav = NavigationState.save(updatedAnswers, redirectUrl)
-              _ <- sessionRepository.set(answersWithNav)
+              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }
