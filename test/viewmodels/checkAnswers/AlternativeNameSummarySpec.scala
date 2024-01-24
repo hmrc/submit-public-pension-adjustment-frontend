@@ -20,7 +20,7 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.AlternativeNamePage
+import pages.{AlternativeNamePage, ClaimOnBehalfPage}
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
@@ -54,6 +54,35 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
         )
       )
 
+    }
+
+    "when yes is selected on behalf of customer, return the summary row" in {
+
+      val userAnswers = UserAnswers("id")
+        .set(
+          AlternativeNamePage,
+          true
+        )
+        .get
+        .set(
+          ClaimOnBehalfPage,
+          true
+        )
+        .get
+
+      AlternativeNameSummary.row(userAnswers) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "alternativeName.checkYourAnswersLabel.onBehalf",
+          value = ValueViewModel("site.yes"),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              routes.AlternativeNameController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText("alternativeName.change.hidden")
+          )
+        )
+      )
     }
 
     "when no is selected, return the summary row" in {

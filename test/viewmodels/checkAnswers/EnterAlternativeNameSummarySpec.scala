@@ -20,7 +20,7 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.EnterAlternativeNamePage
+import pages.{ClaimOnBehalfPage, EnterAlternativeNamePage}
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
@@ -44,6 +44,35 @@ class EnterAlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
       EnterAlternativeNameSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "enterAlternativeName.checkYourAnswersLabel",
+          value = ValueViewModel(Text("John Doe").toString()),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              routes.EnterAlternativeNameController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText("enterAlternativeName.change.hidden")
+          )
+        )
+      )
+    }
+
+    "when user enters name on behalf of customer, return the summary row" in {
+
+      val userAnswers = UserAnswers("id")
+        .set(
+          EnterAlternativeNamePage,
+          "John Doe"
+        )
+        .get
+        .set(
+          ClaimOnBehalfPage,
+          true
+        )
+        .get
+
+      EnterAlternativeNameSummary.row(userAnswers) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "enterAlternativeName.checkYourAnswersLabel.onBehalf",
           value = ValueViewModel(Text("John Doe").toString()),
           actions = Seq(
             ActionItemViewModel(

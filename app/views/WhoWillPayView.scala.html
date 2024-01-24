@@ -24,6 +24,10 @@
 
 @(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p>@messages("whoWillPay.hint")</p>
+}
+
 @layout(pageTitle = title(form, messages("whoWillPay.title"))) {
 
     @formHelper(action = routes.WhoWillPayController.onSubmit(mode, period), 'autoComplete -> "off") {
@@ -40,7 +44,7 @@
                     caption = HmrcSectionCaption(messages("chargeDetails.caption." + period) )),
                 items  = WhoWillPay.options,
 
-            )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

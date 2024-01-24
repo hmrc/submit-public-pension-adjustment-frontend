@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.AlternativeNamePage
+import pages.{AlternativeNamePage, ClaimOnBehalfPage}
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -26,17 +26,29 @@ import viewmodels.implicits._
 
 object AlternativeNameSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] = {
+    val key =
+      if (isClaimOnBehalf(answers)) "alternativeName.checkYourAnswersLabel.onBehalf"
+      else "alternativeName.checkYourAnswersLabel"
+
     answers.get(AlternativeNamePage).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "alternativeName.checkYourAnswersLabel",
+        key = key,
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel("site.change", routes.AlternativeNameController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("alternativeName.change.hidden"))
         )
       )
+    }
+  }
+
+  def isClaimOnBehalf(userAnswers: UserAnswers): Boolean =
+    userAnswers.get(ClaimOnBehalfPage) match {
+      case Some(true) => true
+      case None       => false
+      case _          => false
     }
 }

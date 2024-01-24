@@ -20,8 +20,8 @@ import controllers.actions._
 import forms.EnterAlternativeNameFormProvider
 
 import javax.inject.Inject
-import models.{Mode, NavigationState}
-import pages.EnterAlternativeNamePage
+import models.{Mode, NavigationState, UserAnswers}
+import pages.{ClaimOnBehalfPage, EnterAlternativeNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -53,7 +53,7 @@ class EnterAlternativeNameController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, isClaimOnBehalf(request.userAnswers)))
     }
 
   def onSubmit(mode: Mode): Action[AnyContent] =
@@ -61,7 +61,8 @@ class EnterAlternativeNameController @Inject() (
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mode, isClaimOnBehalf(request.userAnswers)))),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(EnterAlternativeNamePage, value))
@@ -71,5 +72,12 @@ class EnterAlternativeNameController @Inject() (
               _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
+    }
+
+  def isClaimOnBehalf(userAnswers: UserAnswers): Boolean =
+    userAnswers.get(ClaimOnBehalfPage) match {
+      case Some(true) => true
+      case None       => false
+      case _          => false
     }
 }
