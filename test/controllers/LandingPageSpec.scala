@@ -54,7 +54,7 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        checkNavigation(redirectLocation(result).get, "/submission-service/submitting-on-behalf-someone-else")
+        checkNavigation(redirectLocation(result).get, "/submission-info")
       }
     }
 
