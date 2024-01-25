@@ -44,7 +44,7 @@ class LandingPageController @Inject() (
     }
     submissionRetrievalStatus.map { submissionRetrievalStatus =>
       if (submissionRetrievalStatus) {
-        Redirect(routes.ClaimOnBehalfController.onPageLoad(NormalMode))
+        Redirect(routes.SubmissionInfoController.onPageLoad())
       } else {
         logger.error(s"Submission could not be retrieved with submissionUniqueId : $submissionUniqueId")
         Redirect(routes.CalculationPrerequisiteController.onPageLoad())
