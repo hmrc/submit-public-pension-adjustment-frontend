@@ -42,7 +42,7 @@
         @govukInput(
             InputViewModel(
                 field = form("pensionSchemeName"),
-                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeName")).asPageHeading(LabelSize.Medium)
+                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeName")).withCssClass("govuk-label--m")
             )
             .withWidth(Fixed10)
         )
@@ -50,7 +50,7 @@
         @govukInput(
             InputViewModel(
                 field = form("pensionSchemeTaxReference"),
-                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeTaxReference")).asPageHeading(LabelSize.Medium)
+                label = LabelViewModel(messages("pensionSchemeDetails.pensionSchemeTaxReference")).withCssClass("govuk-label--m")
             )
             .withWidth(Fixed10)
             .withHint(HintViewModel(messages("pensionSchemeDetails.pensionSchemeTaxReference.hint")))
