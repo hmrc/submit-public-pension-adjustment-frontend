@@ -70,7 +70,6 @@
         @defining(sortCodeAndAccountNumberFormError) { barsFormError =>
         <fieldset class="govuk-fieldset long-word-wrap" @if(barsFormError.isDefined) {
                   aria-describedby="bars-invalid-error"}>
-            <legend class="govuk-label govuk-visually-hidden">@messages("view-bank-details-hidden")</legend>
 
             <div id="bars-invalid" class="form-field @barsFormError.map { error => govuk-form-group--error }">
                 @barsFormError.map { error =>
