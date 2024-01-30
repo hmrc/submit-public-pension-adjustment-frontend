@@ -105,6 +105,7 @@ chargeDetails.caption.2023 = Annual allowance between 6 April 2022 to 5 April 20
 
 whoWillPay.title = cy: Who is going to pay the new tax charge?
 whoWillPay.heading = cy: Who is going to pay the new tax charge?
+whoWillPay.hint = cy: This is the money that you owe to HMRC following the results of your adjustment
 whoWillPay.you = cy: You
 whoWillPay.pensionScheme = cy: Pension scheme
 whoWillPay.checkYourAnswersLabel = cy: Who is going to pay the new tax charge?
@@ -219,7 +220,7 @@ ukAddress.postCode.change.hidden = cy: Postcode
 
 legacyPensionSchemeReference.title = cy: What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.heading = cy: What is your legacy individual pension scheme reference? (optional)
-legacyPensionSchemeReference.hint1 = cy: Legacy public service pension schemes are pensions from before 2015.
+legacyPensionSchemeReference.hint1 = cy: Legacy public service pension schemes are pensions from before 2015. This is not the same as your Pension Scheme Tax Reference (PSTR).
 legacyPensionSchemeReference.hint2 = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 legacyPensionSchemeReference.checkYourAnswersLabel = cy: What is your legacy individual pension scheme reference?
 legacyPensionSchemeReference.error.length = cy: Legacy individual pension scheme reference must be 15 characters or less
@@ -228,8 +229,8 @@ legacyPensionSchemeReference.caption = cy: Relating to scheme
 
 reformPensionSchemeReference.title = cy: What is your reform individual pension scheme reference? (optional)
 reformPensionSchemeReference.heading = cy: What is your reform individual pension scheme reference? (optional)
-reformPensionSchemeReference.message1 = cy: Reform public service pension schemes are pensions from 2015 onwards.
-reformPensionSchemeReference.hint1 = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
+reformPensionSchemeReference.hint1 = cy: Reform public service pension schemes are pensions from 2015 onwards. This is not the same as your Pension Scheme Tax Reference (PSTR).
+reformPensionSchemeReference.hint2 = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 reformPensionSchemeReference.checkYourAnswersLabel = cy: What is your reform individual pension scheme reference?
 reformPensionSchemeReference.error.length = cy: Reform individual pension scheme reference must be 15 characters or less
 reformPensionSchemeReference.change.hidden = cy: submission service reform individual pension scheme reference
@@ -246,10 +247,12 @@ claimingHigherOrAdditionalTaxRateRelief.error.required = cy: Select yes if you a
 claimingHigherOrAdditionalTaxRateRelief.change.hidden = cy: submission service claiming for higher or additional tax rate relief
 
 howMuchTaxRelief.title = cy: How much tax relief are you claiming for?
-howMuchTaxRelief.heading = cy: How much tax relief are you claiming for?
-howMuchTaxRelief.hint1 = cy: Amount must be rounded down to the nearest pound, for example 2300.
+howMuchTaxRelief.heading = cy: How much higher or additional tax relief are you claiming for?
+howMuchTaxRelief.hint1 = cy: You can find this information on your self-assessment tax return form. If you file your self-assessment tax return online, you may find the value you are claiming for
+howMuchTaxRelief.hint2 = cy: Amount must be rounded down to the nearest pound, for example 2300.
+howMuchTaxRelief.here = cy: here
 howMuchTaxRelief.caption = cy: Submission service
-howMuchTaxRelief.checkYourAnswersLabel = cy: How much tax relief are you claiming for?
+howMuchTaxRelief.checkYourAnswersLabel = cy: How much higher or additional tax relief are you claiming for?
 howMuchTaxRelief.error.nonNumeric = cy: The amount of tax relief you are claiming for must only include numbers 0 to 9
 howMuchTaxRelief.error.required = cy: Enter the how much tax relief you are claiming for
 howMuchTaxRelief.error.wholeNumber = cy: The amount of tax relief you are claiming for must only include numbers 0 to 9
@@ -266,16 +269,16 @@ whichPensionSchemeWillPayTaxRelief.error.required = cy: Select which pension sch
 whichPensionSchemeWillPayTaxRelief.change.hidden = cy: Which pension scheme will pay the tax relief you are claiming
 
 pensionSchemeMemberName.title = cy: What is the name of who you are acting on behalf of?
-pensionSchemeMemberName.heading = cy: What is the name of who you are acting on behalf of?
-pensionSchemeMemberName.checkYourAnswersLabel = cy: What is the name of who you are acting on behalf of?
+pensionSchemeMemberName.heading = cy: What is the name of the person you are acting on behalf of?
+pensionSchemeMemberName.checkYourAnswersLabel = cy: What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.error.required =  cy: Enter the name of who you are acting on behalf of
 pensionSchemeMemberName.error.length =  cy: The name of who you are acting on behalf of must be 30 characters or fewer
 pensionSchemeMemberName.change.hidden = cy: name of who you are acting on behalf of
 
 pensionSchemeMemberDOB.title = cy: What is the date of birth of who you are acting on behalf of?
-pensionSchemeMemberDOB.heading = cy: What is the date of birth of who you are acting on behalf of?
+pensionSchemeMemberDOB.heading = cy: What is the date of birth of the person you are acting on behalf of?
 pensionSchemeMemberDOB.hint = cy: For example, 27 3 1963
-pensionSchemeMemberDOB.checkYourAnswersLabel = cy: What is the date of birth of who you are acting on behalf of?
+pensionSchemeMemberDOB.checkYourAnswersLabel = cy: What is the date of birth of the person you are acting on behalf of?
 pensionSchemeMemberDOB.error.required.all = cy: Enter the date of birth of who you are acting on behalf of
 pensionSchemeMemberDOB.error.required.two = cy: The date of birth of who you are acting on behalf of must include {0} and {1}
 pensionSchemeMemberDOB.error.required = cy: The date of birth of who you are acting on behalf of must include {0}
@@ -286,16 +289,22 @@ pensionSchemeMemberDOB.change.hidden = cy: date of birth of who you are acting o
 pensionSchemeMemberDOB.caption = cy: Personal details
 
 alternativeName.title = cy: Is your name the same one that your pension scheme has?
+alternativeName.title.onBehalf = cy: Is the name you have given the same one that their pension scheme has?
 alternativeName.heading = cy: Is your name the same one that your pension scheme has?
-alternativeName.checkYourAnswersLabel = cy: What is your contact number?
+alternativeName.heading.onBehalf = cy: Is the name you have given the same one that their pension scheme has?
+alternativeName.checkYourAnswersLabel = cy: Is your name the same one that your pension scheme has?
+alternativeName.checkYourAnswersLabel.onBehalf = cy: Is the name you have given the same one that their pension scheme has?
 alternativeName.error.required = cy: Select yes if your name is the same one that your pension scheme has
 alternativeName.change.hidden = cy: Is your name the same one that your pension scheme has?
 
 enterAlternativeName.title = cy: What is your name?
+enterAlternativeName.title.onBehalf = cy: What is their name?
 enterAlternativeName.heading = cy: What is your name?
+enterAlternativeName.heading.onBehalf = cy: What is their name?
 enterAlternativeName.checkYourAnswersLabel = cy: What is your name?
+enterAlternativeName.checkYourAnswersLabel.onBehalf = cy: What is their name?
 enterAlternativeName.error.required = cy: Enter your name
-enterAlternativeName.error.length = cy: Your name must be 100 characters or less
+enterAlternativeName.error.length = cy: Your name must be 100 characters or fewer
 enterAlternativeName.change.hidden = cy: What is your name?
 
 contactNumber.title = cy: What is your contact number? (optional)
@@ -337,19 +346,19 @@ submission.link = cy: What did you think of this service?
 submission.takesSecond = cy: (takes 30 seconds)
 
 pensionSchemeMemberNino.title = cy: What is the National Insurance number of who you are acting on behalf of?
-pensionSchemeMemberNino.heading = cy: What is the National Insurance number of who you are acting on behalf of?
+pensionSchemeMemberNino.heading = cy: What is the National Insurance number of the person you are acting on behalf of?
 pensionSchemeMemberNino.message1 = cy: You can find a National Insurance number on a National Insurance card, benefit letter, payslip or P60.
 pensionSchemeMemberNino.hint1 = cy: For example, QQ123456C.
-pensionSchemeMemberNino.checkYourAnswersLabel = cy: What is the National Insurance number of who you are acting on behalf of?
+pensionSchemeMemberNino.checkYourAnswersLabel = cy: What is the National Insurance number of the person you are acting on behalf of?
 pensionSchemeMemberNino.error.required = cy: Enter the National Insurance number of who you are acting on behalf of
 pensionSchemeMemberNino.error.invalid = cy: The National Insurance number of who you are acting on behalf of must only include letters a to z and numbers 0 to 9
 pensionSchemeMemberNino.change.hidden = cy: National Insurance number of who you are acting on behalf of
 
 pensionSchemeMemberTaxReference.title = cy: What is the Unique Taxpayer Reference (UTR) of who you are acting on behalf of? (optional)
-pensionSchemeMemberTaxReference.heading = cy: What is the Unique Taxpayer Reference (UTR) of who you are acting on behalf of? (optional)
+pensionSchemeMemberTaxReference.heading = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
 pensionSchemeMemberTaxReference.hint1 = cy: The unique tax reference number has 10 digits.
 pensionSchemeMemberTaxReference.hint2 = cy: For example, 1234567890
-pensionSchemeMemberTaxReference.checkYourAnswersLabel = cy: What is the Unique Taxpayer Reference (UTR) of who you are acting on behalf of?
+pensionSchemeMemberTaxReference.checkYourAnswersLabel = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
 pensionSchemeMemberTaxReference.error.length = cy: The Unique Taxpayer Reference of who you are acting on behalf of must be 10 digits or less
 pensionSchemeMemberTaxReference.error.invalid = cy: The Unique Taxpayer Reference of who you are acting on behalf of must only include numbers 0 to 9
 pensionSchemeMemberTaxReference.change.hidden = cy: Unique Taxpayer Reference of who you are acting on behalf of
@@ -426,9 +435,9 @@ pensionSchemeMemberInternationalAddress.postCode.change.hidden = cy: Postal code
 pensionSchemeMemberInternationalAddress.error.country.change.hidden = cy: Country
 
 memberDateOfDeath.title = cy: What was the date of death of who you are acting on behalf of?
-memberDateOfDeath.heading = cy: What was the date of death of who you are acting on behalf of?
+memberDateOfDeath.heading = cy: What was the date of death of the person you are acting on behalf of?
 memberDateOfDeath.hint = cy: For example, 27 3 2017
-memberDateOfDeath.checkYourAnswersLabel = cy: What was the date of death of who you are acting on behalf of?
+memberDateOfDeath.checkYourAnswersLabel = cy: What was the date of death of the person you are acting on behalf of?
 memberDateOfDeath.error.required.all = cy: Enter the date of death of who you are acting on behalf of
 memberDateOfDeath.error.required.two = cy: The date of death of who you are acting on behalf of must include {0} and {1}
 memberDateOfDeath.error.required = cy: The date of death of who you are acting on behalf of must include {0}

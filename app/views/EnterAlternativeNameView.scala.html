@@ -24,26 +24,50 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, isClaimOnBehalf: Boolean)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("enterAlternativeName.title"))) {
+@if(isClaimOnBehalf) {
+    @layout(pageTitle = title(form, messages("enterAlternativeName.title.onBehalf"))) {
 
-    @formHelper(action = routes.EnterAlternativeNameController.onSubmit(mode)) {
+        @formHelper(action = routes.EnterAlternativeNameController.onSubmit(mode)) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
+            @if(form.errors.nonEmpty) {
+                @govukErrorSummary(ErrorSummaryViewModel(form))
+            }
 
-        @govukInput(
-            InputViewModel(
-                field = form("value"),
-                label = LabelViewModel(messages("enterAlternativeName.heading")).asPageHeading()
+            @govukInput(
+                InputViewModel(
+                    field = form("value"),
+                    label = LabelViewModel(messages("enterAlternativeName.heading.onBehalf")).asPageHeading()
+                )
+                .withWidth(Full)
             )
-            .withWidth(Full)
-        )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+            @govukButton(
+                ButtonViewModel(messages("site.continue"))
+            )
+        }
+    }
+} else {
+    @layout(pageTitle = title(form, messages("enterAlternativeName.title"))) {
+
+        @formHelper(action = routes.EnterAlternativeNameController.onSubmit(mode)) {
+
+            @if(form.errors.nonEmpty) {
+                @govukErrorSummary(ErrorSummaryViewModel(form))
+            }
+
+            @govukInput(
+                InputViewModel(
+                    field = form("value"),
+                    label = LabelViewModel(messages("enterAlternativeName.heading")).asPageHeading()
+                )
+                .withWidth(Full)
+            )
+
+            @govukButton(
+                ButtonViewModel(messages("site.continue"))
+            )
+        }
     }
 }

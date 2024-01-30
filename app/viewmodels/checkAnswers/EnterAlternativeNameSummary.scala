@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.EnterAlternativeNamePage
+import pages.{ClaimOnBehalfPage, EnterAlternativeNamePage}
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -27,15 +27,26 @@ import viewmodels.implicits._
 
 object EnterAlternativeNameSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] = {
+    val key =
+      if (isClaimOnBehalf(answers)) "enterAlternativeName.checkYourAnswersLabel.onBehalf"
+      else "enterAlternativeName.checkYourAnswersLabel"
+
     answers.get(EnterAlternativeNamePage).map { answer =>
       SummaryListRowViewModel(
-        key = "enterAlternativeName.checkYourAnswersLabel",
+        key = key,
         value = ValueViewModel(HtmlFormat.escape(answer).toString),
         actions = Seq(
           ActionItemViewModel("site.change", routes.EnterAlternativeNameController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("enterAlternativeName.change.hidden"))
         )
       )
+    }
+  }
+  def isClaimOnBehalf(userAnswers: UserAnswers): Boolean                             =
+    userAnswers.get(ClaimOnBehalfPage) match {
+      case Some(true) => true
+      case None       => false
+      case _          => false
     }
 }

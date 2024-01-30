@@ -105,6 +105,7 @@ chargeDetails.caption.2023 = Annual allowance between 6 April 2022 to 5 April 20
 
 whoWillPay.title = Who is going to pay the new tax charge?
 whoWillPay.heading = Who is going to pay the new tax charge?
+whoWillPay.hint = This is the money that you owe to HMRC following the results of your adjustment
 whoWillPay.you = You
 whoWillPay.pensionScheme = Pension scheme
 whoWillPay.checkYourAnswersLabel = Who is going to pay the new tax charge?
@@ -219,7 +220,7 @@ ukAddress.postCode.change.hidden = Postcode
 
 legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.heading = What is your legacy individual pension scheme reference? (optional)
-legacyPensionSchemeReference.hint1 = Legacy public service pension schemes are pensions from before 2015.
+legacyPensionSchemeReference.hint1 = Legacy public service pension schemes are pensions from before 2015. This is not the same as your Pension Scheme Tax Reference (PSTR).
 legacyPensionSchemeReference.hint2 = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 legacyPensionSchemeReference.checkYourAnswersLabel = What is your legacy individual pension scheme reference?
 legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 15 characters or less
@@ -228,7 +229,7 @@ legacyPensionSchemeReference.caption = Relating to scheme
 
 reformPensionSchemeReference.title = What is your reform individual pension scheme reference? (optional)
 reformPensionSchemeReference.heading = What is your reform individual pension scheme reference? (optional)
-reformPensionSchemeReference.hint1 = Reform public service pension schemes are pensions from 2015 onwards.
+reformPensionSchemeReference.hint1 = Reform public service pension schemes are pensions from 2015 onwards. This is not the same as your Pension Scheme Tax Reference (PSTR).
 reformPensionSchemeReference.hint2 = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 reformPensionSchemeReference.checkYourAnswersLabel = What is your reform individual pension scheme reference?
 reformPensionSchemeReference.error.length = Reform individual pension scheme reference must be 15 characters or less
@@ -246,10 +247,12 @@ claimingHigherOrAdditionalTaxRateRelief.error.required = Select yes if you are c
 claimingHigherOrAdditionalTaxRateRelief.change.hidden = submission service claiming for higher or additional tax rate relief
 
 howMuchTaxRelief.title = How much tax relief are you claiming for?
-howMuchTaxRelief.heading = How much tax relief are you claiming for?
-howMuchTaxRelief.hint1 = Amount must be rounded down to the nearest pound, for example 2300.
+howMuchTaxRelief.heading = How much higher or additional tax relief are you claiming for?
+howMuchTaxRelief.hint1 = You can find this information on your self-assessment tax return form. If you file your self-assessment tax return online, you may find the value you are claiming for
+howMuchTaxRelief.hint2 = Amount must be rounded down to the nearest pound, for example 2300.
+howMuchTaxRelief.here = here
 howMuchTaxRelief.caption = Submission service
-howMuchTaxRelief.checkYourAnswersLabel = How much tax relief are you claiming for?
+howMuchTaxRelief.checkYourAnswersLabel = How much higher or additional tax relief are you claiming for?
 howMuchTaxRelief.error.nonNumeric = The amount of tax relief you are claiming for must only include numbers 0 to 9
 howMuchTaxRelief.error.required = Enter the how much tax relief you are claiming for
 howMuchTaxRelief.error.wholeNumber = The amount of tax relief you are claiming for must only include numbers 0 to 9
@@ -266,16 +269,16 @@ whichPensionSchemeWillPayTaxRelief.error.required = Select which pension scheme 
 whichPensionSchemeWillPayTaxRelief.change.hidden = Which pension scheme will pay the tax relief you are claiming
 
 pensionSchemeMemberName.title = What is the name of who you are acting on behalf of?
-pensionSchemeMemberName.heading = What is the name of who you are acting on behalf of?
-pensionSchemeMemberName.checkYourAnswersLabel = What is the name of who you are acting on behalf of?
+pensionSchemeMemberName.heading = What is the name of the person you are acting on behalf of?
+pensionSchemeMemberName.checkYourAnswersLabel = What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.error.required =  Enter the name of who you are acting on behalf of
 pensionSchemeMemberName.error.length =  The name of who you are acting on behalf of must be 30 characters or fewer
 pensionSchemeMemberName.change.hidden = name of who you are acting on behalf of
 
 pensionSchemeMemberDOB.title = What is the date of birth of who you are acting on behalf of?
-pensionSchemeMemberDOB.heading = What is the date of birth of who you are acting on behalf of?
+pensionSchemeMemberDOB.heading = What is the date of birth of the person you are acting on behalf of?
 pensionSchemeMemberDOB.hint = For example, 27 3 1963
-pensionSchemeMemberDOB.checkYourAnswersLabel = What is the date of birth of who you are acting on behalf of?
+pensionSchemeMemberDOB.checkYourAnswersLabel = What is the date of birth of the person you are acting on behalf of?
 pensionSchemeMemberDOB.error.required.all = Enter the date of birth of who you are acting on behalf of
 pensionSchemeMemberDOB.error.required.two = The date of birth of who you are acting on behalf of must include {0} and {1}
 pensionSchemeMemberDOB.error.required = The date of birth of who you are acting on behalf of must include {0}
@@ -286,16 +289,22 @@ pensionSchemeMemberDOB.change.hidden = date of birth of who you are acting on be
 pensionSchemeMemberDOB.caption = Personal details
 
 alternativeName.title = Is your name the same one that your pension scheme has?
+alternativeName.title.onBehalf = Is the name you have given the same one that their pension scheme has?
 alternativeName.heading = Is your name the same one that your pension scheme has?
+alternativeName.heading.onBehalf = Is the name you have given the same one that their pension scheme has?
 alternativeName.checkYourAnswersLabel = Is your name the same one that your pension scheme has?
+alternativeName.checkYourAnswersLabel.onBehalf = Is the name you have given the same one that their pension scheme has?
 alternativeName.error.required = Select yes if your name is the same one that your pension scheme has
 alternativeName.change.hidden = Is your name the same one that your pension scheme has?
 
 enterAlternativeName.title = What is your name?
+enterAlternativeName.title.onBehalf = What is their name?
 enterAlternativeName.heading = What is your name?
+enterAlternativeName.heading.onBehalf = What is their name?
 enterAlternativeName.checkYourAnswersLabel = What is your name?
+enterAlternativeName.checkYourAnswersLabel.onBehalf = What is their name?
 enterAlternativeName.error.required = Enter your name
-enterAlternativeName.error.length = Your name must be 100 characters or less
+enterAlternativeName.error.length = Your name must be 100 characters or fewer
 enterAlternativeName.change.hidden = What is your name?
 
 contactNumber.title = What is your contact number? (optional)
@@ -337,19 +346,19 @@ submission.link = What did you think of this service?
 submission.takesSecond = (takes 30 seconds)
 
 pensionSchemeMemberNino.title = What is the National Insurance number of who you are acting on behalf of?
-pensionSchemeMemberNino.heading = What is the National Insurance number of who you are acting on behalf of?
+pensionSchemeMemberNino.heading = What is the National Insurance number of the person you are acting on behalf of?
 pensionSchemeMemberNino.message1 = You can find a National Insurance number on a National Insurance card, benefit letter, payslip or P60.
 pensionSchemeMemberNino.hint1 = For example, QQ123456C.
-pensionSchemeMemberNino.checkYourAnswersLabel = What is the National Insurance number of who you are acting on behalf of?
+pensionSchemeMemberNino.checkYourAnswersLabel = What is the National Insurance number of the person you are acting on behalf of?
 pensionSchemeMemberNino.error.required = Enter the National Insurance number of who you are acting on behalf of
 pensionSchemeMemberNino.error.invalid = The National Insurance number of who you are acting on behalf of must only include letters a to z and numbers 0 to 9
 pensionSchemeMemberNino.change.hidden = National Insurance number of who you are acting on behalf of
 
 pensionSchemeMemberTaxReference.title = What is the Unique Taxpayer Reference (UTR) of who you are acting on behalf of? (optional)
-pensionSchemeMemberTaxReference.heading = What is the Unique Taxpayer Reference (UTR) of who you are acting on behalf of? (optional)
+pensionSchemeMemberTaxReference.heading = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
 pensionSchemeMemberTaxReference.hint1 = The unique tax reference number has 10 digits.
 pensionSchemeMemberTaxReference.hint2 = For example, 1234567890
-pensionSchemeMemberTaxReference.checkYourAnswersLabel = What is the Unique Taxpayer Reference (UTR) of who you are acting on behalf of?
+pensionSchemeMemberTaxReference.checkYourAnswersLabel = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
 pensionSchemeMemberTaxReference.error.length = The Unique Taxpayer Reference of who you are acting on behalf of must be 10 digits or less
 pensionSchemeMemberTaxReference.error.invalid = The Unique Taxpayer Reference of who you are acting on behalf of must only include numbers 0 to 9
 pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference of who you are acting on behalf of
@@ -426,9 +435,9 @@ pensionSchemeMemberInternationalAddress.postCode.change.hidden = Postal code (op
 pensionSchemeMemberInternationalAddress.error.country.change.hidden = Country
 
 memberDateOfDeath.title = What was the date of death of who you are acting on behalf of?
-memberDateOfDeath.heading = What was the date of death of who you are acting on behalf of?
+memberDateOfDeath.heading = What was the date of death of the person you are acting on behalf of?
 memberDateOfDeath.hint = For example, 27 3 2017
-memberDateOfDeath.checkYourAnswersLabel = What was the date of death of who you are acting on behalf of?
+memberDateOfDeath.checkYourAnswersLabel = What was the date of death of the person you are acting on behalf of?
 memberDateOfDeath.error.required.all = Enter the date of death of who you are acting on behalf of
 memberDateOfDeath.error.required.two = The date of death of who you are acting on behalf of must include {0} and {1}
 memberDateOfDeath.error.required = The date of death of who you are acting on behalf of must include {0}
