@@ -24,7 +24,7 @@ import models.{Mode, NavigationState}
 import pages.PensionSchemeMemberResidencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PensionSchemeMemberResidenceView
 
@@ -32,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class PensionSchemeMemberResidenceController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -68,7 +68,7 @@ class PensionSchemeMemberResidenceController @Inject() (
               redirectUrl     =
                 PensionSchemeMemberResidencePage.navigate(mode, updatedAnswers).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

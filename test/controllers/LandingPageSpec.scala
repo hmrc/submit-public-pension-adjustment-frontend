@@ -17,6 +17,7 @@
 package controllers
 
 import base.SpecBase
+import connectors.SubmitBackendConnector
 import models.UniqueId
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -24,7 +25,6 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.CalculationDataService
 
 import scala.concurrent.Future
 
@@ -37,14 +37,14 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
     "must redirect to first data capture page when submission can be retrieved" in {
 
-      val mockCalculationDataService = mock[CalculationDataService]
-      when(mockCalculationDataService.retrieveSubmission(any(), any())(any(), any()))
+      val mockSubmitBackendConnector = mock[SubmitBackendConnector]
+      when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
         .thenReturn(Future.successful(true))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationDataService].toInstance(mockCalculationDataService)
+            bind[SubmitBackendConnector].toInstance(mockSubmitBackendConnector)
           )
           .build()
 
@@ -60,14 +60,14 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
     "must redirect to calculation prerequisite page when submission cannot be retrieved" in {
 
-      val mockCalculationDataService = mock[CalculationDataService]
-      when(mockCalculationDataService.retrieveSubmission(any(), any())(any(), any()))
+      val mockSubmitBackendConnector = mock[SubmitBackendConnector]
+      when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
         .thenReturn(Future.successful(false))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationDataService].toInstance(mockCalculationDataService)
+            bind[SubmitBackendConnector].toInstance(mockSubmitBackendConnector)
           )
           .build()
 
@@ -86,14 +86,14 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
       lazy val landingPageRoute =
         routes.LandingPageController.onPageLoad(Some(UniqueId("invalidUniqueId"))).url
 
-      val mockCalculationDataService = mock[CalculationDataService]
-      when(mockCalculationDataService.retrieveSubmission(any(), any())(any(), any()))
+      val mockSubmitBackendConnector = mock[SubmitBackendConnector]
+      when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
         .thenReturn(Future.successful(true))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationDataService].toInstance(mockCalculationDataService)
+            bind[SubmitBackendConnector].toInstance(mockSubmitBackendConnector)
           )
           .build()
 

@@ -21,11 +21,11 @@ import models.UserAnswers
 import models.calculation.inputs.{CalculationInputs, Resubmission}
 import models.requests.{IdentifierRequest, OptionalDataRequest}
 import models.submission.Submission
-import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers.{any, anyString}
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.FakeRequest
-import repositories._
+import services.{SubmissionDataService, UserDataService}
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -33,8 +33,8 @@ import scala.concurrent.Future
 
 class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
-  class Harness(sessionRepository: SessionRepository, submissionRepository: SubmissionRepository)
-      extends DataRetrievalActionImpl(sessionRepository, submissionRepository) {
+  class Harness(userDataService: UserDataService, submissionDataService: SubmissionDataService)
+      extends DataRetrievalActionImpl(userDataService, submissionDataService) {
     def callTransform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = transform(request)
   }
 
@@ -44,16 +44,16 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
       "must set userAnswers to 'None' in the request" in {
 
-        val sessionRepository    = mock[SessionRepository]
-        val submissionRepository = mock[SubmissionRepository]
+        val userDataService       = mock[UserDataService]
+        val submissionDataService = mock[SubmissionDataService]
 
         val submission =
           Submission("sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
 
-        when(sessionRepository.get("id")) thenReturn Future(None)
-        when(submissionRepository.getBySessionId(anyString())) thenReturn Future(Some(submission))
+        when(userDataService.get()(any())) thenReturn Future(None)
+        when(submissionDataService.getBySessionId(anyString())(any())) thenReturn Future(Some(submission))
 
-        val action = new Harness(sessionRepository, submissionRepository)
+        val action = new Harness(userDataService, submissionDataService)
 
         val result = action
           .callTransform(
@@ -76,16 +76,16 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
       "must build a userAnswers object and add it to the request" in {
 
-        val sessionRepository    = mock[SessionRepository]
-        val submissionRepository = mock[SubmissionRepository]
+        val userDataService      = mock[UserDataService]
+        val submissionRepository = mock[SubmissionDataService]
 
         val submission =
           Submission("sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
 
-        when(sessionRepository.get("id")) thenReturn Future(Some(UserAnswers("id")))
-        when(submissionRepository.getBySessionId(anyString())) thenReturn Future(Some(submission))
+        when(userDataService.get()(any())) thenReturn Future(Some(UserAnswers("id")))
+        when(submissionRepository.getBySessionId(anyString())(any())) thenReturn Future(Some(submission))
 
-        val action = new Harness(sessionRepository, submissionRepository)
+        val action = new Harness(userDataService, submissionRepository)
 
         val result =
           action

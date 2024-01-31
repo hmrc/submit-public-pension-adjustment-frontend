@@ -21,7 +21,7 @@ import forms.WhenWillYouAskPensionSchemeToPayFormProvider
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
-import models.{NormalMode, Period, UserAnswers, WhenWillYouAskPensionSchemeToPay}
+import models.{Done, NormalMode, Period, UserAnswers, WhenWillYouAskPensionSchemeToPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -30,7 +30,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.{SessionRepository, SubmissionRepository}
+import services.{SubmissionDataService, UserDataService}
 import views.html.WhenWillYouAskPensionSchemeToPayView
 
 import scala.concurrent.Future
@@ -95,11 +95,11 @@ class WhenWillYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mocki
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository    = mock[SessionRepository]
-      val mockCalculationInputs    = mock[CalculationInputs]
-      val mockSubmissionRepository = mock[SubmissionRepository]
+      val mockUserDataService       = mock[UserDataService]
+      val mockCalculationInputs     = mock[CalculationInputs]
+      val mockSubmissionDataService = mock[SubmissionDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val calculationResponse    = CalculationResponse(
         models.calculation.response.Resubmission(false, None),
@@ -113,8 +113,8 @@ class WhenWillYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mocki
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
-            bind[SubmissionRepository].toInstance(mockSubmissionRepository)
+            bind[UserDataService].toInstance(mockUserDataService),
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService)
           )
           .build()
 

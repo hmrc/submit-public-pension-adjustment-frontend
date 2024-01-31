@@ -27,7 +27,7 @@ import models.{BankDetails, Mode, NavigationState, UserAnswers}
 import pages.BankDetailsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.BankDetailsView
@@ -37,7 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class BankDetailsController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   ppaBarsService: PpaBarsService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
@@ -87,7 +87,7 @@ class BankDetailsController @Inject() (
           updatedAnswers <- Future.fromTry(userAnswers.set(BankDetailsPage, value))
           redirectUrl     = BankDetailsPage.navigate(mode, updatedAnswers).url
           answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-          _              <- sessionRepository.set(answersWithNav)
+          _              <- userDataService.set(answersWithNav)
         } yield Redirect(redirectUrl)
 
       case Left(error) =>
