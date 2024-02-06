@@ -35,7 +35,10 @@
         @govukDateInput(
             DateViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("memberDateOfDeath.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                content = messages("memberDateOfDeath.heading"),
+                caption = HmrcSectionCaption(messages("submissionService.caption")))
+                )
             )
             .withHint(HintViewModel(messages("memberDateOfDeath.hint")))
         )

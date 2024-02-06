@@ -36,8 +36,9 @@
             RadiosViewModel(
             field  = form("value"),
             legend = HmrcPageHeadingLegend(
-                content = messages("statusOfUser.heading")),
-                items  = StatusOfUser.options
+            content = messages("statusOfUser.heading"),
+            caption = HmrcSectionCaption(messages("submissionService.caption"))),
+            items  = StatusOfUser.options
         )
         )
 

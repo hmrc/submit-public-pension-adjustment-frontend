@@ -36,7 +36,10 @@
             @govukRadios(
                 RadiosViewModel.yesNo(
                     field = form("value"),
-                    legend = LegendViewModel(messages("alternativeName.heading.onBehalf")).asPageHeading()
+                    legend = HmrcPageHeadingLegend(
+                    content = messages("alternativeName.heading.onBehalf"),
+                    caption = HmrcSectionCaption(messages("submissionService.caption"))
+                    )
                 )
             )
 
@@ -57,7 +60,10 @@
             @govukRadios(
                 RadiosViewModel.yesNo(
                     field = form("value"),
-                    legend = LegendViewModel(messages("alternativeName.heading")).asPageHeading()
+                    legend = HmrcPageHeadingLegend(
+                    content = messages("alternativeName.heading"),
+                    caption = HmrcSectionCaption(messages("submissionService.caption"))
+                    )
                 )
             )
 

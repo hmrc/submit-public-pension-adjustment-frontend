@@ -286,7 +286,6 @@ pensionSchemeMemberDOB.error.invalid = cy: The date of birth of who you are acti
 pensionSchemeMemberDOB.error.max = cy: The date of birth of who you are acting on behalf of must be today or in the past
 pensionSchemeMemberDOB.error.min = The date of birth of who you are acting on behalf of must be on or after {0}
 pensionSchemeMemberDOB.change.hidden = cy: date of birth of who you are acting on behalf of
-pensionSchemeMemberDOB.caption = cy: Personal details
 
 alternativeName.title = cy: Is your name the same one that your pension scheme has?
 alternativeName.title.onBehalf = cy: Is the name you have given the same one that their pension scheme has?
