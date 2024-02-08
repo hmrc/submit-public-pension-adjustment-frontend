@@ -38,8 +38,9 @@
             @govukInput(
                 InputViewModel(
                     field = form("value"),
-                    label = LabelViewModel(messages("enterAlternativeName.heading.onBehalf")).asPageHeading()
-                )
+                    label = HmrcPageHeadingLabel(
+                    content = messages("enterAlternativeName.heading.onBehalf"),
+                    caption = messages("submissionService.caption"))                )
                 .withWidth(Full)
             )
 
@@ -60,7 +61,9 @@
             @govukInput(
                 InputViewModel(
                     field = form("value"),
-                    label = LabelViewModel(messages("enterAlternativeName.heading")).asPageHeading()
+                    label = HmrcPageHeadingLabel(
+                    content = messages("enterAlternativeName.heading"),
+                    caption = messages("submissionService.caption"))
                 )
                 .withWidth(Full)
             )
