@@ -51,6 +51,7 @@
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withHint(HintViewModel(HtmlContent(contentHint))))
+            .withInputMode("numeric")
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
