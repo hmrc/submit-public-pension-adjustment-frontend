@@ -72,7 +72,7 @@ claimOnBehalf.title = cy: Are you submitting on behalf of someone else?
 claimOnBehalf.heading = cy: Are you submitting on behalf of someone else?
 claimOnBehalf.checkYourAnswersLabel = cy: Are you claiming on behalf of someone else?
 claimOnBehalf.error.required = cy: Select yes if you are submitting on behalf of someone else
-claimOnBehalf.change.hidden = cy: submission service submitting on behalf of someone else
+claimOnBehalf.change.hidden = cy: if you are submitting on behalf of someone else
 
 statusOfUser.title = cy: What authority do you have to act on behalf of someone else?
 statusOfUser.heading = cy: What authority do you have to act on behalf of someone else?
@@ -110,7 +110,7 @@ whoWillPay.you = cy: You
 whoWillPay.pensionScheme = cy: Pension scheme
 whoWillPay.checkYourAnswersLabel = cy: Who is going to pay the new tax charge?
 whoWillPay.error.required = cy: Select if you or your pension scheme is going to pay the new tax charge
-whoWillPay.change.hidden = cy: Who is going to pay the new tax charge
+whoWillPay.change.hidden = cy: who is going to pay the new tax charge
 
 pensionSchemeDetails.title = cy: What is the name and tax reference of the private pension scheme paying the tax charge?
 pensionSchemeDetails.heading = cy: What is the name and tax reference of the private pension scheme paying the tax charge?
@@ -122,8 +122,7 @@ pensionSchemeDetails.error.pensionSchemeName.required = cy: Enter the name of th
 pensionSchemeDetails.error.pensionSchemeName.length = cy: The name of the pension scheme must be 100 characters or fewer
 pensionSchemeDetails.error.pensionSchemeTaxReference.required = cy: Enter the Pension Scheme Tax Reference
 pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = cy: The Pension Scheme Tax Reference must only include letters a to z and numbers 0 to 9
-pensionSchemeDetails.pensionSchemeName.change.hidden = cy: Pension scheme name
-pensionSchemeDetails.pensionSchemeTaxReference.change.hidden = cy: Pension scheme tax reference
+pensionSchemeDetails.change.hidden = cy: name and tax reference of the private pension scheme paying the tax charge
 
 whichPensionSchemeWillPay.title = cy: Which pension scheme will pay the tax charge?
 whichPensionSchemeWillPay.heading = cy: Which pension scheme will pay the tax charge?
@@ -131,13 +130,13 @@ whichPensionSchemeWillPay.privatePensionScheme = cy: Private pension scheme
 whichPensionSchemeWillPay.hint = cy: You must give the name and tax reference number of the pension scheme that is paying the tax charge. The tax charge can be paid by a public or private pension scheme.
 whichPensionSchemeWillPay.checkYourAnswersLabel = cy: Which pension scheme will pay the tax charge?
 whichPensionSchemeWillPay.error.required = cy: Select the pension scheme that will pay the tax charge
-whichPensionSchemeWillPay.change.hidden = cy: Which pension scheme will pay the tax charge
+whichPensionSchemeWillPay.change.hidden = cy: which pension scheme will pay the tax charge
 
 askedPensionSchemeToPayTaxCharge.title = cy: Have you asked your pension scheme to pay the tax charge?
 askedPensionSchemeToPayTaxCharge.heading = cy: Have you asked your pension scheme to pay the tax charge?
 askedPensionSchemeToPayTaxCharge.checkYourAnswersLabel = cy: Have you asked your pension scheme to pay the tax charge?
 askedPensionSchemeToPayTaxCharge.error.required = cy: Select yes if you have asked your pension scheme to pay the tax charge
-askedPensionSchemeToPayTaxCharge.change.hidden = cy: submission service asked your pension scheme to pay the tax charge
+askedPensionSchemeToPayTaxCharge.change.hidden = cy: if you asked your pension scheme to pay the tax charge
 
 whenDidYouAskPensionSchemeToPay.title = cy: When did you ask your pension scheme to pay?
 whenDidYouAskPensionSchemeToPay.heading = cy: When did you ask your pension scheme to pay?
@@ -147,7 +146,7 @@ whenDidYouAskPensionSchemeToPay.error.required.all = cy: Enter the date when you
 whenDidYouAskPensionSchemeToPay.error.required.two = cy: The date when you asked your pension scheme to pay must include {0} and {1}
 whenDidYouAskPensionSchemeToPay.error.required = cy: The date when you asked your pension scheme to pay must include {0}
 whenDidYouAskPensionSchemeToPay.error.invalid = cy: The date when you asked your pension scheme to pay must only include numbers 0 to 9
-whenDidYouAskPensionSchemeToPay.change.hidden = cy: date you asked your pension scheme to pay
+whenDidYouAskPensionSchemeToPay.change.hidden = cy: the date you asked your pension scheme to pay
 whenDidYouAskPensionSchemeToPay.error.afterMaximum = cy: The date when you asked your pension scheme to pay must be today or in the past
 whenDidYouAskPensionSchemeToPay.error.beforeMinimum = cy: The date when you asked your pension scheme to pay must be after 6 April 2015
 
@@ -161,14 +160,14 @@ whenWillYouAskPensionSchemeToPay.octToDec24 = cy: 1 October 2024 to 31 December 
 whenWillYouAskPensionSchemeToPay.janToMar25 = cy: 1 January 2025 to 31 March 2025
 whenWillYouAskPensionSchemeToPay.checkYourAnswersLabel = cy: When do you think you will ask your pension scheme to pay?
 whenWillYouAskPensionSchemeToPay.error.required = cy: Select the annual quarter when you will ask your pension scheme to pay
-whenWillYouAskPensionSchemeToPay.change.hidden = cy: date you think you will ask your pension scheme to pay
+whenWillYouAskPensionSchemeToPay.change.hidden = cy: the date you think you will ask your pension scheme to pay
 whenWillYouAskPensionSchemeToPay.hint = cy: Choose the annual quarter when you will ask your pension scheme to pay.
 
 areYouAUKResident.title = cy: Are you a UK resident?
 areYouAUKResident.heading = cy: Are you a UK resident?
 areYouAUKResident.checkYourAnswersLabel = cy: Are you a UK resident?
 areYouAUKResident.error.required = cy: Select yes if you are a UK resident
-areYouAUKResident.change.hidden = cy: submission service UK resident
+areYouAUKResident.change.hidden = cy: if you are a UK resident
 
 internationalAddress.title = cy: What is your address?
 internationalAddress.heading = cy: What is your address?
@@ -188,12 +187,7 @@ internationalAddress.error.townOrCity.length = cy: Town or city must be 100 char
 internationalAddress.error.stateOrRegion.length = cy: State or region must be 100 characters or less
 internationalAddress.error.postCode.length = cy: Postal code must be 100 characters or less
 internationalAddress.error.country.length = cy: Country must be 100 characters or less
-internationalAddress.addressLine1.change.hidden = cy: Address line 1
-internationalAddress.addressLine2.change.hidden = cy: Address line 2
-internationalAddress.townOrCity.change.hidden = cy: Town or city
-internationalAddress.stateOrRegion.change.hidden = cy: State or region
-internationalAddress.postCode.change.hidden = cy: Postal code
-internationalAddress.country.change.hidden = cy: Country
+internationalAddress.change.hidden = cy: your home address
 
 ukAddress.title = cy: What is your address?
 ukAddress.heading = cy: What is your address?
@@ -212,11 +206,7 @@ ukAddress.error.townOrCity.length = cy: Your town or city must be 100 characters
 ukAddress.error.county.length = cy: Your County must be 100 characters or fewer
 ukAddress.error.postCode.length = cy: Your postcode must be 8 characters or fewer
 ukAddress.error.postCode.invalid = cy: Your postcode must only include letters a to z, numbers 0 to 9
-ukAddress.addressLine1.change.hidden = cy: Address line 1
-ukAddress.addressLine2.change.hidden = cy: Address line 2
-ukAddress.townOrCity.change.hidden = cy: Town or city
-ukAddress.county.change.hidden = cy: County
-ukAddress.postCode.change.hidden = cy: Postcode
+ukAddress.change.hidden = cy: your home address
 
 legacyPensionSchemeReference.title = cy: What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.heading = cy: What is your legacy individual pension scheme reference? (optional)
@@ -224,7 +214,7 @@ legacyPensionSchemeReference.hint1 = cy: Legacy public service pension schemes a
 legacyPensionSchemeReference.hint2 = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 legacyPensionSchemeReference.checkYourAnswersLabel = cy: What is your legacy individual pension scheme reference?
 legacyPensionSchemeReference.error.length = cy: Legacy individual pension scheme reference must be 15 characters or less
-legacyPensionSchemeReference.change.hidden = cy: submission service legacy individual pension scheme reference
+legacyPensionSchemeReference.change.hidden = cy: your legacy individual pension scheme reference
 legacyPensionSchemeReference.caption = cy: Relating to scheme
 
 reformPensionSchemeReference.title = cy: What is your reform individual pension scheme reference? (optional)
@@ -233,7 +223,7 @@ reformPensionSchemeReference.hint1 = cy: Reform public service pension schemes a
 reformPensionSchemeReference.hint2 = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 reformPensionSchemeReference.checkYourAnswersLabel = cy: What is your reform individual pension scheme reference?
 reformPensionSchemeReference.error.length = cy: Reform individual pension scheme reference must be 15 characters or less
-reformPensionSchemeReference.change.hidden = cy: submission service reform individual pension scheme reference
+reformPensionSchemeReference.change.hidden = cy: your reform individual pension scheme reference
 reformPensionSchemeReference.caption = cy: Relating to scheme
 
 claimingHigherOrAdditionalTaxRateRelief.title = cy: Are you claiming for higher or additional tax rate relief?
@@ -244,7 +234,7 @@ claimingHigherOrAdditionalTaxRateRelief.bullet1 = cy: employer takes workplace p
 claimingHigherOrAdditionalTaxRateRelief.bullet2 = cy: pension provider claims tax relief from the government at the basic 20% rate and adds it to your pension pot. This is ‘relief at source’
 claimingHigherOrAdditionalTaxRateRelief.checkYourAnswersLabel = cy: Are you claiming for a higher or additional tax rate relief?
 claimingHigherOrAdditionalTaxRateRelief.error.required = cy: Select yes if you are claiming for higher or additional tax rate relief
-claimingHigherOrAdditionalTaxRateRelief.change.hidden = cy: submission service claiming for higher or additional tax rate relief
+claimingHigherOrAdditionalTaxRateRelief.change.hidden = cy: if you are claiming for higher or additional tax rate relief
 
 howMuchTaxRelief.title = cy: How much tax relief are you claiming for?
 howMuchTaxRelief.heading = cy: How much higher or additional tax relief are you claiming for?
@@ -257,7 +247,7 @@ howMuchTaxRelief.error.nonNumeric = cy: The amount of tax relief you are claimin
 howMuchTaxRelief.error.required = cy: Enter the how much tax relief you are claiming for
 howMuchTaxRelief.error.wholeNumber = cy: The amount of tax relief you are claiming for must only include numbers 0 to 9
 howMuchTaxRelief.error.maximum = cy: The amount of tax relief you are claiming for must be £999,999,999 or less
-howMuchTaxRelief.change.hidden = cy: submission service how much tax relief are you claiming for
+howMuchTaxRelief.change.hidden = cy: how much tax relief are you claiming for
 
 whichPensionSchemeWillPayTaxRelief.title = cy: Which pension scheme will pay the tax relief you are claiming?
 whichPensionSchemeWillPayTaxRelief.heading = cy: Which pension scheme will pay the tax relief you are claiming?
@@ -266,14 +256,14 @@ whichPensionSchemeWillPayTaxRelief.pensionSchemeA = cy: Pension Scheme A
 whichPensionSchemeWillPayTaxRelief.pensionSchemeB = cy: Pension Scheme B
 whichPensionSchemeWillPayTaxRelief.checkYourAnswersLabel = cy: Which pension scheme will pay the tax relief you are claiming?
 whichPensionSchemeWillPayTaxRelief.error.required = cy: Select which pension scheme will pay the tax relief you are claiming
-whichPensionSchemeWillPayTaxRelief.change.hidden = cy: Which pension scheme will pay the tax relief you are claiming
+whichPensionSchemeWillPayTaxRelief.change.hidden = cy: which pension scheme will pay the tax relief you are claiming
 
 pensionSchemeMemberName.title = cy: What is the name of who you are acting on behalf of?
 pensionSchemeMemberName.heading = cy: What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.checkYourAnswersLabel = cy: What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.error.required =  cy: Enter the name of who you are acting on behalf of
 pensionSchemeMemberName.error.length =  cy: The name of who you are acting on behalf of must be 30 characters or fewer
-pensionSchemeMemberName.change.hidden = cy: name of who you are acting on behalf of
+pensionSchemeMemberName.change.hidden = cy: the name of who you are acting on behalf of
 
 pensionSchemeMemberDOB.title = cy: What is the date of birth of who you are acting on behalf of?
 pensionSchemeMemberDOB.heading = cy: What is the date of birth of the person you are acting on behalf of?
@@ -285,7 +275,8 @@ pensionSchemeMemberDOB.error.required = cy: The date of birth of who you are act
 pensionSchemeMemberDOB.error.invalid = cy: The date of birth of who you are acting on behalf of must only include numbers 0 to 9
 pensionSchemeMemberDOB.error.max = cy: The date of birth of who you are acting on behalf of must be today or in the past
 pensionSchemeMemberDOB.error.min = The date of birth of who you are acting on behalf of must be on or after {0}
-pensionSchemeMemberDOB.change.hidden = cy: date of birth of who you are acting on behalf of
+pensionSchemeMemberDOB.change.hidden = cy: the date of birth of who you are acting on behalf of
+pensionSchemeMemberDOB.caption = cy: Personal details
 
 alternativeName.title = cy: Is your name the same one that your pension scheme has?
 alternativeName.title.onBehalf = cy: Is the name you have given the same one that their pension scheme has?
@@ -294,7 +285,7 @@ alternativeName.heading.onBehalf = cy: Is the name you have given the same one t
 alternativeName.checkYourAnswersLabel = cy: Is your name the same one that your pension scheme has?
 alternativeName.checkYourAnswersLabel.onBehalf = cy: Is the name you have given the same one that their pension scheme has?
 alternativeName.error.required = cy: Select yes if your name is the same one that your pension scheme has
-alternativeName.change.hidden = cy: Is your name the same one that your pension scheme has?
+alternativeName.change.hidden = cy: is your name the same one that your pension scheme has
 
 enterAlternativeName.title = cy: What is your name?
 enterAlternativeName.title.onBehalf = cy: What is their name?
@@ -304,14 +295,14 @@ enterAlternativeName.checkYourAnswersLabel = cy: What is your name?
 enterAlternativeName.checkYourAnswersLabel.onBehalf = cy: What is their name?
 enterAlternativeName.error.required = cy: Enter your name
 enterAlternativeName.error.length = cy: Your name must be 100 characters or fewer
-enterAlternativeName.change.hidden = cy: What is your name?
+enterAlternativeName.change.hidden = cy: your name
 
 contactNumber.title = cy: What is your contact number? (optional)
 contactNumber.heading = cy: What is your contact number? (optional)
 contactNumber.checkYourAnswersLabel = cy: Submission service your contact number
 contactNumber.error.invalid = cy: Your contact number must only include numbers 0 to 9
 contactNumber.error.length = cy: Contact number must be 100 characters or less
-contactNumber.change.hidden = cy: submission service contact number
+contactNumber.change.hidden = cy: your contact number
 
 declarations.title = cy: Declarations
 declarations.heading = cy: Declarations
@@ -351,7 +342,7 @@ pensionSchemeMemberNino.hint1 = cy: For example, QQ123456C.
 pensionSchemeMemberNino.checkYourAnswersLabel = cy: What is the National Insurance number of the person you are acting on behalf of?
 pensionSchemeMemberNino.error.required = cy: Enter the National Insurance number of who you are acting on behalf of
 pensionSchemeMemberNino.error.invalid = cy: The National Insurance number of who you are acting on behalf of must only include letters a to z and numbers 0 to 9
-pensionSchemeMemberNino.change.hidden = cy: National Insurance number of who you are acting on behalf of
+pensionSchemeMemberNino.change.hidden = cy: the National Insurance number of who you are acting on behalf of
 
 pensionSchemeMemberTaxReference.title = cy: What is the Unique Taxpayer Reference (UTR) of who you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.heading = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
@@ -360,7 +351,7 @@ pensionSchemeMemberTaxReference.hint2 = cy: For example, 1234567890
 pensionSchemeMemberTaxReference.checkYourAnswersLabel = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
 pensionSchemeMemberTaxReference.error.length = cy: The Unique Taxpayer Reference of who you are acting on behalf of must be 10 digits or less
 pensionSchemeMemberTaxReference.error.invalid = cy: The Unique Taxpayer Reference of who you are acting on behalf of must only include numbers 0 to 9
-pensionSchemeMemberTaxReference.change.hidden = cy: Unique Taxpayer Reference of who you are acting on behalf of
+pensionSchemeMemberTaxReference.change.hidden = cy: the Unique Taxpayer Reference of who you are acting on behalf of
 
 landingPage.title = cy: Submit Public Pension Adjustment
 
@@ -399,11 +390,7 @@ pensionSchemeMemberUKAddress.error.townOrCity.length = cy: Town or city of who y
 pensionSchemeMemberUKAddress.error.county.length = cy: County of who you are acting on behalf of must be 100 characters or fewer
 pensionSchemeMemberUKAddress.error.postCode.length = cy: Postcode of who you are acting on behalf of must be 18 characters or fewer
 pensionSchemeMemberUKAddress.error.postCode.invalid = cy: Postcode of who you are acting on behalf of must only include letters a to z, numbers 0 to 9
-pensionSchemeMemberUKAddress.addressLine1.change.hidden = cy: Address line 1
-pensionSchemeMemberUKAddress.addressLine2.change.hidden = cy: Address line 2
-pensionSchemeMemberUKAddress.townOrCity.change.hidden = cy: Town or city
-pensionSchemeMemberUKAddress.county.change.hidden = cy: County (optional)
-pensionSchemeMemberUKAddress.postCode.change.hidden = cy: Postcode
+pensionSchemeMemberUKAddress.change.hidden = cy: the address of the person you are submitting on behalf of
 
 pensionSchemeMemberInternationalAddress.title = cy: What is their address?
 pensionSchemeMemberInternationalAddress.heading = cy: What is their address?
@@ -426,12 +413,7 @@ pensionSchemeMemberInternationalAddress.error.townOrCity.length = cy: Town or ci
 pensionSchemeMemberInternationalAddress.error.county.length = cy: State or region (optional) must be 100 characters or less
 pensionSchemeMemberInternationalAddress.error.postCode.length = cy: Postal code must be 100 characters or less
 pensionSchemeMemberInternationalAddress.error.country.length = cy: Country must be 100 characters or less
-pensionSchemeMemberInternationalAddress.addressLine1.change.hidden = cy: Address line 1
-pensionSchemeMemberInternationalAddress.addressLine2.change.hidden = cy: Address line 2 (optional)
-pensionSchemeMemberInternationalAddress.townOrCity.change.hidden = cy: Town or city
-pensionSchemeMemberInternationalAddress.county.change.hidden = cy: State or region (optional)
-pensionSchemeMemberInternationalAddress.postCode.change.hidden = cy: Postal code (optional)
-pensionSchemeMemberInternationalAddress.error.country.change.hidden = cy: Country
+pensionSchemeMemberInternationalAddress.change.hidden = cy: the address of the person you are submitting on behalf of
 
 memberDateOfDeath.title = cy: What was the date of death of who you are acting on behalf of?
 memberDateOfDeath.heading = cy: What was the date of death of the person you are acting on behalf of?
@@ -443,7 +425,7 @@ memberDateOfDeath.error.required = cy: The date of death of who you are acting o
 memberDateOfDeath.error.invalid = cy: The date of death of who you are acting on behalf of must only include numbers 0 to 9
 memberDateOfDeath.error.max = cy: The date of death of who you are acting on behalf of must be today or in the past
 memberDateOfDeath.error.min = The date of death of who you are acting on behalf of must be on or after {0}
-memberDateOfDeath.change.hidden = cy: date of death of who you are acting on behalf of
+memberDateOfDeath.change.hidden = cy: the date of death of who you are acting on behalf of
 
 bankDetails.title = cy: Enter Bank Details
 bankDetails.heading = cy: Enter Bank Details
@@ -469,6 +451,7 @@ bankDetails.invalid.sortcode = cy: Enter a valid sort code
 bankDetails.invalid.account.name = cy: Enter the name on the account
 bankDetails.invalid.account.name.length = cy: Account name must be 70 characters or less
 bankDetails.invalid.account.number = cy: Enter a valid account number
+bankDetails.change.hidden = cy: bank details
 
 upliftFailed.title = cy: Identity verification failed
 upliftFailed.heading = cy: Identity verification failed
