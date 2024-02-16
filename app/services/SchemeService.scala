@@ -55,13 +55,13 @@ object SchemeService {
     calculationInputs.annualAllowance
       .map {
         _.taxYears flatMap {
-          case TaxYear2016To2023.NormalTaxYear(_, taxYearSchemes, _, _, _, _)                           =>
+          case TaxYear2016To2023.NormalTaxYear(_, taxYearSchemes, _, _, _, _, _)                                 =>
             List(taxYearSchemes)
-          case TaxYear2016To2023.InitialFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _, _, _) =>
+          case TaxYear2016To2023.InitialFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _, _, _, _, _, _) =>
             List(taxYearSchemes)
-          case TaxYear2016To2023.PostFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _)          =>
+          case TaxYear2016To2023.PostFlexiblyAccessedTaxYear(_, _, _, _, taxYearSchemes, _, _, _, _)             =>
             List(taxYearSchemes)
-          case _                                                                                        => Nil
+          case _                                                                                                 => Nil
         }
       }
       .getOrElse(Nil)

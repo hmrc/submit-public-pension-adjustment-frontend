@@ -103,7 +103,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val submission: Submission =
-        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
