@@ -97,22 +97,13 @@ object TestData {
             20000,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 20000, 0)),
-            Period._2016PreAlignment,
-            None
-          ),
-          PostFlexiblyAccessedTaxYear(
-            0,
-            18000,
-            60000,
-            3600,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 22000, 3600)),
-            Period._2016PostAlignment,
+            List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 20000, 0, Some(40000), Some(36000))),
+            Period._2016,
             None
           ),
           NormalTaxYear(
             45000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 45000, 0)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 45000, 0, None, None)),
             60000,
             0,
             Period._2017,
@@ -120,7 +111,7 @@ object TestData {
           ),
           NormalTaxYear(
             38000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 43000, 38000, 200)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 43000, 38000, 200, None, None)),
             60000,
             200,
             Period._2018,
@@ -128,7 +119,7 @@ object TestData {
           ),
           NormalTaxYear(
             43000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 48000, 43000, 0)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 48000, 43000, 0, None, None)),
             60000,
             3280,
             Period._2019,
@@ -136,7 +127,7 @@ object TestData {
           ),
           NormalTaxYear(
             45000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 50000, 45000, 9000)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 50000, 45000, 9000, None, None)),
             180000,
             0,
             Period._2020,
@@ -144,7 +135,7 @@ object TestData {
           ),
           NormalTaxYear(
             42000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 42000, 0)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 42000, 0, None, None)),
             150000,
             0,
             Period._2021,
@@ -152,7 +143,7 @@ object TestData {
           ),
           NormalTaxYear(
             43500,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 48000, 43500, 2400)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 48000, 43500, 2400, None, None)),
             60000,
             0,
             Period._2022,
@@ -160,7 +151,7 @@ object TestData {
           ),
           NormalTaxYear(
             42000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 42000, 0)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 42000, 0, None, None)),
             60000,
             0,
             Period._2023,
@@ -214,7 +205,7 @@ object TestData {
       TotalAmounts(10470, 1620, 5500),
       List(
         OutOfDatesTaxYearsCalculation(
-          responsePeriod._2016PreAlignment,
+          responsePeriod._2016,
           0,
           0,
           0,
@@ -223,17 +214,6 @@ object TestData {
           0,
           40000,
           List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
-        ),
-        OutOfDatesTaxYearsCalculation(
-          responsePeriod._2016PostAlignment,
-          3600,
-          3600,
-          3600,
-          3600,
-          0,
-          0,
-          0,
-          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 3600))
         ),
         OutOfDatesTaxYearsCalculation(
           responsePeriod._2017,
@@ -621,22 +601,13 @@ object TestData {
               20000,
               60000,
               0,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 20000, 0)),
-              Period._2016PreAlignment,
-              None
-            ),
-            PostFlexiblyAccessedTaxYear(
-              0,
-              18000,
-              60000,
-              3600,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 22000, 3600)),
-              Period._2016PostAlignment,
+              List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 20000, 0, Some(40000), Some(36000))),
+              Period._2016,
               None
             ),
             NormalTaxYear(
               45000,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 45000, 0)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 45000, 0, None, None)),
               60000,
               0,
               Period._2017,
@@ -644,7 +615,7 @@ object TestData {
             ),
             NormalTaxYear(
               38000,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 43000, 38000, 200)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 43000, 38000, 200, None, None)),
               60000,
               200,
               Period._2018,
@@ -652,7 +623,7 @@ object TestData {
             ),
             NormalTaxYear(
               43000,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 48000, 43000, 0)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 48000, 43000, 0, None, None)),
               60000,
               3280,
               Period._2019,
@@ -660,7 +631,7 @@ object TestData {
             ),
             NormalTaxYear(
               45000,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 50000, 45000, 9000)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 50000, 45000, 9000, None, None)),
               180000,
               0,
               Period._2020,
@@ -668,7 +639,7 @@ object TestData {
             ),
             NormalTaxYear(
               42000,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 42000, 0)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 42000, 0, None, None)),
               150000,
               0,
               Period._2021,
@@ -676,7 +647,7 @@ object TestData {
             ),
             NormalTaxYear(
               43500,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 48000, 43500, 2400)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 48000, 43500, 2400, None, None)),
               60000,
               0,
               Period._2022,
@@ -684,7 +655,7 @@ object TestData {
             ),
             NormalTaxYear(
               42000,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 42000, 0)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 42000, 0, None, None)),
               60000,
               0,
               Period._2023,
@@ -737,7 +708,7 @@ object TestData {
         TotalAmounts(10470, 1620, 5500),
         List(
           OutOfDatesTaxYearsCalculation(
-            responsePeriod._2016PreAlignment,
+            responsePeriod._2016,
             0,
             0,
             0,
@@ -746,17 +717,6 @@ object TestData {
             0,
             40000,
             List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
-          ),
-          OutOfDatesTaxYearsCalculation(
-            responsePeriod._2016PostAlignment,
-            3600,
-            3600,
-            3600,
-            3600,
-            0,
-            0,
-            0,
-            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 3600))
           ),
           OutOfDatesTaxYearsCalculation(
             responsePeriod._2017,

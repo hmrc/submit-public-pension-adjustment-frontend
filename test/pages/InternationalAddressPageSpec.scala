@@ -35,7 +35,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
       "to LegacyPensionSchemeReferencePage when answered" in {
 
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
 
         val ua     = emptyUserAnswers
           .set(
@@ -51,7 +51,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
 
       "to JourneyRecovery when not answered" in {
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
 
         val ua     = emptyUserAnswers
         val result = InternationalAddressPage.navigate(NormalMode, ua, submission).url
@@ -64,7 +64,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
 
       "to CYA when answered" in {
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
 
         val ua     = emptyUserAnswers
           .set(
@@ -80,7 +80,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
 
       "to JourneyRecovery when not selected" in {
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
 
         val ua     = emptyUserAnswers
         val result = InternationalAddressPage.navigate(CheckMode, ua, submission).url

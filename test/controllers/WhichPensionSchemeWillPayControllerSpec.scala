@@ -90,23 +90,15 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
             List(
               NormalTaxYear(
                 2,
-                List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
+                List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0, Some(3), Some(4))),
                 5,
                 0,
-                models.calculation.inputs.Period._2016PreAlignment,
-                None
-              ),
-              NormalTaxYear(
-                4,
-                List(TaxYearScheme("Scheme1", "00348916RT", 3, 4, 0)),
-                5,
-                0,
-                models.calculation.inputs.Period._2016PostAlignment,
+                models.calculation.inputs.Period._2016,
                 None
               ),
               NormalTaxYear(
                 5,
-                List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
+                List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7, None, None)),
                 8,
                 6,
                 models.calculation.inputs.Period._2017,
