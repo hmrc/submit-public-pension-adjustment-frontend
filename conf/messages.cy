@@ -104,6 +104,7 @@ chargeDetails.caption.2023 = Lwfans blynyddol rhwng 6 Ebrill 2022 a 5 Ebrill 202
 
 whoWillPay.title = Pwy sy’n mynd i dalu’r tâl treth newydd?
 whoWillPay.heading = Pwy sy’n mynd i dalu’r tâl treth newydd?
+whoWillPay.hint = Dyma’r arian sydd arnoch i CThEF yn dilyn y canlyniadau o’ch addasiad
 whoWillPay.you = Chi
 whoWillPay.pensionScheme = Cynllun pensiwn
 whoWillPay.checkYourAnswersLabel = Pwy sy’n mynd i dalu’r tâl treth newydd?
@@ -126,7 +127,7 @@ pensionSchemeDetails.pensionSchemeTaxReference.change.hidden = cy: Pension schem
 whichPensionSchemeWillPay.title = Pa gynllun pensiwn fydd yn talu’r tâl treth?
 whichPensionSchemeWillPay.heading = Pa gynllun pensiwn fydd yn talu’r tâl treth?
 whichPensionSchemeWillPay.privatePensionScheme = Cynllun pensiwn preifat
-whichPensionSchemeWillPay.hint = Mae’n rhaid i chi roi enw a chyfeirnod treth y cynllun pensiwn sy’n talu’r tâl treth. Gall y tâl
+whichPensionSchemeWillPay.hint = Mae’n rhaid i chi roi enw a chyfeirnod treth y cynllun pensiwn sy’n talu’r rhyddhad treth rydych yn hawlio amdano. Gellir ei dalu gan gynllun pensiwn cyhoeddus neu breifat.
 whichPensionSchemeWillPay.checkYourAnswersLabel = Pa gynllun pensiwn fydd yn talu’r tâl treth?
 whichPensionSchemeWillPay.error.required = Dewiswch y cynllun pensiwn a fydd yn talu’r tâl treth
 whichPensionSchemeWillPay.change.hidden = Pa gynllun pensiwn fydd yn talu’r tâl treth?
