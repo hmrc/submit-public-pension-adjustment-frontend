@@ -29,14 +29,16 @@ object PSTR {
 
   val New: String = "Private pension scheme"
 
-  private val pattern: Regex = """(\d{8})[A-Z]{2}""".r.anchored
+  private val pattern: Regex = """(\d\s*){8}[A-Za-z]{2}""".r.anchored
 
-  def fromString(pstrString: String): Option[PSTR] =
-    pstrString match {
+  def fromString(pstrString: String): Option[PSTR] = {
+    val formattedString = pstrString.toUpperCase.replaceAll(" ", "")
+    formattedString match {
       case "00348916RT" => None
-      case pattern(_)   => Some(PSTR(pstrString))
+      case pattern(_)   => Some(PSTR(formattedString))
       case _            => None
     }
+  }
 
   implicit def pstrPathBindable(implicit stringBinder: PathBindable[String]): PathBindable[PSTR] =
     new PathBindable[PSTR] {

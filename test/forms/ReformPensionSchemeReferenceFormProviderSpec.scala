@@ -21,9 +21,8 @@ import play.api.data.FormError
 
 class ReformPensionSchemeReferenceFormProviderSpec extends StringFieldBehaviours {
 
-  val requiredKey = "reformPensionSchemeReference.error.required"
-  val lengthKey   = "reformPensionSchemeReference.error.length"
-  val maxLength   = 15
+  val lengthKey = "reformPensionSchemeReference.error.length"
+  val maxLength = 15
 
   val form = new ReformPensionSchemeReferenceFormProvider()()
 
@@ -35,7 +34,7 @@ class ReformPensionSchemeReferenceFormProviderSpec extends StringFieldBehaviours
       form,
       fieldName,
       maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+      lengthError = FormError(fieldName, lengthKey, Seq("""^(?:\S\s*){0,15}$"""))
     )
   }
 }

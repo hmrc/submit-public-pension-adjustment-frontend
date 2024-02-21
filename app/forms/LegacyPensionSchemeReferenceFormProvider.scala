@@ -27,7 +27,8 @@ class LegacyPensionSchemeReferenceFormProvider @Inject() extends Mappings {
     Form(
       "value" -> optional(
         text()
-          .verifying(maxLength(15, "legacyPensionSchemeReference.error.length"))
+          .verifying(regexp("""^(?:\S\s*){0,15}$""", "legacyPensionSchemeReference.error.length"))
+          .transform[String](_.toUpperCase.replaceAll(" ", ""), value => value)
       )
     )
 }

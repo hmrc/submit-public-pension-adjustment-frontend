@@ -41,10 +41,17 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     }
   }
 
-  def validPstrs = for {
-    firstDigits <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
-    secondChars <- Gen.listOfN(2, Gen.alphaUpperChar).map(_.mkString)
-  } yield s"$firstDigits$secondChars"
+  def validPstrs: Gen[String] = {
+    val pstr = for {
+      firstDigits <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
+      secondChars <- Gen.listOfN(2, Gen.alphaChar).map(_.mkString)
+    } yield s"$firstDigits $secondChars".toUpperCase.replaceAll(" ", "")
+    if (pstr == "00348916RT") {
+      validPstrs
+    } else {
+      pstr
+    }
+  }
 
   def intsInRangeWithCommas(min: Int, max: Int): Gen[String] = {
     val numberGen = choose[Int](min, max).map(_.toString)
