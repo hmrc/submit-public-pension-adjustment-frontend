@@ -73,7 +73,7 @@ class ReformPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
         UserAnswers(userAnswersId).set(ReformPensionSchemeReferencePage(PSTR("12345678AB"), ""), "answer").success.value
 
       val submission: Submission =
-        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("Scheme1", "12345678AB", 0, 0, 0)))
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("Scheme1", "12345678AB", 0, 0, 0, Some(0), Some(0))))
 
       val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
@@ -100,8 +100,8 @@ class ReformPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
 
       val submission: Submission = submissionRelatingToTaxYearSchemes(
         List(
-          TaxYearScheme("scheme1", "12345678AB", 0, 0, 0),
-          TaxYearScheme("scheme2", "12345678AC", 0, 0, 0)
+          TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None),
+          TaxYearScheme("scheme2", "12345678AC", 0, 0, 0, None, None)
         )
       )
 
