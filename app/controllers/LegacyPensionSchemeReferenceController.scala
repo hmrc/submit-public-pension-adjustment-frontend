@@ -22,8 +22,7 @@ import models.{Mode, NavigationState, PSTR}
 import pages.LegacyPensionSchemeReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
-import services.SchemeService
+import services.{SchemeService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.LegacyPensionSchemeReferenceView
 
@@ -32,7 +31,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class LegacyPensionSchemeReferenceController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -88,7 +87,7 @@ class LegacyPensionSchemeReferenceController @Inject() (
                   SchemeService.schemeName(pstr, request.submission.calculationInputs)
                 ).navigate(mode, updatedAnswers, request.submission).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

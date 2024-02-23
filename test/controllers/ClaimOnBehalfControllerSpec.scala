@@ -21,7 +21,7 @@ import forms.ClaimOnBehalfFormProvider
 import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission}
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
-import models.{NormalMode, UserAnswers}
+import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -30,7 +30,8 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.{SessionRepository, SubmissionRepository}
+import repositories.SubmissionRepository
+import services.UserDataService
 import views.html.ClaimOnBehalfView
 
 import scala.concurrent.Future
@@ -84,11 +85,11 @@ class ClaimOnBehalfControllerSpec extends SpecBase with MockitoSugar {
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository       = mock[SessionRepository]
+      val mockUserDataService         = mock[UserDataService]
       val mockSubmissionRepository    = mock[SubmissionRepository]
       val mockCalculationInputsWithAA = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val calculationResponse    = CalculationResponse(
         models.calculation.response.Resubmission(false, None),
@@ -102,7 +103,7 @@ class ClaimOnBehalfControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[UserDataService].toInstance(mockUserDataService),
             bind[SubmissionRepository].toInstance(mockSubmissionRepository)
           )
           .build()

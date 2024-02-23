@@ -18,7 +18,8 @@ package controllers
 
 import controllers.actions.{DataRetrievalAction, IdentifierAction}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.{SessionRepository, SubmissionRepository}
+import repositories.SubmissionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class KeepAliveController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   submissionRepository: SubmissionRepository
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController {
@@ -37,7 +38,7 @@ class KeepAliveController @Inject() (
     request.userAnswers
       .map { answers =>
         submissionRepository.keepAlive(answers.id)
-        sessionRepository.keepAlive(answers.id).map(_ => Ok)
+        userDataService.keepAlive().map(_ => Ok)
       }
       .getOrElse(Future.successful(Ok))
   }

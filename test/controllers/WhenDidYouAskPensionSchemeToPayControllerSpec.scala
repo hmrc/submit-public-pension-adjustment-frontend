@@ -17,10 +17,9 @@
 package controllers
 
 import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import forms.WhenDidYouAskPensionSchemeToPayFormProvider
-import models.{NormalMode, Period, UserAnswers}
+import models.{Done, NormalMode, Period, UserAnswers}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
@@ -32,7 +31,8 @@ import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.{SessionRepository, SubmissionRepository}
+import repositories.SubmissionRepository
+import services.UserDataService
 import views.html.WhenDidYouAskPensionSchemeToPayView
 
 import scala.concurrent.Future
@@ -108,9 +108,9 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
 
       val mockSubmissionRepository = mock[SubmissionRepository]
       val mockCalculationInputs    = mock[CalculationInputs]
-      val mockSessionRepository    = mock[SessionRepository]
+      val mockUserDataService      = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val calculationResponse    = CalculationResponse(
         models.calculation.response.Resubmission(false, None),
@@ -124,7 +124,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[UserDataService].toInstance(mockUserDataService),
             bind[SubmissionRepository].toInstance(mockSubmissionRepository)
           )
           .build()
