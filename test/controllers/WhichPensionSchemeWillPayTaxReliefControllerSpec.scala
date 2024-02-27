@@ -61,23 +61,15 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
             List(
               NormalTaxYear(
                 2,
-                List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
+                List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0, Some(3), Some(4))),
                 5,
                 0,
-                Period._2016PreAlignment,
-                None
-              ),
-              NormalTaxYear(
-                4,
-                List(TaxYearScheme("Scheme1", "00348916RT", 3, 4, 0)),
-                5,
-                0,
-                Period._2016PostAlignment,
+                Period._2016,
                 None
               ),
               NormalTaxYear(
                 5,
-                List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
+                List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7, None, None)),
                 8,
                 6,
                 Period._2017,
@@ -127,23 +119,15 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
             List(
               NormalTaxYear(
                 2,
-                List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0)),
+                List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0, Some(3), Some(4))),
                 5,
                 0,
-                Period._2016PreAlignment,
-                None
-              ),
-              NormalTaxYear(
-                4,
-                List(TaxYearScheme("Scheme1", "00348916RT", 3, 4, 0)),
-                5,
-                0,
-                Period._2016PostAlignment,
+                Period._2016,
                 None
               ),
               NormalTaxYear(
                 5,
-                List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7)),
+                List(TaxYearScheme("Scheme1", "00348916RT", 4, 5, 7, None, None)),
                 8,
                 6,
                 Period._2017,

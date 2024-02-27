@@ -35,7 +35,7 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
       "to ClaimingHigherOrAdditionalTaxRateReliefPage there are no more schemes" in {
 
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
 
         val ua     = emptyUserAnswers
           .set(
@@ -54,8 +54,8 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
 
         val submission: Submission = submissionRelatingToTaxYearSchemes(
           List(
-            TaxYearScheme("scheme1", "12345678AB", 0, 0, 0),
-            TaxYearScheme("scheme2", "12345678AC", 0, 0, 0)
+            TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None),
+            TaxYearScheme("scheme2", "12345678AC", 0, 0, 0, None, None)
           )
         )
 
@@ -75,7 +75,7 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
       "to JourneyRecovery when not answered" in {
         val ua                     = emptyUserAnswers
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
         val result                 =
           ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
 
@@ -87,7 +87,7 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
 
       "to CYA when answered" in {
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
 
         val ua     = emptyUserAnswers
           .set(
@@ -104,7 +104,7 @@ class ReformPensionSchemeReferencePageSpec extends PageBehaviours {
 
       "to JourneyRecovery when not selected" in {
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
         val ua                     = emptyUserAnswers
         val result                 =
           ReformPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(CheckMode, ua, submission).url

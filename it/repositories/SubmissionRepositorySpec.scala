@@ -57,7 +57,7 @@ class SubmissionRepositorySpec
       TotalAmounts(10470, 1620, 5500),
       List(
         OutOfDatesTaxYearsCalculation(
-          responsePeriod._2016PreAlignment,
+          responsePeriod._2016,
           0,
           0,
           0,
