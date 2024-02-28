@@ -34,7 +34,7 @@ class ReformPensionSchemeReferenceFormProviderSpec extends StringFieldBehaviours
       form,
       fieldName,
       maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq("""^(?:\S\s*){0,15}$"""))
+      lengthError = FormError(fieldName, lengthKey, Seq("""^\s*(?:\S\s*){0,15}$"""))
     )
   }
 }

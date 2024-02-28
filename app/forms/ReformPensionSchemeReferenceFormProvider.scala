@@ -28,7 +28,7 @@ class ReformPensionSchemeReferenceFormProvider @Inject() extends Mappings {
     Form(
       "value" -> optional(
         text()
-          .verifying(regexp("""^(?:\S\s*){0,15}$""", "reformPensionSchemeReference.error.length"))
+          .verifying(regexp("""^\s*(?:\S\s*){0,15}$""", "reformPensionSchemeReference.error.length"))
           .transform[String](_.toUpperCase.replaceAll(" ", ""), value => value)
       )
     )
