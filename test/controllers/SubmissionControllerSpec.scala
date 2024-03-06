@@ -23,7 +23,7 @@ import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SubmissionRepository
+import services.SubmissionDataService
 import services.{SubmissionService, UserDataService}
 import views.html.SubmissionView
 
@@ -41,10 +41,10 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
     "must return OK and the correct view for a GET" in {
 
-      val mockUserDataService      = mock[UserDataService]
-      val mockSubmissionRepository = mock[SubmissionRepository]
+      val mockUserDataService       = mock[UserDataService]
+      val mockSubmissionDataService = mock[SubmissionDataService]
       when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmissionRepository.clear(any())) thenReturn Future.successful(true)
+      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
 
       val userAnswers =
         UserAnswers(userAnswersId).set(UserSubmissionReference(), "userSubmissionReference").success.value
@@ -53,7 +53,7 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
         .overrides(
           bind[SubmissionService].toInstance(mockSubmissionService),
           bind[UserDataService].toInstance(mockUserDataService),
-          bind[SubmissionRepository].toInstance(mockSubmissionRepository)
+          bind[SubmissionDataService].toInstance(mockSubmissionDataService)
         )
         .build()
 
@@ -70,7 +70,7 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
           "/submit-public-pension-adjustment/account/sign-out-survey"
         )(request, messages(application)).toString
         verify(mockUserDataService, times(1)).clear()(any())
-        verify(mockSubmissionRepository, times(1)).clear(eqTo(userAnswersId))
+        verify(mockSubmissionDataService, times(1)).clear()(any())
       }
     }
 

@@ -24,7 +24,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SubmissionRepository
+import services.SubmissionDataService
 import services.UserDataService
 
 import scala.concurrent.Future
@@ -40,13 +40,13 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
         val mockUserDataService = mock[UserDataService]
         when(mockUserDataService.keepAlive()(any())) thenReturn Future.successful(Done)
 
-        val mockSubmissionRepository = mock[SubmissionRepository]
-        when(mockSubmissionRepository.keepAlive(any())) thenReturn Future.successful(true)
+        val mockSubmissionDataService = mock[SubmissionDataService]
+        when(mockSubmissionDataService.keepAlive()(any())) thenReturn Future.successful(Done)
 
         val application =
           applicationBuilder(Some(emptyUserAnswers))
             .overrides(bind[UserDataService].toInstance(mockUserDataService))
-            .overrides(bind[SubmissionRepository].toInstance(mockSubmissionRepository))
+            .overrides(bind[SubmissionDataService].toInstance(mockSubmissionDataService))
             .build()
 
         running(application) {
@@ -57,20 +57,20 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
 
           status(result) mustEqual OK
           verify(mockUserDataService, times(1)).keepAlive()(any())
-          verify(mockSubmissionRepository, times(1)).keepAlive(emptyUserAnswers.id)
+          verify(mockSubmissionDataService, times(1)).keepAlive()(any())
         }
       }
     }
 
     "when the user has not answered any questions" - {
 
-      "must return OK" in {
+      "must return OK but does not invoke mockUserDataService or mockSubmissionDataService" in {
 
         val mockUserDataService = mock[UserDataService]
         when(mockUserDataService.keepAlive()(any())) thenReturn Future.successful(Done)
 
-        val mockSubmissionRepository = mock[SubmissionRepository]
-        when(mockSubmissionRepository.keepAlive(any())) thenReturn Future.successful(true)
+        val mockSubmissionDataService = mock[SubmissionDataService]
+        when(mockSubmissionDataService.keepAlive()(any())) thenReturn Future.successful(Done)
 
         val application =
           applicationBuilder(None)
@@ -85,7 +85,7 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
 
           status(result) mustEqual OK
           verify(mockUserDataService, never()).keepAlive()(any())
-          verify(mockSubmissionRepository, never()).keepAlive(any())
+          verify(mockSubmissionDataService, never()).keepAlive()(any())
         }
       }
     }

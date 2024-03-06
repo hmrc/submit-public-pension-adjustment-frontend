@@ -20,8 +20,7 @@ import config.FrontendAppConfig
 import controllers.actions.IdentifierAction
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SubmissionRepository
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
@@ -31,7 +30,7 @@ class AuthController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   config: FrontendAppConfig,
   userDataService: UserDataService,
-  submissionRepository: SubmissionRepository,
+  submissionDataService: SubmissionDataService,
   identify: IdentifierAction
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
@@ -40,7 +39,7 @@ class AuthController @Inject() (
   def signOut(): Action[AnyContent] = identify.async { implicit request =>
     for {
       _ <- userDataService.clear()
-      _ <- submissionRepository.clear(request.userId)
+      _ <- submissionDataService.clear()
     } yield Redirect(
       config.signOutUrl,
       Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url))
@@ -54,7 +53,7 @@ class AuthController @Inject() (
   def signOutNoSurvey(): Action[AnyContent] = identify.async { implicit request =>
     for {
       _ <- userDataService.clear()
-      _ <- submissionRepository.clear(request.userId)
+      _ <- submissionDataService.clear()
     } yield Redirect(config.signOutUrl, Map("continue" -> Seq(routes.SignedOutController.onPageLoad.url)))
   }
 }

@@ -30,8 +30,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SubmissionRepository
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 import views.html.WhenWillYouAskPensionSchemeToPayView
 
 import scala.concurrent.Future
@@ -96,9 +95,9 @@ class WhenWillYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mocki
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockUserDataService      = mock[UserDataService]
-      val mockCalculationInputs    = mock[CalculationInputs]
-      val mockSubmissionRepository = mock[SubmissionRepository]
+      val mockUserDataService       = mock[UserDataService]
+      val mockCalculationInputs     = mock[CalculationInputs]
+      val mockSubmissionDataService = mock[SubmissionDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
@@ -115,7 +114,7 @@ class WhenWillYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mocki
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService),
-            bind[SubmissionRepository].toInstance(mockSubmissionRepository)
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService)
           )
           .build()
 

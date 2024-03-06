@@ -18,8 +18,7 @@ package controllers.actions
 
 import models.requests.{IdentifierRequest, OptionalDataRequest}
 import play.api.mvc.ActionTransformer
-import repositories.SubmissionRepository
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import javax.inject.Inject
@@ -27,13 +26,13 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DataRetrievalActionImpl @Inject() (
   val userDataService: UserDataService,
-  val submissionRepository: SubmissionRepository
+  val submissionDataService: SubmissionDataService
 )(implicit val executionContext: ExecutionContext)
     extends DataRetrievalAction {
 
   override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    submissionRepository.getBySessionId(request.userId).flatMap { submission =>
+    submissionDataService.getBySessionId(request.userId)(hc).flatMap { submission =>
       userDataService.get()(hc).map {
         OptionalDataRequest(
           request.request,

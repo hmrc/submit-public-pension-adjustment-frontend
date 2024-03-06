@@ -30,7 +30,7 @@ import play.api.Application
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SubmissionRepository
+import services.SubmissionDataService
 import services.{SubmissionService, UserDataService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.checkAnswers._
@@ -98,9 +98,9 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
     "must return OK and the correct view for a GET when user enters period based answers" in {
 
-      val mockCalculationInputs    = mock[CalculationInputs]
-      val mockUserDataService      = mock[UserDataService]
-      val mockSubmissionRepository = mock[SubmissionRepository]
+      val mockCalculationInputs     = mock[CalculationInputs]
+      val mockUserDataService       = mock[UserDataService]
+      val mockSubmissionDataService = mock[SubmissionDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
@@ -117,7 +117,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submission))
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService),
-            bind[SubmissionRepository].toInstance(mockSubmissionRepository)
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService)
           )
           .build()
 
@@ -139,11 +139,11 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
     "must send final submission when continuing if no userSubmissionReference has already been persisted" in {
 
-      val mockCalculationInputs    = mock[CalculationInputs]
-      val mockUserDataService      = mock[UserDataService]
-      val mockSubmissionRepository = mock[SubmissionRepository]
-      val mockSubmissionService    = mock[SubmissionService]
-      val userAnswersCaptor        = ArgCaptor[UserAnswers]
+      val mockCalculationInputs     = mock[CalculationInputs]
+      val mockUserDataService       = mock[UserDataService]
+      val mockSubmissionDataService = mock[SubmissionDataService]
+      val mockSubmissionService     = mock[SubmissionService]
+      val userAnswersCaptor         = ArgCaptor[UserAnswers]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
@@ -163,7 +163,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         applicationBuilder(userAnswers = Some(ua), submission = Some(submission))
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService),
-            bind[SubmissionRepository].toInstance(mockSubmissionRepository),
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService),
             bind[SubmissionService].toInstance(mockSubmissionService)
           )
           .build()
@@ -184,10 +184,10 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
     "must not re-send final submission when continuing if userSubmissionReference has already been persisted" in {
 
-      val mockCalculationInputs    = mock[CalculationInputs]
-      val mockUserDataService      = mock[UserDataService]
-      val mockSubmissionRepository = mock[SubmissionRepository]
-      val mockSubmissionService    = mock[SubmissionService]
+      val mockCalculationInputs     = mock[CalculationInputs]
+      val mockUserDataService       = mock[UserDataService]
+      val mockSubmissionDataService = mock[SubmissionDataService]
+      val mockSubmissionService     = mock[SubmissionService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
@@ -205,7 +205,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         applicationBuilder(userAnswers = Some(uaWithUserSubmissionReference), submission = Some(submission))
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService),
-            bind[SubmissionRepository].toInstance(mockSubmissionRepository),
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService),
             bind[SubmissionService].toInstance(mockSubmissionService)
           )
           .build()
