@@ -60,9 +60,15 @@ journeyRecovery.startAgain.title = cy: Sorry, there is a problem with the servic
 journeyRecovery.startAgain.heading = cy: Sorry, there is a problem with the service
 journeyRecovery.startAgain.guidance = cy: [Add content to explain why the user needs to start again.]
 
-signedOut.title = cy: For your security, we signed you out
-signedOut.heading = cy: For your security, we signed you out
-signedOut.guidance = cy: We did not save your answers.
+signedOut.title = cy: Signed Out
+signedOut.heading = cy: Signed Out
+signedOut.message1 = cy: We have saved your progress
+signedOut.message2 = cy: We will store your data for 28 days
+signedOut.subHeading = cy: How to continue your application
+signedOut.bullet1 = cy: Go to the Gov.uk service page
+signedOut.bullet2 = cy: Press the start now button
+signedOut.bullet3 = cy: Sign in using Government Gateway ID
+signedOut.message3 = cy: Alternatively, continue your application now.
 
 unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account

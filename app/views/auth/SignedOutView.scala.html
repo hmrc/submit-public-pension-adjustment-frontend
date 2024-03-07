@@ -30,12 +30,17 @@
 
     <h1 class="govuk-heading-xl">@messages("signedOut.heading")</h1>
 
-    <p class="govuk-body">@messages("signedOut.guidance")</p>
+    <p class="govuk-body">@messages("signedOut.message1")</p>
 
-    <p class="govuk-body">
-        @govukButton(
-            ButtonViewModel(messages("site.signIn"))
-                .asLink(routes.IndexController.onPageLoad.url)
-        )
-    </p>
+    <p class="govuk-body">@messages("signedOut.message2")</p>
+
+    <p class="govuk-heading-l">@messages("signedOut.subHeading")</p>
+
+    <ul>
+        <li class="govuk-body">@messages("signedOut.bullet1")</li>
+        <li class="govuk-body">@messages("signedOut.bullet2")</li>
+        <li class="govuk-body">@messages("signedOut.bullet3")</li>
+    </ul>
+
+    <p class="govuk-body">@messages("signedOut.message3")</p>
 }
