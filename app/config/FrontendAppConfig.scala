@@ -41,6 +41,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
     s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=$safeBackUrl"
   }
 
+  val baseUrl: String                     = configuration.get[String]("urls.base")
   val loginUrl: String                    = configuration.get[String]("urls.login")
   val confidenceUpliftUrl: String         = configuration.get[String]("urls.confidenceUplift")
   val upliftCompletionUrl                 = configuration.get[String]("urls.upliftCompletion")
