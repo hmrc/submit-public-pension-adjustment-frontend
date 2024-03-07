@@ -33,7 +33,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
   "signOut" - {
 
-    "must clear user answers and redirect to sign out, specifying the exit survey as the continue URL" in {
+    "must clear user answers and redirect to sign out" in {
 
       val mockSessionRepository    = mock[SessionRepository]
       val mockSubmissionRepository = mock[SubmissionRepository]
@@ -69,7 +69,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
   "signOutUnauthorised" - {
 
-    "must redirect to sign out, specifying the exit survey as the continue URL" in {
+    "must redirect to start page" in {
 
       val application = applicationBuilder(None).build()
 
