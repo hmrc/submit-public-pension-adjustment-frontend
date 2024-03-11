@@ -44,7 +44,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
       "must set userAnswers to 'None' in the request" in {
 
-        val userDataService      = mock[UserDataService]
+        val userDataService       = mock[UserDataService]
         val submissionDataService = mock[SubmissionDataService]
 
         val submission =
