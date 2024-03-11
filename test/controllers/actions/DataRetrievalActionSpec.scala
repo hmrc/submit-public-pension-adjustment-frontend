@@ -45,15 +45,15 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
       "must set userAnswers to 'None' in the request" in {
 
         val userDataService      = mock[UserDataService]
-        val submissionRepository = mock[SubmissionDataService]
+        val submissionDataService = mock[SubmissionDataService]
 
         val submission =
           Submission("sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
 
         when(userDataService.get()(any())) thenReturn Future(None)
-        when(submissionRepository.getBySessionId(anyString())(any())) thenReturn Future(Some(submission))
+        when(submissionDataService.getBySessionId(anyString())(any())) thenReturn Future(Some(submission))
 
-        val action = new Harness(userDataService, submissionRepository)
+        val action = new Harness(userDataService, submissionDataService)
 
         val result = action
           .callTransform(
