@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import forms.PensionSchemeMemberNinoFormProvider
 import generators.Generators
-import models.{NormalMode, UserAnswers}
+import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalacheck.Arbitrary.arbitrary
@@ -29,7 +29,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.domain.Nino
 import views.html.PensionSchemeMemberNinoView
 
@@ -88,14 +88,14 @@ class PensionSchemeMemberNinoControllerSpec extends SpecBase with MockitoSugar w
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(Some(emptyUserAnswers), submission = Some(submission))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
