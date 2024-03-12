@@ -174,3 +174,7 @@ GET         /submission                                                         
 
 GET         /uplift-failure                                                                                             controllers.UpliftFailedController.onPageLoad()
 
+GET        /calculation-result                                                                                          controllers.CalculationResultController.onPageLoad()
+
+GET        /continue-choice                                                                                             controllers.ContinueChoiceController.onPageLoad()
+POST       /continue-choice                                                                                             controllers.ContinueChoiceController.onSubmit()
