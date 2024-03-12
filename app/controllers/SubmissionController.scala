@@ -20,7 +20,7 @@ import controllers.actions._
 import models.UserSubmissionReference
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.{SessionRepository, SubmissionRepository}
+import services.{SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SubmissionView
 
@@ -29,8 +29,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class SubmissionController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
-  submissionRepository: SubmissionRepository,
+  userDataService: UserDataService,
+  submissionDataService: SubmissionDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -45,8 +45,8 @@ class SubmissionController @Inject() (
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       request.userAnswers.get(UserSubmissionReference()) match {
         case Some(usr) =>
-          sessionRepository.clear(request.userId).flatMap { _ =>
-            submissionRepository.clear(request.userId).map { _ =>
+          userDataService.clear().flatMap { _ =>
+            submissionDataService.clear().map { _ =>
               Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
             }
           }

@@ -31,7 +31,7 @@ import play.api.http.Status.OK
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 
 import scala.concurrent.Future
@@ -40,14 +40,14 @@ class BarsConnectorSpec extends SpecBase with WireMockHelper {
 
   private lazy val app: Application = {
     val dataRequiredAction = mock[DataRequiredAction]
-    val sessionRepository  = mock[SessionRepository]
+    val userDataService    = mock[UserDataService]
 
     GuiceApplicationBuilder()
       .configure(
         "microservice.services.bars.port" -> server.port()
       )
       .overrides(
-        bind[SessionRepository].toInstance(sessionRepository),
+        bind[UserDataService].toInstance(userDataService),
         bind[DataRequiredAction].toInstance(dataRequiredAction),
         bind[IdentifierAction].to[FakeIdentifierAction],
         bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(None, None))

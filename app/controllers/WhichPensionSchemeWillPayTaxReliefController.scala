@@ -24,8 +24,7 @@ import models.{Mode, NavigationState}
 import pages.WhichPensionSchemeWillPayTaxReliefPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
-import services.SchemeService
+import services.{SchemeService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.WhichPensionSchemeWillPayTaxReliefView
 
@@ -33,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class WhichPensionSchemeWillPayTaxReliefController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -78,7 +77,7 @@ class WhichPensionSchemeWillPayTaxReliefController @Inject() (
               redirectUrl     =
                 WhichPensionSchemeWillPayTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

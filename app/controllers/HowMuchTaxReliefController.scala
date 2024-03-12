@@ -24,8 +24,7 @@ import models.{Mode, NavigationState, WhichPensionSchemeWillPayTaxRelief}
 import pages.{HowMuchTaxReliefPage, WhichPensionSchemeWillPayTaxReliefPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
-import services.SchemeService
+import services.{SchemeService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.HowMuchTaxReliefView
 
@@ -33,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class HowMuchTaxReliefController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -76,14 +75,14 @@ class HowMuchTaxReliefController @Inject() (
                                   )
                 redirectUrl     = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
                 answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-                _              <- sessionRepository.set(answersWithNav)
+                _              <- userDataService.set(answersWithNav)
               } yield Redirect(redirectUrl)
             } else {
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(HowMuchTaxReliefPage, value))
                 redirectUrl     = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
                 answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-                _              <- sessionRepository.set(answersWithNav)
+                _              <- userDataService.set(answersWithNav)
               } yield Redirect(redirectUrl)
             }
         )

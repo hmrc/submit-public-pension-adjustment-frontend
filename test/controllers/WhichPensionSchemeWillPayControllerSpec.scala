@@ -23,7 +23,7 @@ import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TaxYearScheme}
 import models.submission.Submission
-import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPay}
+import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -32,7 +32,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import views.html.WhichPensionSchemeWillPayView
 
 import scala.concurrent.Future
@@ -139,13 +139,13 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
-          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
       running(application) {
