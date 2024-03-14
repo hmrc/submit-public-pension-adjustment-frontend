@@ -32,12 +32,12 @@ import scala.concurrent.Future
 class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
   "UserDataService" - {
-    val hc: HeaderCarrier                         = HeaderCarrier()
+    val hc: HeaderCarrier = HeaderCarrier()
 
     "get" - {
       "must return Some(UserAnswers) when the connector fetches successfully" in {
         val connector = mock[UserAnswersConnector]
-        val service = new UserDataService(connector)
+        val service   = new UserDataService(connector)
 
         val expectedUserAnswers = TestData.userAnswers3.copy(lastUpdated = Instant.parse("2024-03-12T10:00:00Z"))
 
@@ -49,7 +49,7 @@ class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
       "must return None when the connector fails to fetch" in {
         val connector = mock[UserAnswersConnector]
-        val service = new UserDataService(connector)
+        val service   = new UserDataService(connector)
 
         when(connector.get()(any())) thenReturn Future.successful(None)
 
@@ -60,8 +60,8 @@ class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
     "set" - {
       "must return Done when the connector saves successfully" in {
-        val connector = mock[UserAnswersConnector]
-        val service = new UserDataService(connector)
+        val connector   = mock[UserAnswersConnector]
+        val service     = new UserDataService(connector)
         val userAnswers = emptyUserAnswers
 
         when(connector.set(any())(any())) thenReturn Future.successful(Done)
@@ -71,8 +71,8 @@ class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
       }
 
       "must return a failed future when the connector fails to save" in {
-        val connector = mock[UserAnswersConnector]
-        val service = new UserDataService(connector)
+        val connector   = mock[UserAnswersConnector]
+        val service     = new UserDataService(connector)
         val userAnswers = emptyUserAnswers
 
         when(connector.set(any())(any())) thenReturn Future.failed(new RuntimeException("Saving failed"))
@@ -85,7 +85,7 @@ class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
     "keepAlive" - {
       "must return Done when the connector updates successfully" in {
         val connector = mock[UserAnswersConnector]
-        val service = new UserDataService(connector)
+        val service   = new UserDataService(connector)
 
         when(connector.keepAlive()(any())) thenReturn Future.successful(Done)
 
@@ -95,7 +95,7 @@ class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
       "must return a failed future when the connector fails to update" in {
         val connector = mock[UserAnswersConnector]
-        val service = new UserDataService(connector)
+        val service   = new UserDataService(connector)
 
         when(connector.keepAlive()(any())) thenReturn Future.failed(new RuntimeException("Update failed"))
 
@@ -107,7 +107,7 @@ class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
     "clear" - {
       "must return Done when the connector clears successfully" in {
         val connector = mock[UserAnswersConnector]
-        val service = new UserDataService(connector)
+        val service   = new UserDataService(connector)
 
         when(connector.clear()(any())) thenReturn Future.successful(Done)
 
@@ -117,7 +117,7 @@ class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
       "must return a failed future when the connector fails to clear" in {
         val connector = mock[UserAnswersConnector]
-        val service = new UserDataService(connector)
+        val service   = new UserDataService(connector)
 
         when(connector.clear()(any())) thenReturn Future.failed(new RuntimeException("Clear failed"))
 

@@ -43,14 +43,15 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "must return true when the submission signal is successfully sent" in {
       val uniqueId = Some(UniqueId("SomeUniqueId"))
-      val url = s"/submit-public-pension-adjustment/submission-signal/${uniqueId.get.value}"
-      val app = application
+      val url      = s"/submit-public-pension-adjustment/submission-signal/${uniqueId.get.value}"
+      val app      = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
 
         server.stubFor(
-          WireMock.get(urlEqualTo(url))
+          WireMock
+            .get(urlEqualTo(url))
             .willReturn(aResponse().withStatus(OK))
         )
 
@@ -62,14 +63,15 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "Handle a not found exception" in {
       val uniqueId = Some(UniqueId("InvalidUniqueId"))
-      val url = s"/submit-public-pension-adjustment/submission-signal/${uniqueId.get.value}"
-      val app = application
+      val url      = s"/submit-public-pension-adjustment/submission-signal/${uniqueId.get.value}"
+      val app      = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
 
         server.stubFor(
-          WireMock.get(urlEqualTo(url))
+          WireMock
+            .get(urlEqualTo(url))
             .willReturn(aResponse().withStatus(NOT_FOUND))
         )
 
