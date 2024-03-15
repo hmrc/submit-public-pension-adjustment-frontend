@@ -49,6 +49,9 @@ class SubmissionController @Inject() (
             submissionDataService.clear().map { _ =>
               Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
             }
+            submissionDataService.clearCalc().map { _ =>
+              Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
+            }
           }
 
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
