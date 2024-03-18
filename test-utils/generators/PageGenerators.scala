@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryContinueChoicePage: Arbitrary[ContinueChoicePage.type] =
+    Arbitrary(ContinueChoicePage)
+
   implicit lazy val arbitraryPensionSchemeMemberInternationalAddressPage
     : Arbitrary[PensionSchemeMemberInternationalAddressPage.type] =
     Arbitrary(PensionSchemeMemberInternationalAddressPage)
