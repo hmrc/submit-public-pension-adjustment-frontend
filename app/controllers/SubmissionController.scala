@@ -46,12 +46,12 @@ class SubmissionController @Inject() (
       request.userAnswers.get(UserSubmissionReference()) match {
         case Some(usr) =>
           userDataService.clear().flatMap { _ =>
-            submissionDataService.clear().map { _ =>
-              Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
-            }
-            submissionDataService.clearCalc().map { _ =>
-              Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
-            }
+            submissionDataService.clear().flatMap { _ =>
+              userDataService.clearCalcBE().map { _ =>
+                print("//// CLEAR CALC BE BEING CALLED////")
+                Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
+              }            }
+
           }
 
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))

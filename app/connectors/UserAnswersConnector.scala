@@ -35,6 +35,8 @@ class UserAnswersConnector @Inject() (config: Configuration, httpClient: HttpCli
   private val userAnswersUrl = url"$baseUrl/submit-public-pension-adjustment/user-answers"
   private val keepAliveUrl   = url"$baseUrl/submit-public-pension-adjustment/user-answers/keep-alive"
 
+  private val baseUrlCalcBE        = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
+  private val userAnswersUrlCalcBE = url"$baseUrlCalcBE/calculate-public-pension-adjustment/user-answers"
   def get()(implicit hc: HeaderCarrier): Future[Option[UserAnswers]] =
     httpClient
       .get(userAnswersUrl)
@@ -73,6 +75,19 @@ class UserAnswersConnector @Inject() (config: Configuration, httpClient: HttpCli
       .delete(userAnswersUrl)
       .execute[HttpResponse]
       .logFailureReason(connectorName = "UserAnswersConnector on clear")
+      .flatMap { response =>
+        if (response.status == NO_CONTENT) {
+          Future.successful(Done)
+        } else {
+          Future.failed(UpstreamErrorResponse("", response.status))
+        }
+      }
+
+  def clearCalcBE()(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .delete(userAnswersUrlCalcBE)
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "`UserAnswersConnector` on clearCalcBE")
       .flatMap { response =>
         if (response.status == NO_CONTENT) {
           Future.successful(Done)

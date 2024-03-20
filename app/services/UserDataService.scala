@@ -37,4 +37,7 @@ class UserDataService @Inject() (connector: UserAnswersConnector) extends Loggin
 
   def clear()(implicit hc: HeaderCarrier): Future[Done] =
     connector.clear()
+
+  def clearCalcBE()(implicit hc: HeaderCarrier): Future[Done] =
+    connector.clearCalcBE()
 }
