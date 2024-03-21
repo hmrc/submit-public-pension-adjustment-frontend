@@ -16,6 +16,7 @@
 
 package controllers
 
+import connectors.CalculateBackendConnector
 import controllers.actions._
 import models.UserSubmissionReference
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -35,6 +36,7 @@ class SubmissionController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
+  calculateBackendConnector: CalculateBackendConnector,
   val controllerComponents: MessagesControllerComponents,
   view: SubmissionView
 )(implicit ec: ExecutionContext)
@@ -47,7 +49,7 @@ class SubmissionController @Inject() (
         case Some(usr) =>
           userDataService.clear().flatMap { _ =>
             submissionDataService.clear().flatMap { _ =>
-              userDataService.clearCalcBE().map { _ =>
+              submissionDataService.clearCalcBE().map { _ =>
                 print("//// CLEAR CALC BE BEING CALLED////")
                 Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
               }            }

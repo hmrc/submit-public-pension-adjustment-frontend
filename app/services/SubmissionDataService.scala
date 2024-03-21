@@ -36,6 +36,6 @@ class SubmissionDataService @Inject() (connector: SubmissionsConnector) extends 
   def clear()(implicit hc: HeaderCarrier): Future[Done] =
     connector.clear()
 
-  def clearCalc()(implicit hc: HeaderCarrier): Future[Done] =
+  def clearCalcBE()(implicit hc: HeaderCarrier): Future[Done] =
     connector.clear()
 }

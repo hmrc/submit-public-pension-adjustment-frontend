@@ -36,6 +36,8 @@ class SubmissionsConnector @Inject() (config: Configuration, httpClient: HttpCli
   private val submissionsUrl = url"$baseUrl/submit-public-pension-adjustment/submissions"
   private val keepAliveUrl   = url"$baseUrl/submit-public-pension-adjustment/submissions/keep-alive"
 
+  private val baseUrlCalcBE        = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
+  private val submissionsUrlCalcBE = url"$baseUrlCalcBE/calculate-public-pension-adjustment/submission"
   def get()(implicit hc: HeaderCarrier): Future[Option[Submission]] =
     httpClient
       .get(submissionsUrl)
@@ -81,6 +83,19 @@ class SubmissionsConnector @Inject() (config: Configuration, httpClient: HttpCli
       .delete(submissionsUrl)
       .execute[HttpResponse]
       .logFailureReason(connectorName = "SubmissionsConnector on clear")
+      .flatMap { response =>
+        if (response.status == NO_CONTENT) {
+          Future.successful(Done)
+        } else {
+          Future.failed(UpstreamErrorResponse("", response.status))
+        }
+      }
+
+  def clearCalcBE()(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .delete(submissionsUrlCalcBE)
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "SubmissionsConnector on clearCalcBE")
       .flatMap { response =>
         if (response.status == NO_CONTENT) {
           Future.successful(Done)
