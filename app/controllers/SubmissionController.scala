@@ -47,6 +47,7 @@ class SubmissionController @Inject() (
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       request.userAnswers.get(UserSubmissionReference()) match {
         case Some(usr) =>
+          //val a = submissionDataService.get()
           userDataService.clear().flatMap { _ =>
             submissionDataService.clear().flatMap { _ =>
               submissionDataService.clearCalcBE().map { _ =>
