@@ -55,7 +55,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
         .overrides(
           bind[SubmissionService].toInstance(mockSubmissionService),
           bind[UserDataService].toInstance(mockUserDataService),
-          bind[SubmissionDataService].toInstance(mockSubmissionDataService)
+          bind[SubmissionDataService].toInstance(mockSubmissionDataService),
+          bind[CalculateBackendDataService].toInstance(mockCalculateBackendDataService)
         )
         .build()
 
