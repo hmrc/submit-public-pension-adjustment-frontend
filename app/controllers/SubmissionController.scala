@@ -20,7 +20,7 @@ import controllers.actions._
 import models.UserSubmissionReference
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{SubmissionDataService, UserDataService}
+import services.{CalculateBackendDataService, SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SubmissionView
 
@@ -31,6 +31,7 @@ class SubmissionController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
   submissionDataService: SubmissionDataService,
+  calculateBackendDataService: CalculateBackendDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -45,13 +46,15 @@ class SubmissionController @Inject() (
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       request.userAnswers.get(UserSubmissionReference()) match {
         case Some(usr) =>
-          userDataService.clear().flatMap { _ =>
-            submissionDataService.clear().map { _ =>
-              Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
-            }
-          }
+          for {
+            _ <- userDataService.clear()
+            _ <- submissionDataService.clear()
+            _ <- calculateBackendDataService.clearCalcUserAnswersBE()
+            _ <- calculateBackendDataService.clearCalcSubmissionBE()
+          } yield Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
 
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
       }
     }
+
 }
