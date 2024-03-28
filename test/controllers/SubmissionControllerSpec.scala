@@ -40,8 +40,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
     "must return OK and the correct view for a GET" in {
 
-      val mockUserDataService       = mock[UserDataService]
-      val mockSubmissionDataService = mock[SubmissionDataService]
+      val mockUserDataService             = mock[UserDataService]
+      val mockSubmissionDataService       = mock[SubmissionDataService]
       val mockCalculateBackendDataService = mock[CalculateBackendDataService]
       when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
       when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
