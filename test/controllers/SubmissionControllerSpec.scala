@@ -23,8 +23,7 @@ import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.SubmissionDataService
-import services.{SubmissionService, UserDataService}
+import services.{CalculateBackendDataService, SubmissionDataService, SubmissionService, UserDataService}
 import views.html.SubmissionView
 
 import scala.concurrent.Future
@@ -43,8 +42,11 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService       = mock[UserDataService]
       val mockSubmissionDataService = mock[SubmissionDataService]
+      val mockCalculateBackendDataService = mock[CalculateBackendDataService]
       when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
       when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
+      when(mockCalculateBackendDataService.clearCalcUserAnswersBE()(any())) thenReturn Future.successful(Done)
+      when(mockCalculateBackendDataService.clearCalcSubmissionBE()(any())) thenReturn Future.successful(Done)
 
       val userAnswers =
         UserAnswers(userAnswersId).set(UserSubmissionReference(), "userSubmissionReference").success.value
