@@ -34,15 +34,13 @@ import scala.concurrent.Future
 
 class ContinueSessionControllerSpec extends SpecBase with MockitoSugar {
 
-
   "ContinueSession Controller" - {
 
     "must return to page where user left off in Submission journey" in {
 
-      val answers = emptyUserAnswers
+      val answers        = emptyUserAnswers
       val answersWithNav = NavigationState.save(answers, "/submission-service/uk-resident")
-      val application = applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submission)).build()
-
+      val application    = applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submission)).build()
 
       running(application) {
         val request = FakeRequest(GET, routes.ContinueSessionController.continueSession.url)
@@ -57,13 +55,14 @@ class ContinueSessionControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
-
       running(application) {
         val request = FakeRequest(GET, routes.ContinueSessionController.continueSession.url)
 
         val result = route(application, request).value
 
-        redirectLocation(result).value mustEqual "/submit-public-pension-adjustment/submission-service/submitting-on-behalf-someone-else"
+        redirectLocation(
+          result
+        ).value mustEqual "/submit-public-pension-adjustment/submission-service/submitting-on-behalf-someone-else"
       }
     }
   }

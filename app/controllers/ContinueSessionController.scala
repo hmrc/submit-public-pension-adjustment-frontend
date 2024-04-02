@@ -24,14 +24,16 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ContinueSessionController @Inject()(
+class ContinueSessionController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
-  getData: DataRetrievalAction,
+  getData: DataRetrievalAction
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController {
 
   def continueSession: Action[AnyContent] = (identify andThen getData).async { implicit request =>
-    Future.successful(Redirect(NavigationState.getContinuationUrl(request.userAnswers.getOrElse(UserAnswers(request.userId)))))
+    Future.successful(
+      Redirect(NavigationState.getContinuationUrl(request.userAnswers.getOrElse(UserAnswers(request.userId))))
+    )
   }
 }

@@ -17,12 +17,9 @@
 package pages
 
 import models.ContinueChoice.{Continue, Edit, Restart}
-import models.{ContinueChoice, NavigationState, NormalMode, UserAnswers}
+import models.{ContinueChoice, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import play.api.mvc.Results.Redirect
-
-import java.lang.ProcessBuilder.Redirect
 
 case object ContinueChoicePage extends QuestionPage[ContinueChoice] {
 
