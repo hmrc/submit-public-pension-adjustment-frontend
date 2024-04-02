@@ -17,9 +17,12 @@
 package pages
 
 import models.ContinueChoice.{Continue, Edit, Restart}
-import models.{ContinueChoice, NormalMode, UserAnswers}
+import models.{ContinueChoice, NavigationState, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import play.api.mvc.Results.Redirect
+
+import java.lang.ProcessBuilder.Redirect
 
 case object ContinueChoicePage extends QuestionPage[ContinueChoice] {
 
@@ -30,9 +33,10 @@ case object ContinueChoicePage extends QuestionPage[ContinueChoice] {
   // TODO Implement journeys when apis have been implemented
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ContinueChoicePage) match {
-      case Some(Continue) => controllers.routes.ClaimOnBehalfController.onPageLoad(NormalMode)
+      case Some(Continue) => controllers.routes.ContinueSessionController.continueSession
       case Some(Edit)     => controllers.routes.ClaimOnBehalfController.onPageLoad(NormalMode)
       case Some(Restart)  => controllers.routes.ClaimOnBehalfController.onPageLoad(NormalMode)
       case _              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
 }
