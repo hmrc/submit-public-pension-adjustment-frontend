@@ -50,10 +50,11 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
     super.beforeEach()
   }
 
-  override def afterAll(): Unit        = {
+  override def afterAll(): Unit = {
     super.afterAll()
     server.stop()
   }
+
   private def application: Application =
     applicationBuilder()
       .configure(
@@ -118,6 +119,40 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
 
       server.stubFor(
         delete(urlEqualTo("/calculate-public-pension-adjustment/submission"))
+          .willReturn(aResponse().withStatus(BAD_REQUEST))
+      )
+
+      running(app) {
+        val connector = app.injector.instanceOf[CalculateBackendConnector]
+        val result    = connector.clearCalcSubmissionBE().failed.futureValue
+
+        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+      }
+    }
+  }
+
+  "sendFlagResetSignal" - {
+    "must return Done when the server responds with OK" in {
+      val app = application
+
+      server.stubFor(
+        get(urlEqualTo("/calculate-public-pension-adjustment/submission-status-update/1234"))
+          .willReturn(aResponse().withStatus(OK))
+      )
+
+      running(app) {
+        val connector = app.injector.instanceOf[CalculateBackendConnector]
+        val result    = connector.sendFlagResetSignal("1234").futureValue
+
+        result mustBe Done
+      }
+    }
+
+    "must return a failed future when the server responds with an error status" in {
+      val app = application
+
+      server.stubFor(
+        get(urlEqualTo("/calculate-public-pension-adjustment/submission-status-update/1234"))
           .willReturn(aResponse().withStatus(BAD_REQUEST))
       )
 

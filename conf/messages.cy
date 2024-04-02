@@ -565,3 +565,8 @@ continueChoice.edit.hint = cy: You will be sent to the task list in the submissi
 continueChoice.restart = cy: Restart
 continueChoice.restart.hint = cy: You will be sent to the beginning of the service. You will lose all progress that you have made so far.
 continueChoice.error.required = cy: Select the choice you would like to proceed with
+
+confirmEditAnswers.title = cy: Do you want to edit your submission answers?
+confirmEditAnswers.heading = cy: Are you sure you want to edit your calculation answers?
+confirmEditAnswers.subHeading = cy: You will be sent to the task list in the calculation section. Any answers in the submission section you have already given will be deleted.
+confirmEditAnswers.error.required = cy: Select yes if you want to edit a previous submission

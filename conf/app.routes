@@ -180,3 +180,8 @@ GET        /calculation-result                                                  
 
 GET        /continue-choice                                                                                             controllers.ContinueChoiceController.onPageLoad()
 POST       /continue-choice                                                                                             controllers.ContinueChoiceController.onSubmit()
+
+GET        /confirm-edit-answers                                                                                        controllers.ConfirmEditAnswersController.onPageLoad()
+POST       /confirm-edit-answers                                                                                        controllers.ConfirmEditAnswersController.onSubmit()
+
+GET        /edit-calculation                                                                                            controllers.EditCalculationController.editCalculation

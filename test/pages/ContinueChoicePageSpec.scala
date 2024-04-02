@@ -31,17 +31,6 @@ class ContinueChoicePageSpec extends PageBehaviours {
 
   "Normal Mode" - {
 
-    // TODO Change test to continue journey when implemented
-    "must redirect to continue journey, when continue is selected" in {
-      val ua = emptyUserAnswers
-        .set(ContinueChoicePage, ContinueChoice.Edit)
-        .get
-
-      val nextPageUrl: String = ContinueChoicePage.navigate(NormalMode, ua).url
-
-      checkNavigation(nextPageUrl, "/submission-service/submitting-on-behalf-someone-else")
-    }
-
     "must redirect to continue journey where user journey maintained in NavigationState" in {
       val ua = emptyUserAnswers
         .set(ContinueChoicePage, ContinueChoice.Continue)
@@ -52,6 +41,27 @@ class ContinueChoicePageSpec extends PageBehaviours {
       val nextPageUrl: String = ContinueChoicePage.navigate(NormalMode, answersWithNav).url.trim
 
       checkNavigation(nextPageUrl, "/continue-session")
+    }
+
+    "must redirect to edit journey, when edit is selected" in {
+      val ua = emptyUserAnswers
+        .set(ContinueChoicePage, ContinueChoice.Edit)
+        .get
+
+      val nextPageUrl: String = ContinueChoicePage.navigate(NormalMode, ua).url.trim
+
+      checkNavigation(nextPageUrl, "/confirm-edit-answers")
+    }
+
+    // TODO Change test to restart journey when implemented
+    "must redirect to restart journey, when restart is selected" in {
+      val ua = emptyUserAnswers
+        .set(ContinueChoicePage, ContinueChoice.Restart)
+        .get
+
+      val nextPageUrl: String = ContinueChoicePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/submission-service/submitting-on-behalf-someone-else")
     }
 
     "must redirect to journey recovery, when no answer on the page" in {

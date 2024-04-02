@@ -16,11 +16,11 @@
 
 package connectors
 
-import config.Service
+import config.{FrontendAppConfig, Service}
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.Done
-import play.api.Configuration
-import play.api.http.Status.NO_CONTENT
+import play.api.{Configuration, Logging}
+import play.api.http.Status.{NO_CONTENT, OK}
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
@@ -28,9 +28,13 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, Upstream
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class CalculateBackendConnector @Inject() (config: Configuration, httpClient: HttpClientV2)(implicit
+class CalculateBackendConnector @Inject() (
+  config: Configuration,
+  httpClient: HttpClientV2,
+  frontendAppConfig: FrontendAppConfig
+)(implicit
   ec: ExecutionContext
-) {
+) extends Logging {
 
   private val baseUrlCalcBE        = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
   private val userAnswersUrlCalcBE = url"$baseUrlCalcBE/calculate-public-pension-adjustment/user-answers"
@@ -60,6 +64,29 @@ class CalculateBackendConnector @Inject() (config: Configuration, httpClient: Ht
           Future.successful(Done)
         } else {
           Future.failed(UpstreamErrorResponse("", response.status))
+        }
+      }
+
+  def sendFlagResetSignal(submissionUniqueId: String)(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .get(
+        url"${frontendAppConfig.cppaBaseUrl}/calculate-public-pension-adjustment/submission-status-update/$submissionUniqueId"
+      )
+      .execute[HttpResponse]
+      .flatMap { response =>
+        response.status match {
+          case OK =>
+            Future.successful(Done)
+          case _  =>
+            logger.error(
+              s"Unexpected response from /submit-public-pension-adjustment/submission-reset-signal with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from submit-public-pension-adjustment/submission-reset-signal",
+                response.status
+              )
+            )
         }
       }
 }
