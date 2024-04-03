@@ -18,6 +18,7 @@ package services
 
 import models.calculation.inputs.{CalculationInputs, LifeTimeAllowance, TaxYear2016To2023}
 import models.{PSTR, PensionSchemeDetails, WhichPensionSchemeWillPay, WhichPensionSchemeWillPayTaxRelief}
+import play.api.i18n.Messages
 
 object SchemeService {
 
@@ -31,10 +32,11 @@ object SchemeService {
       PensionSchemeDetails(taxYearScheme.pensionSchemeName, taxYearScheme.pensionSchemeTaxReference)
     )
 
-  def allSchemeDetails(calculationInputs: CalculationInputs): WhichPensionSchemeWillPay = {
+  def allSchemeDetails(calculationInputs: CalculationInputs)(implicit messages: Messages): WhichPensionSchemeWillPay = {
     val pensionSchemeDetails: Seq[String] =
       getAllPensionSchemeDetails(calculationInputs).map(taxYearScheme => schemeNameAndReference(taxYearScheme))
-    WhichPensionSchemeWillPay(pensionSchemeDetails :+ PSTR.New)
+
+    WhichPensionSchemeWillPay(pensionSchemeDetails :+ messages("whichPensionSchemeWillPay.privatePensionScheme"))
   }
 
   def allSchemeDetailsForTaxRelief(calculationInputs: CalculationInputs): WhichPensionSchemeWillPayTaxRelief = {

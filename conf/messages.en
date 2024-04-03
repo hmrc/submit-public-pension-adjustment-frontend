@@ -394,7 +394,7 @@ pensionSchemeMemberUKAddress.error.addressLine1.length = Address line 1 of who y
 pensionSchemeMemberUKAddress.error.addressLine2.length = Address line 2 of who you are acting on behalf of must be 100 characters or fewer
 pensionSchemeMemberUKAddress.error.townOrCity.length = Town or city of who you are acting on behalf of must be 100 characters or fewer
 pensionSchemeMemberUKAddress.error.county.length = County of who you are acting on behalf of must be 100 characters or fewer
-pensionSchemeMemberUKAddress.error.postCode.length = Postcode of who you are acting on behalf of must be 18 characters or fewer
+pensionSchemeMemberUKAddress.error.postCode.length = Postcode of who you are acting on behalf of must be 8 characters or fewer
 pensionSchemeMemberUKAddress.error.postCode.invalid = Postcode of who you are acting on behalf of must only include letters a to z, numbers 0 to 9
 pensionSchemeMemberUKAddress.change.hidden = the address of the person you are submitting on behalf of
 
