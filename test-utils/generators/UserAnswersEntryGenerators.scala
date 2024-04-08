@@ -32,6 +32,15 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryConfirmRestartAnswersUserAnswersEntry
+    : Arbitrary[(ConfirmRestartAnswersPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ConfirmRestartAnswersPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryContinueChoiceUserAnswersEntry: Arbitrary[(ContinueChoicePage.type, JsValue)] =
     Arbitrary {
       for {

@@ -61,7 +61,7 @@ class ContinueChoicePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContinueChoicePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/submission-service/submitting-on-behalf-someone-else")
+      checkNavigation(nextPageUrl, "/confirm-restart-answers")
     }
 
     "must redirect to journey recovery, when no answer on the page" in {

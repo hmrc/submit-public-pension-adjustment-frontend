@@ -16,22 +16,21 @@
 
 package pages
 
-import models.ContinueChoice.{Continue, Edit, Restart}
-import models.{ContinueChoice, NormalMode, UserAnswers}
+import models.UserAnswers
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import controllers.routes
 
-case object ContinueChoicePage extends QuestionPage[ContinueChoice] {
+case object ConfirmRestartAnswersPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "continueChoice"
+  override def toString: String = "confirmRestartAnswers"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(ContinueChoicePage) match {
-      case Some(Continue) => controllers.routes.ContinueSessionController.continueSession
-      case Some(Edit)     => controllers.routes.ConfirmEditAnswersController.onPageLoad()
-      case Some(Restart)  => controllers.routes.ConfirmRestartAnswersController.onPageLoad()
-      case _              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(ConfirmRestartAnswersPage) match {
+      case Some(true)  => controllers.routes.RestartCalculationController.restartCalculation
+      case Some(false) => controllers.routes.ContinueChoiceController.onPageLoad()
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
