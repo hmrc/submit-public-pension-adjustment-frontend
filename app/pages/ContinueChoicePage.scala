@@ -30,9 +30,10 @@ case object ContinueChoicePage extends QuestionPage[ContinueChoice] {
   // TODO Implement journeys when apis have been implemented
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ContinueChoicePage) match {
-      case Some(Continue) => controllers.routes.ClaimOnBehalfController.onPageLoad(NormalMode)
+      case Some(Continue) => controllers.routes.ContinueSessionController.continueSession
       case Some(Edit)     => controllers.routes.ClaimOnBehalfController.onPageLoad(NormalMode)
       case Some(Restart)  => controllers.routes.ClaimOnBehalfController.onPageLoad(NormalMode)
       case _              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
 }

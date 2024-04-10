@@ -99,7 +99,7 @@ class ContinueChoiceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.ClaimOnBehalfController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual controllers.routes.ContinueSessionController.continueSession.url
       }
     }
 

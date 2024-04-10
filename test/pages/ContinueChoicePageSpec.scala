@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{ContinueChoice, NormalMode}
+import models.{ContinueChoice, NavigationState, NormalMode}
 
 class ContinueChoicePageSpec extends PageBehaviours {
 
@@ -42,26 +42,16 @@ class ContinueChoicePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/submission-service/submitting-on-behalf-someone-else")
     }
 
-    // TODO Change test to edit journey when implemented
-    "must redirect to edit journey, when edit is selected" in {
+    "must redirect to continue journey where user journey maintained in NavigationState" in {
       val ua = emptyUserAnswers
         .set(ContinueChoicePage, ContinueChoice.Continue)
         .get
 
-      val nextPageUrl: String = ContinueChoicePage.navigate(NormalMode, ua).url.trim
+      val answersWithNav = NavigationState.save(ua, "/submission-service/uk-resident")
 
-      checkNavigation(nextPageUrl, "/submission-service/submitting-on-behalf-someone-else")
-    }
+      val nextPageUrl: String = ContinueChoicePage.navigate(NormalMode, answersWithNav).url.trim
 
-    // TODO Change test to restart journey when implemented
-    "must redirect to restart journey, when restart is selected" in {
-      val ua = emptyUserAnswers
-        .set(ContinueChoicePage, ContinueChoice.Continue)
-        .get
-
-      val nextPageUrl: String = ContinueChoicePage.navigate(NormalMode, ua).url
-
-      checkNavigation(nextPageUrl, "/submission-service/submitting-on-behalf-someone-else")
+      checkNavigation(nextPageUrl, "/continue-session")
     }
 
     "must redirect to journey recovery, when no answer on the page" in {
