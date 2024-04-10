@@ -53,7 +53,6 @@ class ContinueChoicePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/confirm-edit-answers")
     }
 
-    // TODO Change test to restart journey when implemented
     "must redirect to restart journey, when restart is selected" in {
       val ua = emptyUserAnswers
         .set(ContinueChoicePage, ContinueChoice.Restart)
