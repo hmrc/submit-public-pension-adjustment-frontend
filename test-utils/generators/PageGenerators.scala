@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryConfirmEditAnswersPage: Arbitrary[ConfirmEditAnswersPage.type] =
+    Arbitrary(ConfirmEditAnswersPage)
+
   implicit lazy val arbitraryContinueChoicePage: Arbitrary[ContinueChoicePage.type] =
     Arbitrary(ContinueChoicePage)
 
