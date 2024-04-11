@@ -36,17 +36,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
     "must clear user answers and redirect to sign out" in {
 
-      val mockUserDataService       = mock[UserDataService]
-      val mockSubmissionDataService = mock[SubmissionDataService]
-      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
-
       val application =
         applicationBuilder(None)
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService),
-            bind[SubmissionDataService].toInstance(mockSubmissionDataService)
-          )
           .build()
 
       running(application) {
@@ -62,8 +53,6 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual expectedRedirectUrl
-        verify(mockUserDataService, times(1)).clear()(any())
-        verify(mockSubmissionDataService, times(1)).clear()(any())
       }
     }
   }

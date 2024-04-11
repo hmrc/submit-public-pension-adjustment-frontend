@@ -36,15 +36,9 @@ class AuthController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  def signOut(): Action[AnyContent] = identify.async { implicit request =>
-    for {
-      _ <- userDataService.clear()
-      _ <- submissionDataService.clear()
-    } yield Redirect(
-      config.signOutUrl,
-      Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url))
-    )
-  }
+  def signOut(): Action[AnyContent] = Action(
+    Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
+  )
 
   def signOutUnauthorised(): Action[AnyContent] = Action(
     Redirect(config.signOutUrl, Map("continue" -> Seq(config.redirectToStartPage)))
