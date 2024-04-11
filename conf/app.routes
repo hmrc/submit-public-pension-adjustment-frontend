@@ -185,3 +185,8 @@ GET        /confirm-edit-answers                                                
 POST       /confirm-edit-answers                                                                                        controllers.ConfirmEditAnswersController.onSubmit()
 
 GET        /edit-calculation                                                                                            controllers.EditCalculationController.editCalculation
+
+GET        /confirm-restart-answers                                                                                     controllers.ConfirmRestartAnswersController.onPageLoad()
+POST       /confirm-restart-answers                                                                                     controllers.ConfirmRestartAnswersController.onSubmit()
+
+GET        /restart-calculation                                                                                         controllers.RestartCalculationController.restartCalculation

@@ -547,3 +547,8 @@ confirmEditAnswers.title = Do you want to edit your submission answers?
 confirmEditAnswers.heading = Are you sure you want to edit your calculation answers?
 confirmEditAnswers.subHeading = You will be sent to the task list in the calculation section. Any answers in the submission section you have already given will be deleted.
 confirmEditAnswers.error.required = Select yes if you want to edit a previous submission
+
+confirmRestartAnswers.title = Do you want to restart your calculation?
+confirmRestartAnswers.heading = Do you want to restart your calculation?
+confirmRestartAnswers.message = You will be sent to the beginning of the service. You will lose all progress that you have made so far.
+confirmRestartAnswers.error.required = Select yes if you want to restart your calculation.
