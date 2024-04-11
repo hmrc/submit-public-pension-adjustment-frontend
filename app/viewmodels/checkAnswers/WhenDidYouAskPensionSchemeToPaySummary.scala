@@ -24,16 +24,17 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import views.helpers.ImplicitDateFormatter
 
-object WhenDidYouAskPensionSchemeToPaySummary {
+object WhenDidYouAskPensionSchemeToPaySummary extends ImplicitDateFormatter {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(WhenDidYouAskPensionSchemeToPayPage(period)).map { answer =>
-      val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+      val languageTag = if (messages.lang.code == "cy") "cy" else "en"
 
       SummaryListRowViewModel(
         key = "whenDidYouAskPensionSchemeToPay.checkYourAnswersLabel",
-        value = ValueViewModel(answer.format(dateFormatter)),
+        value = ValueViewModel(dateToString(answer, languageTag)),
         actions = Seq(
           ActionItemViewModel(
             "site.change",

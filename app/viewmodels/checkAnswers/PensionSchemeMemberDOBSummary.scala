@@ -17,7 +17,6 @@
 package viewmodels.checkAnswers
 
 import java.time.format.DateTimeFormatter
-
 import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.PensionSchemeMemberDOBPage
@@ -25,16 +24,17 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import views.helpers.ImplicitDateFormatter
 
-object PensionSchemeMemberDOBSummary {
+object PensionSchemeMemberDOBSummary extends ImplicitDateFormatter {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(PensionSchemeMemberDOBPage).map { answer =>
-      val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+      val languageTag = if (messages.lang.code == "cy") "cy" else "en"
 
       SummaryListRowViewModel(
         key = "pensionSchemeMemberDOB.checkYourAnswersLabel",
-        value = ValueViewModel(answer.format(dateFormatter)),
+        value = ValueViewModel(dateToString(answer, languageTag)),
         actions = Seq(
           ActionItemViewModel("site.change", routes.PensionSchemeMemberDOBController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("pensionSchemeMemberDOB.change.hidden"))
