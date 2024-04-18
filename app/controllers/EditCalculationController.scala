@@ -36,7 +36,7 @@ class EditCalculationController @Inject() (
 
   def calculateFrontendTaskList = s"${config.calculateFrontend}/task-list"
 
-  def editCalculation: Action[AnyContent] = (identify andThen getData andThen requireCalculationData).async {
+  def editCalculation: Action[AnyContent] = (identify andThen getData).async {
     Future.successful(
       Redirect(calculateFrontendTaskList)
     )
