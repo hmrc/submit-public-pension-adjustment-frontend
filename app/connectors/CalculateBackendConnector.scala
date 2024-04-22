@@ -16,45 +16,77 @@
 
 package connectors
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import models.UniqueId
-import models.submission.RetrieveSubmissionResponse
-import play.api.Logging
-import play.api.http.Status._
+import config.{FrontendAppConfig, Service}
+import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
+import models.Done
+import play.api.{Configuration, Logging}
+import play.api.http.Status.{NO_CONTENT, OK}
+import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
-import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class CalculateBackendConnector @Inject() (
-  config: FrontendAppConfig,
-  httpClient2: HttpClientV2
+  config: Configuration,
+  httpClient: HttpClientV2,
+  frontendAppConfig: FrontendAppConfig
 )(implicit
   ec: ExecutionContext
 ) extends Logging {
 
-  def retrieveSubmission(
-    submissionUniqueId: UniqueId
-  )(implicit hc: HeaderCarrier): Future[RetrieveSubmissionResponse] =
-    httpClient2
-      .get(url"${config.cppaBaseUrl}/calculate-public-pension-adjustment/submission/${submissionUniqueId.value}")
-      .execute
+  private val baseUrlCalcBE        = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
+  private val userAnswersUrlCalcBE = url"$baseUrlCalcBE/calculate-public-pension-adjustment/user-answers"
+
+  private val submissionsUrlCalcBE = url"$baseUrlCalcBE/calculate-public-pension-adjustment/submission"
+
+  def clearCalcUserAnswersBE()(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .delete(userAnswersUrlCalcBE)
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "`UserAnswersConnector` on clearCalcBE")
+      .flatMap { response =>
+        if (response.status == NO_CONTENT) {
+          Future.successful(Done)
+        } else {
+          Future.failed(UpstreamErrorResponse("", response.status))
+        }
+      }
+
+  def clearCalcSubmissionBE()(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .delete(submissionsUrlCalcBE)
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "SubmissionsConnector on clearCalcBE")
+      .flatMap { response =>
+        if (response.status == NO_CONTENT) {
+          Future.successful(Done)
+        } else {
+          Future.failed(UpstreamErrorResponse("", response.status))
+        }
+      }
+
+  def sendFlagResetSignal(submissionUniqueId: String)(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .get(
+        url"${frontendAppConfig.cppaBaseUrl}/calculate-public-pension-adjustment/submission-status-update/$submissionUniqueId"
+      )
+      .execute[HttpResponse]
       .flatMap { response =>
         response.status match {
           case OK =>
-            Future.successful(response.json.as[RetrieveSubmissionResponse])
+            Future.successful(Done)
           case _  =>
             logger.error(
-              s"Unexpected response from /calculate-public-pension-adjustment/submission/${submissionUniqueId.value} with status : ${response.status}"
+              s"Unexpected response from /submit-public-pension-adjustment/submission-reset-signal with status : ${response.status}"
             )
             Future.failed(
               UpstreamErrorResponse(
-                "Unexpected response from /calculate-public-pension-adjustment/submission/submissionUniqueId",
+                "Unexpected response from submit-public-pension-adjustment/submission-reset-signal",
                 response.status
               )
             )
         }
       }
-
 }

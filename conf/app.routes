@@ -10,6 +10,8 @@ GET         /language/:lang                                                     
 
 GET         /refresh-session                                                                                            controllers.KeepAliveController.keepAlive
 
+GET         /continue-session                                                                                           controllers.ContinueSessionController.continueSession
+
 GET         /there-is-a-problem                                                                                         controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
 GET         /account/sign-out-survey                                                                                    controllers.auth.AuthController.signOut
@@ -174,3 +176,17 @@ GET         /submission                                                         
 
 GET         /uplift-failure                                                                                             controllers.UpliftFailedController.onPageLoad()
 
+GET        /calculation-result                                                                                          controllers.CalculationResultController.onPageLoad()
+
+GET        /continue-choice                                                                                             controllers.ContinueChoiceController.onPageLoad()
+POST       /continue-choice                                                                                             controllers.ContinueChoiceController.onSubmit()
+
+GET        /confirm-edit-answers                                                                                        controllers.ConfirmEditAnswersController.onPageLoad()
+POST       /confirm-edit-answers                                                                                        controllers.ConfirmEditAnswersController.onSubmit()
+
+GET        /edit-calculation                                                                                            controllers.EditCalculationController.editCalculation
+
+GET        /confirm-restart-answers                                                                                     controllers.ConfirmRestartAnswersController.onPageLoad()
+POST       /confirm-restart-answers                                                                                     controllers.ConfirmRestartAnswersController.onSubmit()
+
+GET        /restart-calculation                                                                                         controllers.RestartCalculationController.restartCalculation

@@ -31,25 +31,30 @@ case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[St
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     val selectedScheme: Option[String] = answers.get(WhichPensionSchemeWillPayPage(period))
     selectedScheme match {
-      case Some(PSTR.New) =>
+      case Some(PSTR.New)                  =>
         controllers.routes.PensionSchemeDetailsController.onPageLoad(NormalMode, period)
-      case Some(_)        => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode, period)
-      case _              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some("Cynllun pensiwn preifat") =>
+        controllers.routes.PensionSchemeDetailsController.onPageLoad(NormalMode, period)
+      case Some(_)                         => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(NormalMode, period)
+      case _                               => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhichPensionSchemeWillPayPage(period)) match {
-      case Some(PSTR.New) =>
+      case Some(PSTR.New)                  =>
         controllers.routes.PensionSchemeDetailsController.onPageLoad(CheckMode, period)
-      case Some(_)        => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, period)
-      case _              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some("Cynllun pensiwn preifat") =>
+        controllers.routes.PensionSchemeDetailsController.onPageLoad(CheckMode, period)
+      case Some(_)                         => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, period)
+      case _                               => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[String], userAnswers: UserAnswers): Try[UserAnswers] =
     value match {
-      case Some("Private pension scheme") => super.cleanup(value, userAnswers)
-      case Some(_)                        => userAnswers.remove(PensionSchemeDetailsPage(period))
-      case None                           => super.cleanup(value, userAnswers)
+      case Some("Private pension scheme")  => super.cleanup(value, userAnswers)
+      case Some("Cynllun pensiwn preifat") => super.cleanup(value, userAnswers)
+      case Some(_)                         => userAnswers.remove(PensionSchemeDetailsPage(period))
+      case None                            => super.cleanup(value, userAnswers)
     }
 }

@@ -25,14 +25,14 @@ import pages.ClaimOnBehalfPage
 import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
-import services.{PeriodService, SchemeService, SubmissionService}
+import services.{PeriodService, SchemeService, SubmissionService, UserDataService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.{CheckYourAnswersView, IncompleteDataCaptureView}
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -44,7 +44,7 @@ class CheckYourAnswersController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   submissionService: SubmissionService,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   checkYourAnswersView: CheckYourAnswersView,
   incompleteDataCaptureView: IncompleteDataCaptureView
 )(implicit ec: ExecutionContext)
@@ -113,9 +113,10 @@ class CheckYourAnswersController @Inject() (
     request: DataRequest[AnyContent],
     finalSubmissionResponse: FinalSubmissionResponse
   ) = {
+    val hc                              = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     val userSubmissionReference: String = finalSubmissionResponse.userSubmissionReference
     val updatedAnswers                  = request.userAnswers.set(UserSubmissionReference(), userSubmissionReference)
-    sessionRepository.set(updatedAnswers.get)
+    userDataService.set(updatedAnswers.get)(hc)
   }
 
   private def initialRowBlock(request: DataRequest[AnyContent])(implicit messages: Messages) =

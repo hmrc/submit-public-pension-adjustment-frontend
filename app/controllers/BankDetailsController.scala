@@ -27,17 +27,17 @@ import models.{BankDetails, Mode, NavigationState, UserAnswers}
 import pages.BankDetailsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
-import repositories.SessionRepository
-import uk.gov.hmrc.http.HeaderCarrier
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.BankDetailsView
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class BankDetailsController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   ppaBarsService: PpaBarsService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
@@ -80,14 +80,14 @@ class BankDetailsController @Inject() (
   private def handleValidForm(value: BankDetails, mode: Mode, userAnswers: UserAnswers)(implicit
     request: DataRequest[AnyContent]
   ): Future[Result] = {
-    implicit val hc: HeaderCarrier = HeaderCarrier()
+    implicit val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     ppaBarsService.verifyBankDetails(value).flatMap {
       case Right(_) =>
         for {
           updatedAnswers <- Future.fromTry(userAnswers.set(BankDetailsPage, value))
           redirectUrl     = BankDetailsPage.navigate(mode, updatedAnswers).url
           answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-          _              <- sessionRepository.set(answersWithNav)
+          _              <- userDataService.set(answersWithNav)
         } yield Redirect(redirectUrl)
 
       case Left(error) =>

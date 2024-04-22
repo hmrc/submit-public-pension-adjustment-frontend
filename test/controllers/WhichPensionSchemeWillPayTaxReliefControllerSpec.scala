@@ -23,7 +23,7 @@ import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Period, Resubmission}
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
-import models.{NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
+import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -32,7 +32,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import views.html.WhichPensionSchemeWillPayTaxReliefView
 
 import scala.concurrent.Future
@@ -167,9 +167,9 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val period: models.calculation.response.Period = models.calculation.response.Period._2021
 
@@ -186,7 +186,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
-          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
       running(application) {

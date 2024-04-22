@@ -18,6 +18,7 @@ package connectors
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
+import models.UniqueId
 import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
 import play.api.Logging
 import play.api.http.Status.OK
@@ -58,4 +59,24 @@ class SubmitBackendConnector @Inject() (
         }
       }
 
+  def sendSubmissionSignal(submissionUniqueId: Option[UniqueId])(implicit hc: HeaderCarrier): Future[Boolean] =
+    httpClient2
+      .get(url"${config.sppaBaseUrl}/submit-public-pension-adjustment/submission-signal/$submissionUniqueId")
+      .execute
+      .flatMap { response =>
+        response.status match {
+          case OK =>
+            Future.successful(true)
+          case _  =>
+            logger.error(
+              s"Unexpected response from /submit-public-pension-adjustment/submission-signal with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from submit-public-pension-adjustment/submission-signal",
+                response.status
+              )
+            )
+        }
+      }
 }

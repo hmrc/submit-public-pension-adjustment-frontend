@@ -24,15 +24,15 @@ import models.{Mode, NavigationState, UserAnswers}
 import pages.{AlternativeNamePage, ClaimOnBehalfPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.AlternativeNameView
+import services.UserDataService
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AlternativeNameController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -69,7 +69,7 @@ class AlternativeNameController @Inject() (
               redirectUrl     =
                 AlternativeNamePage.navigate(mode, updatedAnswers).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

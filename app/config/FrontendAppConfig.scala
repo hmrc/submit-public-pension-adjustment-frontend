@@ -41,7 +41,9 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
     s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=$safeBackUrl"
   }
 
+  val baseUrl: String                     = configuration.get[String]("urls.base")
   val loginUrl: String                    = configuration.get[String]("urls.login")
+  val calculateFrontend: String           = configuration.get[String]("urls.calculateFrontend")
   val confidenceUpliftUrl: String         = configuration.get[String]("urls.confidenceUplift")
   val upliftCompletionUrl                 = configuration.get[String]("urls.upliftCompletion")
   val upliftFailureUrl                    = configuration.get[String]("urls.upliftFailure")
@@ -61,11 +63,8 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val sppaBaseUrl: String =
     configuration.get[Service]("microservice.services.submit-public-pension-adjustment").baseUrl
 
-  //  TODO - This will be uncommented while doing the welsh translation
-  //  val languageTranslationEnabled: Boolean =
-  //    configuration.get[Boolean]("features.welsh-translation")
-
-  val languageTranslationEnabled: Boolean = false
+  val languageTranslationEnabled: Boolean =
+    configuration.get[Boolean]("features.welsh-translation")
 
   def languageMap: Map[String, Lang] = Map(
     "en" -> Lang("en"),

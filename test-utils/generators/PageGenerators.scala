@@ -21,6 +21,15 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryConfirmRestartAnswersPage: Arbitrary[ConfirmRestartAnswersPage.type] =
+    Arbitrary(ConfirmRestartAnswersPage)
+
+  implicit lazy val arbitraryConfirmEditAnswersPage: Arbitrary[ConfirmEditAnswersPage.type] =
+    Arbitrary(ConfirmEditAnswersPage)
+
+  implicit lazy val arbitraryContinueChoicePage: Arbitrary[ContinueChoicePage.type] =
+    Arbitrary(ContinueChoicePage)
+
   implicit lazy val arbitraryPensionSchemeMemberInternationalAddressPage
     : Arbitrary[PensionSchemeMemberInternationalAddressPage.type] =
     Arbitrary(PensionSchemeMemberInternationalAddressPage)

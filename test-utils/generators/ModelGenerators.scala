@@ -23,6 +23,11 @@ import uk.gov.hmrc.domain.Nino
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryContinueChoice: Arbitrary[ContinueChoice] =
+    Arbitrary {
+      Gen.oneOf(ContinueChoice.values.toSeq)
+    }
+
   def ukPostcode: Gen[String] =
     for {
       firstChars <- Gen.choose(1, 2)
