@@ -138,7 +138,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       if (flagClaimOnBehalf) {
         userAnswers.get(PensionSchemeMemberNinoPage).map(_.nino)
       } else
-        Some(authRetrievals.nino)
+        Some(authRetrievals.userId)
 
     val utr: Option[String] =
       if (flagClaimOnBehalf) {

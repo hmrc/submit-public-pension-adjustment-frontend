@@ -261,13 +261,13 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
   }
 
   private def ltaOnlySubmissionWithMultipleSchemes =
-    Submission("sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithMultipleSchemes, None)
+    Submission("id", "sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithMultipleSchemes, None)
 
   private def ltaOnlySubmissionWithSingleScheme =
-    Submission("sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithSingleScheme, None)
+    Submission("id", "sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithSingleScheme, None)
 
   private def ltaOnlySubmissionWithNoSchemes =
-    Submission("sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithNoSchemes, None)
+    Submission("id", "sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithNoSchemes, None)
 
   private def submissionWithMultipleSchemes = {
     val calculationResponse = CalculationResponse(
@@ -281,7 +281,13 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     )
 
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", calculationInputsWithMultipleSchemes, Option(calculationResponse))
+      Submission(
+        "id",
+        "sessionId",
+        "submissionUniqueId",
+        calculationInputsWithMultipleSchemes,
+        Option(calculationResponse)
+      )
     submission
   }
 
@@ -297,7 +303,13 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     )
 
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", calculationInputsWithSingleScheme, Option(calculationResponse))
+      Submission(
+        "id",
+        "sessionId",
+        "submissionUniqueId",
+        calculationInputsWithSingleScheme,
+        Option(calculationResponse)
+      )
     submission
   }
 
@@ -313,7 +325,13 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     )
 
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", calculationInputsWithSingleScheme, Option(calculationResponse))
+      Submission(
+        "id",
+        "sessionId",
+        "submissionUniqueId",
+        calculationInputsWithSingleScheme,
+        Option(calculationResponse)
+      )
     submission
   }
 

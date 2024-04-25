@@ -36,7 +36,6 @@ class DataRequiredActionImpl @Inject() (implicit val executionContext: Execution
             DataRequest(
               request.request,
               request.userId,
-              request.nino,
               request.name,
               request.saUtr,
               request.dob,

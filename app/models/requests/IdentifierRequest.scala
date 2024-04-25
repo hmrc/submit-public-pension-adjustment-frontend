@@ -24,7 +24,6 @@ import java.time.LocalDate
 case class IdentifierRequest[A](
   request: Request[A],
   userId: String,
-  nino: String,
   name: ItmpName,
   saUtr: Option[String],
   dateOfBirth: Option[LocalDate]

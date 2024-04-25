@@ -84,7 +84,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
       val mockCalculationResponse = mock[CalculationResponse]
 
       val submission: Submission =
-        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Option(mockCalculationResponse))
+        Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputs, Option(mockCalculationResponse))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
@@ -142,7 +142,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
       val mockCalculationResponse = mock[CalculationResponse]
 
       val submission: Submission =
-        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Option(mockCalculationResponse))
+        Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputs, Option(mockCalculationResponse))
 
       val application = applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission)).build()
 
@@ -182,7 +182,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
         List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
       )
       val submission: Submission =
-        Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+        Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))

@@ -37,6 +37,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
     val mockCalculationInputs = mock[CalculationInputs]
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputs,

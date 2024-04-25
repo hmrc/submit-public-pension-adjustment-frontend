@@ -226,7 +226,7 @@ class AuthActionSpec extends SpecBase {
         val retrievals = new ~(
           new ~(
             new ~(
-              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              new ~(new ~(Some("nino"), Some(AffinityGroup.Individual)), Some(User)),
               name
             ),
             saUtr
@@ -249,7 +249,7 @@ class AuthActionSpec extends SpecBase {
         val retrievals = new ~(
           new ~(
             new ~(
-              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              new ~(new ~(Some("nino"), Some(AffinityGroup.Individual)), Some(User)),
               name
             ),
             saUtr
@@ -272,7 +272,7 @@ class AuthActionSpec extends SpecBase {
         val retrievals = new ~(
           new ~(
             new ~(
-              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              new ~(new ~(Some("nino"), Some(AffinityGroup.Individual)), Some(User)),
               name
             ),
             saUtr
@@ -295,7 +295,7 @@ class AuthActionSpec extends SpecBase {
         val retrievals = new ~(
           new ~(
             new ~(
-              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              new ~(new ~(Some("nino"), Some(AffinityGroup.Individual)), Some(User)),
               name
             ),
             saUtr
@@ -320,7 +320,7 @@ class AuthActionSpec extends SpecBase {
         val retrievals = new ~(
           new ~(
             new ~(
-              new ~(new ~(new ~(Some("nino"), Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              new ~(new ~(Some("nino"), Some(AffinityGroup.Individual)), Some(User)),
               name
             ),
             saUtr
@@ -358,7 +358,7 @@ class AuthActionSpec extends SpecBase {
         val retrievals = new ~(
           new ~(
             new ~(
-              new ~(new ~(new ~(None, Some("internalId")), Some(AffinityGroup.Individual)), Some(User)),
+              new ~(new ~(None, Some(AffinityGroup.Individual)), Some(User)),
               name
             ),
             saUtr
@@ -410,12 +410,12 @@ class AuthActionSpec extends SpecBase {
 
   private def whenRetrievalsAre(
     mockAuthConnector: AuthConnector,
-    retrievals: Option[String] ~ Option[String] ~ Option[AffinityGroup] ~ Some[User.type] ~
+    retrievals: Option[String] ~ Option[AffinityGroup] ~ Some[User.type] ~
       Option[ItmpName] ~ Option[String] ~ Option[LocalDate]
   ) =
     when(
       mockAuthConnector.authorise[
-        Option[String] ~ Option[String] ~ Option[AffinityGroup] ~ Option[CredentialRole] ~
+        Option[String] ~ Option[AffinityGroup] ~ Option[CredentialRole] ~
           Option[ItmpName] ~ Option[String] ~ Option[LocalDate]
       ](
         any(),

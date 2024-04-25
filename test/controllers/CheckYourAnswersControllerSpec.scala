@@ -108,7 +108,13 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
 
       val submission: Submission =
-        Submission("sessionId", "uniqueId", mockCalculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))
+        Submission(
+          "id",
+          "sessionId",
+          "uniqueId",
+          mockCalculationInputs,
+          Some(aCalculationResponseWithAnInDateDebitYear)
+        )
 
       val ua: UserAnswers = completeUserAnswers
       val answersWithNav  = NavigationState.save(ua, NavigationState.checkYourAnswersUrl)
@@ -155,7 +161,13 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .thenReturn(Future.successful(FinalSubmissionResponse("userSubmissionReference")))
 
       val submission: Submission =
-        Submission("sessionId", "uniqueId", mockCalculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))
+        Submission(
+          "id",
+          "sessionId",
+          "uniqueId",
+          mockCalculationInputs,
+          Some(aCalculationResponseWithAnInDateDebitYear)
+        )
 
       val ua: UserAnswers = completeUserAnswers
 
@@ -196,7 +208,13 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       when(mockCalculationInputs.resubmission) thenReturn Resubmission(false, None)
 
       val submission: Submission =
-        Submission("sessionId", "uniqueId", mockCalculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))
+        Submission(
+          "id",
+          "sessionId",
+          "uniqueId",
+          mockCalculationInputs,
+          Some(aCalculationResponseWithAnInDateDebitYear)
+        )
 
       val uaWithUserSubmissionReference: UserAnswers =
         completeUserAnswers.set(UserSubmissionReference(), "userSubmissionReference").get

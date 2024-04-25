@@ -31,7 +31,6 @@ class FakeDataRetrievalAction(dataToReturn: Option[UserAnswers], submission: Opt
       OptionalDataRequest(
         request.request,
         request.userId,
-        "nino",
         ItmpName(Some("givenName"), None, Some("familyName")),
         None,
         None,

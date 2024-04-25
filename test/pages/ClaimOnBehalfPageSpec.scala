@@ -40,7 +40,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
   val mockCalculationInputsWithAA      = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
 
   val debitPeriodSubmission =
-    Submission(sessionId, uniqueId, calculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))
+    Submission(id, sessionId, uniqueId, calculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))
 
   "must redirect to status of user page when user selects yes in normal mode" in {
 
@@ -51,7 +51,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .success
       .value
 
-    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
+    val submission: Submission = Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
     val nextPageUrl: String    = page.navigate(NormalMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/submission-service/authority-someone-else")
@@ -67,6 +67,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithAA,
@@ -88,6 +89,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithAA,
@@ -115,7 +117,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       List.empty
     )
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+      Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
@@ -132,7 +134,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
+      Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
@@ -149,7 +151,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
+      Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
@@ -165,7 +167,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .success
       .value
 
-    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
+    val submission: Submission = Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
@@ -182,6 +184,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithAA,
@@ -210,7 +213,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     )
 
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+      Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
@@ -223,7 +226,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
 
-    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
+    val submission: Submission = Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
@@ -236,7 +239,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
 
-    val submission: Submission = Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
+    val submission: Submission = Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, None)
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
@@ -253,6 +256,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithLTAOnly,
@@ -274,6 +278,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithLTAOnly,
@@ -295,6 +300,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithLTAOnly,
@@ -316,6 +322,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithLTAOnly,
@@ -337,6 +344,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       .value
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithLTAOnly,
@@ -355,6 +363,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     val userAnswers = emptyUserAnswers
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithLTAOnly,
@@ -373,6 +382,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     val userAnswers = emptyUserAnswers
 
     val submission: Submission = Submission(
+      "id",
       "sessionId",
       "submissionUniqueId",
       mockCalculationInputsWithLTAOnly,

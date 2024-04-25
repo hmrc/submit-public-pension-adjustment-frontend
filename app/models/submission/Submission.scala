@@ -27,6 +27,7 @@ import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 import java.time.Instant
 
 case class Submission(
+  id: String,
   sessionId: String,
   uniqueId: String,
   calculationInputs: CalculationInputs,
@@ -38,7 +39,8 @@ object Submission {
 
   val reads: Reads[Submission] =
     (
-      (__ \ "sessionId").read[String] and
+      (__ \ "_id").read[String] and
+        (__ \ "sessionId").read[String] and
         (__ \ "uniqueId").read[String] and
         (__ \ "calculationInputs").read[CalculationInputs] and
         (__ \ "calculation").readNullable[CalculationResponse] and
@@ -47,7 +49,8 @@ object Submission {
 
   val writes: Writes[Submission] =
     (
-      (__ \ "sessionId").write[String] and
+      (__ \ "_id").write[String] and
+        (__ \ "sessionId").write[String] and
         (__ \ "uniqueId").write[String] and
         (__ \ "calculationInputs").write[CalculationInputs] and
         (__ \ "calculation").writeNullable[CalculationResponse] and
@@ -65,22 +68,24 @@ object Submission {
 
     val encryptedReads: Reads[Submission] =
       (
-        (__ \ "sessionId").read[String] and
+        (__ \ "_id").read[String] and
+          (__ \ "sessionId").read[String] and
           (__ \ "uniqueId").read[String] and
           (__ \ "calculationInputs").read[SensitiveString] and
           (__ \ "calculation").readNullable[SensitiveString] and
           (__ \ "lastUpdated").read(MongoJavatimeFormats.instantFormat)
-      ) { (sessionId, uniqueId, encryptedCalculationInputs, maybeEncryptedCalculation, lastUpdated) =>
+      ) { (id, sessionId, uniqueId, encryptedCalculationInputs, maybeEncryptedCalculation, lastUpdated) =>
         val calculationInputs = Json.parse(encryptedCalculationInputs.decryptedValue).as[CalculationInputs]
         val calculation       = maybeEncryptedCalculation.map(encryptedCalculation =>
           Json.parse(encryptedCalculation.decryptedValue).as[CalculationResponse]
         )
-        Submission(sessionId, uniqueId, calculationInputs, calculation, lastUpdated)
+        Submission(id, sessionId, uniqueId, calculationInputs, calculation, lastUpdated)
       }
 
     val encryptedWrites: Writes[Submission] =
       (
-        (__ \ "sessionId").write[String] and
+        (__ \ "_id").write[String] and
+          (__ \ "sessionId").write[String] and
           (__ \ "uniqueId").write[String] and
           (__ \ "calculationInputs").write[SensitiveString] and
           (__ \ "calculation").writeNullable[SensitiveString] and
@@ -89,6 +94,7 @@ object Submission {
         val maybeEncryptedCalculation: Option[SensitiveString] =
           s.calculation.map(calc => SensitiveString(Json.stringify(Json.toJson(calc))))
         (
+          s.id,
           s.sessionId,
           s.uniqueId,
           SensitiveString(Json.stringify(Json.toJson(s.calculationInputs))),

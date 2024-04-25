@@ -44,6 +44,7 @@ class WhenDidYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
   val mockCalculationInputs = mock[CalculationInputs]
 
   val userWithDebitSubmission: Submission = Submission(
+    "id",
     "sessionId",
     "submissionUniqueId",
     mockCalculationInputs,

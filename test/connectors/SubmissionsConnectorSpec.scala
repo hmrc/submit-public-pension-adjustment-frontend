@@ -50,6 +50,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
         val app = application
 
         val expectedSubmission = Submission(
+          id = "id",
           sessionId = "someSessionId",
           uniqueId = "someUniqueId",
           calculationInputs = CalculationInputs(Resubmission(false, None), None, None),
@@ -98,6 +99,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
         val app = application
 
         val expectedSubmission = Submission(
+          id = "id",
           sessionId = "someSessionId",
           uniqueId = "someUniqueId",
           calculationInputs = CalculationInputs(Resubmission(false, None), None, None),

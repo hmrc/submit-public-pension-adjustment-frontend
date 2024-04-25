@@ -46,7 +46,6 @@ class AuthenticatedIdentifierAction @Inject() (
 
   private val retrievals =
     Retrievals.nino and
-      Retrievals.internalId and
       Retrievals.affinityGroup and
       Retrievals.credentialRole and
       Retrievals.itmpName and
@@ -58,9 +57,9 @@ class AuthenticatedIdentifierAction @Inject() (
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     authorised(AffinityGroup.Individual and ConfidenceLevel.L250).retrieve(retrievals) {
-      case Some(nino) ~ Some(userId) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
-        block(IdentifierRequest(request, userId, nino, name, saUtr, dob))
-      case _                                                                                                  =>
+      case Some(nino) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
+        block(IdentifierRequest(request, nino, name, saUtr, dob))
+      case _                                                                                   =>
         logger.warn(s"Incomplete retrievals")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
     } recover {

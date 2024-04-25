@@ -75,7 +75,6 @@ object TestData {
 
   val authRetrievals =
     AuthRetrievals(
-      "Test UserId",
       "AA000000A",
       "Test User",
       Some("1234567890"),

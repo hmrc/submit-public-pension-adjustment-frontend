@@ -34,7 +34,7 @@ class CalculationResultControllerSpec extends SpecBase {
       val calculationResult: CalculationResponse =
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      val submission = Submission("", "", calculationInputs, Option.apply(calculationResult))
+      val submission = Submission("", "", "", calculationInputs, Option.apply(calculationResult))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 

@@ -31,6 +31,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       val mockCalculationInputs = mock[CalculationInputs]
 
       val submission: Submission = Submission(
+        "id",
         "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
@@ -46,6 +47,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       val mockCalculationInputs = mock[CalculationInputs]
 
       val submission: Submission = Submission(
+        "id",
         "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
@@ -60,6 +62,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       val mockCalculationInputs = mock[CalculationInputs]
 
       val submission: Submission = Submission(
+        "id",
         "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
@@ -74,6 +77,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       val mockCalculationInputs = mock[CalculationInputs]
 
       val submission: Submission = Submission(
+        "id",
         "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
@@ -88,6 +92,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       val mockCalculationInputs = mock[CalculationInputs]
 
       val submission: Submission = Submission(
+        "id",
         "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
@@ -103,6 +108,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       val mockCalculationInputs = mock[CalculationInputs]
 
       val submission: Submission = Submission(
+        "id",
         "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
