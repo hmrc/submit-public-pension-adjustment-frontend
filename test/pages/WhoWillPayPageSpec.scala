@@ -38,7 +38,6 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
     val submission: Submission = Submission(
       "id",
-      "sessionId",
       "submissionUniqueId",
       mockCalculationInputs,
       Some(aCalculationResponseWithAnInDateDebitYear)

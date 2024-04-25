@@ -42,14 +42,14 @@ class SubmissionsConnector @Inject() (config: Configuration, httpClient: HttpCli
       .execute[Option[Submission]]
       .logFailureReason(connectorName = "SubmissionsConnector on get")
 
-  def getBySessionId(userId: String)(implicit hc: HeaderCarrier): Future[Option[Submission]] = {
+  def getByUserId(userId: String)(implicit hc: HeaderCarrier): Future[Option[Submission]] = {
     val submissionsSessionUrl = url"$baseUrl/submit-public-pension-adjustment/submissions/$userId"
     httpClient
       .get(submissionsSessionUrl)
       .execute[Option[Submission]]
       .logFailureReason(connectorName = "SubmissionsConnector on get")
   }
-  def insert(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Done]                 =
+  def insert(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Done]              =
     httpClient
       .post(submissionsUrl)
       .withBody(Json.toJson(answers))

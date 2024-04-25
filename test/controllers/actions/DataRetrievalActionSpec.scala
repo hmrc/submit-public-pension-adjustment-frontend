@@ -48,10 +48,10 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
         val submissionDataService = mock[SubmissionDataService]
 
         val submission =
-          Submission("id", "sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
+          Submission("id", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
 
         when(userDataService.get()(any())) thenReturn Future(None)
-        when(submissionDataService.getBySessionId(anyString())(any())) thenReturn Future(Some(submission))
+        when(submissionDataService.getByUserId(anyString())(any())) thenReturn Future(Some(submission))
 
         val action = new Harness(userDataService, submissionDataService)
 
@@ -79,10 +79,10 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
         val submissionRepository = mock[SubmissionDataService]
 
         val submission =
-          Submission("id", "sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
+          Submission("id", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
 
         when(userDataService.get()(any())) thenReturn Future(Some(UserAnswers("id")))
-        when(submissionRepository.getBySessionId(anyString())(any())) thenReturn Future(Some(submission))
+        when(submissionRepository.getByUserId(anyString())(any())) thenReturn Future(Some(submission))
 
         val action = new Harness(userDataService, submissionRepository)
 

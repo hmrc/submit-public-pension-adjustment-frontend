@@ -98,7 +98,7 @@ class ClaimOnBehalfControllerSpec extends SpecBase with MockitoSugar {
         List.empty
       )
       val submission: Submission =
-        Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+        Submission("id", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))

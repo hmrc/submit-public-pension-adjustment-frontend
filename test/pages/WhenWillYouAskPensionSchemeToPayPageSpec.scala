@@ -36,7 +36,6 @@ class WhenWillYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
 
   val userWithDebitSubmission: Submission = Submission(
     "id",
-    "sessionId",
     "submissionUniqueId",
     mockCalculationInputs,
     Some(aCalculationResponseWithAnInDateDebitYear)

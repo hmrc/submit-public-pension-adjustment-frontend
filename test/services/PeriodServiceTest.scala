@@ -32,7 +32,6 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
 
       val submission: Submission = Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
         None
@@ -48,7 +47,6 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
 
       val submission: Submission = Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
         Some(aCalculationResponseWithAnInDateDebitYear)
@@ -63,7 +61,6 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
 
       val submission: Submission = Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
         Some(aCalculationResponseWithAnInDateDebitYear)
@@ -78,7 +75,6 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
 
       val submission: Submission = Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
         Some(aCalculationResponseWithAnInDateDebitYear)
@@ -93,7 +89,6 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
 
       val submission: Submission = Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
         Some(aCalculationResponseWithAnInDateDebitYear)
@@ -109,7 +104,6 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
 
       val submission: Submission = Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         mockCalculationInputs,
         None

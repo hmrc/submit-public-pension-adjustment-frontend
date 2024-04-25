@@ -66,7 +66,7 @@ class ConfirmEditAnswersController @Inject() (
           value => {
             if (value) {
               for {
-                _ <- calculateBackendConnector.sendFlagResetSignal(request.submission.sessionId)
+                _ <- calculateBackendConnector.sendFlagResetSignal(request.submission.id)
                 _ <- userDataService.clear()
                 _ <- submissionDataService.clear()
                 r <- calculateBackendDataService.clearCalcSubmissionBE()

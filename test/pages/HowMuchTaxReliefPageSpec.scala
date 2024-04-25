@@ -261,13 +261,13 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
   }
 
   private def ltaOnlySubmissionWithMultipleSchemes =
-    Submission("id", "sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithMultipleSchemes, None)
+    Submission("id", "submissionUniqueId", ltaOnlyCalculationInputsWithMultipleSchemes, None)
 
   private def ltaOnlySubmissionWithSingleScheme =
-    Submission("id", "sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithSingleScheme, None)
+    Submission("id", "submissionUniqueId", ltaOnlyCalculationInputsWithSingleScheme, None)
 
   private def ltaOnlySubmissionWithNoSchemes =
-    Submission("id", "sessionId", "submissionUniqueId", ltaOnlyCalculationInputsWithNoSchemes, None)
+    Submission("id", "submissionUniqueId", ltaOnlyCalculationInputsWithNoSchemes, None)
 
   private def submissionWithMultipleSchemes = {
     val calculationResponse = CalculationResponse(
@@ -283,7 +283,6 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     val submission: Submission =
       Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         calculationInputsWithMultipleSchemes,
         Option(calculationResponse)
@@ -305,7 +304,6 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     val submission: Submission =
       Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         calculationInputsWithSingleScheme,
         Option(calculationResponse)
@@ -327,7 +325,6 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     val submission: Submission =
       Submission(
         "id",
-        "sessionId",
         "submissionUniqueId",
         calculationInputsWithSingleScheme,
         Option(calculationResponse)
