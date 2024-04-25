@@ -83,4 +83,50 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
       }
     }
   }
+
+  ".sendCalcUserAnswerSignal" - {
+
+    "must return true when the submission signal is successfully sent" in {
+      val uniqueId = Some(UniqueId("SomeUniqueId"))
+      val url      = s"/submit-public-pension-adjustment/calc-user-answers-signal/${uniqueId.get.value}"
+      val app      = application
+
+      running(app) {
+        val connector = app.injector.instanceOf[SubmitBackendConnector]
+
+        server.stubFor(
+          WireMock
+            .get(urlEqualTo(url))
+            .willReturn(aResponse().withStatus(OK))
+        )
+
+        val result: Boolean = connector.sendCalcUserAnswerSignal(uniqueId).futureValue
+
+        result mustBe true
+      }
+    }
+
+    "Handle a not found exception" in {
+      val uniqueId = Some(UniqueId("InvalidUniqueId"))
+      val url      = s"/submit-public-pension-adjustment/calc-user-answers-signal/${uniqueId.get.value}"
+      val app      = application
+
+      running(app) {
+        val connector = app.injector.instanceOf[SubmitBackendConnector]
+
+        server.stubFor(
+          WireMock
+            .get(urlEqualTo(url))
+            .willReturn(aResponse().withStatus(NOT_FOUND))
+        )
+
+        val resultFut: Future[Boolean] = connector.sendCalcUserAnswerSignal(uniqueId)
+
+        whenReady(resultFut.failed) { e =>
+          e mustBe a[NotFoundException]
+        }
+      }
+    }
+  }
+
 }

@@ -79,4 +79,25 @@ class SubmitBackendConnector @Inject() (
             )
         }
       }
+
+  def sendCalcUserAnswerSignal(submissionUniqueId: Option[UniqueId])(implicit hc: HeaderCarrier): Future[Boolean] =
+    httpClient2
+      .get(url"${config.sppaBaseUrl}/submit-public-pension-adjustment/calc-user-answers-signal/$submissionUniqueId")
+      .execute
+      .flatMap { response =>
+        response.status match {
+          case OK =>
+            Future.successful(true)
+          case _  =>
+            logger.error(
+              s"Unexpected response from /submit-public-pension-adjustment/calc-user-answers-signal with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from submit-public-pension-adjustment/calc-user-answers-signal",
+                response.status
+              )
+            )
+        }
+      }
 }
