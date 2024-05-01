@@ -39,7 +39,11 @@ class LandingPageController @Inject() (
 
   def onPageLoad(submissionUniqueId: Option[UniqueId] = None): Action[AnyContent] = identify.async { implicit request =>
     val submissionRetrievalStatus: Future[Boolean] = submissionUniqueId match {
-      case Some(_) => submitBackendConnector.sendSubmissionSignal(submissionUniqueId)
+      case Some(_) =>
+        for {
+          _    <- submitBackendConnector.sendSubmissionSignal(submissionUniqueId)
+          calc <- submitBackendConnector.sendCalcUserAnswerSignal(submissionUniqueId)
+        } yield calc
       case None    => Future.successful(false)
     }
     submissionRetrievalStatus.map { submissionRetrievalStatus =>

@@ -41,6 +41,9 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
       when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
         .thenReturn(Future.successful(true))
 
+      when(mockSubmitBackendConnector.sendCalcUserAnswerSignal(any())(any()))
+        .thenReturn(Future.successful(true))
+
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
@@ -62,6 +65,9 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
       val mockSubmitBackendConnector = mock[SubmitBackendConnector]
       when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
+        .thenReturn(Future.successful(false))
+
+      when(mockSubmitBackendConnector.sendCalcUserAnswerSignal(any())(any()))
         .thenReturn(Future.successful(false))
 
       val application =
@@ -88,6 +94,9 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
       val mockSubmitBackendConnector = mock[SubmitBackendConnector]
       when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
+        .thenReturn(Future.successful(true))
+
+      when(mockSubmitBackendConnector.sendCalcUserAnswerSignal(any())(any()))
         .thenReturn(Future.successful(true))
 
       val application =
