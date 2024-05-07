@@ -36,6 +36,5 @@ object AppDependencies {
   val itDependencies = Seq(
     "uk.gov.hmrc" %% "bootstrap-test-play-30" % bootstrapPlay30Version % Test
   )
-
   def apply(): Seq[ModuleID] = compile ++ test
 }
