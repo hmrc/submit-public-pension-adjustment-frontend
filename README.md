@@ -41,7 +41,7 @@ This service uses sbt-scoverage to provide test coverage reports.
 
 Use the following command to run the tests with coverage and generate a report.
 ```
-sbt clean coverage test it:test coverageReport
+sbt clean coverage test it/test coverageReport
 ```
 
 ## Scalafmt
