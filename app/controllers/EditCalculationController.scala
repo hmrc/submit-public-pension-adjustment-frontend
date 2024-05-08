@@ -17,6 +17,7 @@
 package controllers
 
 import config.FrontendAppConfig
+import connectors.CalculateBackendConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{NavigationState, UserAnswers}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -30,15 +31,17 @@ class EditCalculationController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
+  calculateBackendConnector: CalculateBackendConnector,
   config: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController {
 
   def calculateFrontendTaskList = s"${config.calculateFrontend}/task-list"
 
-  def editCalculation: Action[AnyContent] = (identify andThen getData).async {
-    Future.successful(
-      Redirect(calculateFrontendTaskList)
-    )
+  def editCalculation: Action[AnyContent] = (identify andThen getData andThen requireCalculationData).async {
+    implicit request =>
+      for {
+        _ <- calculateBackendConnector.updateCalcBEWithUserAnswers(request.submission.uniqueId)
+      } yield Redirect(calculateFrontendTaskList)
   }
 }

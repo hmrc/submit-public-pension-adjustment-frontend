@@ -27,9 +27,9 @@ import scala.concurrent.Future
 
 class CalculateBackendDataService @Inject() (connector: CalculateBackendConnector) extends Logging {
 
-  def clearCalcSubmissionBE()(implicit hc: HeaderCarrier): Future[Done] =
-    connector.clearCalcSubmissionBE()
+  def clearSubmissionCalcBE()(implicit hc: HeaderCarrier): Future[Done] =
+    connector.clearSubmissionCalcBE()
 
-  def clearCalcUserAnswersBE()(implicit hc: HeaderCarrier): Future[Done] =
-    connector.clearCalcUserAnswersBE()
+  def clearUserAnswersCalcBE()(implicit hc: HeaderCarrier): Future[Done] =
+    connector.clearUserAnswersCalcBE()
 }

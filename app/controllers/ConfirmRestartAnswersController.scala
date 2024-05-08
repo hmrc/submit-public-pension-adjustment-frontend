@@ -16,6 +16,7 @@
 
 package controllers
 
+import connectors.SubmitBackendConnector
 import controllers.actions._
 import forms.ConfirmRestartAnswersFormProvider
 
@@ -35,6 +36,7 @@ class ConfirmRestartAnswersController @Inject() (
   userDataService: UserDataService,
   submissionDataService: SubmissionDataService,
   calculateBackendDataService: CalculateBackendDataService,
+  submitBackendConnector: SubmitBackendConnector,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   formProvider: ConfirmRestartAnswersFormProvider,
@@ -67,8 +69,9 @@ class ConfirmRestartAnswersController @Inject() (
               for {
                 _ <- userDataService.clear()
                 _ <- submissionDataService.clear()
-                _ <- calculateBackendDataService.clearCalcSubmissionBE()
-                r <- calculateBackendDataService.clearCalcUserAnswersBE()
+                _ <- calculateBackendDataService.clearSubmissionCalcBE()
+                _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
+                r <- calculateBackendDataService.clearUserAnswersCalcBE()
               } yield r
             }
             for {

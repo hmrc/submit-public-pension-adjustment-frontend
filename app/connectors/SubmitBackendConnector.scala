@@ -18,13 +18,13 @@ package connectors
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import models.UniqueId
+import models.{Done, UniqueId}
 import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
 import play.api.Logging
-import play.api.http.Status.OK
+import play.api.http.Status.{NO_CONTENT, OK}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.client.HttpClientV2
-import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -95,6 +95,27 @@ class SubmitBackendConnector @Inject() (
             Future.failed(
               UpstreamErrorResponse(
                 "Unexpected response from submit-public-pension-adjustment/calc-user-answers-signal",
+                response.status
+              )
+            )
+        }
+      }
+
+  def clearCalcUserAnswersSubmitBE()(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient2
+      .delete(url"${config.sppaBaseUrl}/submit-public-pension-adjustment/calc-user-answers")
+      .execute[HttpResponse]
+      .flatMap { response =>
+        response.status match {
+          case NO_CONTENT =>
+            Future.successful(Done)
+          case _          =>
+            logger.error(
+              s"Unexpected response from /submit-public-pension-adjustment/calc-user-answers with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from submit-public-pension-adjustment/calc-user-answers",
                 response.status
               )
             )

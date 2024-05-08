@@ -17,6 +17,7 @@
 package controllers
 
 import base.SpecBase
+import connectors.SubmitBackendConnector
 import models.{Done, UserAnswers, UserSubmissionReference}
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.MockitoSugar
@@ -43,10 +44,13 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
       val mockUserDataService             = mock[UserDataService]
       val mockSubmissionDataService       = mock[SubmissionDataService]
       val mockCalculateBackendDataService = mock[CalculateBackendDataService]
+      val mockSubmitBackendConnector      = mock[SubmitBackendConnector]
+
       when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
       when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockCalculateBackendDataService.clearCalcUserAnswersBE()(any())) thenReturn Future.successful(Done)
-      when(mockCalculateBackendDataService.clearCalcSubmissionBE()(any())) thenReturn Future.successful(Done)
+      when(mockCalculateBackendDataService.clearUserAnswersCalcBE()(any())) thenReturn Future.successful(Done)
+      when(mockCalculateBackendDataService.clearSubmissionCalcBE()(any())) thenReturn Future.successful(Done)
+      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) thenReturn Future.successful(Done)
 
       val userAnswers =
         UserAnswers(userAnswersId).set(UserSubmissionReference(), "userSubmissionReference").success.value
@@ -56,7 +60,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
           bind[SubmissionService].toInstance(mockSubmissionService),
           bind[UserDataService].toInstance(mockUserDataService),
           bind[SubmissionDataService].toInstance(mockSubmissionDataService),
-          bind[CalculateBackendDataService].toInstance(mockCalculateBackendDataService)
+          bind[CalculateBackendDataService].toInstance(mockCalculateBackendDataService),
+          bind[SubmitBackendConnector].toInstance(mockSubmitBackendConnector)
         )
         .build()
 
@@ -74,6 +79,10 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
         )(request, messages(application)).toString
         verify(mockUserDataService, times(1)).clear()(any())
         verify(mockSubmissionDataService, times(1)).clear()(any())
+        verify(mockCalculateBackendDataService, times(1)).clearUserAnswersCalcBE()(any())
+        verify(mockCalculateBackendDataService, times(1)).clearSubmissionCalcBE()(any())
+        verify(mockSubmitBackendConnector, times(1)).clearCalcUserAnswersSubmitBE()(any())
+
       }
     }
 

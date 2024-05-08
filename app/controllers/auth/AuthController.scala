@@ -17,6 +17,7 @@
 package controllers.auth
 
 import config.FrontendAppConfig
+import connectors.SubmitBackendConnector
 import controllers.actions.IdentifierAction
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -31,6 +32,7 @@ class AuthController @Inject() (
   config: FrontendAppConfig,
   userDataService: UserDataService,
   submissionDataService: SubmissionDataService,
+  submitBackendConnector: SubmitBackendConnector,
   identify: IdentifierAction
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
@@ -48,6 +50,7 @@ class AuthController @Inject() (
     for {
       _ <- userDataService.clear()
       _ <- submissionDataService.clear()
+      _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
     } yield Redirect(config.signOutUrl, Map("continue" -> Seq(routes.SignedOutController.onPageLoad.url)))
   }
 }

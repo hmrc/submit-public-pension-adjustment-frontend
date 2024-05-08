@@ -16,6 +16,7 @@
 
 package controllers
 
+import connectors.SubmitBackendConnector
 import controllers.actions._
 import models.UserSubmissionReference
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -32,6 +33,7 @@ class SubmissionController @Inject() (
   userDataService: UserDataService,
   submissionDataService: SubmissionDataService,
   calculateBackendDataService: CalculateBackendDataService,
+  submitBackendConnector: SubmitBackendConnector,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -49,8 +51,9 @@ class SubmissionController @Inject() (
           for {
             _ <- userDataService.clear()
             _ <- submissionDataService.clear()
-            _ <- calculateBackendDataService.clearCalcUserAnswersBE()
-            _ <- calculateBackendDataService.clearCalcSubmissionBE()
+            _ <- calculateBackendDataService.clearUserAnswersCalcBE()
+            _ <- calculateBackendDataService.clearSubmissionCalcBE()
+            _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
           } yield Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
 
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))

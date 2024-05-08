@@ -20,7 +20,7 @@ import config.{FrontendAppConfig, Service}
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.Done
 import play.api.{Configuration, Logging}
-import play.api.http.Status.{NO_CONTENT, OK}
+import play.api.http.Status.{NOT_FOUND, NO_CONTENT, OK}
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
@@ -41,7 +41,7 @@ class CalculateBackendConnector @Inject() (
 
   private val submissionsUrlCalcBE = url"$baseUrlCalcBE/calculate-public-pension-adjustment/submission"
 
-  def clearCalcUserAnswersBE()(implicit hc: HeaderCarrier): Future[Done] =
+  def clearUserAnswersCalcBE()(implicit hc: HeaderCarrier): Future[Done] =
     httpClient
       .delete(userAnswersUrlCalcBE)
       .execute[HttpResponse]
@@ -54,7 +54,7 @@ class CalculateBackendConnector @Inject() (
         }
       }
 
-  def clearCalcSubmissionBE()(implicit hc: HeaderCarrier): Future[Done] =
+  def clearSubmissionCalcBE()(implicit hc: HeaderCarrier): Future[Done] =
     httpClient
       .delete(submissionsUrlCalcBE)
       .execute[HttpResponse]
@@ -84,6 +84,29 @@ class CalculateBackendConnector @Inject() (
             Future.failed(
               UpstreamErrorResponse(
                 "Unexpected response from submit-public-pension-adjustment/submission-reset-signal",
+                response.status
+              )
+            )
+        }
+      }
+
+  def updateCalcBEWithUserAnswers(uniqueId: String)(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .get(
+        url"${frontendAppConfig.cppaBaseUrl}/calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers/$uniqueId"
+      )
+      .execute[HttpResponse]
+      .flatMap { response =>
+        response.status match {
+          case OK =>
+            Future.successful(Done)
+          case _  =>
+            logger.error(
+              s"Unexpected response from /calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers",
                 response.status
               )
             )
