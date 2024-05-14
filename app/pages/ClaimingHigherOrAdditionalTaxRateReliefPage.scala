@@ -17,7 +17,7 @@
 package pages
 
 import models.submission.Submission
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
+import models.{Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 

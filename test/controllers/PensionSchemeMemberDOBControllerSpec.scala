@@ -18,12 +18,11 @@ package controllers
 
 import base.SpecBase
 import forms.PensionSchemeMemberDOBFormProvider
-import models.StatusOfUser.{Deputyship, PowerOfAttorney}
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{PensionSchemeMemberDOBPage, StatusOfUserPage}
+import pages.PensionSchemeMemberDOBPage
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest

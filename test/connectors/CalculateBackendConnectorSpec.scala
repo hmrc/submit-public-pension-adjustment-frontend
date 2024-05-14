@@ -20,19 +20,12 @@ import base.SpecBase
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock._
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
-import models.calculation.inputs.{CalculationInputs, Resubmission}
-import models.submission.Submission
-import models.{Done, UserAnswers}
+import models.Done
 import org.scalatest.concurrent.ScalaFutures
-import pages.TestData
 import play.api.Application
 import play.api.http.Status.{BAD_REQUEST, NO_CONTENT, OK}
-import play.api.libs.json.Json
 import play.api.test.Helpers.running
 import uk.gov.hmrc.http.HeaderCarrier
-
-import java.time.Instant
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with WireMockHelper {
 

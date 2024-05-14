@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers
 
-import java.time.format.DateTimeFormatter
 import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
 import pages.WhenDidYouAskPensionSchemeToPayPage

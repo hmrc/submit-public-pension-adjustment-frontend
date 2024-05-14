@@ -16,10 +16,10 @@
 
 package services
 
-import connectors.{SubmissionsConnector, UserAnswersConnector}
+import connectors.SubmissionsConnector
 import logging.Logging
 import models.submission.Submission
-import models.{Done, UserAnswers}
+import models.Done
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject

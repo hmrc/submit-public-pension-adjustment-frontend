@@ -22,7 +22,6 @@ import models.calculation.inputs.{CalculationInputs, Resubmission}
 import models.submission.Submission
 import models.{Done, UserAnswers}
 import org.scalatest.concurrent.ScalaFutures
-import pages.TestData
 import play.api.Application
 import play.api.http.Status.{BAD_REQUEST, NO_CONTENT, OK}
 import play.api.libs.json.Json

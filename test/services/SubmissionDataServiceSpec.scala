@@ -21,7 +21,6 @@ import connectors.SubmissionsConnector
 import models.Done
 import models.calculation.inputs.{CalculationInputs, Resubmission}
 import models.submission.Submission
-import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar

@@ -19,7 +19,6 @@ package controllers
 import config.FrontendAppConfig
 import connectors.CalculateBackendConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{NavigationState, UserAnswers}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 

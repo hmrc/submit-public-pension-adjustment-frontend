@@ -16,10 +16,9 @@
 
 package services
 
-import connectors.{CalculateBackendConnector, SubmissionsConnector, UserAnswersConnector}
+import connectors.CalculateBackendConnector
 import logging.Logging
-import models.submission.Submission
-import models.{Done, UserAnswers}
+import models.Done
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject

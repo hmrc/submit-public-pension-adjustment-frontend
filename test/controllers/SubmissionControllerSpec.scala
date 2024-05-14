@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import connectors.SubmitBackendConnector
 import models.{Done, UserAnswers, UserSubmissionReference}
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
+import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest

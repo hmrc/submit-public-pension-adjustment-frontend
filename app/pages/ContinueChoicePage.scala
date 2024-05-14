@@ -17,7 +17,7 @@
 package pages
 
 import models.ContinueChoice.{Continue, Edit, Restart}
-import models.{ContinueChoice, NormalMode, UserAnswers}
+import models.{ContinueChoice, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 

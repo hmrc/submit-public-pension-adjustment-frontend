@@ -19,7 +19,6 @@ package pages
 import models.UserAnswers
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.routes
 
 case object ConfirmRestartAnswersPage extends QuestionPage[Boolean] {
 
