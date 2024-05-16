@@ -110,7 +110,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val submission: Submission =
         Submission(
           "id",
-          "sessionId",
           "uniqueId",
           mockCalculationInputs,
           Some(aCalculationResponseWithAnInDateDebitYear)
@@ -163,7 +162,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val submission: Submission =
         Submission(
           "id",
-          "sessionId",
           "uniqueId",
           mockCalculationInputs,
           Some(aCalculationResponseWithAnInDateDebitYear)
@@ -210,7 +208,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val submission: Submission =
         Submission(
           "id",
-          "sessionId",
           "uniqueId",
           mockCalculationInputs,
           Some(aCalculationResponseWithAnInDateDebitYear)

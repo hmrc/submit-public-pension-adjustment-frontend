@@ -32,7 +32,7 @@ class DataRetrievalActionImpl @Inject() (
 
   override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    submissionDataService.getBySessionId(request.userId)(hc).flatMap { submission =>
+    submissionDataService.getByUserId(request.userId)(hc).flatMap { submission =>
       userDataService.get()(hc).map {
         OptionalDataRequest(
           request.request,

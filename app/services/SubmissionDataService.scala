@@ -27,8 +27,8 @@ import scala.concurrent.Future
 
 class SubmissionDataService @Inject() (connector: SubmissionsConnector) extends Logging {
 
-  def getBySessionId(userId: String)(implicit hc: HeaderCarrier): Future[Option[Submission]] =
-    connector.getBySessionId(userId)
+  def getByUserId(userId: String)(implicit hc: HeaderCarrier): Future[Option[Submission]] =
+    connector.getByUserId(userId)
 
   def keepAlive()(implicit hc: HeaderCarrier): Future[Done] =
     connector.keepAlive()

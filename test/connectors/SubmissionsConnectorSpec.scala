@@ -51,7 +51,6 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
 
         val expectedSubmission = Submission(
           id = "id",
-          sessionId = "someSessionId",
           uniqueId = "someUniqueId",
           calculationInputs = CalculationInputs(Resubmission(false, None), None, None),
           calculation = None,
@@ -94,13 +93,12 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
       }
     }
 
-    "getBySessionId" - {
+    "getByUserId" - {
       "must return Some(Submission) when the server responds with OK and valid JSON" in {
         val app = application
 
         val expectedSubmission = Submission(
           id = "id",
-          sessionId = "someSessionId",
           uniqueId = "someUniqueId",
           calculationInputs = CalculationInputs(Resubmission(false, None), None, None),
           calculation = None,
@@ -118,7 +116,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
 
         running(app) {
           val connector = app.injector.instanceOf[SubmissionsConnector]
-          val result    = connector.getBySessionId(userId).futureValue
+          val result    = connector.getByUserId(userId).futureValue
 
           result mustBe Some(expectedSubmission)
         }
@@ -136,7 +134,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
         running(app) {
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector
-            .getBySessionId(userId)
+            .getByUserId(userId)
             .recover { case _: com.fasterxml.jackson.databind.exc.MismatchedInputException =>
               None
             }

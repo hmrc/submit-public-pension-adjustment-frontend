@@ -35,7 +35,7 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
   "UserDataService" - {
     val hc: HeaderCarrier = HeaderCarrier()
 
-    "getBySessionId" - {
+    "getByUserId" - {
       "must return Some(UserAnswers) when the connector fetches successfully" in {
         val connector = mock[SubmissionsConnector]
         val service   = new SubmissionDataService(connector)
@@ -43,15 +43,14 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
 
         val expectedSubmission = Submission(
           id = "id",
-          sessionId = "someSessionId",
           uniqueId = "someUniqueId",
           calculationInputs = CalculationInputs(Resubmission(false, None), None, None),
           calculation = None,
           lastUpdated = Instant.parse("2024-03-12T10:00:00Z")
         )
-        when(connector.getBySessionId(userId)(hc)) thenReturn Future.successful(Some(expectedSubmission))
+        when(connector.getByUserId(userId)(hc)) thenReturn Future.successful(Some(expectedSubmission))
 
-        val result = service.getBySessionId(userId)(hc).futureValue
+        val result = service.getByUserId(userId)(hc).futureValue
         result mustBe Some(expectedSubmission)
       }
 
@@ -60,9 +59,9 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
         val service   = new SubmissionDataService(connector)
         val userId    = "someSessionId"
 
-        when(connector.getBySessionId(userId)(hc)) thenReturn Future.successful(None)
+        when(connector.getByUserId(userId)(hc)) thenReturn Future.successful(None)
 
-        val result = service.getBySessionId(userId)(hc).futureValue
+        val result = service.getByUserId(userId)(hc).futureValue
         result mustBe None
       }
     }
