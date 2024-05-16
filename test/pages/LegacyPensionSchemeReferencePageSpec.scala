@@ -35,7 +35,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
       "to ReformPensionSchemeReferencePage when answered" in {
 
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
 
         val ua     = emptyUserAnswers
           .set(
@@ -52,7 +52,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
 
       "to JourneyRecovery when not answered" in {
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
         val ua                     = emptyUserAnswers
         val result                 =
           LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(NormalMode, ua, submission).url
@@ -65,7 +65,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
 
       "to CYA when answered" in {
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
         val ua                     = emptyUserAnswers
           .set(
             LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1"),
@@ -81,7 +81,7 @@ class LegacyPensionSchemeReferencePageSpec extends PageBehaviours {
 
       "to JourneyRecovery when not selected" in {
         val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
         val ua                     = emptyUserAnswers
         val result                 =
           LegacyPensionSchemeReferencePage(PSTR("12345678AB"), "Scheme1").navigate(CheckMode, ua, submission).url

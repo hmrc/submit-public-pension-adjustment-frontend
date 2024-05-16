@@ -99,7 +99,7 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val submission: Submission =
-        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, 0, None, None)))
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))

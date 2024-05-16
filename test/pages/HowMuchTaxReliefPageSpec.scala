@@ -355,7 +355,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           List(
             NormalTaxYear(
               2,
-              List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0, None, None)),
+              List(TaxYearScheme("Scheme1", "00348916RT", 2, 0, None)),
               5,
               0,
               models.calculation.inputs.Period._2021,
@@ -376,7 +376,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           List(
             NormalTaxYear(
               2,
-              List(TaxYearScheme("Scheme1", "00348916RT", 1, 2, 0, Some(3), Some(4))),
+              List(TaxYearScheme("Scheme1", "00348916RT", 2, 0, Some(4))),
               5,
               0,
               models.calculation.inputs.Period._2016,
@@ -384,7 +384,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
             ),
             NormalTaxYear(
               5,
-              List(TaxYearScheme("Scheme1", "00348916RL", 4, 5, 7, None, None)),
+              List(TaxYearScheme("Scheme1", "00348916RL", 5, 7, None)),
               8,
               6,
               models.calculation.inputs.Period._2017,

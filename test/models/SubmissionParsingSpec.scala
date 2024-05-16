@@ -42,7 +42,7 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
             List(
               NormalTaxYear(
                 2,
-                List(TaxYearScheme("1", "00348916RT", 1, 2, 0, Some(3), Some(4))),
+                List(TaxYearScheme("1", "00348916RT", 2, 0, Some(4))),
                 5,
                 0,
                 Period._2016,
@@ -50,7 +50,7 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
               ),
               NormalTaxYear(
                 5,
-                List(TaxYearScheme("1", "00348916RT", 4, 5, 7, None, None)),
+                List(TaxYearScheme("1", "00348916RT", 5, 7, None)),
                 8,
                 6,
                 Period._2017,
