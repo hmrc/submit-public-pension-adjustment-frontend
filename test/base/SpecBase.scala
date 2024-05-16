@@ -76,6 +76,8 @@ trait SpecBase
       taxYearSchemes = List.empty
     )
 
+  val id: String = "id"
+
   val sessionId: String = "sessionId"
 
   val uniqueId: String = "uniqueId"
@@ -86,7 +88,7 @@ trait SpecBase
 
   val calculationInputs = CalculationInputs(resubmission, None, None)
 
-  val submission = Submission(sessionId, uniqueId, calculationInputs, None)
+  val submission = Submission(id, sessionId, uniqueId, calculationInputs, None)
 
   def submissionRelatingToTaxYearSchemes(taxYearSchemes: List[TaxYearScheme]): Submission = {
     val resubmission      = Resubmission(false, None)
@@ -95,7 +97,7 @@ trait SpecBase
       List(NormalTaxYear(0, taxYearSchemes, 0, 0, models.calculation.inputs.Period._2017, None))
     )
     val calculationInputs = CalculationInputs(resubmission, Some(annualAllowance), None)
-    Submission(sessionId, uniqueId, calculationInputs, None)
+    Submission(id, sessionId, uniqueId, calculationInputs, None)
   }
 
   protected val fixedInstant: Instant      = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant

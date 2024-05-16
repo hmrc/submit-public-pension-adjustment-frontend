@@ -26,6 +26,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
   val mockCalculationInputsWithAA = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
   val ltaOnlySubmission           = Submission(
+    "id",
     "sessionId",
     "submissionUniqueId",
     CalculationInputs(mock[Resubmission], None, Some(mock[LifeTimeAllowance])),
@@ -299,7 +300,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
       List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
     )
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+      Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
     submission
   }
 
@@ -313,7 +314,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
       List(models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty))
     )
     val submission: Submission =
-      Submission("sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
+      Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
     submission
   }
 }

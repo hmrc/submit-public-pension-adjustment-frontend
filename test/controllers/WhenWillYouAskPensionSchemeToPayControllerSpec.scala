@@ -108,7 +108,7 @@ class WhenWillYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mocki
         List.empty
       )
       val submission: Submission =
-        Submission("sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
+        Submission("id", "sessionId", "submissionUniqueId", mockCalculationInputs, Some(calculationResponse))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))

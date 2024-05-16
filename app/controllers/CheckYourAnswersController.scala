@@ -77,7 +77,6 @@ class CheckYourAnswersController @Inject() (
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
       val authRetrievals = AuthRetrievals(
         request.userId,
-        request.nino,
         (request.name.givenName.getOrElse("") + " " + request.name.middleName.getOrElse(
           ""
         ) + " " + request.name.familyName.getOrElse("")).trim,

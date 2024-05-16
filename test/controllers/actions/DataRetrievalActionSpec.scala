@@ -48,7 +48,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
         val submissionDataService = mock[SubmissionDataService]
 
         val submission =
-          Submission("sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
+          Submission("id", "sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
 
         when(userDataService.get()(any())) thenReturn Future(None)
         when(submissionDataService.getBySessionId(anyString())(any())) thenReturn Future(Some(submission))
@@ -59,7 +59,6 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
           .callTransform(
             IdentifierRequest(
               FakeRequest(),
-              "id",
               "nino",
               ItmpName(Some("givenName"), None, Some("familyName")),
               None,
@@ -80,7 +79,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
         val submissionRepository = mock[SubmissionDataService]
 
         val submission =
-          Submission("sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
+          Submission("id", "sessionId", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
 
         when(userDataService.get()(any())) thenReturn Future(Some(UserAnswers("id")))
         when(submissionRepository.getBySessionId(anyString())(any())) thenReturn Future(Some(submission))
@@ -92,7 +91,6 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
             .callTransform(
               new IdentifierRequest(
                 FakeRequest(),
-                "id",
                 "nino",
                 ItmpName(Some("givenName"), None, Some("familyName")),
                 None,

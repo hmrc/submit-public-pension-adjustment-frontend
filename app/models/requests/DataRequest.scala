@@ -26,7 +26,6 @@ import java.time.LocalDate
 case class OptionalDataRequest[A](
   request: Request[A],
   userId: String,
-  nino: String,
   name: ItmpName,
   saUtr: Option[String],
   dob: Option[LocalDate],
@@ -37,7 +36,6 @@ case class OptionalDataRequest[A](
 case class DataRequest[A](
   request: Request[A],
   userId: String,
-  nino: String,
   name: ItmpName,
   saUtr: Option[String],
   dob: Option[LocalDate],
@@ -48,7 +46,6 @@ case class DataRequest[A](
 case class CalculationDataRequest[A](
   request: Request[A],
   userId: String,
-  nino: String,
   name: ItmpName,
   saUtr: Option[String],
   dob: Option[LocalDate],

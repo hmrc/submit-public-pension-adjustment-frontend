@@ -42,6 +42,7 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
         val userId    = "someSessionId"
 
         val expectedSubmission = Submission(
+          id = "id",
           sessionId = "someSessionId",
           uniqueId = "someUniqueId",
           calculationInputs = CalculationInputs(Resubmission(false, None), None, None),

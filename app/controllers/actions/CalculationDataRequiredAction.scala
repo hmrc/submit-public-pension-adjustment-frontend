@@ -37,7 +37,6 @@ class CalculationDataRequiredActionImpl @Inject() (implicit val executionContext
             CalculationDataRequest(
               request.request,
               request.userId,
-              request.nino,
               request.name,
               request.saUtr,
               request.dob,

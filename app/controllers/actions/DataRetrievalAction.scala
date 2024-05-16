@@ -37,7 +37,6 @@ class DataRetrievalActionImpl @Inject() (
         OptionalDataRequest(
           request.request,
           request.userId,
-          request.nino,
           request.name,
           request.saUtr,
           request.dateOfBirth,
