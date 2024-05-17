@@ -118,7 +118,7 @@ object TestData {
           ),
           NormalTaxYear(
             43000,
-            List(TaxYearScheme("Scheme 1", "00348916RT",  43000, 0, None)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 43000, 0, None)),
             60000,
             3280,
             Period._2019,
@@ -622,7 +622,7 @@ object TestData {
             ),
             NormalTaxYear(
               43000,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 43000, 0,  None)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 43000, 0, None)),
               60000,
               3280,
               Period._2019,
