@@ -30,7 +30,7 @@ class BankDetailsPageSpec extends PageBehaviours {
 
     "must navigate correctly in NormalMode" - {
 
-      "to CYA when Pension scheme b scheme selected" in {
+      "to CYA" in {
         val ua     = emptyUserAnswers
           .set(
             BankDetailsPage,
@@ -40,10 +40,10 @@ class BankDetailsPageSpec extends PageBehaviours {
           .value
         val result = BankDetailsPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
-      "to JourneyRecoveryPage when not selected" in {
+      "to JourneyRecoveryPage when not answered" in {
         val ua     = emptyUserAnswers
         val result = BankDetailsPage.navigate(NormalMode, ua).url
 

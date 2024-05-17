@@ -21,11 +21,10 @@
     govukButton: GovukButton
 )
 
-@(list: SummaryList)(implicit request: Request[_], messages: Messages)
+@(list: SummaryList, continueURL: Call)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
-@formHelper(action = routes.CheckYourAnswersController.onSubmit(), Symbol("autoComplete") -> "off") {
 
     <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 
@@ -35,8 +34,8 @@
 
     <p class="govuk-body">
         @govukButton(
-          ButtonViewModel(messages("site.continue")).preventingDoubleClick()
+          ButtonViewModel(messages("site.continue")).asLink(continueURL.url)
         )
     </p>
-  }
+
 }

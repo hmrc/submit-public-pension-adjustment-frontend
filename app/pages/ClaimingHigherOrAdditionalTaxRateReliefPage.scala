@@ -42,7 +42,7 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPageWith
   override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimingHigherOrAdditionalTaxRateReliefPage) match {
       case Some(true)  => controllers.routes.HowMuchTaxReliefController.onPageLoad(NormalMode)
-      case Some(false) => controllers.routes.DeclarationsController.onPageLoad
+      case Some(false) => controllers.routes.CheckYourAnswersController.onPageLoad
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -54,7 +54,7 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPageWith
     if (memberCredit > 0) {
       controllers.routes.BankDetailsController.onPageLoad(mode)
     } else {
-      controllers.routes.DeclarationsController.onPageLoad
+      controllers.routes.CheckYourAnswersController.onPageLoad
     }
   }
 

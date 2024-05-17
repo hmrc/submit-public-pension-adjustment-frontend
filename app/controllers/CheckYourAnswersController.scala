@@ -18,23 +18,20 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions._
-import models.finalsubmission.{AuthRetrievals, FinalSubmissionResponse}
 import models.requests.DataRequest
-import models.{NavigationState, PSTR, Period, UserAnswers, UserSubmissionReference}
+import models.{NavigationState, PSTR, Period, UserAnswers}
 import pages.ClaimOnBehalfPage
 import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{PeriodService, SchemeService, SubmissionService, UserDataService}
+import services.{PeriodService, SchemeService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.{CheckYourAnswersView, IncompleteDataCaptureView}
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class CheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -43,8 +40,6 @@ class CheckYourAnswersController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  submissionService: SubmissionService,
-  userDataService: UserDataService,
   checkYourAnswersView: CheckYourAnswersView,
   incompleteDataCaptureView: IncompleteDataCaptureView
 )(implicit ec: ExecutionContext)
@@ -66,56 +61,16 @@ class CheckYourAnswersController @Inject() (
 
         val allRows = initialRowBlock(request) ++ mayBePeriodRowBlock.getOrElse(Seq()) ++ finalRowBlock(request)
 
-        Ok(checkYourAnswersView(SummaryListViewModel(allRows.flatten)))
+        Ok(
+          checkYourAnswersView(
+            SummaryListViewModel(allRows.flatten),
+            controllers.routes.DeclarationsController.onPageLoad
+          )
+        )
       } else {
         Ok(incompleteDataCaptureView(NavigationState.getContinuationUrl(request.userAnswers)))
       }
 
-  }
-
-  def onSubmit(): Action[AnyContent] =
-    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      val authRetrievals = AuthRetrievals(
-        request.userId,
-        (request.name.givenName.getOrElse("") + " " + request.name.middleName.getOrElse(
-          ""
-        ) + " " + request.name.familyName.getOrElse("")).trim,
-        request.saUtr,
-        request.dob
-      )
-
-      request.userAnswers.get(UserSubmissionReference()) match {
-        case Some(_) =>
-          val submissionUniqueId = request.submission.uniqueId
-          logger.warn(s"Prevented attempted duplicate submission related to submissionUniqueId : $submissionUniqueId")
-          Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
-        case None    => sendFinalSubmission(request, authRetrievals)
-      }
-    }
-
-  private def sendFinalSubmission(request: DataRequest[AnyContent], authRetrievals: AuthRetrievals)(implicit
-    headerCarrier: HeaderCarrier
-  ) =
-    submissionService
-      .sendFinalSubmission(
-        authRetrievals,
-        request.submission.calculationInputs,
-        request.submission.calculation,
-        request.userAnswers
-      )
-      .map { finalSubmissionResponse =>
-        persistSubmissionReference(request, finalSubmissionResponse)
-        Redirect(controllers.routes.SubmissionController.onPageLoad())
-      }
-
-  private def persistSubmissionReference(
-    request: DataRequest[AnyContent],
-    finalSubmissionResponse: FinalSubmissionResponse
-  ) = {
-    val hc                              = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    val userSubmissionReference: String = finalSubmissionResponse.userSubmissionReference
-    val updatedAnswers                  = request.userAnswers.set(UserSubmissionReference(), userSubmissionReference)
-    userDataService.set(updatedAnswers.get)(hc)
   }
 
   private def initialRowBlock(request: DataRequest[AnyContent])(implicit messages: Messages) =

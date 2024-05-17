@@ -171,7 +171,7 @@ GET         /change-bank-details                                                
 POST        /change-bank-details                                                                                        controllers.BankDetailsController.onSubmit(mode: Mode = CheckMode)
 
 GET         /check-your-answers                                                                                         controllers.CheckYourAnswersController.onPageLoad
-GET         /submit-your-answers                                                                                        controllers.CheckYourAnswersController.onSubmit()
+GET         /submit-your-answers                                                                                        controllers.DeclarationsController.onSubmit()
 GET         /submission                                                                                                 controllers.SubmissionController.onPageLoad()
 
 GET         /uplift-failure                                                                                             controllers.UpliftFailedController.onPageLoad()

@@ -17,22 +17,21 @@
 package controllers
 
 import base.SpecBase
-import models.calculation.inputs.{CalculationInputs, Resubmission}
-import models.finalsubmission.FinalSubmissionResponse
+import models.calculation.inputs.CalculationInputs
 import models.submission.Submission
-import models.{Done, NavigationState, PensionSchemeDetails, Period, UserAnswers, UserSubmissionReference, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
+import models.{Done, NavigationState, PensionSchemeDetails, Period, UserAnswers, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{verify, verifyNoInteractions, when}
+import org.mockito.Mockito.when
 import org.mockito.MockitoSugar.mock
-import org.mockito.captor.ArgCaptor
 import pages._
 import play.api.Application
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.SubmissionDataService
-import services.{SubmissionService, UserDataService}
+import services.UserDataService
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
@@ -42,10 +41,9 @@ import scala.concurrent.Future
 
 class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
-  lazy val checkYourAnswerRoute  = routes.CheckYourAnswersController.onPageLoad.url
-  lazy val submitYourAnswerRoute = routes.CheckYourAnswersController.onSubmit.url
-
-  lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
+  lazy val checkYourAnswerRoute         = controllers.routes.CheckYourAnswersController.onPageLoad.url
+  lazy val declarationRoute             = controllers.routes.DeclarationsController.onPageLoad
+  lazy val calculationPrerequisiteRoute = controllers.routes.CalculationPrerequisiteController.onPageLoad().url
 
   "Check Your Answers Controller" - {
 
@@ -64,7 +62,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val list = SummaryListViewModel(Seq.empty)
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list)(request, messages(application)).toString()
+        contentAsString(result) mustEqual view(list, declarationRoute)(request, messages(application)).toString()
       }
     }
 
@@ -87,12 +85,12 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
-        val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad.url)
+        val request = FakeRequest(GET, controllers.routes.CheckYourAnswersController.onPageLoad.url)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -138,101 +136,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val list = SummaryListViewModel(expectedSeq)
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list)(request, messages(application)).toString()
-      }
-    }
-
-    "must send final submission when continuing if no userSubmissionReference has already been persisted" in {
-
-      val mockCalculationInputs     = mock[CalculationInputs]
-      val mockUserDataService       = mock[UserDataService]
-      val mockSubmissionDataService = mock[SubmissionDataService]
-      val mockSubmissionService     = mock[SubmissionService]
-      val userAnswersCaptor         = ArgCaptor[UserAnswers]
-
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-
-      when(mockCalculationInputs.annualAllowance) thenReturn None
-      when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
-      when(mockCalculationInputs.resubmission) thenReturn Resubmission(false, None)
-
-      when(mockSubmissionService.sendFinalSubmission(any, any, any, any)(any))
-        .thenReturn(Future.successful(FinalSubmissionResponse("userSubmissionReference")))
-
-      val submission: Submission =
-        Submission(
-          "id",
-          "uniqueId",
-          mockCalculationInputs,
-          Some(aCalculationResponseWithAnInDateDebitYear)
-        )
-
-      val ua: UserAnswers = completeUserAnswers
-
-      val application =
-        applicationBuilder(userAnswers = Some(ua), submission = Some(submission))
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService),
-            bind[SubmissionDataService].toInstance(mockSubmissionDataService),
-            bind[SubmissionService].toInstance(mockSubmissionService)
-          )
-          .build()
-
-      running(application) {
-        val request = FakeRequest(GET, submitYourAnswerRoute)
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.SubmissionController.onPageLoad().url
-
-        verify(mockUserDataService).set(userAnswersCaptor)(any())
-        val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
-        capturedUserAnswers.get(UserSubmissionReference()).get mustEqual "userSubmissionReference"
-      }
-    }
-
-    "must not re-send final submission when continuing if userSubmissionReference has already been persisted" in {
-
-      val mockCalculationInputs     = mock[CalculationInputs]
-      val mockUserDataService       = mock[UserDataService]
-      val mockSubmissionDataService = mock[SubmissionDataService]
-      val mockSubmissionService     = mock[SubmissionService]
-
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-
-      when(mockCalculationInputs.annualAllowance) thenReturn None
-      when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
-      when(mockCalculationInputs.resubmission) thenReturn Resubmission(false, None)
-
-      val submission: Submission =
-        Submission(
-          "id",
-          "uniqueId",
-          mockCalculationInputs,
-          Some(aCalculationResponseWithAnInDateDebitYear)
-        )
-
-      val uaWithUserSubmissionReference: UserAnswers =
-        completeUserAnswers.set(UserSubmissionReference(), "userSubmissionReference").get
-
-      val application =
-        applicationBuilder(userAnswers = Some(uaWithUserSubmissionReference), submission = Some(submission))
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService),
-            bind[SubmissionDataService].toInstance(mockSubmissionDataService),
-            bind[SubmissionService].toInstance(mockSubmissionService)
-          )
-          .build()
-
-      running(application) {
-        val request = FakeRequest(GET, submitYourAnswerRoute)
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
-        verifyNoInteractions(mockSubmissionService)
+        contentAsString(result) mustEqual view(list, declarationRoute)(request, messages(application)).toString()
       }
     }
   }
