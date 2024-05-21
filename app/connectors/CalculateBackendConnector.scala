@@ -98,9 +98,10 @@ class CalculateBackendConnector @Inject() (
       .execute[HttpResponse]
       .flatMap { response =>
         response.status match {
-          case OK =>
+          case OK         =>
             Future.successful(Done)
-          case _  =>
+          case NO_CONTENT => Future.successful(Done)
+          case _          =>
             logger.error(
               s"Unexpected response from /calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers with status : ${response.status}"
             )

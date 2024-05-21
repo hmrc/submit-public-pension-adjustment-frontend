@@ -182,6 +182,22 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
       }
     }
 
+    "must return Done when the server responds with NO_CONTENT" in {
+      val app = application
+
+      server.stubFor(
+        get(urlEqualTo("/calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers/1234"))
+          .willReturn(aResponse().withStatus(NO_CONTENT))
+      )
+
+      running(app) {
+        val connector = app.injector.instanceOf[CalculateBackendConnector]
+        val result    = connector.updateCalcBEWithUserAnswers("1234").futureValue
+
+        result mustBe Done
+      }
+    }
+
     "must return a failed future when the server responds with an error status" in {
       val app = application
 
