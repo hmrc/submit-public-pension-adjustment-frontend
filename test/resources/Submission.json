@@ -12,10 +12,8 @@
             {
               "name": "1",
               "pensionSchemeTaxReference": "00348916RT",
-              "originalPensionInputAmount": 1,
               "revisedPensionInputAmount": 2,
               "chargePaidByScheme": 0,
-              "originalPensionInput2016PostAmount": 3,
               "revisedPensionInput2016PostAmount": 4
             }
           ],
@@ -29,7 +27,6 @@
             {
               "name": "1",
               "pensionSchemeTaxReference": "00348916RT",
-              "originalPensionInputAmount": 4,
               "revisedPensionInputAmount": 5,
               "chargePaidByScheme": 7
             }
