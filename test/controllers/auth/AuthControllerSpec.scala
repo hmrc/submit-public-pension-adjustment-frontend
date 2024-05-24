@@ -18,6 +18,7 @@ package controllers.auth
 
 import base.SpecBase
 import config.FrontendAppConfig
+import connectors.SubmitBackendConnector
 import models.Done
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, when}
@@ -83,16 +84,20 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
     "must clear users answers and redirect to sign out, specifying SignedOut as the continue URL" in {
 
-      val mockUserDataService       = mock[UserDataService]
-      val mockSubmissionDataService = mock[SubmissionDataService]
+      val mockUserDataService        = mock[UserDataService]
+      val mockSubmissionDataService  = mock[SubmissionDataService]
+      val mockSubmitBackendConnector = mock[SubmitBackendConnector]
+
       when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
       when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
+      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(None)
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService),
-            bind[SubmissionDataService].toInstance(mockSubmissionDataService)
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService),
+            bind[SubmitBackendConnector].toInstance(mockSubmitBackendConnector)
           )
           .build()
 
@@ -110,6 +115,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
         redirectLocation(result).value mustEqual expectedRedirectUrl
         verify(mockUserDataService, times(1)).clear()(any())
         verify(mockSubmissionDataService, times(1)).clear()(any())
+        verify(mockSubmitBackendConnector, times(1)).clearCalcUserAnswersSubmitBE()(any())
       }
     }
   }

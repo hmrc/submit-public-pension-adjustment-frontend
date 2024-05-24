@@ -73,7 +73,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
 
       running(app) {
         val connector = app.injector.instanceOf[CalculateBackendConnector]
-        val result    = connector.clearCalcUserAnswersBE().futureValue
+        val result    = connector.clearUserAnswersCalcBE().futureValue
 
         result mustBe Done
       }
@@ -89,7 +89,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
 
       running(app) {
         val connector = app.injector.instanceOf[CalculateBackendConnector]
-        val result    = connector.clearCalcUserAnswersBE().failed.futureValue
+        val result    = connector.clearUserAnswersCalcBE().failed.futureValue
 
         result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
@@ -108,7 +108,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
 
       running(app) {
         val connector = app.injector.instanceOf[CalculateBackendConnector]
-        val result    = connector.clearCalcSubmissionBE().futureValue
+        val result    = connector.clearSubmissionCalcBE().futureValue
 
         result mustBe Done
       }
@@ -124,7 +124,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
 
       running(app) {
         val connector = app.injector.instanceOf[CalculateBackendConnector]
-        val result    = connector.clearCalcSubmissionBE().failed.futureValue
+        val result    = connector.clearSubmissionCalcBE().failed.futureValue
 
         result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
@@ -158,7 +158,57 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
 
       running(app) {
         val connector = app.injector.instanceOf[CalculateBackendConnector]
-        val result    = connector.clearCalcSubmissionBE().failed.futureValue
+        val result    = connector.sendFlagResetSignal("1234").failed.futureValue
+
+        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+      }
+    }
+  }
+
+  "updateCalcBEWithUserAnswers" - {
+    "must return Done when the server responds with OK" in {
+      val app = application
+
+      server.stubFor(
+        get(urlEqualTo("/calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers/1234"))
+          .willReturn(aResponse().withStatus(OK))
+      )
+
+      running(app) {
+        val connector = app.injector.instanceOf[CalculateBackendConnector]
+        val result    = connector.updateCalcBEWithUserAnswers("1234").futureValue
+
+        result mustBe Done
+      }
+    }
+
+    "must return Done when the server responds with NO_CONTENT" in {
+      val app = application
+
+      server.stubFor(
+        get(urlEqualTo("/calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers/1234"))
+          .willReturn(aResponse().withStatus(NO_CONTENT))
+      )
+
+      running(app) {
+        val connector = app.injector.instanceOf[CalculateBackendConnector]
+        val result    = connector.updateCalcBEWithUserAnswers("1234").futureValue
+
+        result mustBe Done
+      }
+    }
+
+    "must return a failed future when the server responds with an error status" in {
+      val app = application
+
+      server.stubFor(
+        get(urlEqualTo("/calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers/1234"))
+          .willReturn(aResponse().withStatus(BAD_REQUEST))
+      )
+
+      running(app) {
+        val connector = app.injector.instanceOf[CalculateBackendConnector]
+        val result    = connector.updateCalcBEWithUserAnswers("1234").failed.futureValue
 
         result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }

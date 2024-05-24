@@ -16,7 +16,7 @@
 
 package controllers
 
-import connectors.CalculateBackendConnector
+import connectors.{CalculateBackendConnector, SubmitBackendConnector}
 import controllers.actions._
 import forms.ConfirmEditAnswersFormProvider
 
@@ -37,6 +37,7 @@ class ConfirmEditAnswersController @Inject() (
   submissionDataService: SubmissionDataService,
   calculateBackendDataService: CalculateBackendDataService,
   calculateBackendConnector: CalculateBackendConnector,
+  submitBackendConnector: SubmitBackendConnector,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -69,7 +70,8 @@ class ConfirmEditAnswersController @Inject() (
                 _ <- calculateBackendConnector.sendFlagResetSignal(request.submission.id)
                 _ <- userDataService.clear()
                 _ <- submissionDataService.clear()
-                r <- calculateBackendDataService.clearCalcSubmissionBE()
+                _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
+                r <- calculateBackendDataService.clearSubmissionCalcBE()
               } yield r
             }
             for {
