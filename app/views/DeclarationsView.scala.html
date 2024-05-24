@@ -16,12 +16,15 @@
 
 @this(
         layout: templates.Layout,
+formHelper: FormWithCSRF,
         govukButton: GovukButton
 )
 
 @(isClaimOnBehalf: Boolean, memberName: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("declarations.title"))) {
+
+@formHelper(action = routes.DeclarationsController.onSubmit(), Symbol("autoComplete") -> "off") {
 
     <h1 class="govuk-heading-xl">@messages("declarations.heading")</h1>
 
@@ -63,9 +66,10 @@
 
     <p class="govuk-body">
         @govukButton(
-        ButtonViewModel(messages("declaration.confirm"))
-        .asLink(routes.CheckYourAnswersController.onPageLoad.url)
+        ButtonViewModel(messages("declaration.confirm")).preventingDoubleClick()
         )
     </p>
+
+    }
 
 }

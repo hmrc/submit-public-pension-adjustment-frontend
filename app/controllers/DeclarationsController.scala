@@ -17,13 +17,22 @@
 package controllers
 
 import controllers.actions._
-import models.UserAnswers
+import models.{UserAnswers, UserSubmissionReference}
+import models.finalsubmission.{AuthRetrievals, FinalSubmissionResponse}
+import models.requests.DataRequest
 import pages.{ClaimOnBehalfPage, PensionSchemeMemberNamePage}
+import play.api.i18n.Lang.logger
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.{SubmissionService, UserDataService}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.DeclarationsView
+
+import scala.concurrent.{ExecutionContext, Future}
 
 class DeclarationsController @Inject() (
   override val messagesApi: MessagesApi,
@@ -32,8 +41,11 @@ class DeclarationsController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: DeclarationsView
-) extends FrontendBaseController
+  view: DeclarationsView,
+  submissionService: SubmissionService,
+  userDataService: UserDataService
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
@@ -48,5 +60,50 @@ class DeclarationsController @Inject() (
       case None       => false
       case _          => false
     }
+
+  def onSubmit(): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+      val authRetrievals = AuthRetrievals(
+        request.userId,
+        (request.name.givenName.getOrElse("") + " " + request.name.middleName.getOrElse(
+          ""
+        ) + " " + request.name.familyName.getOrElse("")).trim,
+        request.saUtr,
+        request.dob
+      )
+
+      request.userAnswers.get(UserSubmissionReference()) match {
+        case Some(_) =>
+          val submissionUniqueId = request.submission.uniqueId
+          logger.warn(s"Prevented attempted duplicate submission related to submissionUniqueId : $submissionUniqueId")
+          Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
+        case None    => sendFinalSubmission(request, authRetrievals)
+      }
+    }
+
+  private def sendFinalSubmission(request: DataRequest[AnyContent], authRetrievals: AuthRetrievals)(implicit
+    headerCarrier: HeaderCarrier
+  ) =
+    submissionService
+      .sendFinalSubmission(
+        authRetrievals,
+        request.submission.calculationInputs,
+        request.submission.calculation,
+        request.userAnswers
+      )
+      .map { finalSubmissionResponse =>
+        persistSubmissionReference(request, finalSubmissionResponse)
+        Redirect(controllers.routes.SubmissionController.onPageLoad())
+      }
+
+  private def persistSubmissionReference(
+    request: DataRequest[AnyContent],
+    finalSubmissionResponse: FinalSubmissionResponse
+  ) = {
+    val hc                              = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    val userSubmissionReference: String = finalSubmissionResponse.userSubmissionReference
+    val updatedAnswers                  = request.userAnswers.set(UserSubmissionReference(), userSubmissionReference)
+    userDataService.set(updatedAnswers.get)(hc)
+  }
 
 }

@@ -56,7 +56,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/submission-service/how-much-tax-relief-claiming-for")
       }
 
-      "to declarations when answered no and LTA only" in {
+      "to CYA when answered no and LTA only" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -67,7 +67,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, ltaOnlySubmission).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to journey recovery when not answered and LTA only" in {
@@ -92,7 +92,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/bank-details")
       }
 
-      "to Declarations when answered no and member is not in credit" in {
+      "to CYA when answered no and member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -103,7 +103,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submissionNotInCredit).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to HowMuchTaxReliefPage when answered yes" in {
@@ -145,7 +145,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/submission-service/how-much-tax-relief-claiming-for")
       }
 
-      "to Declarations answered no and LTA only" in {
+      "to CYA answered no and LTA only" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -156,7 +156,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, ltaOnlySubmission).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to journey recovery when not answered and LTA only" in {
@@ -195,7 +195,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/submission-service/how-much-tax-relief-claiming-for")
       }
 
-      "to Declarations when answered no and member is not in credit" in {
+      "to CYA when answered no and member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -206,7 +206,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionNotInCredit).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to BankDetails when answered no and member is in credit" in {

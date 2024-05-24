@@ -51,7 +51,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
       }
 
-      "to DeclarationsPage when single scheme" in {
+      "to CYA when single scheme" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -62,7 +62,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, ltaOnlySubmissionWithSingleScheme).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
     }
 
@@ -96,7 +96,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
       }
 
-      "to Declarations when there is a single scheme" in {
+      "to CYA when there is a single scheme" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -107,7 +107,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, ltaOnlySubmissionWithSingleScheme).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
     }
 
@@ -160,7 +160,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
       checkNavigation(result, "/bank-details")
     }
 
-    "to declarations controller controller when member is in credit and only 1 scheme" in {
+    "to CYA when member is in credit and only 1 scheme" in {
 
       val ua = emptyUserAnswers
         .set(
@@ -172,7 +172,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
       val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, submissionNotInCreditWithOneScheme).url
 
-      checkNavigation(result, "/declarations")
+      checkNavigation(result, "/check-your-answers")
     }
 
     "must navigate correctly in CheckMode" - {
@@ -237,7 +237,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/bank-details")
       }
 
-      "to Declarations when there is a single scheme and member is not in credit" in {
+      "to CYA when there is a single scheme and member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -247,7 +247,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionNotInCreditWithOneScheme).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not selected" in {

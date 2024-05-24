@@ -41,7 +41,7 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOn
     navigateInNormalModeAA(answers, submission)
 
   override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    controllers.routes.DeclarationsController.onPageLoad
+    controllers.routes.CheckYourAnswersController.onPageLoad
 
   override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     navigateInNormalModeLTAOnly(answers, submission)
@@ -51,7 +51,7 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOn
     if (memberCredit > 0) {
       controllers.routes.BankDetailsController.onPageLoad(mode)
     } else {
-      controllers.routes.DeclarationsController.onPageLoad
+      controllers.routes.CheckYourAnswersController.onPageLoad
     }
   }
 

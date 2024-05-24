@@ -37,7 +37,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
     "must navigate correctly when LTA Only" - {
 
-      "to Declarations in NormalMode" in {
+      "to CYA in NormalMode" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
@@ -54,10 +54,10 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           )
           .url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
-      "to Declarations in CheckMode" in {
+      "to CYA in CheckMode" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
@@ -74,7 +74,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           )
           .url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
     }
 
@@ -104,7 +104,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
         checkNavigation(result, "/bank-details")
       }
 
-      "to Declarations when Pension scheme b scheme selected and member is in credit" in {
+      "to CYA when Pension scheme b scheme selected and member is in credit" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
@@ -125,7 +125,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           Submission("id", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecoveryPage when not selected" in {
@@ -147,7 +147,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to Declarations when member is not in credit" in {
+      "to CYA when member is not in credit" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
@@ -166,7 +166,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           Submission("id", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua, submission).url
 
-        checkNavigation(result, "/declarations")
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to BARS when Pension scheme b scheme selected and member is in credit in Check mode" in {
