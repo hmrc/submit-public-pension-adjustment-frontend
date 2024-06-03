@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package models.finalsubmission
+package pages
 
 import models.SchemeCreditConsent
-import play.api.libs.json.{Format, Json}
+import models.UserAnswers
+import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
-case class Declarations(
-  compensation: Boolean,
-  tax: Boolean,
-  contactDetails: Boolean,
-  powerOfAttorney: Option[Boolean],
-  claimOnBehalfOfDeceased: Option[Boolean],
-  schemeCreditConsent: Option[SchemeCreditConsent]
-) {}
+case object SchemeCreditConsentPage extends QuestionPage[Set[SchemeCreditConsent]] {
 
-object Declarations {
+  override def path: JsPath = JsPath \ toString
 
-  implicit lazy val formats: Format[Declarations] = Json.format
+  override def toString: String = "schemeCreditConsent"
+
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    answers.get(SchemeCreditConsentPage) match {
+      case Some(_) => controllers.routes.DeclarationsController.onPageLoad
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

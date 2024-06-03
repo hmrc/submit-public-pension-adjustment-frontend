@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package models.finalsubmission
+package forms
 
+import javax.inject.Inject
+
+import forms.mappings.Mappings
+import play.api.data.Form
+import play.api.data.Forms.set
 import models.SchemeCreditConsent
-import play.api.libs.json.{Format, Json}
 
-case class Declarations(
-  compensation: Boolean,
-  tax: Boolean,
-  contactDetails: Boolean,
-  powerOfAttorney: Option[Boolean],
-  claimOnBehalfOfDeceased: Option[Boolean],
-  schemeCreditConsent: Option[SchemeCreditConsent]
-) {}
+class SchemeCreditConsentFormProvider @Inject() extends Mappings {
 
-object Declarations {
-
-  implicit lazy val formats: Format[Declarations] = Json.format
+  def apply(): Form[Set[SchemeCreditConsent]] =
+    Form(
+      "value" -> set(enumerable[SchemeCreditConsent]("schemeCreditConsent.error.required"))
+        .verifying(nonEmptySet("schemeCreditConsent.error.required"))
+    )
 }

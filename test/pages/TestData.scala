@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{PSTR, PensionSchemeMemberInternationalAddress, UkAddress, UserAnswers}
+import models.{PSTR, PensionSchemeMemberInternationalAddress, SchemeCreditConsent, UkAddress, UserAnswers}
 import models.calculation.inputs.Income.{AboveThreshold, BelowThreshold}
 import models.calculation.inputs.TaxYear2016To2023.{NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.calculation.inputs._
@@ -391,7 +391,10 @@ object TestData {
       |  },
       |  "claimingHigherOrAdditionalTaxRateRelief": true,
       |  "howMuchTaxRelief": 10000,
-      |  "whichPensionSchemeWillPayTaxRelief": "Scheme 1 / 00348916RT"
+      |  "whichPensionSchemeWillPayTaxRelief": "Scheme 1 / 00348916RT",
+      |  "schemeCreditConsent": [
+      |      "yes"
+      |    ]
       |}
       |""".stripMargin)
     .as[JsObject]
@@ -513,7 +516,7 @@ object TestData {
       )
     ),
     None,
-    Declarations(true, true, true, None, None)
+    Declarations(true, true, true, None, None, None)
   )
 
   val submissionInputs2 = SubmissionInputs(
@@ -581,7 +584,7 @@ object TestData {
       )
     ),
     None,
-    Declarations(true, true, true, Some(true), None)
+    Declarations(true, true, true, Some(true), None, Some(SchemeCreditConsent.Yes))
   )
 
   val finalSubmission1 = FinalSubmission(

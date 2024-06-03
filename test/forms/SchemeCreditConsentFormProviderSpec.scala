@@ -14,21 +14,32 @@
  * limitations under the License.
  */
 
-package models.finalsubmission
+package forms
 
+import forms.behaviours.CheckboxFieldBehaviours
 import models.SchemeCreditConsent
-import play.api.libs.json.{Format, Json}
+import play.api.data.FormError
 
-case class Declarations(
-  compensation: Boolean,
-  tax: Boolean,
-  contactDetails: Boolean,
-  powerOfAttorney: Option[Boolean],
-  claimOnBehalfOfDeceased: Option[Boolean],
-  schemeCreditConsent: Option[SchemeCreditConsent]
-) {}
+class SchemeCreditConsentFormProviderSpec extends CheckboxFieldBehaviours {
 
-object Declarations {
+  val form = new SchemeCreditConsentFormProvider()()
 
-  implicit lazy val formats: Format[Declarations] = Json.format
+  ".value" - {
+
+    val fieldName   = "value"
+    val requiredKey = "schemeCreditConsent.error.required"
+
+    behave like checkboxField[SchemeCreditConsent](
+      form,
+      fieldName,
+      validValues = SchemeCreditConsent.values,
+      invalidError = FormError(s"$fieldName[0]", "error.invalid")
+    )
+
+    behave like mandatoryCheckboxField(
+      form,
+      fieldName,
+      requiredKey
+    )
+  }
 }

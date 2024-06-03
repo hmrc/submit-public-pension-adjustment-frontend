@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitrarySchemeCreditConsentPage: Arbitrary[SchemeCreditConsentPage.type] =
+    Arbitrary(SchemeCreditConsentPage)
+
   implicit lazy val arbitraryConfirmRestartAnswersPage: Arbitrary[ConfirmRestartAnswersPage.type] =
     Arbitrary(ConfirmRestartAnswersPage)
 
