@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ContinueChoiceFormProvider
-import models.{ContinueChoice, Done, NormalMode, UserAnswers}
+import models.{ContinueChoice, Done, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar

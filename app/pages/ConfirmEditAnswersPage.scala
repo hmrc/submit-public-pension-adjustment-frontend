@@ -16,7 +16,6 @@
 
 package pages
 
-import config.FrontendAppConfig
 import models.UserAnswers
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

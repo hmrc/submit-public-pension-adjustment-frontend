@@ -17,20 +17,17 @@
 package controllers
 
 import base.SpecBase
-import connectors.CalculateBackendConnector
 import forms.ConfirmEditAnswersFormProvider
-import models.submission.Submission
-import models.{Done, NormalMode, UserAnswers}
+import models.Done
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{times, verify, when}
+import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ConfirmEditAnswersPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.ConfirmEditAnswersView
-import services.{CalculateBackendDataService, SubmissionDataService, UserDataService}
+import services.UserDataService
 
 import scala.concurrent.Future
 

@@ -17,20 +17,10 @@
 package controllers
 
 import base.SpecBase
-import forms.ContinueChoiceFormProvider
-import models.{ContinueChoice, Done, NavigationState, NormalMode, UserAnswers}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import models.NavigationState
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ContinueChoicePage
-import play.api.inject.bind
-import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
-import views.html.ContinueChoiceView
-
-import scala.concurrent.Future
 
 class ContinueSessionControllerSpec extends SpecBase with MockitoSugar {
 

@@ -17,7 +17,7 @@
 package models.requests
 
 import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.retrieve.{ItmpName, Name}
+import uk.gov.hmrc.auth.core.retrieve.ItmpName
 
 import java.time.LocalDate
 
