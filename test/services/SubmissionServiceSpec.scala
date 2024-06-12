@@ -18,7 +18,7 @@ package services
 
 import base.SpecBase
 import connectors.SubmitBackendConnector
-import models.{PensionSchemeMemberInternationalAddress, UkAddress}
+import models.{PensionSchemeMemberInternationalAddress, SchemeCreditConsent, UkAddress}
 import models.finalsubmission.{BankAccountDetails, Declarations, FinalSubmissionResponse, PersonalDetails, TaxIdentifiers}
 import org.mockito.{ArgumentMatchers, MockitoSugar}
 import pages.TestData
@@ -172,7 +172,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
       result mustBe Some(BankAccountDetails("TestFName TestLName", "012345", "12345678"))
     }
 
-    "buildDeclarations with StatusOfUserPage having no PowerOfAttorney and Deputyship should return valid Declarations" in {
+    "buildDeclarations with StatusOfUserPage having no PowerOfAttorney, Deputyship and SchemeCreditConsent should return valid Declarations" in {
 
       val result = service.buildDeclarations(TestData.userAnswers1)
 
@@ -181,11 +181,12 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         tax = true,
         contactDetails = true,
         powerOfAttorney = None,
-        claimOnBehalfOfDeceased = None
+        claimOnBehalfOfDeceased = None,
+        schemeCreditConsent = None
       )
     }
 
-    "buildDeclarations with StatusOfUserPage having PowerOfAttorney should return valid Declarations" in {
+    "buildDeclarations with StatusOfUserPage having PowerOfAttorney and schemeCreditConsent should return valid Declarations" in {
 
       val result = service.buildDeclarations(TestData.userAnswers2)
 
@@ -194,7 +195,8 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         tax = true,
         contactDetails = true,
         powerOfAttorney = Some(true),
-        claimOnBehalfOfDeceased = None
+        claimOnBehalfOfDeceased = None,
+        schemeCreditConsent = Some(SchemeCreditConsent.Yes)
       )
     }
 
@@ -207,7 +209,8 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         tax = true,
         contactDetails = true,
         powerOfAttorney = None,
-        claimOnBehalfOfDeceased = Some(true)
+        claimOnBehalfOfDeceased = Some(true),
+        schemeCreditConsent = None
       )
     }
 

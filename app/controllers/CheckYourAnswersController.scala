@@ -19,11 +19,12 @@ package controllers
 import com.google.inject.Inject
 import controllers.actions._
 import models.requests.DataRequest
+import models.submission.Submission
 import models.{NavigationState, PSTR, Period, UserAnswers}
 import pages.ClaimOnBehalfPage
 import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import services.{PeriodService, SchemeService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -47,7 +48,7 @@ class CheckYourAnswersController @Inject() (
     with I18nSupport
     with Logging {
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
+  def onPageLoad(): Action[AnyContent]                               = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
       if (NavigationState.isDataCaptureComplete(request.userAnswers)) {
         val relevantPeriods: Option[Seq[Period]] =
@@ -64,7 +65,7 @@ class CheckYourAnswersController @Inject() (
         Ok(
           checkYourAnswersView(
             SummaryListViewModel(allRows.flatten),
-            controllers.routes.DeclarationsController.onPageLoad
+            maybeCreditSchemeConsent(request.submission)
           )
         )
       } else {
@@ -72,6 +73,16 @@ class CheckYourAnswersController @Inject() (
       }
 
   }
+  private def maybeCreditSchemeConsent(submission: Submission): Call =
+    submission.calculation match {
+      case Some(calculation) =>
+        if (calculation.inDates.map(_.schemeCredit).sum > 0) {
+          controllers.routes.SchemeCreditConsentController.onPageLoad
+        } else {
+          controllers.routes.DeclarationsController.onPageLoad
+        }
+      case None              => controllers.routes.DeclarationsController.onPageLoad
+    }
 
   private def initialRowBlock(request: DataRequest[AnyContent])(implicit messages: Messages) =
     Seq(

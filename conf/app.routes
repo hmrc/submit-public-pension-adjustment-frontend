@@ -190,3 +190,6 @@ GET        /confirm-restart-answers                                             
 POST       /confirm-restart-answers                                                                                     controllers.ConfirmRestartAnswersController.onSubmit()
 
 GET        /restart-calculation                                                                                         controllers.RestartCalculationController.restartCalculation
+
+GET        /submission-service/scheme-credit-consent                                                                    controllers.SchemeCreditConsentController.onPageLoad()
+POST       /submission-service/scheme-credit-consent                                                                    controllers.SchemeCreditConsentController.onSubmit()

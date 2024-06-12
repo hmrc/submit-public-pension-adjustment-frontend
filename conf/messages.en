@@ -541,3 +541,10 @@ confirmRestartAnswers.title = Do you want to restart your calculation?
 confirmRestartAnswers.heading = Do you want to restart your calculation?
 confirmRestartAnswers.message = You will be sent to the beginning of the service. You will lose all progress that you have made so far.
 confirmRestartAnswers.error.required = Select yes if you want to restart your calculation.
+
+schemeCreditConsent.title = Scheme Credit Consent
+schemeCreditConsent.heading = Scheme Credit Consent
+schemeCreditConsent.yes = Yes
+schemeCreditConsent.checkYourAnswersLabel = Scheme Credit Consent
+schemeCreditConsent.error.required = Select schemeCreditConsent
+schemeCreditConsent.change.hidden = Scheme Credit Consent

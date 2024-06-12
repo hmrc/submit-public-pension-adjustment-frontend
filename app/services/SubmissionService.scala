@@ -268,7 +268,8 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
           tax = true,
           contactDetails = true,
           powerOfAttorney = Some(true),
-          claimOnBehalfOfDeceased = None
+          claimOnBehalfOfDeceased = None,
+          schemeCreditConsent = userAnswers.get(SchemeCreditConsentPage).map(_.head)
         )
 
       case Some(StatusOfUser.Deputyship) =>
@@ -277,7 +278,8 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
           tax = true,
           contactDetails = true,
           powerOfAttorney = None,
-          claimOnBehalfOfDeceased = Some(true)
+          claimOnBehalfOfDeceased = Some(true),
+          schemeCreditConsent = userAnswers.get(SchemeCreditConsentPage).map(_.head)
         )
 
       case _ =>
@@ -286,7 +288,8 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
           tax = true,
           contactDetails = true,
           powerOfAttorney = None,
-          claimOnBehalfOfDeceased = None
+          claimOnBehalfOfDeceased = None,
+          schemeCreditConsent = userAnswers.get(SchemeCreditConsentPage).map(_.head)
         )
     }
 

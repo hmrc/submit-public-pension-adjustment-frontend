@@ -76,6 +76,38 @@ trait SpecBase
       taxYearSchemes = List.empty
     )
 
+  def aCalculationResponseWithAnInDateSchemeCredit = {
+
+    val inDatesYears = List(
+      inDatesTaxYearsCalculationSchemeCredit(models.calculation.response.Period._2023, 0),
+      inDatesTaxYearsCalculationSchemeCredit(models.calculation.response.Period._2022, 1),
+      inDatesTaxYearsCalculationSchemeCredit(models.calculation.response.Period._2020, 1),
+      inDatesTaxYearsCalculationSchemeCredit(models.calculation.response.Period._2021, 1)
+    )
+
+    val calculationResponse = CalculationResponse(
+      models.calculation.response.Resubmission(false, None),
+      TotalAmounts(0, 0, 3),
+      List.empty,
+      inDatesYears
+    )
+    calculationResponse
+  }
+
+  private def inDatesTaxYearsCalculationSchemeCredit(period1: Period, creditAmount: Int) =
+    InDatesTaxYearsCalculation(
+      period = period1,
+      memberCredit = 0,
+      schemeCredit = creditAmount,
+      debit = 0,
+      chargePaidByMember = 0,
+      chargePaidBySchemes = 0,
+      revisedChargableAmountBeforeTaxRate = 0,
+      revisedChargableAmountAfterTaxRate = 0,
+      unusedAnnualAllowance = 0,
+      taxYearSchemes = List.empty
+    )
+
   val id: String = "id"
 
   val uniqueId: String = "uniqueId"

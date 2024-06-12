@@ -31,7 +31,6 @@ import play.api.test.Helpers._
 import services.SubmissionDataService
 import services.UserDataService
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
@@ -43,11 +42,12 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
   lazy val checkYourAnswerRoute         = controllers.routes.CheckYourAnswersController.onPageLoad.url
   lazy val declarationRoute             = controllers.routes.DeclarationsController.onPageLoad
+  lazy val schemeCreditConsentRoute     = controllers.routes.SchemeCreditConsentController.onPageLoad
   lazy val calculationPrerequisiteRoute = controllers.routes.CalculationPrerequisiteController.onPageLoad().url
 
   "Check Your Answers Controller" - {
 
-    "must return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET when no calculation response" in {
 
       val answers        = emptyUserAnswers
       val answersWithNav = NavigationState.save(answers, NavigationState.checkYourAnswersUrl)
@@ -63,6 +63,53 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(list, declarationRoute)(request, messages(application)).toString()
+      }
+    }
+
+    "must return OK and the correct view for a GET when no in date scheme credit" in {
+
+      val answers                           = emptyUserAnswers
+      val submissionWithCalculationResponse =
+        submission.copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
+
+      val answersWithNav = NavigationState.save(answers, NavigationState.checkYourAnswersUrl)
+      val application    =
+        applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submissionWithCalculationResponse))
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, checkYourAnswerRoute)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[CheckYourAnswersView]
+        val list = SummaryListViewModel(Seq.empty)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(list, declarationRoute)(request, messages(application)).toString()
+      }
+    }
+
+    "must return OK and the correct view for a GET when in date scheme credit" in {
+
+      val answers                = emptyUserAnswers
+      val schemeCreditSubmission = submission.copy(calculation = Some(aCalculationResponseWithAnInDateSchemeCredit))
+
+      val answersWithNav = NavigationState.save(answers, NavigationState.checkYourAnswersUrl)
+      val application    =
+        applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(schemeCreditSubmission)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, checkYourAnswerRoute)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[CheckYourAnswersView]
+        val list = SummaryListViewModel(Seq.empty)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(list, schemeCreditConsentRoute)(request, messages(application))
+          .toString()
       }
     }
 
