@@ -17,19 +17,19 @@
 package services
 
 import config.FrontendAppConfig
-import models.CalculationAuditStartEvent
+import models.SubmissionAuditStartEvent
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class AuditService @Inject()(
+class AuditService @Inject() (
   auditConnector: AuditConnector,
   config: FrontendAppConfig
 )(implicit ec: ExecutionContext) {
 
-  def auditSubmissionStart(event: CalculationAuditStartEvent)(implicit
+  def auditSubmissionStart(event: SubmissionAuditStartEvent)(implicit
     hc: HeaderCarrier
   ): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(config.submissionAuditStartEventName, event))

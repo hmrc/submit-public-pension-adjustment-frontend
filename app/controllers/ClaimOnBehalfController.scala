@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.ClaimOnBehalfFormProvider
-import models.{CalculationAuditStartEvent, Mode, NavigationState, UserAnswers}
+import models.{Mode, NavigationState, SubmissionAuditStartEvent, UserAnswers}
 import pages.ClaimOnBehalfPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -52,7 +52,7 @@ class ClaimOnBehalfController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      auditService.auditSubmissionStart(CalculationAuditStartEvent(request.userId, true)).map { x =>
+      auditService.auditSubmissionStart(SubmissionAuditStartEvent(request.userId, true)).map { _ =>
         Ok(view(preparedForm, mode))
       }
   }
