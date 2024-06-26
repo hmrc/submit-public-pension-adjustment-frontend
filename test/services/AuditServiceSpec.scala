@@ -16,6 +16,7 @@
 
 package services
 
+import org.apache.pekko.util.Timeout
 import base.SpecBase
 import models.SubmissionAuditStartEvent
 import org.mockito.MockitoSugar
@@ -26,7 +27,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
 import scala.concurrent.ExecutionContext
-import scala.concurrent.duration._
+import scala.concurrent.duration.DurationInt
 
 class AuditServiceSpec extends SpecBase with MockitoSugar {
 
