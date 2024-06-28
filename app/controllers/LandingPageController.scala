@@ -18,10 +18,11 @@ package controllers
 
 import connectors.SubmitBackendConnector
 import controllers.actions._
-import models.UniqueId
+import models.{SubmissionStartAuditEvent, UniqueId}
 import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
@@ -31,7 +32,8 @@ class LandingPageController @Inject() (
   override val messagesApi: MessagesApi,
   identify: LandingPageIdentifierAction,
   val controllerComponents: MessagesControllerComponents,
-  submitBackendConnector: SubmitBackendConnector
+  submitBackendConnector: SubmitBackendConnector,
+  auditService: AuditService
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport
@@ -41,6 +43,9 @@ class LandingPageController @Inject() (
     val submissionRetrievalStatus: Future[Boolean] = submissionUniqueId match {
       case Some(_) =>
         for {
+          _    <- auditService.auditSubmissionStart(
+                    SubmissionStartAuditEvent(submissionUniqueId.map(_.toString).getOrElse("NO-UNIQUE-ID"), true)
+                  )
           _    <- submitBackendConnector.sendSubmissionSignal(submissionUniqueId)
           calc <- submitBackendConnector.sendCalcUserAnswerSignal(submissionUniqueId)
         } yield calc

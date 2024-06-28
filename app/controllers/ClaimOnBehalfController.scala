@@ -18,11 +18,11 @@ package controllers
 
 import controllers.actions._
 import forms.ClaimOnBehalfFormProvider
-import models.{Mode, NavigationState, SubmissionAuditStartEvent, UserAnswers}
+import models.{Mode, NavigationState, UserAnswers}
 import pages.ClaimOnBehalfPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{AuditService, UserDataService}
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ClaimOnBehalfView
 
@@ -36,7 +36,6 @@ class ClaimOnBehalfController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   formProvider: ClaimOnBehalfFormProvider,
-  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: ClaimOnBehalfView
 )(implicit ec: ExecutionContext)
@@ -45,16 +44,14 @@ class ClaimOnBehalfController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireCalculationData).async {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireCalculationData) {
     implicit request =>
       val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(ClaimOnBehalfPage) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      auditService.auditSubmissionStart(SubmissionAuditStartEvent(request.userId, true)).map { _ =>
-        Ok(view(preparedForm, mode))
-      }
+      Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireCalculationData).async {

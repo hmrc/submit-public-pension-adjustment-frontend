@@ -18,12 +18,12 @@ package models
 
 import play.api.libs.json._
 
-case class SubmissionAuditStartEvent(
+case class SubmissionStartAuditEvent(
   uniqueId: String,
   authenticated: Boolean
 )
 
-object SubmissionAuditStartEvent {
+object SubmissionStartAuditEvent {
 
-  implicit lazy val formats: Format[SubmissionAuditStartEvent] = Json.format
+  implicit lazy val formats: Format[SubmissionStartAuditEvent] = Json.format
 }

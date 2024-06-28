@@ -18,7 +18,7 @@ package services
 
 import org.apache.pekko.util.Timeout
 import base.SpecBase
-import models.SubmissionAuditStartEvent
+import models.SubmissionStartAuditEvent
 import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -56,7 +56,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
         implicit val hc = HeaderCarrier()
 
         val auditSubmissionStartEvent =
-          SubmissionAuditStartEvent(
+          SubmissionStartAuditEvent(
             "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
             true
           )
