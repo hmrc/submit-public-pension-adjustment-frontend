@@ -40,7 +40,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
       bind[AuditConnector].toInstance(mockAuditConnector)
     )
     .configure(
-      "auditing.calculation-submission-request-event-name" -> "calculation-submission-event"
+      "auditing.submission-start-event-name" -> "SubmissionStart"
     )
     .build()
 
@@ -50,18 +50,18 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
 
   "AuditService" - {
 
-    "auditCalculationStart" - {
-      "should call the audit connector with the CalculationAuditStartEvent event" in {
+    "auditSubmissionStart" - {
+      "should call the audit connector with the SubmissionStartAuditEvent event" in {
 
         implicit val hc = HeaderCarrier()
 
-        val auditSubmissionStartEvent =
+        val submissionStartAuditEvent =
           SubmissionStartAuditEvent(
             "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
             true
           )
 
-        await(service.auditSubmissionStart(auditSubmissionStartEvent)(hc)) mustBe ()
+        await(service.auditSubmissionStart(submissionStartAuditEvent)(hc)) mustBe ()
       }
     }
 
