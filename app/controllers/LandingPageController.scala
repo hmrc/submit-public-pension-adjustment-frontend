@@ -41,15 +41,15 @@ class LandingPageController @Inject() (
 
   def onPageLoad(submissionUniqueId: Option[UniqueId] = None): Action[AnyContent] = identify.async { implicit request =>
     val submissionRetrievalStatus: Future[Boolean] = submissionUniqueId match {
-      case Some(_) =>
+      case Some(sUniqueId) =>
         for {
           _    <- auditService.auditSubmissionStart(
-                    SubmissionStartAuditEvent(submissionUniqueId.map(_.toString).getOrElse("NO-UNIQUE-ID"), true)
+                    SubmissionStartAuditEvent(sUniqueId.value, true)
                   )
           _    <- submitBackendConnector.sendSubmissionSignal(submissionUniqueId)
           calc <- submitBackendConnector.sendCalcUserAnswerSignal(submissionUniqueId)
         } yield calc
-      case None    => Future.successful(false)
+      case None            => Future.successful(false)
     }
     submissionRetrievalStatus.map { submissionRetrievalStatus =>
       if (submissionRetrievalStatus) {
