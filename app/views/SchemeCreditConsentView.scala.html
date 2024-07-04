@@ -26,23 +26,25 @@
 
 @layout(pageTitle = title(form, messages("schemeCreditConsent.title"))) {
 
-    @formHelper(action = routes.SchemeCreditConsentController.onSubmit(), 'autoComplete -> "off") {
+    <h1 class="govuk-heading-xl" style="margin-bottom: 10px">@messages("schemeCreditConsent.heading")</h1>
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
-        }
+    <p class="govuk-body">@messages("schemeCreditConsent.message1")</p>
 
-        @govukCheckboxes(
-            CheckboxesViewModel(
-                form   = form,
-                name   = "value",
-                legend = LegendViewModel(messages("schemeCreditConsent.heading")).asPageHeading(),
-                items  = SchemeCreditConsent.checkboxItems
-            )
-        )
+    <ul class="govuk-body">
+        <li>
+            @messages("schemeCreditConsent.bullet1")
+        </li>
+
+        <br>
+
+        <li>
+            @messages("schemeCreditConsent.bullet2")
+        </li>
+    </ul>
+
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
         )
     }
-}
+
