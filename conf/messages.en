@@ -548,3 +548,5 @@ schemeCreditConsent.yes = Yes
 schemeCreditConsent.checkYourAnswersLabel = Scheme Credit Consent
 schemeCreditConsent.error.required = Select schemeCreditConsent
 schemeCreditConsent.change.hidden = Scheme Credit Consent
+schemeCreditConsent.title = schemeCreditConsent
+schemeCreditConsent.heading = schemeCreditConsent
