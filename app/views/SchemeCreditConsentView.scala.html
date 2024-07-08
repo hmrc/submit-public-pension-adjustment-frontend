@@ -15,34 +15,31 @@
  *@
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukCheckboxes: GovukCheckboxes,
-    govukButton: GovukButton
+layout: templates.Layout,
+formHelper: FormWithCSRF,
+govukButton: GovukButton
 )
 
-@(form: Form[_])(implicit request: Request[_], messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("schemeCreditConsent.title"))) {
+@layout(pageTitle = titleNoForm(messages("schemeCreditConsent.title"))) {
 
-    @formHelper(action = routes.SchemeCreditConsentController.onSubmit(), 'autoComplete -> "off") {
+@formHelper(action = routes.SchemeCreditConsentController.onSubmit(), Symbol("autoComplete") -> "off") {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
-        }
+    <h1 class="govuk-heading-xl">@messages("schemeCreditConsent.heading")</h1>
 
-        @govukCheckboxes(
-            CheckboxesViewModel(
-                form   = form,
-                name   = "value",
-                legend = LegendViewModel(messages("schemeCreditConsent.heading")).asPageHeading(),
-                items  = SchemeCreditConsent.checkboxItems
-            )
-        )
+    <p class="govuk-body">@messages("schemeCreditConsent.message1")</p>
 
+    <ul class="govuk-body">
+        <li>@messages("schemeCreditConsent.bullet1")</li>
+        <br>
+        <li>@messages("schemeCreditConsent.bullet2")</li>
+    </ul>
+
+    <p class="govuk-body">
         @govukButton(
-            ButtonViewModel(messages("site.continue"))
+        ButtonViewModel(messages("declaration.confirm")).preventingDoubleClick()
         )
-    }
+    </p>
+}
 }

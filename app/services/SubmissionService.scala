@@ -23,7 +23,7 @@ import models.WhoWillPay.{PensionScheme, You}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, Period}
 import models.finalsubmission._
-import models.{PSTR, StatusOfUser, UserAnswers}
+import models.{PSTR, SchemeCreditConsent, StatusOfUser, UserAnswers}
 import pages._
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
@@ -269,7 +269,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
           contactDetails = true,
           powerOfAttorney = Some(true),
           claimOnBehalfOfDeceased = None,
-          schemeCreditConsent = userAnswers.get(SchemeCreditConsentPage).map(_.head)
+          schemeCreditConsent = userAnswers.get(SchemeCreditConsent)
         )
 
       case Some(StatusOfUser.Deputyship) =>
@@ -279,7 +279,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
           contactDetails = true,
           powerOfAttorney = None,
           claimOnBehalfOfDeceased = Some(true),
-          schemeCreditConsent = userAnswers.get(SchemeCreditConsentPage).map(_.head)
+          schemeCreditConsent = userAnswers.get(SchemeCreditConsent)
         )
 
       case _ =>
@@ -289,7 +289,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
           contactDetails = true,
           powerOfAttorney = None,
           claimOnBehalfOfDeceased = None,
-          schemeCreditConsent = userAnswers.get(SchemeCreditConsentPage).map(_.head)
+          schemeCreditConsent = userAnswers.get(SchemeCreditConsent)
         )
     }
 
