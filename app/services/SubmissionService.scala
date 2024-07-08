@@ -269,7 +269,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
           contactDetails = true,
           powerOfAttorney = Some(true),
           claimOnBehalfOfDeceased = None,
-          schemeCreditConsent = userAnswers.get(SchemeCreditConsentPage).map(_.head)
+          schemeCreditConsent = userAnswers.get(// get the modelSchemeCreditConsentPage).map(_.head)
         )
 
       case Some(StatusOfUser.Deputyship) =>
