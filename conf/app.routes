@@ -193,4 +193,3 @@ GET        /restart-calculation                                                 
 
 GET        /submission-service/scheme-credit-consent                                                                    controllers.SchemeCreditConsentController.onPageLoad()
 POST       /submission-service/scheme-credit-consent                                                                    controllers.SchemeCreditConsentController.onSubmit()
-GET        /schemeCreditConsent                       controllers.SchemeCreditConsentController.onPageLoad()

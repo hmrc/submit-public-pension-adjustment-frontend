@@ -19,11 +19,10 @@ package models
 import play.api.libs.json.JsPath
 import queries.{Gettable, Settable}
 
-case class SchemeCreditConsent() extends Gettable[Option[Boolean]] with Settable[Option[Boolean]] {
+case object SchemeCreditConsent extends Gettable[Boolean] with Settable[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "schemeCreditConsent"
-
 
 }

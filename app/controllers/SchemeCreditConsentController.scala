@@ -17,40 +17,40 @@
 package controllers
 
 import controllers.actions._
-import models.SchemeCreditConsent
+import models.{NormalMode, SchemeCreditConsent, UserAnswers}
 
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SchemeCreditConsentView
+import pages.ConfirmEditAnswersPage
+import services.UserDataService
+
+import scala.concurrent.{ExecutionContext, Future}
 
 class SchemeCreditConsentController @Inject()(
                                        override val messagesApi: MessagesApi,
                                        identify: IdentifierAction,
                                        getData: DataRetrievalAction,
                                        requireData: DataRequiredAction,
+                                       userDataService: UserDataService,
                                        val controllerComponents: MessagesControllerComponents,
                                        requireCalculationData: CalculationDataRequiredAction,
-                                       declarationsController: DeclarationsController,
                                        view: SchemeCreditConsentView
-                                     ) extends FrontendBaseController with I18nSupport {
+                                     ) (implicit val executionContext: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData andThen requireCalculationData) {
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
       Ok(view())
   }
 
-  def onSubmit(): Action[AnyContent] =
-    (identify andThen getData andThen requireData andThen requireCalculationData).async { implicit request =>
-      // for loop
-      for{
-        _ <- request.userAnswers.set(SchemeCreditConsent(), Some(true))//Credit consent option[bool], true)
-
-      }
-        yield Redirect(controllers.routes.DeclarationsController.onPageLoad) //redirect controller declerations to load to next page
-      //create route for app.routes
-      //button on consent page to link to route
-      }
-    }
+  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData).async {
+    implicit request =>
+      for {
+        userAnswers <- Future.fromTry(request.userAnswers.set(SchemeCreditConsent, true))
+        _ <- userDataService.set(userAnswers)
+      } yield Redirect(controllers.routes.DeclarationsController.onPageLoad.url)
+  }
 }
