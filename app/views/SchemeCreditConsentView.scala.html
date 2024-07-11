@@ -26,6 +26,8 @@ govukButton: GovukButton
 
 @formHelper(action = routes.SchemeCreditConsentController.onSubmit(), Symbol("autoComplete") -> "off") {
 
+    <p class="govuk-caption-xl">@messages("submissionService.caption")</p>
+
     <h1 class="govuk-heading-xl">@messages("schemeCreditConsent.heading")</h1>
 
     <p class="govuk-body">@messages("schemeCreditConsent.message1")</p>
@@ -38,7 +40,7 @@ govukButton: GovukButton
 
     <p class="govuk-body">
         @govukButton(
-        ButtonViewModel(messages("declaration.confirm")).preventingDoubleClick()
+        ButtonViewModel(messages("site.continue")).preventingDoubleClick()
         )
     </p>
 }
