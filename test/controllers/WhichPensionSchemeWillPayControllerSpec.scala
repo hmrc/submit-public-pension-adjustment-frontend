@@ -27,6 +27,7 @@ import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.TestData.incomeSubJourney
 import pages.WhichPensionSchemeWillPayPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -94,6 +95,7 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
                 5,
                 0,
                 models.calculation.inputs.Period._2016,
+                incomeSubJourney,
                 None
               ),
               NormalTaxYear(
@@ -102,6 +104,7 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
                 8,
                 6,
                 models.calculation.inputs.Period._2017,
+                incomeSubJourney,
                 Some(AboveThreshold(7))
               )
             )
