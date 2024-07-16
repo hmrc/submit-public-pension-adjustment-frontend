@@ -20,6 +20,7 @@ import base.SpecBase
 import models.{Done, SchemeCreditConsent, UserAnswers}
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
 import org.mockito.MockitoSugar.mock
 import play.api.inject
 import play.api.test.FakeRequest
