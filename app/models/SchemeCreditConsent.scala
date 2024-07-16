@@ -25,7 +25,4 @@ case object SchemeCreditConsent extends Gettable[Boolean] with Settable[Boolean]
 
   override def toString: String = "schemeCreditConsent"
 
-  def saveConsent(userAnswers: UserAnswers, boolean: Boolean): UserAnswers =
-    //    userAnswers.set(SchemeCreditConsent(),boolean).get
-    userAnswers.set(SchemeCreditConsent, boolean).get
 }
