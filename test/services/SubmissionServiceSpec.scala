@@ -196,7 +196,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         contactDetails = true,
         powerOfAttorney = Some(true),
         claimOnBehalfOfDeceased = None,
-        schemeCreditConsent = Some(SchemeCreditConsent.Yes)
+        schemeCreditConsent = Some(true)
       )
     }
 

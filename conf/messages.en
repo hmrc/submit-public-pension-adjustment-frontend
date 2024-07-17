@@ -6,6 +6,7 @@ site.change = Change
 site.no = No
 site.yes = Yes
 site.continue = Save and continue
+site.agreeAndContinue = Agree and continue
 site.start = Start now
 site.startAgain = Start again
 site.signIn = Sign in
@@ -542,9 +543,11 @@ confirmRestartAnswers.heading = Do you want to restart your calculation?
 confirmRestartAnswers.message = You will be sent to the beginning of the service. You will lose all progress that you have made so far.
 confirmRestartAnswers.error.required = Select yes if you want to restart your calculation.
 
-schemeCreditConsent.title = Scheme Credit Consent
-schemeCreditConsent.heading = Scheme Credit Consent
-schemeCreditConsent.yes = Yes
-schemeCreditConsent.checkYourAnswersLabel = Scheme Credit Consent
-schemeCreditConsent.error.required = Select schemeCreditConsent
+schemeCreditConsent.title = Scheme credit consent
+schemeCreditConsent.heading = Scheme credit consent
+schemeCreditConsent.message1 = Between 2019-20 and 2022-23, you had a tax charge that you asked your scheme to pay. This has reduced as a result of the public service pensions remedy.
+schemeCreditConsent.bullet1 = If the charge was paid by your public service pension scheme, we will tell your scheme administrator to adjust your benefits. This means you don’t need to tell your public service scheme administrator about this change.
+schemeCreditConsent.bullet2 = If the charge was paid by a non-public service pension scheme, you will need to contact them directly.
+schemeCreditConsent.checkYourAnswersLabel = Scheme credit consent
 schemeCreditConsent.change.hidden = Scheme Credit Consent
+

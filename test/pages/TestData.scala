@@ -392,9 +392,7 @@ object TestData {
       |  "claimingHigherOrAdditionalTaxRateRelief": true,
       |  "howMuchTaxRelief": 10000,
       |  "whichPensionSchemeWillPayTaxRelief": "Scheme 1 / 00348916RT",
-      |  "schemeCreditConsent": [
-      |      "yes"
-      |    ]
+      |  "schemeCreditConsent": true
       |}
       |""".stripMargin)
     .as[JsObject]
@@ -584,7 +582,7 @@ object TestData {
       )
     ),
     None,
-    Declarations(true, true, true, Some(true), None, Some(SchemeCreditConsent.Yes))
+    Declarations(true, true, true, Some(true), None, Some(true))
   )
 
   val finalSubmission1 = FinalSubmission(

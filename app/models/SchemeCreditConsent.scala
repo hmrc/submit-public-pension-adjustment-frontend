@@ -16,31 +16,13 @@
 
 package models
 
-import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import viewmodels.govuk.checkbox._
+import play.api.libs.json.JsPath
+import queries.{Gettable, Settable}
 
-sealed trait SchemeCreditConsent
+case object SchemeCreditConsent extends Gettable[Boolean] with Settable[Boolean] {
 
-object SchemeCreditConsent extends Enumerable.Implicits {
+  override def path: JsPath = JsPath \ toString
 
-  case object Yes extends WithName("yes") with SchemeCreditConsent
+  override def toString: String = "schemeCreditConsent"
 
-  val values: Seq[SchemeCreditConsent] = Seq(
-    Yes
-  )
-
-  def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =
-    values.zipWithIndex.map { case (value, index) =>
-      CheckboxItemViewModel(
-        content = Text(messages(s"schemeCreditConsent.${value.toString}")),
-        fieldId = "value",
-        index = index,
-        value = value.toString
-      )
-    }
-
-  implicit val enumerable: Enumerable[SchemeCreditConsent] =
-    Enumerable(values.map(v => v.toString -> v): _*)
 }

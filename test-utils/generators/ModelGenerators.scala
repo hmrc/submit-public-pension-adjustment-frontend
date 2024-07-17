@@ -23,11 +23,6 @@ import uk.gov.hmrc.domain.Nino
 
 trait ModelGenerators {
 
-  implicit lazy val arbitrarySchemeCreditConsent: Arbitrary[SchemeCreditConsent] =
-    Arbitrary {
-      Gen.oneOf(SchemeCreditConsent.values)
-    }
-
   implicit lazy val arbitraryContinueChoice: Arbitrary[ContinueChoice] =
     Arbitrary {
       Gen.oneOf(ContinueChoice.values.toSeq)

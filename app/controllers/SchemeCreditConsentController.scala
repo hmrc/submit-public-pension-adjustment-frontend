@@ -17,59 +17,42 @@
 package controllers
 
 import controllers.actions._
-import forms.SchemeCreditConsentFormProvider
+import models.{NormalMode, SchemeCreditConsent, UserAnswers}
 
 import javax.inject.Inject
-import models.{Mode, NavigationState, NormalMode}
-import pages.SchemeCreditConsentPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SchemeCreditConsentView
+import pages.ConfirmEditAnswersPage
 import services.UserDataService
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class SchemeCreditConsentController @Inject() (
   override val messagesApi: MessagesApi,
-  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
-  formProvider: SchemeCreditConsentFormProvider,
+  userDataService: UserDataService,
   val controllerComponents: MessagesControllerComponents,
+  requireCalculationData: CalculationDataRequiredAction,
   view: SchemeCreditConsentView
-)(implicit ec: ExecutionContext)
+)(implicit val executionContext: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
-
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.get(SchemeCreditConsentPage) match {
-        case None        => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm))
+      Ok(view())
   }
 
   def onSubmit(): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      form
-        .bindFromRequest()
-        .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
-          value =>
-            for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(SchemeCreditConsentPage, value))
-              redirectUrl     =
-                SchemeCreditConsentPage.navigate(NormalMode, updatedAnswers).url
-              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
-            } yield Redirect(redirectUrl)
-        )
+      for {
+        userAnswers <- Future.fromTry(request.userAnswers.set(SchemeCreditConsent, true))
+        _           <- userDataService.set(userAnswers)
+      } yield Redirect(controllers.routes.DeclarationsController.onPageLoad.url)
     }
 }
