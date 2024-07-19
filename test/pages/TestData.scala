@@ -81,6 +81,25 @@ object TestData {
       Some(LocalDate.of(1968, 11, 30))
     )
 
+  val incomeSubJourney =
+    IncomeSubJourney(
+      Some(1211),
+      Some(1618),
+      Some(3345),
+      Some(948),
+      Some(true),
+      Some(519),
+      Some(2189),
+      Some(8181),
+      Some(4999),
+      Some(3474),
+      Some(589),
+      Some(PayeCodeAdjustment.Increase),
+      Some(697),
+      Some(4573),
+      Some(2291)
+    )
+
   val calculationInputs = CalculationInputs(
     Resubmission(false, None),
     Some(
@@ -98,6 +117,7 @@ object TestData {
             0,
             List(TaxYearScheme("Scheme 1", "00348916RT", 20000, 0, Some(36000))),
             Period._2016,
+            incomeSubJourney,
             None
           ),
           NormalTaxYear(
@@ -106,6 +126,7 @@ object TestData {
             60000,
             0,
             Period._2017,
+            incomeSubJourney,
             Some(BelowThreshold)
           ),
           NormalTaxYear(
@@ -114,6 +135,7 @@ object TestData {
             60000,
             200,
             Period._2018,
+            incomeSubJourney,
             Some(BelowThreshold)
           ),
           NormalTaxYear(
@@ -122,6 +144,7 @@ object TestData {
             60000,
             3280,
             Period._2019,
+            incomeSubJourney,
             Some(BelowThreshold)
           ),
           NormalTaxYear(
@@ -130,6 +153,7 @@ object TestData {
             180000,
             0,
             Period._2020,
+            incomeSubJourney,
             Some(AboveThreshold(160000))
           ),
           NormalTaxYear(
@@ -138,6 +162,7 @@ object TestData {
             150000,
             0,
             Period._2021,
+            incomeSubJourney,
             Some(BelowThreshold)
           ),
           NormalTaxYear(
@@ -146,6 +171,7 @@ object TestData {
             60000,
             0,
             Period._2022,
+            incomeSubJourney,
             Some(BelowThreshold)
           ),
           NormalTaxYear(
@@ -154,6 +180,7 @@ object TestData {
             60000,
             0,
             Period._2023,
+            incomeSubJourney,
             Some(BelowThreshold)
           )
         )
@@ -603,6 +630,7 @@ object TestData {
               0,
               List(TaxYearScheme("Scheme 1", "00348916RT", 20000, 0, Some(36000))),
               Period._2016,
+              incomeSubJourney,
               None
             ),
             NormalTaxYear(
@@ -611,6 +639,7 @@ object TestData {
               60000,
               0,
               Period._2017,
+              incomeSubJourney,
               Some(BelowThreshold)
             ),
             NormalTaxYear(
@@ -619,6 +648,7 @@ object TestData {
               60000,
               200,
               Period._2018,
+              incomeSubJourney,
               Some(BelowThreshold)
             ),
             NormalTaxYear(
@@ -627,6 +657,7 @@ object TestData {
               60000,
               3280,
               Period._2019,
+              incomeSubJourney,
               Some(BelowThreshold)
             ),
             NormalTaxYear(
@@ -635,6 +666,7 @@ object TestData {
               180000,
               0,
               Period._2020,
+              incomeSubJourney,
               Some(AboveThreshold(160000))
             ),
             NormalTaxYear(
@@ -643,6 +675,7 @@ object TestData {
               150000,
               0,
               Period._2021,
+              incomeSubJourney,
               Some(BelowThreshold)
             ),
             NormalTaxYear(
@@ -651,6 +684,7 @@ object TestData {
               60000,
               0,
               Period._2022,
+              incomeSubJourney,
               Some(BelowThreshold)
             ),
             NormalTaxYear(
@@ -659,6 +693,7 @@ object TestData {
               60000,
               0,
               Period._2023,
+              incomeSubJourney,
               Some(BelowThreshold)
             )
           )
