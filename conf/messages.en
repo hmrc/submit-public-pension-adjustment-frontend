@@ -60,7 +60,7 @@ journeyRecovery.startAgain.guidance = [Add content to explain why the user needs
 signedOut.title = Signed Out
 signedOut.heading = Signed Out
 signedOut.message1 = We have saved your progress
-signedOut.message2 = We will store your data for 28 days
+signedOut.message2 = We will store your data for 270 days (9 months)
 signedOut.subHeading = How to continue your application
 signedOut.bullet1 = Go to the Gov.uk service page
 signedOut.bullet2 = Press the start now button
@@ -550,4 +550,3 @@ schemeCreditConsent.bullet1 = If the charge was paid by your public service pens
 schemeCreditConsent.bullet2 = If the charge was paid by a non-public service pension scheme, you will need to contact them directly.
 schemeCreditConsent.checkYourAnswersLabel = Scheme credit consent
 schemeCreditConsent.change.hidden = Scheme Credit Consent
-
