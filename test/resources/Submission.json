@@ -19,7 +19,25 @@
           ],
           "totalIncome": 5,
           "chargePaidByMember": 0,
-          "period": "2016"
+          "period": "2016",
+          "incomeSubJourney" :
+          {
+            "salarySacrificeAmount" : 1211,
+            "flexibleRemunerationAmount" : 1618,
+            "rASContributionsAmount" : 3345,
+            "lumpsumDeathBenefitsAmount" : 948,
+            "isAboveThreshold" : true,
+            "taxReliefAmount" : 519,
+            "adjustedIncomeAmount": 2189,
+            "taxReliefPensionAmount" : 8181,
+            "personalContributionsAmount" : 4999,
+            "reliefClaimedOnOverseasPensionsAmount" : 3474,
+            "giftAidAmount" : 589,
+            "payeCodeAdjustment" : "increase",
+            "codeAdjustmentAmount" : 697,
+            "personalAllowanceAmount" : 4573,
+            "blindPersonsAllowanceAmount" : 2291
+          }
         },
         {
           "pensionInputAmount": 5,
@@ -34,6 +52,24 @@
           "totalIncome": 8,
           "chargePaidByMember": 6,
           "period": "2017",
+          "incomeSubJourney" :
+          {
+            "salarySacrificeAmount" : 1211,
+            "flexibleRemunerationAmount" : 1618,
+            "rASContributionsAmount" : 3345,
+            "lumpsumDeathBenefitsAmount" : 948,
+            "isAboveThreshold" : true,
+            "taxReliefAmount" : 519,
+            "adjustedIncomeAmount": 2189,
+            "taxReliefPensionAmount" : 8181,
+            "personalContributionsAmount" : 4999,
+            "reliefClaimedOnOverseasPensionsAmount" : 3474,
+            "giftAidAmount" : 589,
+            "payeCodeAdjustment" : "increase",
+            "codeAdjustmentAmount" : 697,
+            "personalAllowanceAmount" : 4573,
+            "blindPersonsAllowanceAmount" : 2291
+          },
           "income": {
             "incomeAboveThreshold": true,
             "adjustedIncome": 7

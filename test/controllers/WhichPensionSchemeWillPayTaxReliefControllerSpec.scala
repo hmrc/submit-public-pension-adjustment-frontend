@@ -27,6 +27,7 @@ import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.TestData.incomeSubJourney
 import pages.WhichPensionSchemeWillPayTaxReliefPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -65,6 +66,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
                 5,
                 0,
                 Period._2016,
+                incomeSubJourney,
                 None
               ),
               NormalTaxYear(
@@ -73,6 +75,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
                 8,
                 6,
                 Period._2017,
+                incomeSubJourney,
                 Some(AboveThreshold(7))
               )
             )
@@ -123,6 +126,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
                 5,
                 0,
                 Period._2016,
+                incomeSubJourney,
                 None
               ),
               NormalTaxYear(
@@ -131,6 +135,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
                 8,
                 6,
                 Period._2017,
+                incomeSubJourney,
                 Some(AboveThreshold(7))
               )
             )

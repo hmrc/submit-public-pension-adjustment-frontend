@@ -23,6 +23,7 @@ import models.calculation.response.{TaxYearScheme, TotalAmounts}
 import models.submission.RetrieveSubmissionResponse
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
+import pages.TestData.incomeSubJourney
 import play.api.libs.json.{JsValue, Json}
 
 import scala.io.Source
@@ -46,6 +47,7 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
                 5,
                 0,
                 Period._2016,
+                incomeSubJourney,
                 None
               ),
               NormalTaxYear(
@@ -54,6 +56,7 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
                 8,
                 6,
                 Period._2017,
+                incomeSubJourney,
                 Some(AboveThreshold(7))
               )
             )

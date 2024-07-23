@@ -20,12 +20,13 @@ import controllers.actions._
 import models.UserAnswers
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, Period, TaxYearScheme, TotalAmounts}
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, IncomeSubJourney, PayeCodeAdjustment, Resubmission}
 import models.submission.Submission
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
+import pages.TestData
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.bind
@@ -124,7 +125,9 @@ trait SpecBase
     val resubmission      = Resubmission(false, None)
     val annualAllowance   = AnnualAllowance(
       List.empty,
-      List(NormalTaxYear(0, taxYearSchemes, 0, 0, models.calculation.inputs.Period._2017, None))
+      List(
+        NormalTaxYear(0, taxYearSchemes, 0, 0, models.calculation.inputs.Period._2017, TestData.incomeSubJourney, None)
+      )
     )
     val calculationInputs = CalculationInputs(resubmission, Some(annualAllowance), None)
     Submission(id, uniqueId, calculationInputs, None)

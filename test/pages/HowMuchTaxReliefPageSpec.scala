@@ -22,6 +22,7 @@ import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{BankDetails, CheckMode, NormalMode}
+import pages.TestData.incomeSubJourney
 
 import java.time.LocalDate
 
@@ -359,6 +360,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
               5,
               0,
               models.calculation.inputs.Period._2021,
+              incomeSubJourney,
               None
             )
           )
@@ -380,6 +382,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
               5,
               0,
               models.calculation.inputs.Period._2016,
+              incomeSubJourney,
               None
             ),
             NormalTaxYear(
@@ -388,6 +391,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
               8,
               6,
               models.calculation.inputs.Period._2017,
+              incomeSubJourney,
               Some(AboveThreshold(7))
             )
           )
