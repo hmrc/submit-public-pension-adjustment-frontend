@@ -6,6 +6,7 @@ site.change = Newid
 site.no = Na
 site.yes = Iawn
 site.continue = Cadw ac yn eich blaen
+site.agreeAndContinue = cy: Agree and continue
 site.start = Dechrau nawr
 site.startAgain = Dechrau eto
 site.signIn = Mewngofnodi
