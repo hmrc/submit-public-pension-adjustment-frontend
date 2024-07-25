@@ -17,7 +17,7 @@
 package services
 
 import config.FrontendAppConfig
-import models.SubmissionStartAuditEvent
+import models.{SubmissionSaveAndReturnAuditEvent, SubmissionStartAuditEvent}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
@@ -33,5 +33,20 @@ class AuditService @Inject() (
     hc: HeaderCarrier
   ): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(config.submissionStartAuditEventName, event))
+
+  def auditSubmissionUserSelectionContinue(event: SubmissionSaveAndReturnAuditEvent)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit] =
+    Future.successful(auditConnector.sendExplicitAudit(config.submissionUserSelectionContinueAuditEventName, event))
+
+  def auditSubmissionUserSelectionEdit(event: SubmissionSaveAndReturnAuditEvent)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit] =
+    Future.successful(auditConnector.sendExplicitAudit(config.submissionUserSelectionEditAuditEventName, event))
+
+  def auditSubmissionUserSelectionRestart(event: SubmissionSaveAndReturnAuditEvent)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit] =
+    Future.successful(auditConnector.sendExplicitAudit(config.submissionUserSelectionRestartAuditEventName, event))
 
 }

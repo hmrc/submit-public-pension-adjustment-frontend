@@ -21,11 +21,11 @@ import controllers.actions._
 import forms.ConfirmEditAnswersFormProvider
 
 import javax.inject.Inject
-import models.{NormalMode, UserAnswers}
+import models.{NormalMode, SubmissionSaveAndReturnAuditEvent, UserAnswers}
 import pages.ConfirmEditAnswersPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{CalculateBackendDataService, SubmissionDataService, UserDataService}
+import services.{AuditService, CalculateBackendDataService, SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ConfirmEditAnswersView
 
@@ -42,6 +42,7 @@ class ConfirmEditAnswersController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   formProvider: ConfirmEditAnswersFormProvider,
+  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: ConfirmEditAnswersView
 )(implicit ec: ExecutionContext)
@@ -80,6 +81,9 @@ class ConfirmEditAnswersController @Inject() (
                   .fromTry(
                     request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmEditAnswersPage, value)
                   )
+              _              <- auditService.auditSubmissionUserSelectionEdit(
+                                  SubmissionSaveAndReturnAuditEvent(true, request.submission.uniqueId, request.userId)
+                                )
             } yield Redirect(ConfirmEditAnswersPage.navigate(NormalMode, updatedAnswers))
           }
         )

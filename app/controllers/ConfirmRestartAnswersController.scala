@@ -21,11 +21,11 @@ import controllers.actions._
 import forms.ConfirmRestartAnswersFormProvider
 
 import javax.inject.Inject
-import models.{NormalMode, UserAnswers}
+import models.{NormalMode, SubmissionSaveAndReturnAuditEvent, UserAnswers}
 import pages.ConfirmRestartAnswersPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{CalculateBackendDataService, SubmissionDataService, UserDataService}
+import services.{AuditService, CalculateBackendDataService, SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ConfirmRestartAnswersView
 
@@ -40,6 +40,7 @@ class ConfirmRestartAnswersController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   formProvider: ConfirmRestartAnswersFormProvider,
+  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   requireCalculationData: CalculationDataRequiredAction,
   view: ConfirmRestartAnswersView
@@ -80,6 +81,9 @@ class ConfirmRestartAnswersController @Inject() (
                   .fromTry(
                     request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmRestartAnswersPage, value)
                   )
+              _              <- auditService.auditSubmissionUserSelectionRestart(
+                                  SubmissionSaveAndReturnAuditEvent(true, request.submission.uniqueId, request.userId)
+                                )
             } yield Redirect(ConfirmRestartAnswersPage.navigate(NormalMode, updatedAnswers))
           }
         )

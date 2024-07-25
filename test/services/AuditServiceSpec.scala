@@ -18,7 +18,7 @@ package services
 
 import org.apache.pekko.util.Timeout
 import base.SpecBase
-import models.SubmissionStartAuditEvent
+import models.{SubmissionSaveAndReturnAuditEvent, SubmissionStartAuditEvent}
 import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -51,7 +51,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
   "AuditService" - {
 
     "auditSubmissionStart" - {
-      "should call the audit connector with the SubmissionStartAuditEvent event" in {
+      "should call the audit connector with a SubmissionStartAuditEvent event" in {
 
         implicit val hc = HeaderCarrier()
 
@@ -62,6 +62,54 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
           )
 
         await(service.auditSubmissionStart(submissionStartAuditEvent)(hc)) mustBe ()
+      }
+    }
+
+    "auditSubmissionUserSelectionContinue" - {
+      "should call the audit connector with a SubmissionSaveAndReturnAuditEvent event" in {
+
+        implicit val hc = HeaderCarrier()
+
+        val submissionSaveAndReturnAuditEvent =
+          SubmissionSaveAndReturnAuditEvent(
+            true,
+            "uniqueId",
+            "userId"
+          )
+
+        await(service.auditSubmissionUserSelectionContinue(submissionSaveAndReturnAuditEvent)(hc)) mustBe ()
+      }
+    }
+
+    "auditSubmissionUserSelectionEdit" - {
+      "should call the audit connector with a SubmissionSaveAndReturnAuditEvent event" in {
+
+        implicit val hc = HeaderCarrier()
+
+        val submissionSaveAndReturnAuditEvent =
+          SubmissionSaveAndReturnAuditEvent(
+            true,
+            "uniqueId",
+            "userId"
+          )
+
+        await(service.auditSubmissionUserSelectionEdit(submissionSaveAndReturnAuditEvent)(hc)) mustBe ()
+      }
+    }
+
+    "auditSubmissionUserSelectionRestart" - {
+      "should call the audit connector with a SubmissionSaveAndReturnAuditEvent event" in {
+
+        implicit val hc = HeaderCarrier()
+
+        val submissionSaveAndReturnAuditEvent =
+          SubmissionSaveAndReturnAuditEvent(
+            true,
+            "uniqueId",
+            "userId"
+          )
+
+        await(service.auditSubmissionUserSelectionRestart(submissionSaveAndReturnAuditEvent)(hc)) mustBe ()
       }
     }
 
