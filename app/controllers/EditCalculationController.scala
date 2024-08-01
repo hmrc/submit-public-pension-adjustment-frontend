@@ -37,10 +37,10 @@ class EditCalculationController @Inject() (
 
   def calculateFrontendTaskList = s"${config.calculateFrontend}/task-list"
 
-  def editCalculation: Action[AnyContent] = (identify andThen getData andThen requireCalculationData).async {
-    implicit request =>
-      for {
-        _ <- calculateBackendConnector.updateCalcBEWithUserAnswers(request.submission.uniqueId)
-      } yield Redirect(calculateFrontendTaskList)
+  def editCalculation: Action[AnyContent] = (identify andThen getData).async { implicit request =>
+    val uniqueId = request.submission.map(_.uniqueId).getOrElse("Submission Not Found")
+    for {
+      _ <- calculateBackendConnector.updateCalcBEWithUserAnswers(uniqueId)
+    } yield Redirect(calculateFrontendTaskList)
   }
 }
