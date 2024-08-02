@@ -16,28 +16,21 @@
 
 package controllers
 
-import connectors.{CalculateBackendConnector, SubmitBackendConnector}
 import controllers.actions._
 import forms.ConfirmEditAnswersFormProvider
-
-import javax.inject.Inject
 import models.{NormalMode, SubmissionSaveAndReturnAuditEvent, UserAnswers}
 import pages.ConfirmEditAnswersPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{AuditService, CalculateBackendDataService, SubmissionDataService, UserDataService}
+import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ConfirmEditAnswersView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ConfirmEditAnswersController @Inject() (
   override val messagesApi: MessagesApi,
-  userDataService: UserDataService,
-  submissionDataService: SubmissionDataService,
-  calculateBackendDataService: CalculateBackendDataService,
-  calculateBackendConnector: CalculateBackendConnector,
-  submitBackendConnector: SubmitBackendConnector,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -66,24 +59,15 @@ class ConfirmEditAnswersController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
           value => {
-            if (value) {
-              for {
-                _ <- calculateBackendConnector.sendFlagResetSignal(request.submission.id)
-                _ <- userDataService.clear()
-                _ <- submissionDataService.clear()
-                _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
-                r <- calculateBackendDataService.clearSubmissionCalcBE()
-              } yield r
-            }
+            val updateAnswersFuture = Future
+              .fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmEditAnswersPage, value))
+            val auditFuture         = auditService.auditSubmissionUserSelectionEdit(
+              SubmissionSaveAndReturnAuditEvent(true, request.submission.uniqueId, request.userId)
+            )
+
             for {
-              updatedAnswers <-
-                Future
-                  .fromTry(
-                    request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmEditAnswersPage, value)
-                  )
-              _              <- auditService.auditSubmissionUserSelectionEdit(
-                                  SubmissionSaveAndReturnAuditEvent(true, request.submission.uniqueId, request.userId)
-                                )
+              updatedAnswers <- updateAnswersFuture
+              _              <- auditFuture
             } yield Redirect(ConfirmEditAnswersPage.navigate(NormalMode, updatedAnswers))
           }
         )

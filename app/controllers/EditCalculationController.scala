@@ -17,9 +17,10 @@
 package controllers
 
 import config.FrontendAppConfig
-import connectors.CalculateBackendConnector
+import connectors.{CalculateBackendConnector, SubmitBackendConnector}
 import controllers.actions.{CalculationDataRequiredAction, DataRetrievalAction, IdentifierAction}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.{CalculateBackendDataService, SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
@@ -31,6 +32,10 @@ class EditCalculationController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   calculateBackendConnector: CalculateBackendConnector,
+  userDataService: UserDataService,
+  submissionDataService: SubmissionDataService,
+  submitBackendConnector: SubmitBackendConnector,
+  calculateBackendDataService: CalculateBackendDataService,
   config: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController {
@@ -41,6 +46,11 @@ class EditCalculationController @Inject() (
     implicit request =>
       for {
         _ <- calculateBackendConnector.updateCalcBEWithUserAnswers(request.submission.uniqueId)
+        _ <- calculateBackendConnector.sendFlagResetSignal(request.submission.id)
+        _ <- userDataService.clear()
+        _ <- submissionDataService.clear()
+        _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
+        _ <- calculateBackendDataService.clearSubmissionCalcBE()
       } yield Redirect(calculateFrontendTaskList)
   }
 }
