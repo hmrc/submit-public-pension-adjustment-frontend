@@ -20,7 +20,7 @@ import controllers.actions._
 import models.UserAnswers
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, Period, TaxYearScheme, TotalAmounts}
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, IncomeSubJourney, PayeCodeAdjustment, Resubmission}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission}
 import models.submission.Submission
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec

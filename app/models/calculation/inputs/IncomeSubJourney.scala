@@ -30,9 +30,8 @@ case class IncomeSubJourney(
   personalContributionsAmount: Option[Int],
   reliefClaimedOnOverseasPensionsAmount: Option[Int],
   giftAidAmount: Option[Int],
-  payeCodeAdjustment: Option[PayeCodeAdjustment],
-  codeAdjustmentAmount: Option[Int],
   personalAllowanceAmount: Option[Int],
+  tradeUnionOrPoliceReliefAmount: Option[Int],
   blindPersonsAllowanceAmount: Option[Int]
 )
 

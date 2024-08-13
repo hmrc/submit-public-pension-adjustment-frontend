@@ -94,9 +94,8 @@ object TestData {
       Some(4999),
       Some(3474),
       Some(589),
-      Some(PayeCodeAdjustment.Increase),
-      Some(697),
       Some(4573),
+      Some(90),
       Some(2291)
     )
 

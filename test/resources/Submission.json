@@ -33,9 +33,8 @@
             "personalContributionsAmount" : 4999,
             "reliefClaimedOnOverseasPensionsAmount" : 3474,
             "giftAidAmount" : 589,
-            "payeCodeAdjustment" : "increase",
-            "codeAdjustmentAmount" : 697,
             "personalAllowanceAmount" : 4573,
+            "tradeUnionOrPoliceReliefAmount": 90,
             "blindPersonsAllowanceAmount" : 2291
           }
         },
@@ -65,9 +64,8 @@
             "personalContributionsAmount" : 4999,
             "reliefClaimedOnOverseasPensionsAmount" : 3474,
             "giftAidAmount" : 589,
-            "payeCodeAdjustment" : "increase",
-            "codeAdjustmentAmount" : 697,
             "personalAllowanceAmount" : 4573,
+            "tradeUnionOrPoliceReliefAmount": 90,
             "blindPersonsAllowanceAmount" : 2291
           },
           "income": {
