@@ -18,7 +18,7 @@ package controllers.actions
 
 import base.SpecBase
 import models.UserAnswers
-import models.calculation.inputs.{CalculationInputs, Resubmission}
+import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Resubmission, Setup}
 import models.requests.{IdentifierRequest, OptionalDataRequest}
 import models.submission.Submission
 import org.mockito.ArgumentMatchers.{any, anyString}
@@ -48,7 +48,20 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
         val submissionDataService = mock[SubmissionDataService]
 
         val submission =
-          Submission("id", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
+          Submission(
+            "id",
+            "uniqueId",
+            CalculationInputs(
+              Resubmission(false, None),
+              Setup(
+                Some(AnnualAllowanceSetup(Some(true))),
+                Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+              ),
+              None,
+              None
+            ),
+            None
+          )
 
         when(userDataService.get()(any())) thenReturn Future(None)
         when(submissionDataService.getByUserId(anyString())(any())) thenReturn Future(Some(submission))
@@ -79,7 +92,20 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
         val submissionRepository = mock[SubmissionDataService]
 
         val submission =
-          Submission("id", "uniqueId", CalculationInputs(Resubmission(false, None), None, None), None)
+          Submission(
+            "id",
+            "uniqueId",
+            CalculationInputs(
+              Resubmission(false, None),
+              Setup(
+                Some(AnnualAllowanceSetup(Some(true))),
+                Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+              ),
+              None,
+              None
+            ),
+            None
+          )
 
         when(userDataService.get()(any())) thenReturn Future(Some(UserAnswers("id")))
         when(submissionRepository.getByUserId(anyString())(any())) thenReturn Future(Some(submission))

@@ -16,7 +16,7 @@
 
 package pages
 
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission, Setup}
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
 import models.{BankDetails, CheckMode, NormalMode}
@@ -24,11 +24,12 @@ import org.mockito.MockitoSugar.mock
 
 class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
-  val mockCalculationInputsWithAA = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
+  val mockCalculationInputsWithAA =
+    CalculationInputs(mock[Resubmission], mock[Setup], Some(mock[AnnualAllowance]), None)
   val ltaOnlySubmission           = Submission(
     "id",
     "submissionUniqueId",
-    CalculationInputs(mock[Resubmission], None, Some(mock[LifeTimeAllowance])),
+    CalculationInputs(mock[Resubmission], mock[Setup], None, Some(mock[LifeTimeAllowance])),
     None
   )
 

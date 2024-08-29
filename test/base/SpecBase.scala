@@ -20,7 +20,7 @@ import controllers.actions._
 import models.UserAnswers
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, Period, TaxYearScheme, TotalAmounts}
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission}
+import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Resubmission, Setup}
 import models.submission.Submission
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
@@ -117,19 +117,24 @@ trait SpecBase
 
   val resubmission = Resubmission(false, None)
 
-  val calculationInputs = CalculationInputs(resubmission, None, None)
+  val setup =
+    Setup(Some(AnnualAllowanceSetup(Some(true))), Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false))))
+
+  val calculationInputs = CalculationInputs(resubmission, setup, None, None)
 
   val submission = Submission(id, uniqueId, calculationInputs, None)
 
   def submissionRelatingToTaxYearSchemes(taxYearSchemes: List[TaxYearScheme]): Submission = {
     val resubmission      = Resubmission(false, None)
+    val setup             =
+      Setup(Some(AnnualAllowanceSetup(Some(true))), Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false))))
     val annualAllowance   = AnnualAllowance(
       List.empty,
       List(
         NormalTaxYear(0, taxYearSchemes, 0, 0, models.calculation.inputs.Period._2017, TestData.incomeSubJourney, None)
       )
     )
-    val calculationInputs = CalculationInputs(resubmission, Some(annualAllowance), None)
+    val calculationInputs = CalculationInputs(resubmission, setup, Some(annualAllowance), None)
     Submission(id, uniqueId, calculationInputs, None)
   }
 

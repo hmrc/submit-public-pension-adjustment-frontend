@@ -38,9 +38,7 @@ object TestData {
     whoPayingExtra: Option[WhoPayingExtraLtaCharge],
     pensionSchemeDetails: Option[LtaPensionSchemeDetails]
   ) = LifeTimeAllowance(
-    benefitCrystallisationEventFlag = true,
     benefitCrystallisationEventDate = LocalDate.of(2017, 1, 30),
-    changeInLifetimeAllowancePercentageInformedFlag = true,
     changeInTaxCharge = ChangeInTaxCharge.NewCharge,
     lifetimeAllowanceProtectionOrEnhancements = LtaProtectionOrEnhancements.Protection,
     protectionType = Some(ProtectionType.PrimaryProtection),
@@ -55,7 +53,6 @@ object TestData {
     newLifetimeAllowanceChargeWillBePaidBy = whoPayingExtra,
     newLifetimeAllowanceChargeSchemeNameAndTaxRef = pensionSchemeDetails,
     NewLifeTimeAllowanceAdditions(
-      false,
       None,
       None,
       None,
@@ -101,6 +98,7 @@ object TestData {
 
   val calculationInputs = CalculationInputs(
     Resubmission(false, None),
+    Setup(Some(AnnualAllowanceSetup(Some(true))), Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))),
     Some(
       AnnualAllowance(
         List(Period._2021, Period._2019),
@@ -187,9 +185,7 @@ object TestData {
     ),
     Some(
       LifeTimeAllowance(
-        true,
         LocalDate.parse("2018-10-27"),
-        true,
         ChangeInTaxCharge.IncreasedCharge,
         LtaProtectionOrEnhancements.Protection,
         Some(ProtectionType.FixedProtection2014),
@@ -204,7 +200,6 @@ object TestData {
         Some(WhoPayingExtraLtaCharge.You),
         None,
         NewLifeTimeAllowanceAdditions(
-          false,
           None,
           None,
           None,
@@ -614,6 +609,7 @@ object TestData {
   val finalSubmission1 = FinalSubmission(
     CalculationInputs(
       Resubmission(false, None),
+      Setup(Some(AnnualAllowanceSetup(Some(true))), Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))),
       Some(
         AnnualAllowance(
           List(Period._2021, Period._2019),
@@ -700,9 +696,7 @@ object TestData {
       ),
       Some(
         LifeTimeAllowance(
-          true,
           LocalDate.parse("2018-10-27"),
-          true,
           ChangeInTaxCharge.IncreasedCharge,
           LtaProtectionOrEnhancements.Protection,
           Some(ProtectionType.FixedProtection2014),
@@ -717,7 +711,6 @@ object TestData {
           Some(WhoPayingExtraLtaCharge.You),
           None,
           NewLifeTimeAllowanceAdditions(
-            false,
             None,
             None,
             None,
