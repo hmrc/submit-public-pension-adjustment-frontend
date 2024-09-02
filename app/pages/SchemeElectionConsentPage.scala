@@ -16,58 +16,36 @@
 
 package pages
 
-import models.WhoWillPay.{PensionScheme, You}
 import models.submission.Submission
-import models.{CheckMode, NormalMode, Period, UserAnswers, WhoWillPay}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
 
-import scala.util.Try
-
-case class WhoWillPayPage(period: Period) extends QuestionPage[WhoWillPay] {
-
+case class SchemeElectionConsentPage(period: Period) extends QuestionPage[Boolean] {
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "whoWillPay"
+  override def toString: String = "schemeElectionConsent"
 
   override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
-    answers.get(WhoWillPayPage(period)) match {
-      case Some(PensionScheme) => controllers.routes.WhichPensionSchemeWillPayController.onPageLoad(NormalMode, period)
-      case Some(You)           =>
+    answers.get(SchemeElectionConsentPage(period)) match {
+      case Some(true) =>
         val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
         nextDebitPeriod match {
           case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(NormalMode, period)
           case None         => controllers.routes.AlternativeNameController.onPageLoad(NormalMode)
         }
-      case _                   => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
-    answers.get(WhoWillPayPage(period)) match {
-      case Some(PensionScheme) => controllers.routes.WhichPensionSchemeWillPayController.onPageLoad(CheckMode, period)
-      case Some(You)           =>
+    answers.get(SchemeElectionConsentPage(period)) match {
+      case Some(true) =>
         val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
         nextDebitPeriod match {
           case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(CheckMode, period)
           case None         => controllers.routes.CheckYourAnswersController.onPageLoad
         }
-      case _                   => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  override def cleanup(value: Option[WhoWillPay], userAnswers: UserAnswers): Try[UserAnswers] =
-    value
-      .map {
-        case WhoWillPay.You =>
-          userAnswers
-            .remove(WhichPensionSchemeWillPayPage(period))
-            .flatMap(_.remove(PensionSchemeDetailsPage(period)))
-            .flatMap(_.remove(AskedPensionSchemeToPayTaxChargePage(period)))
-            .flatMap(_.remove(WhenWillYouAskPensionSchemeToPayPage(period)))
-            .flatMap(_.remove(WhenDidYouAskPensionSchemeToPayPage(period)))
-            .flatMap(_.remove(SchemeElectionConsentPage(period)))
-
-        case WhoWillPay.PensionScheme => super.cleanup(value, userAnswers)
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -496,7 +496,7 @@ object TestData {
         models.calculation.inputs.Period._2021,
         None,
         Some(
-          SchemeCharge(820, SchemeDetails("Scheme 1", PSTR("00348916RT")), Some(LocalDate.parse("2021-07-20")), None)
+          SchemeCharge(820, SchemeDetails("Scheme 1", PSTR("00348916RT")), Some(LocalDate.parse("2021-07-20")))
         )
       ),
       PaymentElection(
@@ -511,8 +511,7 @@ object TestData {
           SchemeCharge(
             800,
             SchemeDetails("Scheme 2", PSTR("00348916NQ")),
-            None,
-            Some("1 October 2024 to 31 December 2024")
+            None
           )
         )
       )

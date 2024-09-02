@@ -224,22 +224,11 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       case PensionScheme =>
         val paymentElectionDate = userAnswers.get(WhenDidYouAskPensionSchemeToPayPage(period.toCorePeriod))
 
-        val estimatedPaymentElectionQuarter =
-          userAnswers.get(WhenWillYouAskPensionSchemeToPayPage(period.toCorePeriod)) map {
-            case OctToDec23  => "1 October 2023 to 31 December 2023"
-            case JanToMar24  => "1 January 2024 to 31 March 2024"
-            case AprToJune24 => "1 April 2024 to 30 June 2024"
-            case JulToSep24  => "1 July 2024 to 30 September 2024"
-            case OctToDec24  => "1 October 2024 to 31 December 2024"
-            case JanToMar25  => "1 January 2025 to 31 March 2025"
-          }
-
         Some(
           SchemeCharge(
             debit,
             buildSchemeDetails(userAnswers, period).getOrElse(SchemeDetails("", PSTR(""))),
-            paymentElectionDate,
-            estimatedPaymentElectionQuarter
+            paymentElectionDate
           )
         )
     }

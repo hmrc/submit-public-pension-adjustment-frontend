@@ -98,8 +98,7 @@ submissionInfo.list.you.message5 = cyfeirnod cynllun pensiwn unigol hanesyddol n
 submissionInfo.list.you.message6 = enw cynllun pensiwn cyhoeddus neu breifat
 submissionInfo.list.you.message7 = cyfeirnod treth y cynllun pensiwn cyhoeddus neu breifat
 submissionInfo.list.behalf.message1 = Rhif Yswiriant Gwladol
-submissionInfo.list.behalf.message2 = cyfeirnod dros dro
-submissionInfo.list.behalf.message3 = cyfeirnod unigryw y trethdalwr
+submissionInfo.list.behalf.message2 = cyfeirnod unigryw y trethdalwr
 
 chargeDetails.caption.2020 = Lwfans blynyddol rhwng 6 Ebrill 2019 a 5 Ebrill 2020
 chargeDetails.caption.2021 = Lwfans blynyddol rhwng 6 Ebrill 2020 a 5 Ebrill 2021
@@ -545,8 +544,17 @@ confirmRestartAnswers.error.required = cy: Select yes if you want to restart you
 
 schemeCreditConsent.title = cy: Scheme credit consent
 schemeCreditConsent.heading = cy: Scheme credit consent
-schemeCreditConsent.message1 = cy: Between 2019-20 and 2022-23, you had a tax charge that you asked your scheme to pay. This has reduced as a result of the public service pensions remedy.
-schemeCreditConsent.bullet1 = cy: If the charge was paid by your public service pension scheme, we will tell your scheme administrator to adjust your benefits. This means you don’t need to tell your public service scheme administrator about this change.
+schemeCreditConsent.message1 = cy: Between the tax years of 2019-20 and 2022-23, you had a tax charge that you asked your scheme to pay. This has reduced as a result of the public service pensions remedy.
+schemeCreditConsent.bullet1 = cy: If the charge was paid by your public service pension scheme, we will tell your scheme administrator to adjust your benefits. This means you don’t need to tell your public service pension scheme administrator about this change.
 schemeCreditConsent.bullet2 = cy: If the charge was paid by a non-public service pension scheme, you will need to contact them directly.
 schemeCreditConsent.checkYourAnswersLabel = cy: Scheme credit consent
 schemeCreditConsent.change.hidden = cy: Scheme Credit Consent
+
+schemeElectionConsent.title = cy: Scheme election consent
+schemeElectionConsent.heading = cy: Scheme election consent
+schemeElectionConsent.message1 = cy: Based on the information you gave us, you have a new or additional annual allowance tax charge as a result of the public service pensions remedy.
+schemeElectionConsent.message2 = cy: You have told us that you would like your scheme to pay the new or additional annual allowance tax charge.
+schemeElectionConsent.message3 = cy: By doing this, you understand that we will tell your pension scheme administrator that this is your scheme pays election notice. You cannot withdraw this notice.
+schemeElectionConsent.message4 = cy: Your pension scheme administrator will adjust your benefits to account for the tax that will be paid on your behalf.
+schemeElectionConsent.message5 = cy: HMRC will tell your pension scheme administrator the amount of the new or additional charge you want the scheme to pay.
+schemeElectionConsent.message6 = cy: This means you don’t need to tell your pension scheme administrator about this charge.

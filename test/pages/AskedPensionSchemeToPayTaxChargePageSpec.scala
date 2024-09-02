@@ -45,7 +45,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
         checkNavigation(result, "/submission-service/2020/date-asked-pension-scheme-to-pay")
       }
 
-      "to WhenWillYouAskPensionSchemeToPayPage when no selected" in {
+      "to SchemeElectionConsentPage when no selected" in {
         val ua     = emptyUserAnswers
           .set(
             AskedPensionSchemeToPayTaxChargePage(Period._2020),
@@ -55,7 +55,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
           .value
         val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/submission-service/2020/date-you-will-ask-pension-scheme-to-pay")
+        checkNavigation(result, "/submission-service/2020/scheme-election-consent")
       }
 
       "to JourneyRecovery when not selected" in {
@@ -81,7 +81,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
         checkNavigation(result, "/submission-service/2020/change-date-asked-pension-scheme-to-pay")
       }
 
-      "to when will you ask pension scheme to charge page in check mode when no selected" in {
+      "to scheme election consent page in check mode when no selected" in {
         val ua     = emptyUserAnswers
           .set(
             AskedPensionSchemeToPayTaxChargePage(Period._2020),
@@ -91,7 +91,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
           .value
         val result = AskedPensionSchemeToPayTaxChargePage(Period._2020).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/submission-service/2020/change-date-you-will-ask-pension-scheme-to-pay")
+        checkNavigation(result, "/submission-service/2020/change-scheme-election-consent")
       }
 
       "to JourneyRecovery when not selected" in {
@@ -126,10 +126,17 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
           )
           .success
           .value
+          .set(
+            SchemeElectionConsentPage(Period._2020),
+            true
+          )
+          .success
+          .value
 
         val cleanedUserAnswers =
           AskedPensionSchemeToPayTaxChargePage(Period._2020).cleanup(Some(true), ua).success.value
         cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
+        cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) mustBe None
       }
     }
   }

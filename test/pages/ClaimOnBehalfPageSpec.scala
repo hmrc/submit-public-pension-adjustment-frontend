@@ -483,6 +483,12 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
         )
         .success
         .value
+        .set(
+          SchemeElectionConsentPage(Period._2021),
+          true
+        )
+        .success
+        .value
 
       val cleanedUserAnswers = ClaimOnBehalfPage.cleanup(Some(true), ua).success.value
 
@@ -492,6 +498,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) mustBe None
       cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) mustBe None
       cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe None
+      cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) mustBe None
 
     }
   }

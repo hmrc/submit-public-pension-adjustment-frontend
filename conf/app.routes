@@ -193,3 +193,9 @@ GET        /restart-calculation                                                 
 
 GET        /submission-service/scheme-credit-consent                                                                    controllers.SchemeCreditConsentController.onPageLoad()
 POST       /submission-service/scheme-credit-consent                                                                    controllers.SchemeCreditConsentController.onSubmit()
+
+GET        /submission-service/:period/scheme-election-consent                                                          controllers.SchemeElectionConsentController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /submission-service/:period/scheme-election-consent                                                          controllers.SchemeElectionConsentController.onSubmit(mode: Mode = NormalMode, period:Period)
+
+GET        /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onSubmit(mode: Mode = CheckMode, period:Period)
