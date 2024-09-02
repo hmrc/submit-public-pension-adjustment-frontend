@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.WhichPensionSchemeWillPayFormProvider
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs.CalculationInputs
+import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup}
 import models.calculation.response.{CalculationResponse, TaxYearScheme}
 import models.submission.Submission
 import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPay}
@@ -85,6 +85,10 @@ class WhichPensionSchemeWillPayControllerSpec extends SpecBase with MockitoSugar
 
       val mockCalculationInputs = CalculationInputs(
         models.calculation.inputs.Resubmission(false, None),
+        models.calculation.inputs.Setup(
+          Some(AnnualAllowanceSetup(Some(true))),
+          Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        ),
         Option(
           models.calculation.inputs.AnnualAllowance(
             List(),

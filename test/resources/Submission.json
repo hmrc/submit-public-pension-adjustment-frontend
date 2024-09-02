@@ -3,6 +3,16 @@
     "resubmission": {
       "isResubmission": false
     },
+    "setup": {
+      "annualAllowanceSetup": {
+        "savingsStatement": true
+      },
+      "lifetimeAllowanceSetup": {
+        "benefitCrystallisationEventFlag": true,
+        "changeInLifetimeAllowancePercentageInformedFlag": true,
+        "multipleBenefitCrystallisationEventFlag": false
+      }
+    },
     "annualAllowance": {
       "scottishTaxYears": [],
       "taxYears": [

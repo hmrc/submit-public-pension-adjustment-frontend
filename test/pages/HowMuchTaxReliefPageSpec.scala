@@ -16,7 +16,7 @@
 
 package pages
 
-import models.calculation.inputs.{CalculationInputs, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, ProtectionEnhancedChanged, ProtectionType, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifetimeAllowanceSetup, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, ProtectionEnhancedChanged, ProtectionType, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
@@ -336,6 +336,10 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
   private def ltaOnlyCalculationInputsWithSingleScheme =
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
+      models.calculation.inputs.Setup(
+        Some(AnnualAllowanceSetup(Some(true))),
+        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+      ),
       None,
       Some(TestData.lifeTimeAllowanceWithSingeScheme)
     )
@@ -343,6 +347,10 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
   private def ltaOnlyCalculationInputsWithMultipleSchemes =
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
+      models.calculation.inputs.Setup(
+        Some(AnnualAllowanceSetup(Some(true))),
+        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+      ),
       None,
       Some(TestData.lifeTimeAllowanceWithMultipleSchemes)
     )
@@ -350,6 +358,10 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
   private def calculationInputsWithSingleScheme =
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
+      models.calculation.inputs.Setup(
+        Some(AnnualAllowanceSetup(Some(true))),
+        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+      ),
       Option(
         models.calculation.inputs.AnnualAllowance(
           List(),
@@ -372,6 +384,10 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
   private def calculationInputsWithMultipleSchemes =
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
+      models.calculation.inputs.Setup(
+        Some(AnnualAllowanceSetup(Some(true))),
+        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+      ),
       Option(
         models.calculation.inputs.AnnualAllowance(
           List(),
@@ -403,12 +419,14 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
   private def ltaOnlyCalculationInputsWithNoSchemes =
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
+      models.calculation.inputs.Setup(
+        Some(AnnualAllowanceSetup(Some(true))),
+        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+      ),
       None,
       Option(
         models.calculation.inputs.LifeTimeAllowance(
-          benefitCrystallisationEventFlag = true,
           benefitCrystallisationEventDate = LocalDate.of(2017, 1, 30),
-          changeInLifetimeAllowancePercentageInformedFlag = true,
           changeInTaxCharge = ChangeInTaxCharge.NewCharge,
           lifetimeAllowanceProtectionOrEnhancements = LtaProtectionOrEnhancements.Protection,
           protectionType = Some(ProtectionType.PrimaryProtection),
@@ -423,7 +441,6 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           newLifetimeAllowanceChargeWillBePaidBy = Some(WhoPayingExtraLtaCharge.You),
           newLifetimeAllowanceChargeSchemeNameAndTaxRef = None,
           NewLifeTimeAllowanceAdditions(
-            false,
             None,
             None,
             None,

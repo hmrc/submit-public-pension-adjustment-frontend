@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ClaimOnBehalfFormProvider
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission, Setup}
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.{Done, NormalMode, UserAnswers}
@@ -87,7 +87,8 @@ class ClaimOnBehalfControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService         = mock[UserDataService]
       val mockSubmissionDataService   = mock[SubmissionDataService]
-      val mockCalculationInputsWithAA = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
+      val mockCalculationInputsWithAA =
+        CalculationInputs(mock[Resubmission], mock[Setup], Some(mock[AnnualAllowance]), None)
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 

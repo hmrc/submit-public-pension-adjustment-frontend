@@ -17,7 +17,7 @@
 package pages
 
 import models.StatusOfUser.Deputyship
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission, Setup}
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, WhoWillPay}
@@ -36,8 +36,10 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     beRemovable[Boolean](ClaimOnBehalfPage)
   }
 
-  val mockCalculationInputsWithLTAOnly = CalculationInputs(mock[Resubmission], None, Some(mock[LifeTimeAllowance]))
-  val mockCalculationInputsWithAA      = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
+  val mockCalculationInputsWithLTAOnly =
+    CalculationInputs(mock[Resubmission], mock[Setup], None, Some(mock[LifeTimeAllowance]))
+  val mockCalculationInputsWithAA      =
+    CalculationInputs(mock[Resubmission], mock[Setup], Some(mock[AnnualAllowance]), None)
 
   val debitPeriodSubmission =
     Submission(id, uniqueId, calculationInputs, Some(aCalculationResponseWithAnInDateDebitYear))

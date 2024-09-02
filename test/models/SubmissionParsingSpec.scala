@@ -18,7 +18,7 @@ package models
 
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs.{AnnualAllowance, Period}
+import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, LifetimeAllowanceSetup, Period}
 import models.calculation.response.{TaxYearScheme, TotalAmounts}
 import models.submission.RetrieveSubmissionResponse
 import org.scalatest.freespec.AnyFreeSpec
@@ -36,6 +36,12 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
       val res: RetrieveSubmissionResponse = readRetrieveSubmissionResponse("test/resources/Submission.json")
 
       res.calculationInputs.resubmission      must be(models.calculation.inputs.Resubmission(false, None))
+      res.calculationInputs.setup             must be(
+        models.calculation.inputs.Setup(
+          Some(AnnualAllowanceSetup(Some(true))),
+          Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        )
+      )
       res.calculationInputs.annualAllowance   must be(
         Some(
           AnnualAllowance(

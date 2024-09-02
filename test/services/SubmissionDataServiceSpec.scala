@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import connectors.SubmissionsConnector
 import models.Done
-import models.calculation.inputs.{CalculationInputs, Resubmission}
+import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Resubmission, Setup}
 import models.submission.Submission
 import org.mockito.MockitoSugar.when
 import org.scalatest.concurrent.ScalaFutures
@@ -43,7 +43,15 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
         val expectedSubmission = Submission(
           id = "id",
           uniqueId = "someUniqueId",
-          calculationInputs = CalculationInputs(Resubmission(false, None), None, None),
+          calculationInputs = CalculationInputs(
+            Resubmission(false, None),
+            Setup(
+              Some(AnnualAllowanceSetup(Some(true))),
+              Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+            ),
+            None,
+            None
+          ),
           calculation = None,
           lastUpdated = Instant.parse("2024-03-12T10:00:00Z")
         )

@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.WhichPensionSchemeWillPayTaxReliefFormProvider
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Period, Resubmission}
+import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Period, Resubmission, Setup}
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
@@ -56,6 +56,10 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
       val mockCalculationInputs = CalculationInputs(
         models.calculation.inputs.Resubmission(false, None),
+        models.calculation.inputs.Setup(
+          Some(AnnualAllowanceSetup(Some(true))),
+          Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        ),
         Option(
           models.calculation.inputs.AnnualAllowance(
             List(),
@@ -116,6 +120,10 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
       val mockCalculationInputs = CalculationInputs(
         models.calculation.inputs.Resubmission(false, None),
+        models.calculation.inputs.Setup(
+          Some(AnnualAllowanceSetup(Some(true))),
+          Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        ),
         Option(
           models.calculation.inputs.AnnualAllowance(
             List(),
@@ -178,7 +186,8 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
       val period: models.calculation.response.Period = models.calculation.response.Period._2021
 
-      val mockCalculationInputsWithAA = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
+      val mockCalculationInputsWithAA =
+        CalculationInputs(mock[Resubmission], mock[Setup], Some(mock[AnnualAllowance]), None)
 
       val calculationResponse    = CalculationResponse(
         models.calculation.response.Resubmission(false, None),

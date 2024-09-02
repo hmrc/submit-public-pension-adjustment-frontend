@@ -18,7 +18,7 @@ package connectors
 
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
-import models.calculation.inputs.{CalculationInputs, Resubmission}
+import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Resubmission, Setup}
 import models.submission.Submission
 import models.{Done, UserAnswers}
 import org.scalatest.concurrent.ScalaFutures
@@ -51,7 +51,15 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
         val expectedSubmission = Submission(
           id = "id",
           uniqueId = "someUniqueId",
-          calculationInputs = CalculationInputs(Resubmission(false, None), None, None),
+          calculationInputs = CalculationInputs(
+            Resubmission(false, None),
+            Setup(
+              Some(AnnualAllowanceSetup(Some(true))),
+              Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+            ),
+            None,
+            None
+          ),
           calculation = None,
           lastUpdated = Instant.parse("2024-03-12T10:00:00Z")
         )
@@ -99,7 +107,15 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
         val expectedSubmission = Submission(
           id = "id",
           uniqueId = "someUniqueId",
-          calculationInputs = CalculationInputs(Resubmission(false, None), None, None),
+          calculationInputs = CalculationInputs(
+            Resubmission(false, None),
+            Setup(
+              Some(AnnualAllowanceSetup(Some(true))),
+              Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+            ),
+            None,
+            None
+          ),
           calculation = None,
           lastUpdated = Instant.parse("2024-03-12T10:00:00Z")
         )

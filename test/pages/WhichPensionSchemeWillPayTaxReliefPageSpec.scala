@@ -16,7 +16,7 @@
 
 package pages
 
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission}
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission, Setup}
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
 import models.{BankDetails, CheckMode, NormalMode}
@@ -24,8 +24,10 @@ import org.mockito.MockitoSugar.mock
 
 class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
-  val mockCalculationInputsWithAA      = CalculationInputs(mock[Resubmission], Some(mock[AnnualAllowance]), None)
-  val mockCalculationInputsWithLTAOnly = CalculationInputs(mock[Resubmission], None, Some(mock[LifeTimeAllowance]))
+  val mockCalculationInputsWithAA      =
+    CalculationInputs(mock[Resubmission], mock[Setup], Some(mock[AnnualAllowance]), None)
+  val mockCalculationInputsWithLTAOnly =
+    CalculationInputs(mock[Resubmission], mock[Setup], None, Some(mock[LifeTimeAllowance]))
 
   "WhichPensionSchemeWillPayTaxReliefPage" - {
 
