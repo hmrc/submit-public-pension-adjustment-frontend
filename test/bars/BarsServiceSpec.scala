@@ -69,15 +69,14 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
         }
       }
 
-      "should throw IllegalArgumentException when httpResponse.status is OK but httpResponse body cannot be parsed to BarsValidateResponse" in {
+      "should throw UpstreamErrorResponse when httpResponse.status is OK but httpResponse body cannot be parsed to BarsValidateResponse" in {
         val notParsableOkResponse = Future.successful(HttpResponse(OK, "Non parsable JSON"))
         val barsService           = new BarsService(mockBarsConnectorWithResponse(notParsableOkResponse))
 
         val response = barsService.preVerify(notParsableOkResponse)(headerCarrier)
 
         whenReady(response.failed) { e =>
-          e          shouldBe an[IllegalArgumentException]
-          e.getMessage should include("Unsupported statusCode 200")
+          e shouldBe UpstreamErrorResponse("Non parsable JSON", OK)
         }
       }
 
