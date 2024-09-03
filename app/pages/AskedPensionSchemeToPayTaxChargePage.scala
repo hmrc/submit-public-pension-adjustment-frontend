@@ -31,14 +31,14 @@ case class AskedPensionSchemeToPayTaxChargePage(period: Period) extends Question
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(AskedPensionSchemeToPayTaxChargePage(period)) match {
       case Some(true)  => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(NormalMode, period)
-      case Some(false) => controllers.routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(NormalMode, period)
+      case Some(false) => controllers.routes.SchemeElectionConsentController.onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AskedPensionSchemeToPayTaxChargePage(period)) match {
       case Some(true)  => controllers.routes.WhenDidYouAskPensionSchemeToPayController.onPageLoad(CheckMode, period)
-      case Some(false) => controllers.routes.WhenWillYouAskPensionSchemeToPayController.onPageLoad(CheckMode, period)
+      case Some(false) => controllers.routes.SchemeElectionConsentController.onPageLoad(CheckMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -46,7 +46,10 @@ case class AskedPensionSchemeToPayTaxChargePage(period: Period) extends Question
     value
       .map {
         case false => userAnswers.remove(WhenDidYouAskPensionSchemeToPayPage(period))
-        case true  => userAnswers.remove(WhenWillYouAskPensionSchemeToPayPage(period))
+        case true  =>
+          userAnswers
+            .remove(WhenWillYouAskPensionSchemeToPayPage(period))
+            .flatMap(_.remove(SchemeElectionConsentPage(period)))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

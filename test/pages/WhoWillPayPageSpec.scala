@@ -172,6 +172,9 @@ class WhoWillPayPageSpec extends PageBehaviours {
           .set(WhenWillYouAskPensionSchemeToPayPage(Period._2020), WhenWillYouAskPensionSchemeToPay.OctToDec23)
           .success
           .value
+          .set(SchemeElectionConsentPage(Period._2020), true)
+          .success
+          .value
 
         val cleanedUserAnswers = WhoWillPayPage(Period._2020).cleanup(Some(You), ua).success.value
 
@@ -180,6 +183,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
         cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2020)) mustBe None
         cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
         cleanedUserAnswers.get(WhenWillYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
+        cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) mustBe None
       }
     }
   }

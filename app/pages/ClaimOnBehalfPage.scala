@@ -121,6 +121,7 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
             .flatMap(_.remove(AskedPensionSchemeToPayTaxChargePage(period)))
             .flatMap(_.remove(WhenWillYouAskPensionSchemeToPayPage(period)))
             .flatMap(_.remove(WhenDidYouAskPensionSchemeToPayPage(period)))
+            .flatMap(_.remove(SchemeElectionConsentPage(period)))
             .get,
           periods.tail
         )
