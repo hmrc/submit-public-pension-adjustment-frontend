@@ -16,6 +16,7 @@
 
 package controllers
 
+import config.FrontendAppConfig
 import connectors.SubmitBackendConnector
 import controllers.actions._
 import models.UserSubmissionReference
@@ -34,6 +35,7 @@ class SubmissionController @Inject() (
   submissionDataService: SubmissionDataService,
   calculateBackendDataService: CalculateBackendDataService,
   submitBackendConnector: SubmitBackendConnector,
+  frontendAppConfig: FrontendAppConfig,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
@@ -54,7 +56,7 @@ class SubmissionController @Inject() (
             _ <- calculateBackendDataService.clearUserAnswersCalcBE()
             _ <- calculateBackendDataService.clearSubmissionCalcBE()
             _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
-          } yield Ok(view(usr, controllers.auth.routes.AuthController.signOut.url))
+          } yield Ok(view(usr, frontendAppConfig.exitSurveyUrl))
 
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
       }
