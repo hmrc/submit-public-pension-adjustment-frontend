@@ -24,6 +24,7 @@ import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import config.FrontendAppConfig
 import services.{CalculateBackendDataService, SubmissionDataService, SubmissionService, UserDataService}
 import views.html.SubmissionView
 
@@ -66,16 +67,21 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
         .build()
 
       running(application) {
+
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+
         val request = FakeRequest(GET, submissionRoute)
 
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[SubmissionView]
 
+        val expectedRedirectUrl = s"${appConfig.exitSurveyUrl}"
+
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           "userSubmissionReference",
-          "/submit-public-pension-adjustment/account/sign-out-survey"
+          expectedRedirectUrl
         )(request, messages(application)).toString
         verify(mockUserDataService, times(1)).clear()(any())
         verify(mockSubmissionDataService, times(1)).clear()(any())
