@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import connectors.SubmissionsConnector
 import models.Done
-import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Resubmission, Setup}
+import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Resubmission, Setup}
 import models.submission.Submission
 import org.mockito.MockitoSugar.when
 import org.scalatest.concurrent.ScalaFutures
@@ -46,8 +46,33 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
           calculationInputs = CalculationInputs(
             Resubmission(false, None),
             Setup(
-              Some(AnnualAllowanceSetup(Some(true))),
-              Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+              Some(
+                AnnualAllowanceSetup(
+                  Some(true),
+                  Some(false),
+                  Some(false),
+                  Some(false),
+                  Some(false),
+                  Some(false),
+                  Some(MaybePIAIncrease.No),
+                  Some(MaybePIAUnchangedOrDecreased.No),
+                  Some(false),
+                  Some(false),
+                  Some(false),
+                  Some(false)
+                )
+              ),
+              Some(
+                LifetimeAllowanceSetup(
+                  Some(true),
+                  Some(false),
+                  Some(true),
+                  Some(false),
+                  Some(false),
+                  Some(false),
+                  Some(true)
+                )
+              )
             ),
             None,
             None

@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.WhichPensionSchemeWillPayTaxReliefFormProvider
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Period, Resubmission, Setup}
+import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, Resubmission, Setup}
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
@@ -57,8 +57,33 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
       val mockCalculationInputs = CalculationInputs(
         models.calculation.inputs.Resubmission(false, None),
         models.calculation.inputs.Setup(
-          Some(AnnualAllowanceSetup(Some(true))),
-          Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+          Some(
+            AnnualAllowanceSetup(
+              Some(true),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(MaybePIAIncrease.No),
+              Some(MaybePIAUnchangedOrDecreased.No),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false)
+            )
+          ),
+          Some(
+            LifetimeAllowanceSetup(
+              Some(true),
+              Some(false),
+              Some(true),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(true)
+            )
+          )
         ),
         Option(
           models.calculation.inputs.AnnualAllowance(
@@ -121,8 +146,33 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
       val mockCalculationInputs = CalculationInputs(
         models.calculation.inputs.Resubmission(false, None),
         models.calculation.inputs.Setup(
-          Some(AnnualAllowanceSetup(Some(true))),
-          Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+          Some(
+            AnnualAllowanceSetup(
+              Some(true),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(MaybePIAIncrease.No),
+              Some(MaybePIAUnchangedOrDecreased.No),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false)
+            )
+          ),
+          Some(
+            LifetimeAllowanceSetup(
+              Some(true),
+              Some(false),
+              Some(true),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(true)
+            )
+          )
         ),
         Option(
           models.calculation.inputs.AnnualAllowance(
