@@ -18,7 +18,7 @@ package models
 
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, LifetimeAllowanceSetup, Period}
+import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, LifetimeAllowanceSetup, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period}
 import models.calculation.response.{TaxYearScheme, TotalAmounts}
 import models.submission.RetrieveSubmissionResponse
 import org.scalatest.freespec.AnyFreeSpec
@@ -38,8 +38,33 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
       res.calculationInputs.resubmission      must be(models.calculation.inputs.Resubmission(false, None))
       res.calculationInputs.setup             must be(
         models.calculation.inputs.Setup(
-          Some(AnnualAllowanceSetup(Some(true))),
-          Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+          Some(
+            AnnualAllowanceSetup(
+              Some(true),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(MaybePIAIncrease.No),
+              Some(MaybePIAUnchangedOrDecreased.No),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(false)
+            )
+          ),
+          Some(
+            LifetimeAllowanceSetup(
+              Some(true),
+              Some(false),
+              Some(true),
+              Some(false),
+              Some(false),
+              Some(false),
+              Some(true)
+            )
+          )
         )
       )
       res.calculationInputs.annualAllowance   must be(

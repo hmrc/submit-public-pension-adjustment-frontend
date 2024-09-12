@@ -5,12 +5,27 @@
     },
     "setup": {
       "annualAllowanceSetup": {
-        "savingsStatement": true
+        "savingsStatement": true,
+        "pensionProtectedMember": false,
+        "hadAACharge": false,
+        "contributionRefunds": false,
+        "netIncomeAbove100K": false,
+        "netIncomeAbove190K": false,
+        "maybePIAIncrease": "no",
+        "maybePIAUnchangedOrDecreased": "no",
+        "pIAAboveAnnualAllowanceIn2023": false,
+        "netIncomeAbove190KIn2023": false,
+        "flexibleAccessDcScheme": false,
+        "contribution4000ToDirectContributionScheme": false
       },
       "lifetimeAllowanceSetup": {
         "benefitCrystallisationEventFlag": true,
+        "previousLTACharge": false,
         "changeInLifetimeAllowancePercentageInformedFlag": true,
-        "multipleBenefitCrystallisationEventFlag": false
+        "increaseInLTACharge": false,
+        "newLTACharge": false,
+        "multipleBenefitCrystallisationEventFlag": false,
+        "otherSchemeNotification": true
       }
     },
     "annualAllowance": {
