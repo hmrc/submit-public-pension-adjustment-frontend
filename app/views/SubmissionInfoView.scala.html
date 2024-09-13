@@ -22,7 +22,10 @@
 
 @()(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("submissionInfo.title"))) {
+@layout(
+pageTitle = titleNoForm(messages("submissionInfo.title")) ,
+showBackLink = false) {
+
 
     <h1 class="govuk-heading-xl">@messages("submissionInfo.heading")</h1>
 
