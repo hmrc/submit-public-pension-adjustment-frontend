@@ -36,7 +36,7 @@ class RestartCalculationControllerSpec extends SpecBase {
 
         redirectLocation(
           result
-        ).value must endWith("/public-pension-adjustment/pension-saving-statement")
+        ).value must endWith("/public-pension-adjustment/change-previous-adjustment")
       }
     }
   }
