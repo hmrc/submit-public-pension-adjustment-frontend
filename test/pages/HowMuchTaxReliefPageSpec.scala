@@ -16,7 +16,7 @@
 
 package pages
 
-import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifetimeAllowanceSetup, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, ProtectionEnhancedChanged, ProtectionType, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, ExcessLifetimeAllowancePaid, LifetimeAllowanceSetup, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, ProtectionEnhancedChanged, ProtectionType, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
@@ -337,8 +337,33 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
       models.calculation.inputs.Setup(
-        Some(AnnualAllowanceSetup(Some(true))),
-        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        Some(
+          AnnualAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(MaybePIAIncrease.No),
+            Some(MaybePIAUnchangedOrDecreased.No),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false)
+          )
+        ),
+        Some(
+          LifetimeAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(true)
+          )
+        )
       ),
       None,
       Some(TestData.lifeTimeAllowanceWithSingeScheme)
@@ -348,8 +373,33 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
       models.calculation.inputs.Setup(
-        Some(AnnualAllowanceSetup(Some(true))),
-        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        Some(
+          AnnualAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(MaybePIAIncrease.No),
+            Some(MaybePIAUnchangedOrDecreased.No),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false)
+          )
+        ),
+        Some(
+          LifetimeAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(true)
+          )
+        )
       ),
       None,
       Some(TestData.lifeTimeAllowanceWithMultipleSchemes)
@@ -359,8 +409,33 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
       models.calculation.inputs.Setup(
-        Some(AnnualAllowanceSetup(Some(true))),
-        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        Some(
+          AnnualAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(MaybePIAIncrease.No),
+            Some(MaybePIAUnchangedOrDecreased.No),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false)
+          )
+        ),
+        Some(
+          LifetimeAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(true)
+          )
+        )
       ),
       Option(
         models.calculation.inputs.AnnualAllowance(
@@ -385,8 +460,33 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
       models.calculation.inputs.Setup(
-        Some(AnnualAllowanceSetup(Some(true))),
-        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        Some(
+          AnnualAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(MaybePIAIncrease.No),
+            Some(MaybePIAUnchangedOrDecreased.No),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false)
+          )
+        ),
+        Some(
+          LifetimeAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(true)
+          )
+        )
       ),
       Option(
         models.calculation.inputs.AnnualAllowance(
@@ -420,14 +520,38 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
     CalculationInputs(
       models.calculation.inputs.Resubmission(false, None),
       models.calculation.inputs.Setup(
-        Some(AnnualAllowanceSetup(Some(true))),
-        Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+        Some(
+          AnnualAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(MaybePIAIncrease.No),
+            Some(MaybePIAUnchangedOrDecreased.No),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false)
+          )
+        ),
+        Some(
+          LifetimeAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(true)
+          )
+        )
       ),
       None,
       Option(
         models.calculation.inputs.LifeTimeAllowance(
           benefitCrystallisationEventDate = LocalDate.of(2017, 1, 30),
-          changeInTaxCharge = ChangeInTaxCharge.NewCharge,
           lifetimeAllowanceProtectionOrEnhancements = LtaProtectionOrEnhancements.Protection,
           protectionType = Some(ProtectionType.PrimaryProtection),
           protectionReference = Some("originalReference"),

@@ -16,19 +16,22 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import models.{Enumerable, WithName}
 
-case class LifetimeAllowanceSetup(
-  benefitCrystallisationEventFlag: Option[Boolean],
-  previousLTACharge: Option[Boolean],
-  changeInLifetimeAllowancePercentageInformedFlag: Option[Boolean],
-  increaseInLTACharge: Option[Boolean],
-  newLTACharge: Option[Boolean],
-  multipleBenefitCrystallisationEventFlag: Option[Boolean],
-  otherSchemeNotification: Option[Boolean]
-)
+sealed trait MaybePIAIncrease
 
-object LifetimeAllowanceSetup {
+object MaybePIAIncrease extends Enumerable.Implicits {
 
-  implicit lazy val formats: Format[LifetimeAllowanceSetup] = Json.format
+  case object Yes extends WithName("yes") with MaybePIAIncrease
+  case object No extends WithName("no") with MaybePIAIncrease
+  case object IDoNotKnow extends WithName("idk") with MaybePIAIncrease
+
+  val values: Seq[MaybePIAIncrease] = Seq(
+    Yes,
+    No,
+    IDoNotKnow
+  )
+
+  implicit val enumerable: Enumerable[MaybePIAIncrease] =
+    Enumerable(values.map(v => v.toString -> v): _*)
 }

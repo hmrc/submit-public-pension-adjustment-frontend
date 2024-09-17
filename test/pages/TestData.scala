@@ -39,7 +39,6 @@ object TestData {
     pensionSchemeDetails: Option[LtaPensionSchemeDetails]
   ) = LifeTimeAllowance(
     benefitCrystallisationEventDate = LocalDate.of(2017, 1, 30),
-    changeInTaxCharge = ChangeInTaxCharge.NewCharge,
     lifetimeAllowanceProtectionOrEnhancements = LtaProtectionOrEnhancements.Protection,
     protectionType = Some(ProtectionType.PrimaryProtection),
     protectionReference = Some("originalReference"),
@@ -98,7 +97,35 @@ object TestData {
 
   val calculationInputs = CalculationInputs(
     Resubmission(false, None),
-    Setup(Some(AnnualAllowanceSetup(Some(true))), Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))),
+    Setup(
+      Some(
+        AnnualAllowanceSetup(
+          Some(true),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(MaybePIAIncrease.No),
+          Some(MaybePIAUnchangedOrDecreased.No),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false)
+        )
+      ),
+      Some(
+        LifetimeAllowanceSetup(
+          Some(true),
+          Some(false),
+          Some(true),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(true)
+        )
+      )
+    ),
     Some(
       AnnualAllowance(
         List(Period._2021, Period._2019),
@@ -186,7 +213,6 @@ object TestData {
     Some(
       LifeTimeAllowance(
         LocalDate.parse("2018-10-27"),
-        ChangeInTaxCharge.IncreasedCharge,
         LtaProtectionOrEnhancements.Protection,
         Some(ProtectionType.FixedProtection2014),
         Some("R41AB678TR23355"),
@@ -608,7 +634,35 @@ object TestData {
   val finalSubmission1 = FinalSubmission(
     CalculationInputs(
       Resubmission(false, None),
-      Setup(Some(AnnualAllowanceSetup(Some(true))), Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))),
+      Setup(
+        Some(
+          AnnualAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(MaybePIAIncrease.No),
+            Some(MaybePIAUnchangedOrDecreased.No),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(false)
+          )
+        ),
+        Some(
+          LifetimeAllowanceSetup(
+            Some(true),
+            Some(false),
+            Some(true),
+            Some(false),
+            Some(false),
+            Some(false),
+            Some(true)
+          )
+        )
+      ),
       Some(
         AnnualAllowance(
           List(Period._2021, Period._2019),
@@ -696,7 +750,6 @@ object TestData {
       Some(
         LifeTimeAllowance(
           LocalDate.parse("2018-10-27"),
-          ChangeInTaxCharge.IncreasedCharge,
           LtaProtectionOrEnhancements.Protection,
           Some(ProtectionType.FixedProtection2014),
           Some("R41AB678TR23355"),

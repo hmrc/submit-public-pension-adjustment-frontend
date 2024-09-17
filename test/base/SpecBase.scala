@@ -20,7 +20,7 @@ import controllers.actions._
 import models.UserAnswers
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
 import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, Period, TaxYearScheme, TotalAmounts}
-import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Resubmission, Setup}
+import models.calculation.inputs.{AnnualAllowance, AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Resubmission, Setup}
 import models.submission.Submission
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
@@ -118,7 +118,35 @@ trait SpecBase
   val resubmission = Resubmission(false, None)
 
   val setup =
-    Setup(Some(AnnualAllowanceSetup(Some(true))), Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false))))
+    Setup(
+      Some(
+        AnnualAllowanceSetup(
+          Some(true),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(MaybePIAIncrease.No),
+          Some(MaybePIAUnchangedOrDecreased.No),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false)
+        )
+      ),
+      Some(
+        LifetimeAllowanceSetup(
+          Some(true),
+          Some(false),
+          Some(true),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(true)
+        )
+      )
+    )
 
   val calculationInputs = CalculationInputs(resubmission, setup, None, None)
 
@@ -126,8 +154,35 @@ trait SpecBase
 
   def submissionRelatingToTaxYearSchemes(taxYearSchemes: List[TaxYearScheme]): Submission = {
     val resubmission      = Resubmission(false, None)
-    val setup             =
-      Setup(Some(AnnualAllowanceSetup(Some(true))), Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false))))
+    val setup             = Setup(
+      Some(
+        AnnualAllowanceSetup(
+          Some(true),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(MaybePIAIncrease.No),
+          Some(MaybePIAUnchangedOrDecreased.No),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(false)
+        )
+      ),
+      Some(
+        LifetimeAllowanceSetup(
+          Some(true),
+          Some(false),
+          Some(true),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(true)
+        )
+      )
+    )
     val annualAllowance   = AnnualAllowance(
       List.empty,
       List(

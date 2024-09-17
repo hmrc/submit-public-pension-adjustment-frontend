@@ -18,23 +18,20 @@ package models.calculation.inputs
 
 import models.{Enumerable, WithName}
 
-sealed trait ChangeInTaxCharge
+sealed trait MaybePIAUnchangedOrDecreased
 
-object ChangeInTaxCharge extends Enumerable.Implicits {
+object MaybePIAUnchangedOrDecreased extends Enumerable.Implicits {
 
-  case object NewCharge extends WithName(s"newCharge") with ChangeInTaxCharge
-  case object IncreasedCharge extends WithName(s"increasedCharge") with ChangeInTaxCharge
-  case object DecreasedCharge extends WithName(s"decreasedCharge") with ChangeInTaxCharge
-  case object None extends WithName(s"none") with ChangeInTaxCharge
+  case object Yes extends WithName("yes") with MaybePIAUnchangedOrDecreased
+  case object No extends WithName("no") with MaybePIAUnchangedOrDecreased
+  case object IDoNotKnow extends WithName("idk") with MaybePIAUnchangedOrDecreased
 
-  val values: Seq[ChangeInTaxCharge] = Seq(
-    NewCharge,
-    IncreasedCharge,
-    DecreasedCharge,
-    None
+  val values: Seq[MaybePIAUnchangedOrDecreased] = Seq(
+    Yes,
+    No,
+    IDoNotKnow
   )
 
-  implicit val enumerable: Enumerable[ChangeInTaxCharge] =
+  implicit val enumerable: Enumerable[MaybePIAUnchangedOrDecreased] =
     Enumerable(values.map(v => v.toString -> v): _*)
-
 }
