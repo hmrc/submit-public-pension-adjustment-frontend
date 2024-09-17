@@ -31,7 +31,7 @@ class RestartCalculationController @Inject() (
   config: FrontendAppConfig
 ) extends FrontendBaseController {
 
-  def calculateFrontendResubmittingAdjustment = s"${config.calculateFrontend}/pension-saving-statement"
+  def calculateFrontendResubmittingAdjustment = s"${config.calculateFrontend}/change-previous-adjustment"
 
   def restartCalculation: Action[AnyContent] = (identify andThen getData).async {
     Future.successful(
