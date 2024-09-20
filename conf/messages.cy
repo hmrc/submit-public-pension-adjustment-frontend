@@ -247,7 +247,8 @@ howMuchTaxRelief.caption = Gwasanaeth cyflwyno
 howMuchTaxRelief.checkYourAnswersLabel = Faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano?
 howMuchTaxRelief.error.nonNumeric = Mae’n rhaid i swm y rhyddhad treth rydych yn hawlio amdano gynnwys y rhifau 0 i 9 yn unig
 howMuchTaxRelief.error.required = Nodwch faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano
-howMuchTaxRelief.error.wholeNumber = Mae’n rhaid i’r rhyddhad treth ychwanegol neu uwch rydych yn hawlio amdano gynnwys y rhifau 0 i 9 yn unig
+howMuchTaxRelief.error.wholeNumber = cy: The amount of tax relief you are claiming must be a whole number
+howMuchTaxRelief.error.minimum = Mae’n rhaid i’r rhyddhad treth ychwanegol neu uwch rydych yn hawlio amdano fod £1 neu fwy
 howMuchTaxRelief.error.maximum = Mae’n rhaid i’r rhyddhad treth ychwanegol neu uwch rydych yn hawlio amdano fod £999,999,999 neu lai
 howMuchTaxRelief.change.hidden = gwasanaeth cyflwyno faint o ryddhad treth rydych yn hawlio amdano
 

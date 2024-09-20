@@ -31,6 +31,7 @@ class HowMuchTaxReliefFormProvider @Inject() extends Mappings {
         "howMuchTaxRelief.error.nonNumeric"
       )
         .verifying(
+          minimumValue[BigInt](1, "howMuchTaxRelief.error.minimum"),
           maximumValue[BigInt](BigInt("999999999"), "howMuchTaxRelief.error.maximum")
         )
     )
