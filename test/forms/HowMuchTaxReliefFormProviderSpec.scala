@@ -27,7 +27,7 @@ class HowMuchTaxReliefFormProviderSpec extends IntFieldBehaviours {
 
     val fieldName = "value"
 
-    val minimum = 0
+    val minimum = 1
     val maximum = 999999999
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
@@ -43,6 +43,13 @@ class HowMuchTaxReliefFormProviderSpec extends IntFieldBehaviours {
       fieldName,
       nonNumericError = FormError(fieldName, "howMuchTaxRelief.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "howMuchTaxRelief.error.wholeNumber")
+    )
+
+    behave like intFieldWithMinimum(
+      form,
+      fieldName,
+      minimum,
+      expectedError = FormError(fieldName, "howMuchTaxRelief.error.minimum", Seq(minimum))
     )
 
     behave like intFieldWithMaximum(

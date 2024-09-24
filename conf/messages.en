@@ -247,7 +247,8 @@ howMuchTaxRelief.caption = Submission service
 howMuchTaxRelief.checkYourAnswersLabel = How much higher or additional tax relief are you claiming for?
 howMuchTaxRelief.error.nonNumeric = The amount of tax relief you are claiming for must only include numbers 0 to 9
 howMuchTaxRelief.error.required = Enter the how much tax relief you are claiming for
-howMuchTaxRelief.error.wholeNumber = The amount of tax relief you are claiming for must only include numbers 0 to 9
+howMuchTaxRelief.error.wholeNumber = The amount of tax relief you are claiming must be a whole number
+howMuchTaxRelief.error.minimum = The amount of tax relief you are claiming for must be £1 or more
 howMuchTaxRelief.error.maximum = The amount of tax relief you are claiming for must be £999,999,999 or less
 howMuchTaxRelief.change.hidden = how much tax relief are you claiming for
 
