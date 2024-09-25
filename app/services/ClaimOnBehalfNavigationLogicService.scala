@@ -27,10 +27,10 @@ import scala.util.Try
 object ClaimOnBehalfNavigationLogicService {
 
   def handleNavigateInAA(
-                                    submission: Submission,
-                                    answers: UserAnswers,
-                                    mode: Mode
-                                  ): Call = {
+    submission: Submission,
+    answers: UserAnswers,
+    mode: Mode
+  ): Call =
     submission.calculation match {
       case Some(calculation) =>
         if (calculation.totalAmounts.inDatesDebit > 0) {
@@ -42,9 +42,8 @@ object ClaimOnBehalfNavigationLogicService {
             routes.AlternativeNameController.onPageLoad(mode)
           }
         }
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None              => routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   private def navigateWhenTotalAmountsHasInDateDebit(submission: Submission, mode: Mode) = {
     val maybePeriod = PeriodService.getFirstDebitPeriod(submission)
@@ -55,13 +54,12 @@ object ClaimOnBehalfNavigationLogicService {
   }
 
   def handleNavigateInLTA(
-                          mode: Mode
-                        ): Call = {
-          if (mode == CheckMode) {
-            routes.CheckYourAnswersController.onPageLoad
-          } else {
-            routes.AlternativeNameController.onPageLoad(mode)
-          }
+    mode: Mode
+  ): Call =
+    if (mode == CheckMode) {
+      routes.CheckYourAnswersController.onPageLoad
+    } else {
+      routes.AlternativeNameController.onPageLoad(mode)
     }
 
   def periodPageCleanup(answers: UserAnswers, periods: Seq[Period]): UserAnswers =

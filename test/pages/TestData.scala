@@ -500,6 +500,57 @@ object TestData {
     userAnswerData3
   )
 
+  val userAnswerData4 = Json
+    .parse("""
+             |{
+             |  "claimOnBehalf": true,
+             |  "statusOfUser": "legalPersonalRepresentative",
+             |  "pensionSchemeMemberName": "Test SchemeUser",
+             |  "pensionSchemeMemberDOB": "1962-10-24",
+             |  "pensionSchemeMemberNino": "AB123456C",
+             |  "pensionSchemeMemberTaxReference": "1234567890",
+             |  "pensionSchemeMemberResidence": false,
+             |  "pensionSchemeMemberInternationalAddress": {
+             |    "addressLine1": "Test Address line 1",
+             |    "addressLine2": "Test Address line 2",
+             |    "townOrCity": "Test city",
+             |    "postCode": "NP4 9KL",
+             |    "country": "Spain"
+             |  },
+             |  "alternativeName": false,
+             |  "enterAlternativeName": "Duplicate Name",
+             |  "contactNumber": "01632 960 001",
+             |  "areYouAUKResident": true,
+             |  "ukAddress": {
+             |    "addressLine1": "Test UK Address line 1",
+             |    "townOrCity": "Test UK city",
+             |    "postCode": "AB1 2CD"
+             |  },
+             |  "bankDetails" : {
+             |    "accountName": "TestFName TestLName",
+             |    "sortCode": "012345",
+             |    "accountNumber": "12345678"
+             |  },
+             |  "aa": {
+             |    "schemes": {
+             |      "00348916RT": {
+             |        "legacyPensionSchemeReference": "R41AB678TR23355",
+             |        "reformPensionSchemeReference": "AB189416C"
+             |      }
+             |    }
+             |  },
+             |  "claimingHigherOrAdditionalTaxRateRelief": true,
+             |  "howMuchTaxRelief": 10000,
+             |  "whichPensionSchemeWillPayTaxRelief": "Scheme 1 / 00348916RT"
+             |}
+             |""".stripMargin)
+    .as[JsObject]
+
+  val userAnswers4 = UserAnswers(
+    "Test UserId",
+    userAnswerData4
+  )
+
   val submissionInputs1 = SubmissionInputs(
     AdministrativeDetails(
       ClaimantDetails(

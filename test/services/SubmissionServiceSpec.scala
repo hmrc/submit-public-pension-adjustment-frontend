@@ -217,6 +217,21 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
       )
     }
 
+    "buildDeclarations with StatusOfUserPage having legalPersonalRepresentative should return valid Declarations" in {
+
+      val result = service.buildDeclarations(TestData.userAnswers4)
+
+      result mustBe Declarations(
+        compensation = true,
+        tax = true,
+        contactDetails = true,
+        powerOfAttorney = None,
+        claimOnBehalfOfDeceased = None,
+        legalPersonalRepresentative = Some(true),
+        schemeCreditConsent = None
+      )
+    }
+
   }
 
 }
