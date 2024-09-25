@@ -21,7 +21,7 @@ import models.submission.Submission
 import models.{CheckMode, Mode, NormalMode, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import services.PeriodService
+import services.{ClaimOnBehalfNavigationLogicService, PeriodService}
 
 import scala.util.Try
 
@@ -35,53 +35,29 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
     answers.get(ClaimOnBehalfPage) match {
       case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
       case Some(false) =>
-        submission.calculation match {
-          case Some(calculation) =>
-            if (calculation.totalAmounts.inDatesDebit > 0) {
-              navigateWhenTotalAmountsHasInDateDebit(submission, NormalMode)
-            } else {
-              routes.AlternativeNameController.onPageLoad(NormalMode)
-            }
-          case None              => routes.JourneyRecoveryController.onPageLoad(None)
-        }
+        ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  private def navigateWhenTotalAmountsHasInDateDebit(submission: Submission, mode: Mode) = {
-    val maybePeriod = PeriodService.getFirstDebitPeriod(submission)
-    maybePeriod match {
-      case Some(period) => routes.WhoWillPayController.onPageLoad(mode, period)
-      case None         => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-  }
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
       case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
       case Some(false) =>
-        submission.calculation match {
-          case Some(calculation) =>
-            if (calculation.totalAmounts.inDatesDebit > 0) {
-              navigateWhenTotalAmountsHasInDateDebit(submission, CheckMode)
-            } else {
-              routes.CheckYourAnswersController.onPageLoad
-            }
-          case None              => routes.JourneyRecoveryController.onPageLoad(None)
-        }
+        ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, CheckMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
       case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
-      case Some(false) => routes.AlternativeNameController.onPageLoad(NormalMode)
+      case Some(false) => ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
       case Some(true)  => routes.StatusOfUserController.onPageLoad(CheckMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad
+      case Some(false) => ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(CheckMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -93,7 +69,7 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
           onBehalfOfCleanup(userAnswers)
 
         case true =>
-          Try(periodPageCleanup(userAnswers, periodsToCleanup))
+          Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, periodsToCleanup))
       }
       .getOrElse(super.cleanup(value, userAnswers))
   }
@@ -109,23 +85,4 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
       .flatMap(_.remove(PensionSchemeMemberResidencePage))
       .flatMap(_.remove(PensionSchemeMemberUKAddressPage))
       .flatMap(_.remove(PensionSchemeMemberInternationalAddressPage))
-
-  def periodPageCleanup(answers: UserAnswers, periods: Seq[Period]): UserAnswers =
-    periods.headOption match {
-      case Some(period) =>
-        periodPageCleanup(
-          answers
-            .remove(WhoWillPayPage(period))
-            .flatMap(_.remove(WhichPensionSchemeWillPayPage(period)))
-            .flatMap(_.remove(PensionSchemeDetailsPage(period)))
-            .flatMap(_.remove(AskedPensionSchemeToPayTaxChargePage(period)))
-            .flatMap(_.remove(WhenWillYouAskPensionSchemeToPayPage(period)))
-            .flatMap(_.remove(WhenDidYouAskPensionSchemeToPayPage(period)))
-            .flatMap(_.remove(SchemeElectionConsentPage(period)))
-            .get,
-          periods.tail
-        )
-      case None         => answers
-    }
-
 }

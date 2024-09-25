@@ -182,6 +182,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         contactDetails = true,
         powerOfAttorney = None,
         claimOnBehalfOfDeceased = None,
+        legalPersonalRepresentative = None,
         schemeCreditConsent = None
       )
     }
@@ -196,6 +197,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         contactDetails = true,
         powerOfAttorney = Some(true),
         claimOnBehalfOfDeceased = None,
+        legalPersonalRepresentative = None,
         schemeCreditConsent = Some(true)
       )
     }
@@ -210,6 +212,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         contactDetails = true,
         powerOfAttorney = None,
         claimOnBehalfOfDeceased = Some(true),
+        legalPersonalRepresentative = None,
         schemeCreditConsent = None
       )
     }

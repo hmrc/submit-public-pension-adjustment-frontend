@@ -560,7 +560,7 @@ object TestData {
       )
     ),
     None,
-    Declarations(true, true, true, None, None, None)
+    Declarations(true, true, true, None, None, None, None)
   )
 
   val submissionInputs2 = SubmissionInputs(
@@ -628,7 +628,7 @@ object TestData {
       )
     ),
     None,
-    Declarations(true, true, true, Some(true), None, Some(true))
+    Declarations(true, true, true, Some(true), None, None, Some(true))
   )
 
   val finalSubmission1 = FinalSubmission(

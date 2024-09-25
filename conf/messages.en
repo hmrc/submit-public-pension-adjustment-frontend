@@ -81,6 +81,7 @@ statusOfUser.title = What authority do you have to act on behalf of someone else
 statusOfUser.heading = What authority do you have to act on behalf of someone else?
 statusOfUser.deputyship = Deputyship
 statusOfUser.powerOfAttorney = Power of Attorney
+statusOfUser.legalPersonalRepresentative = Legal Personal Representative
 statusOfUser.checkYourAnswersLabel = What authority do you have to act on behalf of someone else?
 statusOfUser.error.required = Select the authority you have to act on behalf of someone else
 statusOfUser.change.hidden = authority to act on behalf of someone else

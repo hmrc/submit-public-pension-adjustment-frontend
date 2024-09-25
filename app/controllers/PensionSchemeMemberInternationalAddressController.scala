@@ -67,7 +67,7 @@ class PensionSchemeMemberInternationalAddressController @Inject() (
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeMemberInternationalAddressPage, value))
               redirectUrl     =
-                PensionSchemeMemberInternationalAddressPage.navigate(mode, updatedAnswers).url
+                PensionSchemeMemberInternationalAddressPage.navigate(mode, updatedAnswers, request.submission).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)

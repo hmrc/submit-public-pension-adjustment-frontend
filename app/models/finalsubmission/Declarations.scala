@@ -25,6 +25,7 @@ case class Declarations(
   contactDetails: Boolean,
   powerOfAttorney: Option[Boolean],
   claimOnBehalfOfDeceased: Option[Boolean],
+  legalPersonalRepresentative: Option[Boolean],
   schemeCreditConsent: Option[Boolean]
 ) {}
 

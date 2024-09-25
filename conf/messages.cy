@@ -81,6 +81,7 @@ statusOfUser.title = Pa awdurdod sydd gennych chi i weithredu ar ran rhywun aral
 statusOfUser.heading = Pa awdurdod sydd gennych chi i weithredu ar ran rhywun arall?
 statusOfUser.deputyship = Dirprwyaeth
 statusOfUser.powerOfAttorney = Pŵer atwrnai
+statusOfUser.legalPersonalRepresentative = cy: Legal Personal Representative
 statusOfUser.checkYourAnswersLabel = Pa awdurdod sydd gennych chi i weithredu ar ran rhywun arall?
 statusOfUser.error.required = Dewiswch yr awdurdod sydd gennych i weithredu ar ran rhywun arall
 statusOfUser.change.hidden = awdurdod i weithredu ar ran rhywun arall
