@@ -97,7 +97,7 @@ class StatusOfUserSpec extends PageBehaviours {
 
   }
 
-  "must cleanup member date of death when user selects LegalPersonalRepresentative" in {
+  "must not cleanup member date of death when user selects LegalPersonalRepresentative" in {
 
     val ua = emptyUserAnswers
       .set(MemberDateOfDeathPage, validDate)
@@ -106,7 +106,7 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val cleanedUserAnswers = StatusOfUserPage.cleanup(Some(LegalPersonalRepresentative), ua).success.value
 
-    cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe None
+    cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe Some(validDate)
 
   }
 

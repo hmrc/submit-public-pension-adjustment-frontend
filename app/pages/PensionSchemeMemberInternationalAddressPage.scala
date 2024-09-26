@@ -87,7 +87,11 @@ case object PensionSchemeMemberInternationalAddressPage
     val periodsToCleanup = PeriodService.allInDateRemedyPeriods
     value
       .map { case _ =>
-        Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, periodsToCleanup))
+        userAnswers.get(StatusOfUserPage) match {
+          case Some(StatusOfUser.LegalPersonalRepresentative) =>
+            Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, periodsToCleanup))
+          case _                                              => super.cleanup(value, userAnswers)
+        }
       }
       .getOrElse(super.cleanup(value, userAnswers))
   }

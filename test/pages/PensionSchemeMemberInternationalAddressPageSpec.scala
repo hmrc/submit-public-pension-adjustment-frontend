@@ -349,8 +349,11 @@ class PensionSchemeMemberInternationalAddressPageSpec extends PageBehaviours {
   }
 
   "cleanup" - {
-    "must cleanup correctly" in {
+    "must cleanup correctly when status of user is LegalPersonalRepresentative" in {
       val ua = emptyUserAnswers
+        .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
+        .success
+        .value
         .set(
           WhoWillPayPage(Period._2020),
           WhoWillPay.You
@@ -408,6 +411,70 @@ class PensionSchemeMemberInternationalAddressPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) mustBe None
 
     }
+
+    "must not cleanup when status of user is not LegalPersonalRepresentative" in {
+      val ua = emptyUserAnswers
+        .set(StatusOfUserPage, StatusOfUser.Deputyship)
+        .success
+        .value
+        .set(
+          WhoWillPayPage(Period._2020),
+          WhoWillPay.You
+        )
+        .success
+        .value
+        .set(
+          WhoWillPayPage(Period._2021),
+          WhoWillPay.PensionScheme
+        )
+        .success
+        .value
+        .set(
+          WhichPensionSchemeWillPayPage(Period._2021),
+          "Private pension scheme"
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeDetailsPage(Period._2021),
+          PensionSchemeDetails("name", "pstr")
+        )
+        .success
+        .value
+        .set(
+          AskedPensionSchemeToPayTaxChargePage(Period._2021),
+          true
+        )
+        .success
+        .value
+        .set(
+          WhenDidYouAskPensionSchemeToPayPage(Period._2021),
+          LocalDate.of(2020, 1, 1)
+        )
+        .success
+        .value
+        .set(
+          SchemeElectionConsentPage(Period._2021),
+          true
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers = PensionSchemeMemberInternationalAddressPage
+        .cleanup(Some(arbitraryPensionSchemeMemberInternationalAddress.arbitrary.sample.value), ua)
+        .success
+        .value
+
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe Some(WhoWillPay.You)
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe Some(WhoWillPay.PensionScheme)
+      cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2021)) mustBe Some("Private pension scheme")
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) mustBe Some(PensionSchemeDetails("name", "pstr"))
+      cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) mustBe Some(true)
+      cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe Some(LocalDate.of(2020, 1, 1))
+      cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) mustBe Some(true)
+
+    }
+
   }
 
   private def aCalculationResponseWithDebitButNoPeriods = {

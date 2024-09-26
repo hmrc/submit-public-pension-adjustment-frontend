@@ -49,7 +49,7 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
           userAnswers.remove(MemberDateOfDeathPage)
 
         case LegalPersonalRepresentative =>
-          userAnswers.remove(MemberDateOfDeathPage)
+          super.cleanup(value, userAnswers)
 
         case Deputyship =>
           super.cleanup(value, userAnswers)

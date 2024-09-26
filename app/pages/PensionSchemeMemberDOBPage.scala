@@ -16,7 +16,7 @@
 
 package pages
 
-import models.StatusOfUser.{Deputyship, PowerOfAttorney}
+import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
 import models.{CheckMode, NormalMode, UserAnswers}
 
 import java.time.LocalDate
@@ -31,16 +31,18 @@ case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(StatusOfUserPage) match {
-      case Some(Deputyship)      => controllers.routes.MemberDateOfDeathController.onPageLoad(NormalMode)
-      case Some(PowerOfAttorney) => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
-      case _                     => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(status) if status == Deputyship || status == LegalPersonalRepresentative =>
+        controllers.routes.MemberDateOfDeathController.onPageLoad(NormalMode)
+      case Some(PowerOfAttorney)                                                         => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
+      case _                                                                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(StatusOfUserPage) match {
-      case Some(Deputyship)      => controllers.routes.MemberDateOfDeathController.onPageLoad(CheckMode)
-      case Some(PowerOfAttorney) => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
-      case _                     => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(status) if status == Deputyship || status == LegalPersonalRepresentative =>
+        controllers.routes.MemberDateOfDeathController.onPageLoad(CheckMode)
+      case Some(PowerOfAttorney)                                                         => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
+      case _                                                                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
 }
