@@ -26,10 +26,12 @@ object StatusOfUser extends Enumerable.Implicits {
 
   case object Deputyship extends WithName("deputyship") with StatusOfUser
   case object PowerOfAttorney extends WithName("powerOfAttorney") with StatusOfUser
+  case object LegalPersonalRepresentative extends WithName("legalPersonalRepresentative") with StatusOfUser
 
   val values: Seq[StatusOfUser] = Seq(
     PowerOfAttorney,
-    Deputyship
+    Deputyship,
+    LegalPersonalRepresentative
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>

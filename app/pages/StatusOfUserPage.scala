@@ -20,7 +20,7 @@ import models.{CheckMode, NormalMode, StatusOfUser, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.routes
-import models.StatusOfUser.{Deputyship, PowerOfAttorney}
+import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
 
 import scala.util.Try
 
@@ -47,6 +47,9 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
       .map {
         case PowerOfAttorney =>
           userAnswers.remove(MemberDateOfDeathPage)
+
+        case LegalPersonalRepresentative =>
+          super.cleanup(value, userAnswers)
 
         case Deputyship =>
           super.cleanup(value, userAnswers)

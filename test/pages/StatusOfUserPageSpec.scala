@@ -16,7 +16,7 @@
 
 package pages
 
-import models.StatusOfUser.{Deputyship, PowerOfAttorney}
+import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
 import models.{CheckMode, NormalMode, StatusOfUser}
 
 import java.time.LocalDate
@@ -94,6 +94,19 @@ class StatusOfUserSpec extends PageBehaviours {
     val cleanedUserAnswers = StatusOfUserPage.cleanup(Some(PowerOfAttorney), ua).success.value
 
     cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe None
+
+  }
+
+  "must not cleanup member date of death when user selects LegalPersonalRepresentative" in {
+
+    val ua = emptyUserAnswers
+      .set(MemberDateOfDeathPage, validDate)
+      .success
+      .value
+
+    val cleanedUserAnswers = StatusOfUserPage.cleanup(Some(LegalPersonalRepresentative), ua).success.value
+
+    cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe Some(validDate)
 
   }
 
