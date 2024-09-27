@@ -20,7 +20,7 @@ import connectors.SubmitBackendConnector
 import models.StatusOfUser.Deputyship
 import models.WhenWillYouAskPensionSchemeToPay._
 import models.WhoWillPay.{PensionScheme, You}
-import models.calculation.inputs.CalculationInputs
+import models.calculation.inputs.{CalculationInputs, IncomeSubJourney}
 import models.calculation.response.{CalculationResponse, Period}
 import models.finalsubmission._
 import models.{PSTR, SchemeCreditConsent, StatusOfUser, UserAnswers}
@@ -40,29 +40,32 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
     authRetrievals: AuthRetrievals,
     calculationInputs: CalculationInputs,
     calculation: Option[CalculationResponse],
-    userAnswers: UserAnswers
+    userAnswers: UserAnswers,
+    incomeSubJourney: IncomeSubJourney
   )(implicit hc: HeaderCarrier): Future[FinalSubmissionResponse] =
     submitBackendConnector.sendFinalSubmission(
-      buildFinalSubmission(authRetrievals, calculationInputs, calculation, userAnswers)
+      buildFinalSubmission(authRetrievals, calculationInputs, calculation, userAnswers, incomeSubJourney)
     )
 
   def buildFinalSubmission(
     authRetrievals: AuthRetrievals,
     calculationInputs: CalculationInputs,
     calculation: Option[CalculationResponse],
-    userAnswers: UserAnswers
+    userAnswers: UserAnswers,
+    incomeSubJourney: IncomeSubJourney
   ): FinalSubmission =
     FinalSubmission(
       calculationInputs,
       calculation,
-      buildSubmissionInputs(authRetrievals, calculationInputs, calculation, userAnswers)
+      buildSubmissionInputs(authRetrievals, calculationInputs, calculation, userAnswers, incomeSubJourney)
     )
 
   def buildSubmissionInputs(
     authRetrievals: AuthRetrievals,
     calculationInputs: CalculationInputs,
     calculation: Option[CalculationResponse],
-    userAnswers: UserAnswers
+    userAnswers: UserAnswers,
+    incomeSubJourney: IncomeSubJourney
   ): SubmissionInputs =
     SubmissionInputs(
       buildAdministrativeDetails(authRetrievals, userAnswers),
@@ -70,7 +73,8 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       buildCalculationInputSchemeIdentifiers(userAnswers, calculationInputs),
       buildSchemeTaxRelief(userAnswers),
       buildBankAccountDetails(userAnswers),
-      buildDeclarations(userAnswers)
+      buildDeclarations(userAnswers),
+      incomeSubJourney
     )
 
   def buildPersonalDetails(
@@ -337,5 +341,11 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       case false =>
         None
     }
+
+//  def buildIncomeSubJourney() =
+//    IncomeSubJourney(
+//      thresholdIncomeAmount =
+//
+//    )
 
 }

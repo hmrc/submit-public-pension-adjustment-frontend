@@ -17,6 +17,7 @@
 package controllers
 
 import controllers.actions._
+import models.calculation.inputs.IncomeSubJourney
 import models.{UserAnswers, UserSubmissionReference}
 import models.finalsubmission.{AuthRetrievals, FinalSubmissionResponse}
 import models.requests.DataRequest
@@ -81,15 +82,16 @@ class DeclarationsController @Inject() (
       }
     }
 
-  private def sendFinalSubmission(request: DataRequest[AnyContent], authRetrievals: AuthRetrievals)(implicit
-    headerCarrier: HeaderCarrier
+  private def sendFinalSubmission(request: DataRequest[AnyContent], authRetrievals: AuthRetrievals, incomeSubJourney: IncomeSubJourney)(implicit
+                                                                                                                                        headerCarrier: HeaderCarrier
   ) =
     submissionService
       .sendFinalSubmission(
         authRetrievals,
         request.submission.calculationInputs,
         request.submission.calculation,
-        request.userAnswers
+        request.userAnswers,
+        incomeSubJourney
       )
       .map { finalSubmissionResponse =>
         persistSubmissionReference(request, finalSubmissionResponse)

@@ -16,6 +16,7 @@
 
 package models.finalsubmission
 
+import models.calculation.inputs.IncomeSubJourney
 import play.api.libs.json._
 
 case class SubmissionInputs(
@@ -24,7 +25,8 @@ case class SubmissionInputs(
   calculationInputSchemeIdentifiers: List[IndividualSchemeIdentifier],
   schemeTaxRelief: Option[SchemeTaxRelief],
   bankAccountDetails: Option[BankAccountDetails],
-  declarations: Declarations
+  declarations: Declarations,
+  incomeSubJourney: IncomeSubJourney
 ) {}
 
 object SubmissionInputs {
