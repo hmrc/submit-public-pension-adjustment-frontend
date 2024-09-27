@@ -92,7 +92,8 @@ object TestData {
       Some(589),
       Some(4573),
       Some(90),
-      Some(2291)
+      Some(2291),
+      None
     )
 
   val calculationInputs = CalculationInputs(
