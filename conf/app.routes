@@ -199,3 +199,13 @@ POST       /submission-service/:period/scheme-election-consent                  
 
 GET        /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /submission-service/:period/amount-of-new-tax-charge-scheme-pay                  controllers.AmountOfNewTaxChargeSchemePayController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /submission-service/:period/amount-of-new-tax-charge-scheme-pay                  controllers.AmountOfNewTaxChargeSchemePayController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /submission-service/:period/change-amount-of-new-tax-charge-scheme-pay                        controllers.AmountOfNewTaxChargeSchemePayController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /submission-service/:period/change-amount-of-new-tax-charge-scheme-pay                        controllers.AmountOfNewTaxChargeSchemePayController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /submission-service/:period/amount-of-new-tax-charge-you-pay                  controllers.AmountOfNewTaxChargeYouPayController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /submission-service/:period/amount-of-new-tax-charge-you-pay                  controllers.AmountOfNewTaxChargeYouPayController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /submission-service/:period/change-amount-of-new-tax-charge-you-pay                        controllers.AmountOfNewTaxChargeYouPayController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /submission-service/:period/change-amount-of-new-tax-charge-you-pay                        controllers.AmountOfNewTaxChargeYouPayController.onSubmit(mode: Mode = CheckMode, period:Period)

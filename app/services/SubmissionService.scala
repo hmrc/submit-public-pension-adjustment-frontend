@@ -19,7 +19,7 @@ package services
 import connectors.SubmitBackendConnector
 import models.StatusOfUser.Deputyship
 import models.WhenWillYouAskPensionSchemeToPay._
-import models.WhoWillPay.{PensionScheme, You}
+import models.WhoWillPay.{Both, PensionScheme, You}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, Period}
 import models.finalsubmission._
@@ -221,7 +221,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
   ): Option[SchemeCharge] =
     userAnswers.get(WhoWillPayPage(period.toCorePeriod)) flatMap {
       case You           => None
-      case PensionScheme =>
+      case scheme if scheme == PensionScheme || scheme == Both=> //TODO verify this
         val paymentElectionDate = userAnswers.get(WhenDidYouAskPensionSchemeToPayPage(period.toCorePeriod))
 
         Some(

@@ -16,7 +16,7 @@
 
 package pages
 
-import models.WhoWillPay.{PensionScheme, You}
+import models.WhoWillPay.{Both, PensionScheme, You}
 import models.submission.Submission
 import models.{CheckMode, NormalMode, Period, UserAnswers, WhoWillPay}
 import play.api.libs.json.JsPath
@@ -34,6 +34,12 @@ case class WhoWillPayPage(period: Period) extends QuestionPage[WhoWillPay] {
   override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhoWillPayPage(period)) match {
       case Some(PensionScheme) => controllers.routes.WhichPensionSchemeWillPayController.onPageLoad(NormalMode, period)
+      case Some(Both)           => //todo: Verify
+        val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
+        nextDebitPeriod match {
+          case Some(period) => controllers.routes.AmountOfNewTaxChargeYouPayController.onPageLoad(NormalMode, period)
+          case None         => controllers.routes.AlternativeNameController.onPageLoad(NormalMode)
+        }
       case Some(You)           =>
         val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
         nextDebitPeriod match {

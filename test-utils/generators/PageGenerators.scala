@@ -21,6 +21,12 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryAmountOfNewTaxChargeYouPayPage: Arbitrary[AmountOfNewTaxChargeYouPayPage.type] =
+    Arbitrary(AmountOfNewTaxChargeYouPayPage)
+
+  implicit lazy val arbitraryAmountOfNewTaxChargeSchemePayPage: Arbitrary[AmountOfNewTaxChargeSchemePayPage.type] =
+    Arbitrary(AmountOfNewTaxChargeSchemePayPage)
+
   implicit lazy val arbitraryConfirmRestartAnswersPage: Arbitrary[ConfirmRestartAnswersPage.type] =
     Arbitrary(ConfirmRestartAnswersPage)
 

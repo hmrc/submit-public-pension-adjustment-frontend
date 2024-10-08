@@ -26,10 +26,13 @@ object WhoWillPay extends Enumerable.Implicits {
 
   case object You extends WithName("you") with WhoWillPay
   case object PensionScheme extends WithName("pensionScheme") with WhoWillPay
+  case object Both extends WithName("both") with WhoWillPay
+
 
   val values: Seq[WhoWillPay] = Seq(
     You,
-    PensionScheme
+    PensionScheme,
+    Both
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>

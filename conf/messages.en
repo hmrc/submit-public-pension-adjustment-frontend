@@ -563,3 +563,21 @@ schemeElectionConsent.message6 = This means you don’t need to tell your pensio
 schemeElectionConsent.message7 = If you are liable for an annual allowance tax charge outside of the remedy period, you must:
 schemeElectionConsent.bullet1 = notify your scheme that you would like to pay the charge through scheme pays
 schemeElectionConsent.bullet2 = report it through self assessment
+
+amountOfNewTaxChargeSchemePay.title = AmountOfNewTaxChargeSchemePay
+amountOfNewTaxChargeSchemePay.heading = AmountOfNewTaxChargeSchemePay
+amountOfNewTaxChargeSchemePay.checkYourAnswersLabel = AmountOfNewTaxChargeSchemePay
+amountOfNewTaxChargeSchemePay.error.nonNumeric = Enter your amountOfNewTaxChargeSchemePay using numbers
+amountOfNewTaxChargeSchemePay.error.required = Enter your amountOfNewTaxChargeSchemePay
+amountOfNewTaxChargeSchemePay.error.wholeNumber = Enter your amountOfNewTaxChargeSchemePay using whole numbers
+amountOfNewTaxChargeSchemePay.error.outOfRange = AmountOfNewTaxChargeSchemePay must be between {0} and {1}
+amountOfNewTaxChargeSchemePay.change.hidden = AmountOfNewTaxChargeSchemePay
+
+amountOfNewTaxChargeYouPay.title = AmountOfNewTaxChargeYouPay
+amountOfNewTaxChargeYouPay.heading = AmountOfNewTaxChargeYouPay
+amountOfNewTaxChargeYouPay.checkYourAnswersLabel = AmountOfNewTaxChargeYouPay
+amountOfNewTaxChargeYouPay.error.nonNumeric = Enter your amountOfNewTaxChargeYouPay using numbers
+amountOfNewTaxChargeYouPay.error.required = Enter your amountOfNewTaxChargeYouPay
+amountOfNewTaxChargeYouPay.error.wholeNumber = Enter your amountOfNewTaxChargeYouPay using whole numbers
+amountOfNewTaxChargeYouPay.error.outOfRange = AmountOfNewTaxChargeYouPay must be between {0} and {1}
+amountOfNewTaxChargeYouPay.change.hidden = AmountOfNewTaxChargeYouPay
