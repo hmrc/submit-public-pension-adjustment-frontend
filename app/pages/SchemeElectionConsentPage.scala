@@ -43,7 +43,7 @@ case class SchemeElectionConsentPage(period: Period) extends QuestionPage[Boolea
       case Some(true) =>
         val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
         nextDebitPeriod match {
-          case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(CheckMode, period)
+          case Some(period) => controllers.routes.CheckYourAnswersController.onPageLoad
           case None         => controllers.routes.CheckYourAnswersController.onPageLoad
         }
       case _          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
