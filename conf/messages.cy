@@ -12,6 +12,7 @@ site.startAgain = Dechrau eto
 site.signIn = Mewngofnodi
 site.govuk = GOV.UK
 site.next = Nesaf
+site.opensInNewTab = (yn agor tab newydd)
 
 date.day = Diwrnod
 date.month = Mis
@@ -232,7 +233,7 @@ reformPensionSchemeReference.caption = Yn ymwneud â’r cynllun
 claimingHigherOrAdditionalTaxRateRelief.title = A ydych yn hawlio am ryddhad treth ar y gyfradd uwch neu ychwanegol?
 claimingHigherOrAdditionalTaxRateRelief.heading = A ydych yn hawlio am ryddhad treth ar y gyfradd uwch neu ychwanegol?
 claimingHigherOrAdditionalTaxRateRelief.message1 = Mae dau fath o gynllun pensiwn lle byddwch yn cael rhyddhad treth yn awtomatig. Sef:
-claimingHigherOrAdditionalTaxRateRelief.message2 = Dysgwch ragor am ryddhad treth pensiwn (yn agor tab newydd)
+claimingHigherOrAdditionalTaxRateRelief.message2 = Dysgwch ragor am ryddhad treth pensiwn
 claimingHigherOrAdditionalTaxRateRelief.bullet1 = pan fydd eich cyflogwr yn tynnu cyfraniadau pensiwn gweithle allan o’ch cyflog cyn didynnu Treth Incwm
 claimingHigherOrAdditionalTaxRateRelief.bullet2 = pan fydd eich darparwr pensiwn yn hawlio rhyddhad treth gan y llywodraeth ar y gyfradd sylfaenol o 20% ac yn ei hychwanegu at eich cronfa bensiwn. Dyma ‘rhyddhad wrth y ffynhonnell’
 claimingHigherOrAdditionalTaxRateRelief.checkYourAnswersLabel = A ydych yn hawlio am ryddhad treth ar y gyfradd uwch neu ychwanegol?

@@ -12,6 +12,7 @@ site.startAgain = Start again
 site.signIn = Sign in
 site.govuk = GOV.UK
 site.next = Next
+site.opensInNewTab = (opens in a new tab)
 
 date.day = Day
 date.month = Month
@@ -232,7 +233,7 @@ reformPensionSchemeReference.caption = Relating to scheme
 claimingHigherOrAdditionalTaxRateRelief.title = Are you claiming for higher or additional tax rate relief?
 claimingHigherOrAdditionalTaxRateRelief.heading = Are you claiming for higher or additional tax rate relief?
 claimingHigherOrAdditionalTaxRateRelief.message1 = There are two kinds of pension schemes where you get tax relief automatically. They are where your:
-claimingHigherOrAdditionalTaxRateRelief.message2 = Find out more about pension tax relief (opens in a new tab)
+claimingHigherOrAdditionalTaxRateRelief.message2 = Find out more about pension tax relief
 claimingHigherOrAdditionalTaxRateRelief.bullet1 = employer takes workplace pension contributions out of your pay before deducting Income Tax
 claimingHigherOrAdditionalTaxRateRelief.bullet2 = pension provider claims tax relief from the government at the basic 20% rate and adds it to your pension pot. This is ‘relief at source’
 claimingHigherOrAdditionalTaxRateRelief.checkYourAnswersLabel = Are you claiming for a higher or additional tax rate relief?
