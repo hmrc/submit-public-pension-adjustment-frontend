@@ -38,8 +38,9 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(StatusOfUserPage) match {
-      case Some(_) => routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
-      case None    => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(PowerOfAttorney) => routes.CheckYourAnswersController.onPageLoad
+      case Some(_)               => routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
+      case None                  => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[StatusOfUser], userAnswers: UserAnswers): Try[UserAnswers] =

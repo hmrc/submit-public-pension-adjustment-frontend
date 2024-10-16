@@ -19,7 +19,7 @@ package pages
 import play.api.libs.json.JsPath
 import uk.gov.hmrc.domain.Nino
 import controllers.routes
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
 import play.api.mvc.Call
 
 case object PensionSchemeMemberNinoPage extends QuestionPage[Nino] {
@@ -35,8 +35,8 @@ case object PensionSchemeMemberNinoPage extends QuestionPage[Nino] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeMemberNinoPage) match {
-      case Some(_) => routes.PensionSchemeMemberTaxReferenceController.onPageLoad(CheckMode)
-      case _       => routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(RunThroughOnBehalfFlow()) match {
+      case Some(true)     => controllers.routes.PensionSchemeMemberTaxReferenceController.onPageLoad(CheckMode)
+      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
     }
 }

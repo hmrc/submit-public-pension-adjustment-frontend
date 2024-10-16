@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.ClaimOnBehalfFormProvider
-import models.{Mode, NavigationState, UserAnswers}
+import models.{CheckMode, Mode, NavigationState, RunThroughOnBehalfFlow, UserAnswers}
 import pages.ClaimOnBehalfPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -60,15 +60,23 @@ class ClaimOnBehalfController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value =>
+          value => {
+            val shouldRunThroughOnBehalfFlow = mode == CheckMode && value
             for {
               updatedAnswers <-
-                Future.fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ClaimOnBehalfPage, value))
+                Future.fromTry(
+                  request.userAnswers
+                    .getOrElse(UserAnswers(request.userId))
+                    .set(ClaimOnBehalfPage, value)
+                    .get
+                    .set(RunThroughOnBehalfFlow(), shouldRunThroughOnBehalfFlow)
+                )
               redirectUrl     =
                 ClaimOnBehalfPage.navigate(mode, updatedAnswers, request.submission).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
+          }
         )
   }
 }

@@ -171,7 +171,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/submission-service/authority-someone-else")
+    checkNavigation(nextPageUrl, "/submission-service/change-authority-someone-else")
   }
 
   "must redirect to who paid charge page when user selects no and user is in debit in check mode" in {
