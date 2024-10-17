@@ -48,7 +48,7 @@ case class AskedPensionSchemeToPayTaxChargePage(period: Period) extends Question
         case false => userAnswers.remove(WhenDidYouAskPensionSchemeToPayPage(period))
         case true  =>
           userAnswers
-            .remove(SchemeElectionConsentPage(period)) // todo is this correct
+            .remove(SchemeElectionConsentPage(period))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

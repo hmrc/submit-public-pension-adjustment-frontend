@@ -46,8 +46,8 @@ case class WhenDidYouAskPensionSchemeToPayPage(period: Period) extends QuestionP
       case Some(_) =>
         val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
         nextDebitPeriod match {
-          case Some(period) => controllers.routes.CheckYourAnswersController.onPageLoad // todo verify
-          case None         => controllers.routes.CheckYourAnswersController.onPageLoad
+          case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+          case None    => controllers.routes.CheckYourAnswersController.onPageLoad
         }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
