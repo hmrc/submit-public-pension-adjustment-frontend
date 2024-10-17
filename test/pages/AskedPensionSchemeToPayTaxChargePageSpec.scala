@@ -121,12 +121,6 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
       "must cleanup correctly when answered yes" in {
         val ua = emptyUserAnswers
           .set(
-            WhenWillYouAskPensionSchemeToPayPage(Period._2020),
-            WhenWillYouAskPensionSchemeToPay.OctToDec23
-          )
-          .success
-          .value
-          .set(
             SchemeElectionConsentPage(Period._2020),
             true
           )
