@@ -107,7 +107,26 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
           checkNavigation(result, "/submission-service/2020/change-private-scheme-name-reference")
         }
 
-        "to asked pension scheme to pay page" in {
+        "to CYA when public pension selected asked pension scheme to pay page already answered" in {
+          val ua     = emptyUserAnswers
+            .set(
+              AskedPensionSchemeToPayTaxChargePage(Period._2020),
+              true
+            )
+            .success
+            .value
+            .set(
+              WhichPensionSchemeWillPayPage(Period._2020),
+              "Scheme1 / 00348916RT"
+            )
+            .success
+            .value
+          val result = WhichPensionSchemeWillPayPage(Period._2020).navigate(CheckMode, ua).url
+
+          checkNavigation(result, "/check-your-answers")
+        }
+
+        "to asked pension scheme to pay page when not already answered" in {
           val ua     = emptyUserAnswers
             .set(
               WhichPensionSchemeWillPayPage(Period._2020),
