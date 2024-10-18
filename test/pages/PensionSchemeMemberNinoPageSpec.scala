@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow}
 import uk.gov.hmrc.domain.Nino
 
 class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
@@ -49,6 +49,8 @@ class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
       .set(page, arbitraryNino.arbitrary.sample.value)
+      .get
+      .set(RunThroughOnBehalfFlow(), true)
       .success
       .value
 
@@ -68,7 +70,7 @@ class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
 
-  "must redirect to JourneyRecoveryPage when not answered in check mode " in {
+  "must redirect to check your answers when RunThroughOnBehalfFlow is false or empty in check mode" in {
 
     val page = PensionSchemeMemberNinoPage
 
@@ -76,6 +78,6 @@ class PensionSchemeMemberNinoPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/there-is-a-problem")
+    checkNavigation(nextPageUrl, "/check-your-answers")
   }
 }

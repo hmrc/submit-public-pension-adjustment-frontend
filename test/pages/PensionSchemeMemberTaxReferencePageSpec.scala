@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow}
 
 class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
 
@@ -49,11 +49,24 @@ class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
       .set(page, "1234567890")
+      .get
+      .set(RunThroughOnBehalfFlow(), true)
       .success
       .value
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/submission-service/change-uk-resident-someone-else")
+  }
+
+  "must redirect to check your answers when RunThroughOnBehalfFlow is false or empty in check mode" in {
+
+    val page = PensionSchemeMemberTaxReferencePage
+
+    val userAnswers = emptyUserAnswers
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/check-your-answers")
   }
 }

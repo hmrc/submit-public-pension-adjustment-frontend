@@ -46,7 +46,21 @@ class StatusOfUserSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/submission-service/name-someone-else")
   }
 
-  "must redirect to their name page when user submits data in check mode" in {
+  "must redirect to their CYA page when status of user page is PowerOfAttorney in check mode" in {
+
+    val page = StatusOfUserPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, PowerOfAttorney)
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/check-your-answers")
+  }
+
+  "must redirect to their name page when status of user page is not PowerOfAttorney in check mode" in {
 
     val page = StatusOfUserPage
 

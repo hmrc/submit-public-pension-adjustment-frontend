@@ -17,7 +17,7 @@
 package pages
 
 import controllers.routes
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -34,7 +34,8 @@ case object PensionSchemeMemberTaxReferencePage extends QuestionPage[String] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeMemberTaxReferencePage) match {
-      case _ => routes.PensionSchemeMemberResidenceController.onPageLoad(CheckMode)
+    answers.get(RunThroughOnBehalfFlow()) match {
+      case Some(true)     => controllers.routes.PensionSchemeMemberResidenceController.onPageLoad(CheckMode)
+      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
     }
 }

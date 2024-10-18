@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow}
 
 import java.time.LocalDate
 import org.scalacheck.Arbitrary
@@ -68,6 +68,8 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
       .set(page, LocalDate.of(1995, 1, 1))
+      .get
+      .set(RunThroughOnBehalfFlow(), true)
       .success
       .value
 
@@ -77,7 +79,7 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
   }
 
-  "must redirect to journey recovery when no data submitted in check mode" in {
+  "must redirect to check your answers when RunThroughOnBehalfFlow is false or empty in check mode" in {
 
     val page = MemberDateOfDeathPage
 
@@ -85,6 +87,6 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/there-is-a-problem")
+    checkNavigation(nextPageUrl, "/check-your-answers")
   }
 }

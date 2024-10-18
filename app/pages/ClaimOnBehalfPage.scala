@@ -41,7 +41,7 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
-      case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
+      case Some(true)  => routes.StatusOfUserController.onPageLoad(CheckMode)
       case Some(false) =>
         ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, CheckMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)

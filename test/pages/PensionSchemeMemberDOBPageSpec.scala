@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, StatusOfUser}
+import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, StatusOfUser}
 import org.scalacheck.Arbitrary
 
 import java.time.LocalDate
@@ -110,6 +110,9 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
       .set(page, LocalDate.of(1995, 1, 1))
       .success
       .value
+      .set(RunThroughOnBehalfFlow(), true)
+      .success
+      .value
       .set(StatusOfUserPage, StatusOfUser.PowerOfAttorney)
       .success
       .value
@@ -125,6 +128,9 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
       .set(page, LocalDate.of(1995, 1, 1))
+      .success
+      .value
+      .set(RunThroughOnBehalfFlow(), true)
       .success
       .value
       .set(StatusOfUserPage, StatusOfUser.Deputyship)
@@ -144,6 +150,9 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
       .set(page, LocalDate.of(1995, 1, 1))
       .success
       .value
+      .set(RunThroughOnBehalfFlow(), true)
+      .success
+      .value
       .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
       .success
       .value
@@ -161,9 +170,26 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
       .set(page, LocalDate.of(1995, 1, 1))
       .success
       .value
+      .set(RunThroughOnBehalfFlow(), true)
+      .success
+      .value
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
+
+  "must redirect to CYA when RunThroughOnBehalfFlow is false in check mode" in {
+
+    val page = PensionSchemeMemberDOBPage
+
+    val userAnswers = emptyUserAnswers
+      .set(RunThroughOnBehalfFlow(), false)
+      .success
+      .value
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/check-your-answers")
   }
 }
