@@ -54,7 +54,7 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to asked pension scheme to pay charge page when answered" in {
+      "to asked pension scheme to pay charge page when answered and doesn't already exist" in {
         val ua     = emptyUserAnswers
           .set(
             PensionSchemeDetailsPage(Period._2020),
@@ -65,6 +65,25 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
         val result = PensionSchemeDetailsPage(Period._2020).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/submission-service/2020/change-asked-pension-scheme-to-pay-tax-charge")
+      }
+
+      "to check your answers when answer already exists" in {
+        val ua     = emptyUserAnswers
+          .set(
+            PensionSchemeDetailsPage(Period._2020),
+            PensionSchemeDetails("name", "pstr")
+          )
+          .success
+          .value
+          .set(
+            AskedPensionSchemeToPayTaxChargePage(Period._2020),
+            true
+          )
+          .success
+          .value
+        val result = PensionSchemeDetailsPage(Period._2020).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to JourneyRecovery when not answered" in {

@@ -98,7 +98,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
     "must navigate correctly in CheckMode" - {
 
-      "to who will pay page when user selects You and more debit periods" in {
+      "to CYA when user selects You and more debit periods" in {
         val ua = emptyUserAnswers
           .set(
             WhoWillPayPage(Period._2020),
@@ -109,7 +109,7 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
         val result = WhoWillPayPage(Period._2020).navigate(CheckMode, ua, submission).url
 
-        checkNavigation(result, "/submission-service/2021/change-who-will-pay-new-tax-charge")
+        checkNavigation(result, "/check-your-answers")
       }
 
       "to CYA when user selects You and no more debit periods" in {

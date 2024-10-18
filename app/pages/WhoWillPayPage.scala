@@ -45,12 +45,13 @@ case class WhoWillPayPage(period: Period) extends QuestionPage[WhoWillPay] {
 
   override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(WhoWillPayPage(period)) match {
-      case Some(PensionScheme) => controllers.routes.WhichPensionSchemeWillPayController.onPageLoad(CheckMode, period)
+      case Some(PensionScheme) =>
+        controllers.routes.WhichPensionSchemeWillPayController.onPageLoad(CheckMode, period)
       case Some(You)           =>
         val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
         nextDebitPeriod match {
-          case Some(period) => controllers.routes.WhoWillPayController.onPageLoad(CheckMode, period)
-          case None         => controllers.routes.CheckYourAnswersController.onPageLoad
+          case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+          case None    => controllers.routes.CheckYourAnswersController.onPageLoad
         }
       case _                   => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
