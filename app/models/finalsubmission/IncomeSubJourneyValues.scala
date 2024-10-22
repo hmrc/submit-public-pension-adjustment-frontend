@@ -16,20 +16,20 @@
 
 package models.finalsubmission
 
-import models.calculation.inputs.IncomeSubJourney
-import play.api.libs.json._
+import models.{InternationalAddress, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, UkAddress}
+import play.api.libs.json.{Format, Json}
 
-case class SubmissionInputs(
-  administrativeDetails: AdministrativeDetails,
-  paymentElections: List[PaymentElection],
-  calculationInputSchemeIdentifiers: List[IndividualSchemeIdentifier],
-  schemeTaxRelief: Option[SchemeTaxRelief],
-  bankAccountDetails: Option[BankAccountDetails],
-  declarations: Declarations,
-  incomeSubJourney: IncomeSubJourney
+import java.time.LocalDate
+
+case class IncomeSubJourneyValues(
+                            revisedPIA: Option[Int],
+                            reducedNetIncome: Option[Int],
+                            thresholdIncomeAmount: Option[Int],
+                            adjustedIncome: Option[Int],
+                            personalAllowance: Option[Int],
 ) {}
 
-object SubmissionInputs {
+object IncomeSubJourneyValues {
 
-  implicit lazy val formats: Format[SubmissionInputs] = Json.format
+  implicit lazy val formats: Format[IncomeSubJourneyValues] = Json.format
 }

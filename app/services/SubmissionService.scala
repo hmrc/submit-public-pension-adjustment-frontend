@@ -70,7 +70,8 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       buildCalculationInputSchemeIdentifiers(userAnswers, calculationInputs),
       buildSchemeTaxRelief(userAnswers),
       buildBankAccountDetails(userAnswers),
-      buildDeclarations(userAnswers)
+      buildDeclarations(userAnswers),
+      buildIncomeSubJourneyValues(userAnswers)
     )
 
   def buildPersonalDetails(
@@ -295,6 +296,9 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
           schemeCreditConsent = userAnswers.get(SchemeCreditConsent)
         )
     }
+
+  def buildIncomeSubJourneyValues(userAnswers: UserAnswers): Option[IncomeSubJourneyValues] =
+    userAnswers.get().map(v => BankAccountDetails(v.accountName, v.sortCode, v.accountNumber))
 
   def buildCalculationInputSchemeIdentifiers(
     userAnswers: UserAnswers,
