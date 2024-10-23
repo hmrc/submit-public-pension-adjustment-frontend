@@ -71,7 +71,7 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
       buildSchemeTaxRelief(userAnswers),
       buildBankAccountDetails(userAnswers),
       buildDeclarations(userAnswers),
-      buildIncomeSubJourneyValues(userAnswers)
+      buildIncomeSubJourneyValues()
     )
 
   def buildPersonalDetails(
@@ -297,8 +297,11 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
         )
     }
 
-  def buildIncomeSubJourneyValues(userAnswers: UserAnswers): Option[IncomeSubJourneyValues] =
-    userAnswers.get().map(v => BankAccountDetails(v.accountName, v.sortCode, v.accountNumber))
+  def buildIncomeSubJourneyValues(): Option[IncomeSubJourneyValues] =
+    Some(IncomeSubJourneyValues(Some(10000),Some(4000),Some(2000),Some(5000),Some(7500)))
+
+//  def buildIncomeSubJourneyValues(userAnswers: UserAnswers): Option[IncomeSubJourneyValues] =
+//    userAnswers.get().map(v => BankAccountDetails(v.accountName, v.sortCode, v.accountNumber))
 
   def buildCalculationInputSchemeIdentifiers(
     userAnswers: UserAnswers,

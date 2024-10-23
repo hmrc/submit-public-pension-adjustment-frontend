@@ -26,7 +26,7 @@ case class SubmissionInputs(
   schemeTaxRelief: Option[SchemeTaxRelief],
   bankAccountDetails: Option[BankAccountDetails],
   declarations: Declarations,
-  incomeSubJourney: IncomeSubJourney
+  incomeSubJourneyValues: Option[IncomeSubJourneyValues]
 ) {}
 
 object SubmissionInputs {
