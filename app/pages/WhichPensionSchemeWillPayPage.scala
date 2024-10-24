@@ -46,7 +46,10 @@ case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[St
         controllers.routes.PensionSchemeDetailsController.onPageLoad(CheckMode, period)
       case Some("Cynllun pensiwn preifat") =>
         controllers.routes.PensionSchemeDetailsController.onPageLoad(CheckMode, period)
-      case Some(_)                         => controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, period)
+      case Some(_)                         =>
+        if (answers.get(AskedPensionSchemeToPayTaxChargePage(period)).isEmpty)
+          controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, period)
+        else controllers.routes.CheckYourAnswersController.onPageLoad
       case _                               => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

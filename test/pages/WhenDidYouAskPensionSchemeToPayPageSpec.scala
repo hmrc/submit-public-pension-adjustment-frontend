@@ -106,7 +106,7 @@ class WhenDidYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
       checkNavigation(result, "/check-your-answers")
     }
 
-    "to who will pay page when user submits and more debit periods" in {
+    "to CYA when user submits and more debit periods" in {
 
       val ua = emptyUserAnswers
         .set(
@@ -118,7 +118,7 @@ class WhenDidYouAskPensionSchemeToPayPageSpec extends PageBehaviours {
       val result =
         WhenDidYouAskPensionSchemeToPayPage(Period._2020).navigate(CheckMode, ua, userWithDebitSubmission).url
 
-      checkNavigation(result, "/submission-service/2021/change-who-will-pay-new-tax-charge")
+      checkNavigation(result, "/check-your-answers")
     }
 
     "to JourneyRecovery when not selected" in {
