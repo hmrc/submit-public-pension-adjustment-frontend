@@ -21,6 +21,7 @@ import forms.mappings.Mappings
 
 import javax.inject.Inject
 import play.api.data.Form
+import play.api.i18n.Messages
 
 import java.time.format.DateTimeFormatter
 
@@ -31,7 +32,7 @@ class PensionSchemeMemberDOBFormProvider @Inject() (clock: Clock) extends Mappin
 
   val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
 
-  def apply(): Form[LocalDate] =
+  def apply()(implicit messages: Messages): Form[LocalDate] =
     Form(
       "value" -> localDate(
         invalidKey = "pensionSchemeMemberDOB.error.invalid",

@@ -18,8 +18,10 @@ package forms
 
 import java.time.{Clock, LocalDate}
 import forms.mappings.Mappings
+
 import javax.inject.Inject
 import play.api.data.Form
+import play.api.i18n.Messages
 
 import java.time.format.DateTimeFormatter
 
@@ -29,7 +31,7 @@ class WhenDidYouAskPensionSchemeToPayFormProvider @Inject() (clock: Clock) exten
   def minDate: LocalDate    = LocalDate.of(2015, 4, 6)
   private def dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
-  def apply(): Form[LocalDate] =
+  def apply()(implicit messages: Messages): Form[LocalDate] =
     Form(
       "value" -> localDate(
         invalidKey = "whenDidYouAskPensionSchemeToPay.error.invalid",
