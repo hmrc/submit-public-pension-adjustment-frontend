@@ -58,6 +58,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
         val submissionStartAuditEvent =
           SubmissionStartAuditEvent(
             "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
+            "AC666401B",
             true
           )
 

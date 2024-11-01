@@ -44,7 +44,7 @@ class LandingPageController @Inject() (
       case Some(sUniqueId) =>
         for {
           _    <- auditService.auditSubmissionStart(
-                    SubmissionStartAuditEvent(sUniqueId.value, true)
+                    SubmissionStartAuditEvent(sUniqueId.value, request.userId, true)
                   )
           _    <- submitBackendConnector.sendSubmissionSignal(submissionUniqueId)
           calc <- submitBackendConnector.sendCalcUserAnswerSignal(submissionUniqueId)
