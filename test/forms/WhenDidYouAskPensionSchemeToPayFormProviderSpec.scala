@@ -26,10 +26,9 @@ import java.time.format.DateTimeFormatter
 
 class WhenDidYouAskPensionSchemeToPayFormProviderSpec extends DateBehaviours {
 
-  private val fixedInstant = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
-  private val clock        = Clock.fixed(fixedInstant, ZoneId.systemDefault)
+  private val fixedInstant                = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
+  private val clock                       = Clock.fixed(fixedInstant, ZoneId.systemDefault)
   private implicit val messages: Messages = stubMessages()
-
 
   val form = new WhenDidYouAskPensionSchemeToPayFormProvider(clock)()(messages)
 

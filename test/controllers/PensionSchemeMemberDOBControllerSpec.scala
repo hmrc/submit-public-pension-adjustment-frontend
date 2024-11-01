@@ -36,7 +36,7 @@ import scala.concurrent.Future
 
 class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new PensionSchemeMemberDOBFormProvider(clockAtFixedInstant)
+  val formProvider                        = new PensionSchemeMemberDOBFormProvider(clockAtFixedInstant)
   private implicit val messages: Messages = stubMessages()
 
   private def form = formProvider()(messages)

@@ -40,7 +40,7 @@ import scala.concurrent.Future
 
 class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new WhenDidYouAskPensionSchemeToPayFormProvider(clockAtFixedInstant)
+  val formProvider                        = new WhenDidYouAskPensionSchemeToPayFormProvider(clockAtFixedInstant)
   private implicit val messages: Messages = stubMessages()
 
   private def form = formProvider()(messages)

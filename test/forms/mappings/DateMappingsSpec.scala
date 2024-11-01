@@ -28,7 +28,7 @@ import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
 
 class DateMappingsSpec
-  extends AnyFreeSpec
+    extends AnyFreeSpec
     with Matchers
     with ScalaCheckPropertyChecks
     with Generators

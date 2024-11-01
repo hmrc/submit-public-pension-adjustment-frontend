@@ -44,7 +44,6 @@ class PensionSchemeMemberDOBController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-
   def onPageLoad(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
       val form = formProvider()

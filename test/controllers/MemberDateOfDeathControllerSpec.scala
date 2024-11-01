@@ -36,7 +36,7 @@ import scala.concurrent.Future
 
 class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new MemberDateOfDeathFormProvider(clockAtFixedInstant)
+  val formProvider                        = new MemberDateOfDeathFormProvider(clockAtFixedInstant)
   private implicit val messages: Messages = stubMessages()
 
   private def form = formProvider()(messages)
