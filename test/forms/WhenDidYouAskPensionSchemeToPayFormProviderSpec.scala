@@ -19,14 +19,19 @@ package forms
 import java.time.{Clock, LocalDate, ZoneId, ZoneOffset}
 import forms.behaviours.DateBehaviours
 import play.api.data.FormError
+import play.api.i18n.Messages
+import play.api.test.Helpers.stubMessages
+
 import java.time.format.DateTimeFormatter
 
 class WhenDidYouAskPensionSchemeToPayFormProviderSpec extends DateBehaviours {
 
   private val fixedInstant = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
   private val clock        = Clock.fixed(fixedInstant, ZoneId.systemDefault)
+  private implicit val messages: Messages = stubMessages()
 
-  val form = new WhenDidYouAskPensionSchemeToPayFormProvider(clock)()
+
+  val form = new WhenDidYouAskPensionSchemeToPayFormProvider(clock)()(messages)
 
   private val maxDate = LocalDate.now(clock)
   private val minDate = LocalDate.of(2015, 4, 6)

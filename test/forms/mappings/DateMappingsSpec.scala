@@ -17,7 +17,6 @@
 package forms.mappings
 
 import java.time.LocalDate
-
 import generators.Generators
 import org.scalacheck.Gen
 import org.scalatest.OptionValues
@@ -25,14 +24,18 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.{Form, FormError}
+import play.api.i18n.Messages
+import play.api.test.Helpers.stubMessages
 
 class DateMappingsSpec
-    extends AnyFreeSpec
+  extends AnyFreeSpec
     with Matchers
     with ScalaCheckPropertyChecks
     with Generators
     with OptionValues
     with Mappings {
+
+  private implicit val messages: Messages = stubMessages()
 
   val form = Form(
     "value" -> localDate(
@@ -88,7 +91,7 @@ class DateMappingsSpec
 
       val result = form.bind(data)
 
-      result.errors must contain only FormError("value", "error.required", List("day"))
+      result.errors must contain only FormError("value", "error.required", List(messages("date.error.day")))
     }
   }
 
@@ -123,7 +126,7 @@ class DateMappingsSpec
 
       val result = form.bind(data)
 
-      result.errors must contain only FormError("value", "error.required", List("month"))
+      result.errors must contain only FormError("value", "error.required", List(messages("date.error.month")))
     }
   }
 
@@ -158,7 +161,7 @@ class DateMappingsSpec
 
       val result = form.bind(data)
 
-      result.errors must contain only FormError("value", "error.required", List("year"))
+      result.errors must contain only FormError("value", "error.required", List(messages("date.error.year")))
     }
   }
 
@@ -197,7 +200,11 @@ class DateMappingsSpec
 
         val result = form.bind(data)
 
-        result.errors must contain only FormError("value", "error.required.two", List("day", "month"))
+        result.errors must contain only FormError(
+          "value",
+          "error.required.two",
+          List(messages("date.error.day"), messages("date.error.month"))
+        )
     }
   }
 
@@ -219,7 +226,11 @@ class DateMappingsSpec
 
         val result = form.bind(data)
 
-        result.errors must contain only FormError("value", "error.required.two", List("day", "year"))
+        result.errors must contain only FormError(
+          "value",
+          "error.required.two",
+          List(messages("date.error.day"), messages("date.error.year"))
+        )
     }
   }
 
@@ -241,7 +252,11 @@ class DateMappingsSpec
 
         val result = form.bind(data)
 
-        result.errors must contain only FormError("value", "error.required.two", List("month", "year"))
+        result.errors must contain only FormError(
+          "value",
+          "error.required.two",
+          List(messages("date.error.month"), messages("date.error.year"))
+        )
     }
   }
 
