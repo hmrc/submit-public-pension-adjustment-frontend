@@ -20,6 +20,7 @@ import play.api.libs.json._
 
 case class SubmissionStartAuditEvent(
   uniqueId: String,
+  userId: String,
   authenticated: Boolean
 )
 
