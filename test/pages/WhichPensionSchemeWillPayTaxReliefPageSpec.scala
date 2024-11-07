@@ -97,7 +97,10 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           models.calculation.response.Resubmission(false, None),
           TotalAmounts(0, 1, 0),
           List.empty,
-          List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
+          List(
+            models.calculation.response
+              .InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty, Some(0))
+          )
         )
         val submission: Submission =
           Submission("id", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
@@ -121,7 +124,9 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           models.calculation.response.Resubmission(false, None),
           TotalAmounts(0, 1, 0),
           List.empty,
-          List(models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty))
+          List(
+            models.calculation.response.InDatesTaxYearsCalculation(period, 0, 0, 0, 0, 0, 0, 0, 0, List.empty, Some(0))
+          )
         )
         val submission: Submission =
           Submission("id", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
@@ -192,7 +197,10 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           models.calculation.response.Resubmission(false, None),
           TotalAmounts(0, 1, 0),
           List.empty,
-          List(models.calculation.response.InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty))
+          List(
+            models.calculation.response
+              .InDatesTaxYearsCalculation(period, 320, 0, 0, 0, 0, 0, 0, 0, List.empty, Some(0))
+          )
         )
 
         val cleanedUserAnswers =
