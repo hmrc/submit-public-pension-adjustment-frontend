@@ -277,7 +277,19 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
       List.empty,
       List(
         models.calculation.response
-          .InDatesTaxYearsCalculation(models.calculation.response.Period._2021, 320, 0, 0, 0, 0, 0, 0, 0, List.empty)
+          .InDatesTaxYearsCalculation(
+            models.calculation.response.Period._2021,
+            320,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            List.empty,
+            Some(0)
+          )
       )
     )
 
@@ -298,7 +310,19 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
       List.empty,
       List(
         models.calculation.response
-          .InDatesTaxYearsCalculation(models.calculation.response.Period._2021, 320, 0, 0, 0, 0, 0, 0, 0, List.empty)
+          .InDatesTaxYearsCalculation(
+            models.calculation.response.Period._2021,
+            320,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            List.empty,
+            Some(0)
+          )
       )
     )
 
@@ -319,7 +343,19 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
       List.empty,
       List(
         models.calculation.response
-          .InDatesTaxYearsCalculation(models.calculation.response.Period._2021, 0, 0, 0, 0, 0, 0, 0, 0, List.empty)
+          .InDatesTaxYearsCalculation(
+            models.calculation.response.Period._2021,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            List.empty,
+            Some(0)
+          )
       )
     )
 

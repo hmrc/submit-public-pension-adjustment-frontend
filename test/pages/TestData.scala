@@ -261,7 +261,8 @@ object TestData {
           0,
           0,
           40000,
-          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+          Some(0)
         ),
         OutOfDatesTaxYearsCalculation(
           responsePeriod._2017,
@@ -272,7 +273,8 @@ object TestData {
           5000,
           2000,
           0,
-          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+          Some(0)
         ),
         OutOfDatesTaxYearsCalculation(
           responsePeriod._2018,
@@ -283,7 +285,8 @@ object TestData {
           0,
           0,
           2000,
-          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 200))
+          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 200)),
+          Some(0)
         ),
         OutOfDatesTaxYearsCalculation(
           responsePeriod._2019,
@@ -294,7 +297,8 @@ object TestData {
           1000,
           410,
           0,
-          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+          List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+          Some(0)
         )
       ),
       List(
@@ -308,7 +312,8 @@ object TestData {
           10000,
           4500,
           0,
-          List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 9000))
+          List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 9000)),
+          Some(0)
         ),
         InDatesTaxYearsCalculation(
           responsePeriod._2021,
@@ -320,7 +325,8 @@ object TestData {
           2000,
           820,
           0,
-          List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+          List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+          Some(0)
         ),
         InDatesTaxYearsCalculation(
           responsePeriod._2022,
@@ -332,7 +338,8 @@ object TestData {
           3500,
           1400,
           0,
-          List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 2400))
+          List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 2400)),
+          Some(0)
         ),
         InDatesTaxYearsCalculation(
           responsePeriod._2023,
@@ -344,7 +351,8 @@ object TestData {
           2000,
           800,
           0,
-          List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+          List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+          Some(0)
         )
       )
     )
@@ -848,7 +856,8 @@ object TestData {
             0,
             0,
             40000,
-            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+            Some(0)
           ),
           OutOfDatesTaxYearsCalculation(
             responsePeriod._2017,
@@ -859,7 +868,8 @@ object TestData {
             5000,
             2000,
             0,
-            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+            Some(0)
           ),
           OutOfDatesTaxYearsCalculation(
             responsePeriod._2018,
@@ -870,7 +880,8 @@ object TestData {
             0,
             0,
             2000,
-            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 200))
+            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 200)),
+            Some(0)
           ),
           OutOfDatesTaxYearsCalculation(
             responsePeriod._2019,
@@ -881,7 +892,8 @@ object TestData {
             1000,
             410,
             0,
-            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+            List(OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+            Some(0)
           )
         ),
         List(
@@ -895,7 +907,8 @@ object TestData {
             10000,
             4500,
             0,
-            List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 9000))
+            List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 9000)),
+            Some(0)
           ),
           InDatesTaxYearsCalculation(
             responsePeriod._2021,
@@ -907,7 +920,8 @@ object TestData {
             2000,
             820,
             0,
-            List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+            List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+            Some(0)
           ),
           InDatesTaxYearsCalculation(
             responsePeriod._2022,
@@ -919,7 +933,8 @@ object TestData {
             3500,
             1400,
             0,
-            List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 2400))
+            List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 2400)),
+            Some(0)
           ),
           InDatesTaxYearsCalculation(
             responsePeriod._2023,
@@ -931,7 +946,8 @@ object TestData {
             2000,
             800,
             0,
-            List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0))
+            List(InDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0)),
+            Some(0)
           )
         )
       )

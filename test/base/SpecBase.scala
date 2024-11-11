@@ -74,7 +74,8 @@ trait SpecBase
       revisedChargableAmountBeforeTaxRate = 0,
       revisedChargableAmountAfterTaxRate = 0,
       unusedAnnualAllowance = 0,
-      taxYearSchemes = List.empty
+      taxYearSchemes = List.empty,
+      totalCompensation = Some(0)
     )
 
   def aCalculationResponseWithAnInDateSchemeCredit = {
@@ -106,7 +107,8 @@ trait SpecBase
       revisedChargableAmountBeforeTaxRate = 0,
       revisedChargableAmountAfterTaxRate = 0,
       unusedAnnualAllowance = 0,
-      taxYearSchemes = List.empty
+      taxYearSchemes = List.empty,
+      totalCompensation = Some(0)
     )
 
   val id: String = "id"
