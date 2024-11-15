@@ -16,13 +16,17 @@
 
 package controllers
 
+import config.FrontendAppConfig
+import connectors.AddressLookupConnector
 import controllers.actions._
 import forms.PensionSchemeMemberTaxReferenceFormProvider
+import models.requests.{AddressLookupOptions, AddressLookupRequest}
 
 import javax.inject.Inject
 import models.{Mode, NavigationState}
 import pages.PensionSchemeMemberTaxReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -39,12 +43,16 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
   requireData: DataRequiredAction,
   formProvider: PensionSchemeMemberTaxReferenceFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: PensionSchemeMemberTaxReferenceView
+  addressLookupConnector: AddressLookupConnector,
+  view: PensionSchemeMemberTaxReferenceView,
+  frontendAppConfig: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
   val form = formProvider()
+
+  val returnURL: String = frontendAppConfig.addressLookupReturnAlternateName
 
   def onPageLoad(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
@@ -64,13 +72,14 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
+              initialiseALF <- addressLookupConnector.start(AddressLookupRequest(options = AddressLookupOptions(returnURL)))
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeMemberTaxReferencePage, value.getOrElse("")))
               redirectUrl     =
                 PensionSchemeMemberTaxReferencePage.navigate(mode, updatedAnswers).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
-            } yield Redirect(redirectUrl)
+            } yield Redirect(initialiseALF)
         )
     }
 }

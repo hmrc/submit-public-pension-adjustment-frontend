@@ -52,6 +52,8 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val origin                              = configuration.get[String]("origin")
   val signOutUrl: String                  = configuration.get[String]("urls.signOut")
   val redirectToStartPage: String         = configuration.get[String]("urls.redirectToStartPage")
+  val addressLookupStart: String = configuration.get[String]("urls.addressLookupStart")
+  val addressLookupReturnAlternateName: String = configuration.get[String]("urls.addressLookupReturnAlternateName")
 
   private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
   val exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/submit-public-pension-adjustment-frontend"

@@ -16,16 +16,29 @@
 
 package models
 
+import models.requests.AddressLookupConfirmation
 import play.api.libs.json._
 
 case class PensionSchemeMemberUKAddress(
-  addressLine1: String,
-  addressLine2: Option[String],
-  townOrCity: String,
-  county: Option[String],
-  postCode: String
+                                         addressLine1: String,
+                                         addressLine2: Option[String],
+                                         addressLine3: Option[String],
+                                         townOrCity: String,
+                                         county: Option[String],
+                                         postCode: String
 )
 
 object PensionSchemeMemberUKAddress {
   implicit val format = Json.format[PensionSchemeMemberUKAddress]
+
+  def apply(addressLookupConfirmation: AddressLookupConfirmation): PensionSchemeMemberUKAddress = {
+    val lines = addressLookupConfirmation.extractAddressLines()
+    new PensionSchemeMemberUKAddress(addressLine1 = lines._1,
+      addressLine2 = lines._2,
+      addressLine3 = lines._3,
+      townOrCity = lines._4,
+      postCode = addressLookupConfirmation.address.postcode.getOrElse(""),
+      county = None
+    )
+  }
 }

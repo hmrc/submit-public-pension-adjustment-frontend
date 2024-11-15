@@ -27,25 +27,29 @@ class UkAddressFormProvider @Inject() extends Mappings {
 
   def apply(): Form[UkAddress] = Form(
     mapping(
-      "addressLine1" -> text("ukAddress.error.addressLine1.required")
-        .verifying(maxLength(100, "ukAddress.error.addressLine1.length")),
+      "addressLine1" -> text("pensionSchemeMemberUKAddress.error.addressLine1.required")
+        .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.addressLine1.length")),
       "addressLine2" -> optional(
-        text("ukAddress.error.addressLine2.required")
-          .verifying(maxLength(100, "ukAddress.error.addressLine2.length"))
+        text("pensionSchemeMemberUKAddress.error.addressLine2.required")
+          .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.addressLine2.length"))
       ),
-      "townOrCity"   -> text("ukAddress.error.townOrCity.required")
-        .verifying(maxLength(100, "ukAddress.error.townOrCity.length")),
+      "addressLine3" -> optional(
+        text("pensionSchemeMemberUKAddress.error.addressLine2.required")
+          .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.addressLine2.length"))
+      ),
+      "townOrCity"   -> text("pensionSchemeMemberUKAddress.error.townOrCity.required")
+        .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.townOrCity.length")),
       "county"       -> optional(
-        text("ukAddress.error.county.required")
-          .verifying(maxLength(100, "ukAddress.error.county.length"))
+        text("pensionSchemeMemberUKAddress.error.county.required")
+          .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.county.length"))
       ),
-      "postCode"     -> text("ukAddress.error.postCode.required")
+      "postCode"     -> text("pensionSchemeMemberUKAddress.error.postCode.required")
         .verifying(
           firstError(
-            maxLength(8, "ukAddress.error.postCode.length"),
+            maxLength(8, "pensionSchemeMemberUKAddress.error.postCode.length"),
             regexp(
               """[a-zA-Z]{1,2}[0-9][0-9a-zA-Z]? ?[0-9][a-zA-Z]{2}""",
-              "ukAddress.error.postCode.invalid"
+              "pensionSchemeMemberUKAddress.error.postCode.invalid"
             )
           )
         )

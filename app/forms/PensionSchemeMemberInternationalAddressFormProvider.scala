@@ -33,6 +33,10 @@ class PensionSchemeMemberInternationalAddressFormProvider @Inject() extends Mapp
         text("pensionSchemeMemberInternationalAddress.error.addressLine2.required")
           .verifying(maxLength(100, "pensionSchemeMemberInternationalAddress.error.addressLine2.length"))
       ),
+      "addressLine3" -> optional(
+        text("pensionSchemeMemberInternationalAddress.error.addressLine2.required")
+          .verifying(maxLength(100, "pensionSchemeMemberInternationalAddress.error.addressLine2.length"))
+      ),
       "townOrCity"   -> text("pensionSchemeMemberInternationalAddress.error.townOrCity.required")
         .verifying(maxLength(100, "pensionSchemeMemberInternationalAddress.error.townOrCity.length")),
       "county"       -> optional(

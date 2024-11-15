@@ -33,6 +33,10 @@ class PensionSchemeMemberUKAddressFormProvider @Inject() extends Mappings {
         text("pensionSchemeMemberUKAddress.error.addressLine2.required")
           .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.addressLine2.length"))
       ),
+      "addressLine3" -> optional(
+        text("pensionSchemeMemberUKAddress.error.addressLine2.required")
+          .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.addressLine2.length"))
+      ),
       "townOrCity"   -> text("pensionSchemeMemberUKAddress.error.townOrCity.required")
         .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.townOrCity.length")),
       "county"       -> optional(
@@ -49,6 +53,7 @@ class PensionSchemeMemberUKAddressFormProvider @Inject() extends Mappings {
             )
           )
         )
-    )(PensionSchemeMemberUKAddress.apply)(PensionSchemeMemberUKAddress.unapply)
+    )
+    (PensionSchemeMemberUKAddress.apply)(PensionSchemeMemberUKAddress.unapply)
   )
 }
