@@ -16,11 +16,13 @@
 
 package models
 
+import models.requests.AddressLookupConfirmation
 import play.api.libs.json._
 
 case class PensionSchemeMemberUKAddress(
   addressLine1: String,
   addressLine2: Option[String],
+  addressLine3: Option[String],
   townOrCity: String,
   county: Option[String],
   postCode: String
@@ -28,4 +30,5 @@ case class PensionSchemeMemberUKAddress(
 
 object PensionSchemeMemberUKAddress {
   implicit val format = Json.format[PensionSchemeMemberUKAddress]
+
 }

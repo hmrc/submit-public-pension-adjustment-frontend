@@ -16,13 +16,13 @@
 
 package pages
 
-import models.{PSTR, PensionSchemeMemberInternationalAddress, SchemeCreditConsent, UkAddress, UserAnswers}
 import models.calculation.inputs.Income.{AboveThreshold, BelowThreshold}
 import models.calculation.inputs.TaxYear2016To2023.{NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.calculation.inputs._
 import models.calculation.response.{CalculationResponse, InDatesTaxYearSchemeCalculation, InDatesTaxYearsCalculation, OutOfDatesTaxYearSchemeCalculation, OutOfDatesTaxYearsCalculation, Period => responsePeriod, Resubmission => responseResubmission, TaxYearScheme, TotalAmounts}
 import models.finalsubmission.OnBehalfOfMemberType.PowerOfAttorney
-import models.finalsubmission.{AdministrativeDetails, AuthRetrievals, ClaimantDetails, Declarations, FinalSubmission, IndividualSchemeIdentifier, OnBehalfOfMember, PaymentElection, PersonalCharge, PersonalDetails, SchemeCharge, SchemeDetails, SchemeTaxRelief, SubmissionInputs, TaxIdentifiers}
+import models.finalsubmission._
+import models.{InternationalAddress, PSTR, UkAddress, UserAnswers}
 import play.api.libs.json.{JsObject, Json}
 
 import java.time.LocalDate
@@ -620,7 +620,9 @@ object TestData {
           "Test User",
           None,
           Some(LocalDate.of(1968, 11, 30)),
-          Some(UkAddress("Test Address line 1", None, "Test city", Some("Test county"), "AB1 2CD")),
+          Some(
+            UkAddress(None, "Test Address line 1", None, None, "Test city", Some("Test county"), Some("AB1 2CD"), None)
+          ),
           None,
           None,
           None,
@@ -683,7 +685,7 @@ object TestData {
           "Test User",
           Some("Duplicate Name"),
           Some(LocalDate.of(1968, 11, 30)),
-          Some(UkAddress("Test UK Address line 1", None, "Test UK city", None, "AB1 2CD")),
+          Some(UkAddress(None, "Test UK Address line 1", None, None, "Test UK city", None, Some("AB1 2CD"), None)),
           None,
           None,
           None,
@@ -701,9 +703,11 @@ object TestData {
             None,
             None,
             Some(
-              PensionSchemeMemberInternationalAddress(
+              InternationalAddress(
+                None,
                 "Test Address line 1",
                 Some("Test Address line 2"),
+                None,
                 "Test city",
                 None,
                 Some("NP4 9KL"),

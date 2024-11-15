@@ -29,7 +29,7 @@ class ContactNumberPageSpec extends PageBehaviours {
     beRemovable[String](ContactNumberPage)
   }
 
-  "must redirect to AreYouAUKResidentPage page when user submits answers in normal mode" in {
+  "must redirect to alf page when user submits answers in normal mode" in {
 
     val page = ContactNumberPage
 
@@ -40,10 +40,10 @@ class ContactNumberPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/submission-service/uk-resident")
+    checkNavigation(nextPageUrl, "/alf-ramp-on-user-address/normal-mode")
   }
 
-  "must redirect to AreYouAUKResidentPage page when user does not enter an answer in normal mode" in {
+  "must redirect to alf page when user does not enter an answer in normal mode" in {
 
     val page = ContactNumberPage
 
@@ -54,7 +54,7 @@ class ContactNumberPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/submission-service/uk-resident")
+    checkNavigation(nextPageUrl, "/alf-ramp-on-user-address/normal-mode")
   }
 
   "must redirect to CYA page when user submits answers in check mode" in {

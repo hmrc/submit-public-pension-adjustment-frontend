@@ -17,7 +17,7 @@
 package pages
 
 import controllers.routes
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 case object ContactNumberPage extends QuestionPage[String] {
@@ -28,7 +28,7 @@ case object ContactNumberPage extends QuestionPage[String] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ContactNumberPage) match {
-      case Some(_) => routes.AreYouAUKResidentController.onPageLoad(NormalMode)
+      case Some(_) => routes.AddressLookupRampOnController.rampOnUserAddress(NormalMode)
       case _       => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

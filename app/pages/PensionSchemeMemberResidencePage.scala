@@ -16,38 +16,13 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
-import controllers.routes
+import queries.{Gettable, Settable}
 
-import scala.util.Try
-
-case object PensionSchemeMemberResidencePage extends QuestionPage[Boolean] {
+case object PensionSchemeMemberResidencePage extends Gettable[Boolean] with Settable[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "pensionSchemeMemberResidence"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeMemberResidencePage) match {
-      case Some(true)  => routes.PensionSchemeMemberUKAddressController.onPageLoad(NormalMode)
-      case Some(false) => routes.PensionSchemeMemberInternationalAddressController.onPageLoad(NormalMode)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeMemberResidencePage) match {
-      case Some(true)  => routes.PensionSchemeMemberUKAddressController.onPageLoad(CheckMode)
-      case Some(false) => routes.PensionSchemeMemberInternationalAddressController.onPageLoad(CheckMode)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
-    value
-      .map {
-        case false => userAnswers.remove(PensionSchemeMemberUKAddressPage)
-        case true  => userAnswers.remove(PensionSchemeMemberInternationalAddressPage)
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
 }

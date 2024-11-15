@@ -16,13 +16,17 @@
 
 package controllers
 
+import config.FrontendAppConfig
+import connectors.AddressLookupConnector
 import controllers.actions._
 import forms.PensionSchemeMemberTaxReferenceFormProvider
+import models.requests.{AddressLookupOptions, AddressLookupRequest}
 
 import javax.inject.Inject
-import models.{Mode, NavigationState}
+import models.{Mode, NavigationState, NormalMode}
 import pages.PensionSchemeMemberTaxReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -38,8 +42,11 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   formProvider: PensionSchemeMemberTaxReferenceFormProvider,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
-  view: PensionSchemeMemberTaxReferenceView
+  addressLookupConnector: AddressLookupConnector,
+  view: PensionSchemeMemberTaxReferenceView,
+  frontendAppConfig: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -66,10 +73,8 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeMemberTaxReferencePage, value.getOrElse("")))
-              redirectUrl     =
-                PensionSchemeMemberTaxReferencePage.navigate(mode, updatedAnswers).url
-              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              _              <- userDataService.set(updatedAnswers)
+              redirectUrl     = PensionSchemeMemberTaxReferencePage.navigate(mode, updatedAnswers)
             } yield Redirect(redirectUrl)
         )
     }

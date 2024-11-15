@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+package viewmodels.checkAnswers
+
 import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -46,7 +48,7 @@ class AreYouAUKResidentSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.AreYouAUKResidentController.onPageLoad(CheckMode).url
+              routes.AddressLookupRampOnController.rampOnUserAddress(CheckMode).url
             )
               .withVisuallyHiddenText("areYouAUKResident.change.hidden")
           )
@@ -71,7 +73,7 @@ class AreYouAUKResidentSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.AreYouAUKResidentController.onPageLoad(CheckMode).url
+              routes.AddressLookupRampOnController.rampOnUserAddress(CheckMode).url
             )
               .withVisuallyHiddenText("areYouAUKResident.change.hidden")
           )

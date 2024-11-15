@@ -16,31 +16,14 @@
 
 package pages
 
-import models.submission.Submission
-import models.{InternationalAddress, NormalMode, PSTR, UserAnswers}
+import models.InternationalAddress
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
-import services.SchemeService
+import queries.{Gettable, Settable}
 
-case object InternationalAddressPage extends QuestionPage[InternationalAddress] {
+case object InternationalAddressPage extends Gettable[InternationalAddress] with Settable[InternationalAddress] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "internationalAddress"
 
-  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
-    answers.get(InternationalAddressPage) match {
-      case Some(_) =>
-        val firstPstr = PSTR(
-          SchemeService.allPensionSchemeDetails(submission.calculationInputs).head.pensionSchemeTaxReference
-        )
-        controllers.routes.LegacyPensionSchemeReferenceController.onPageLoad(NormalMode, firstPstr)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
-    answers.get(InternationalAddressPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
 }

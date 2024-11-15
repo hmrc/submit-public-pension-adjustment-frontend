@@ -16,11 +16,14 @@
 
 package models
 
+import models.requests.AddressLookupConfirmation
 import play.api.libs.json._
 
 case class InternationalAddress(
+  organisation: Option[String],
   addressLine1: String,
   addressLine2: Option[String],
+  addressLine3: Option[String],
   townOrCity: String,
   stateOrRegion: Option[String],
   postCode: Option[String],
@@ -29,4 +32,18 @@ case class InternationalAddress(
 
 object InternationalAddress {
   implicit val format = Json.format[InternationalAddress]
+
+  def apply(addressLookupConfirmation: AddressLookupConfirmation): InternationalAddress = {
+    val lines = addressLookupConfirmation.extractAddressLines()
+    new InternationalAddress(
+      organisation = addressLookupConfirmation.address.organisation,
+      addressLine1 = lines._1,
+      addressLine2 = lines._2,
+      addressLine3 = lines._3,
+      townOrCity = lines._4,
+      postCode = addressLookupConfirmation.address.postcode,
+      stateOrRegion = None,
+      country = addressLookupConfirmation.address.country.name
+    )
+  }
 }

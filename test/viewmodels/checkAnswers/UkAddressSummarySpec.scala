@@ -31,7 +31,7 @@ class UkAddressSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
-  val mockAddress = UkAddress("line1", None, "town", None, "AA1 1AA")
+  val mockAddress = UkAddress(None, "line1", None, None, "town", None, Some("AA1 1AA"), Some("United Kingdom"))
 
   "row" - {
     "when user submits address, return the summary row" in {
@@ -46,11 +46,11 @@ class UkAddressSummarySpec extends AnyFreeSpec with Matchers {
       UkAddressSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "ukAddress.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("line1<br/>town<br/>AA1 1AA")),
+          value = ValueViewModel(HtmlContent("line1<br/>town<br/>AA1 1AA<br/>United Kingdom")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.UkAddressController.onPageLoad(CheckMode).url
+              routes.AddressLookupRampOnController.rampOnUserAddress(CheckMode).url
             )
               .withVisuallyHiddenText("ukAddress.change.hidden")
           )

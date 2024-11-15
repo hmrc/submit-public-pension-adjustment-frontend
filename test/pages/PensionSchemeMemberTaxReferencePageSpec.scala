@@ -29,7 +29,7 @@ class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
     beRemovable[String](PensionSchemeMemberTaxReferencePage)
   }
 
-  "must redirect to their residence page page when user submits data in normal mode" in {
+  "must redirect to alf when user submits data in normal mode" in {
 
     val page = PensionSchemeMemberTaxReferencePage
 
@@ -40,10 +40,10 @@ class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/submission-service/uk-resident-someone-else")
+    checkNavigation(nextPageUrl, "/alf-ramp-on-claim-on-behalf/normal-mode")
   }
 
-  "must redirect to their residence page page when user submits data in check mode" in {
+  "must redirect to alf when user submits data in check mode" in {
 
     val page = PensionSchemeMemberTaxReferencePage
 
@@ -56,7 +56,7 @@ class PensionSchemeMemberTaxReferencePageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/submission-service/change-uk-resident-someone-else")
+    checkNavigation(nextPageUrl, "/alf-ramp-on-claim-on-behalf/check-mode")
   }
 
   "must redirect to check your answers when RunThroughOnBehalfFlow is false or empty in check mode" in {

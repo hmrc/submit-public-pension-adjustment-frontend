@@ -31,18 +31,21 @@ object UkAddressSummary {
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(UkAddressPage).map { answer =>
       val value = Seq(
+        answer.organisation.map(HtmlFormat.escape),
         Some(HtmlFormat.escape(answer.addressLine1).toString),
         answer.addressLine2.map(HtmlFormat.escape),
+        answer.addressLine3.map(HtmlFormat.escape),
         Some(HtmlFormat.escape(answer.townOrCity)),
         answer.county.map(HtmlFormat.escape),
-        Some(HtmlFormat.escape(answer.postCode))
+        answer.postCode.map(HtmlFormat.escape),
+        answer.country.map(HtmlFormat.escape)
       ).flatten.mkString("<br/>")
 
       SummaryListRowViewModel(
         key = "ukAddress.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.UkAddressController.onPageLoad(CheckMode).url)
+          ActionItemViewModel("site.change", routes.AddressLookupRampOnController.rampOnUserAddress(CheckMode).url)
             .withVisuallyHiddenText(messages("ukAddress.change.hidden"))
         )
       )
