@@ -73,24 +73,38 @@ trait ModelGenerators {
   implicit lazy val arbitraryUkAddress: Arbitrary[UkAddress] =
     Arbitrary {
       for {
+        organisation <- arbitrary[Option[String]]
         addressLine1 <- arbitrary[String]
         addressLine2 <- arbitrary[Option[String]]
+        addressLine3 <- arbitrary[Option[String]]
         townOrCity   <- arbitrary[String]
         county       <- arbitrary[Option[String]]
-        postCode     <- arbitrary[String]
-      } yield UkAddress(addressLine1, addressLine2, townOrCity, county, postCode)
+        postCode     <- arbitrary[Option[String]]
+        country      <- arbitrary[Option[String]]
+      } yield UkAddress(organisation, addressLine1, addressLine2, addressLine3, townOrCity, county, postCode, country)
     }
 
   implicit lazy val arbitraryInternationalAddress: Arbitrary[InternationalAddress] =
     Arbitrary {
       for {
+        organisation  <- arbitrary[Option[String]]
         addressLine1  <- arbitrary[String]
         addressLine2  <- arbitrary[Option[String]]
+        addressLine3  <- arbitrary[Option[String]]
         townOrCity    <- arbitrary[String]
         stateOrRegion <- arbitrary[Option[String]]
         postCode      <- arbitrary[Option[String]]
         country       <- arbitrary[String]
-      } yield InternationalAddress(addressLine1, addressLine2, townOrCity, stateOrRegion, postCode, country)
+      } yield InternationalAddress(
+        organisation,
+        addressLine1,
+        addressLine2,
+        addressLine3,
+        townOrCity,
+        stateOrRegion,
+        postCode,
+        country
+      )
     }
 
   implicit lazy val arbitraryNino: Arbitrary[Nino] = Arbitrary {
@@ -103,27 +117,4 @@ trait ModelGenerators {
     } yield Nino(firstChar.toString + secondChar.toString + digits.mkString + lastChar.toString)
   }
 
-  implicit lazy val arbitraryPensionSchemeMemberUKAddress: Arbitrary[PensionSchemeMemberUKAddress] =
-    Arbitrary {
-      for {
-        addressLine1 <- arbitrary[String]
-        addressLine2 <- arbitrary[Option[String]]
-        townOrCity   <- arbitrary[String]
-        county       <- arbitrary[Option[String]]
-        postCode     <- arbitrary[String]
-      } yield PensionSchemeMemberUKAddress(addressLine1, addressLine2, townOrCity, county, postCode)
-    }
-
-  implicit lazy val arbitraryPensionSchemeMemberInternationalAddress
-    : Arbitrary[PensionSchemeMemberInternationalAddress] =
-    Arbitrary {
-      for {
-        addressLine1 <- arbitrary[String]
-        addressLine2 <- arbitrary[Option[String]]
-        townOrCity   <- arbitrary[String]
-        county       <- arbitrary[Option[String]]
-        postCode     <- arbitrary[Option[String]]
-        country      <- arbitrary[String]
-      } yield PensionSchemeMemberInternationalAddress(addressLine1, addressLine2, townOrCity, county, postCode, country)
-    }
 }

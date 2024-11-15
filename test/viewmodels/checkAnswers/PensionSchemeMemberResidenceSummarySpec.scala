@@ -47,7 +47,7 @@ class PensionSchemeMemberResidenceSummarySpec extends AnyFreeSpec with Matchers 
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.PensionSchemeMemberResidenceController.onPageLoad(CheckMode).url
+              routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode).url
             )
               .withVisuallyHiddenText("pensionSchemeMemberResidence.change.hidden")
           )
@@ -72,7 +72,7 @@ class PensionSchemeMemberResidenceSummarySpec extends AnyFreeSpec with Matchers 
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.PensionSchemeMemberResidenceController.onPageLoad(CheckMode).url
+              routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode).url
             )
               .withVisuallyHiddenText("pensionSchemeMemberResidence.change.hidden")
           )

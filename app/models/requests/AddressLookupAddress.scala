@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-package forms
+package models.requests
 
-import javax.inject.Inject
+import play.api.libs.json.{Json, OFormat}
 
-import forms.mappings.Mappings
-import play.api.data.Form
+case class AddressLookupAddress(
+  organisation: Option[String],
+  lines: List[String],
+  postcode: Option[String],
+  country: AddressLookupCountry
+)
 
-class AreYouAUKResidentFormProvider @Inject() extends Mappings {
+object AddressLookupAddress {
+  implicit val format: OFormat[AddressLookupAddress] = Json.format[AddressLookupAddress]
+}
 
-  def apply(): Form[Boolean] =
-    Form(
-      "value" -> boolean("areYouAUKResident.error.required")
-    )
+case class AddressLookupCountry(code: String, name: String)
+
+object AddressLookupCountry {
+  implicit val format: OFormat[AddressLookupCountry] = Json.format[AddressLookupCountry]
 }

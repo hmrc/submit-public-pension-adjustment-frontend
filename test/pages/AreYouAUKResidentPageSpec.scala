@@ -16,117 +16,15 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
-
 class AreYouAUKResidentPageSpec extends PageBehaviours {
 
   "AreYouAUKResidentPage" - {
 
-    beRetrievable[Boolean](AreYouAUKResidentPage)
+    "should save residence" in {
 
-    beSettable[Boolean](AreYouAUKResidentPage)
+      val updatedUserAnswers = emptyUserAnswers.set(AreYouAUKResidentPage, true).get
 
-    beRemovable[Boolean](AreYouAUKResidentPage)
-
-    "must navigate correctly in NormalMode" - {
-
-      "to UKAddressPage when Yes selected" in {
-        val ua     = emptyUserAnswers
-          .set(
-            AreYouAUKResidentPage,
-            true
-          )
-          .success
-          .value
-        val result = AreYouAUKResidentPage.navigate(NormalMode, ua).url
-
-        checkNavigation(result, "/submission-service/your-address")
-      }
-
-      "to InternationalAddressPage when no selected" in {
-        val ua     = emptyUserAnswers
-          .set(
-            AreYouAUKResidentPage,
-            false
-          )
-          .success
-          .value
-        val result = AreYouAUKResidentPage.navigate(NormalMode, ua).url
-
-        checkNavigation(result, "/submission-service/your-international-address")
-      }
-
-      "to JourneyRecovery when not selected" in {
-        val ua     = emptyUserAnswers
-        val result = AreYouAUKResidentPage.navigate(NormalMode, ua).url
-
-        checkNavigation(result, "/there-is-a-problem")
-      }
-    }
-
-    "must navigate correctly in CheckMode" - {
-
-      "to uk address page when yes selected" in {
-        val ua     = emptyUserAnswers
-          .set(
-            AreYouAUKResidentPage,
-            true
-          )
-          .success
-          .value
-        val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
-
-        checkNavigation(result, "/submission-service/change-your-address")
-      }
-
-      "to international address page when no selected" in {
-        val ua     = emptyUserAnswers
-          .set(
-            AreYouAUKResidentPage,
-            false
-          )
-          .success
-          .value
-        val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
-
-        checkNavigation(result, "/submission-service/change-your-international-address")
-      }
-
-      "to JourneyRecovery when not selected" in {
-        val ua     = emptyUserAnswers
-        val result = AreYouAUKResidentPage.navigate(CheckMode, ua).url
-
-        checkNavigation(result, "/there-is-a-problem")
-      }
-    }
-
-    "cleanup" - {
-
-      "must cleanup correctly when answered no" in {
-        val ua = emptyUserAnswers
-          .set(
-            UkAddressPage,
-            arbitraryUkAddress.arbitrary.sample.value
-          )
-          .success
-          .value
-
-        val cleanedUserAnswers = AreYouAUKResidentPage.cleanup(Some(false), ua).success.value
-        cleanedUserAnswers.get(UkAddressPage) mustBe None
-      }
-
-      "must cleanup correctly when answered yes" in {
-        val ua = emptyUserAnswers
-          .set(
-            InternationalAddressPage,
-            arbitraryInternationalAddress.arbitrary.sample.value
-          )
-          .success
-          .value
-
-        val cleanedUserAnswers = AreYouAUKResidentPage.cleanup(Some(true), ua).success.value
-        cleanedUserAnswers.get(InternationalAddressPage) mustBe None
-      }
+      updatedUserAnswers.get(AreYouAUKResidentPage) mustBe Some(true)
     }
   }
 }

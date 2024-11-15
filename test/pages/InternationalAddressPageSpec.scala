@@ -16,77 +16,24 @@
 
 package pages
 
-import models.calculation.response.TaxYearScheme
-import models.submission.Submission
-import models.{CheckMode, InternationalAddress, NormalMode}
+import models.InternationalAddress
 
 class InternationalAddressPageSpec extends PageBehaviours {
 
   "InternationalAddressPage" - {
 
-    beRetrievable[InternationalAddress](InternationalAddressPage)
+    "should save address" in {
 
-    beSettable[InternationalAddress](InternationalAddressPage)
+      val updatedUserAnswers = emptyUserAnswers
+        .set(
+          InternationalAddressPage,
+          InternationalAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), "United Kingdom")
+        )
+        .get
 
-    beRemovable[InternationalAddress](InternationalAddressPage)
-
-    "must navigate correctly in NormalMode" - {
-
-      "to LegacyPensionSchemeReferencePage when answered" in {
-
-        val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
-
-        val ua     = emptyUserAnswers
-          .set(
-            InternationalAddressPage,
-            arbitraryInternationalAddress.arbitrary.sample.value
-          )
-          .success
-          .value
-        val result = InternationalAddressPage.navigate(NormalMode, ua, submission).url
-
-        checkNavigation(result, "/submission-service/12345678AB/legacy-individual-pension-scheme-reference")
-      }
-
-      "to JourneyRecovery when not answered" in {
-        val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
-
-        val ua     = emptyUserAnswers
-        val result = InternationalAddressPage.navigate(NormalMode, ua, submission).url
-
-        checkNavigation(result, "/there-is-a-problem")
-      }
-    }
-
-    "must navigate correctly in CheckMode" - {
-
-      "to CYA when answered" in {
-        val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
-
-        val ua     = emptyUserAnswers
-          .set(
-            InternationalAddressPage,
-            arbitraryInternationalAddress.arbitrary.sample.value
-          )
-          .success
-          .value
-        val result = InternationalAddressPage.navigate(CheckMode, ua, submission).url
-
-        checkNavigation(result, "/check-your-answers")
-      }
-
-      "to JourneyRecovery when not selected" in {
-        val submission: Submission =
-          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
-
-        val ua     = emptyUserAnswers
-        val result = InternationalAddressPage.navigate(CheckMode, ua, submission).url
-
-        checkNavigation(result, "/there-is-a-problem")
-      }
+      updatedUserAnswers.get(InternationalAddressPage) mustBe Some(
+        InternationalAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), "United Kingdom")
+      )
     }
   }
 }
