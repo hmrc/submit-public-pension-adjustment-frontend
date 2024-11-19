@@ -240,7 +240,7 @@ claimingHigherOrAdditionalTaxRateRelief.checkYourAnswersLabel = cy: Are you clai
 claimingHigherOrAdditionalTaxRateRelief.error.required = Dewiswch ‘Iawn’ os ydych yn hawliad am ryddhad treth ar gyfradd uwch neu ychwanegol
 claimingHigherOrAdditionalTaxRateRelief.change.hidden = gwasanaeth cyflwyno yn hawlio am ryddhad treth ar y gyfradd uwch neu ychwanegol
 
-howMuchTaxRelief.title = vy: How much higher or additional tax relief are you claiming for?
+howMuchTaxRelief.title = cy: How much higher or additional tax relief are you claiming for?
 howMuchTaxRelief.heading = Faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano?
 howMuchTaxRelief.hint1 = Gallwch ddod o hyd i’r wybodaeth hon ar eich Ffurflen Dreth Hunanasesiad. Os ydych yn cyflwyno’ch Ffurflen Dreth Hunanasesiad ar-lein, mae’n bosibl y byddwch yn canfod y gwerth rydych yn hawlio amdano
 howMuchTaxRelief.hint2 = Mae’n rhaid talgrynnu’r swm i lawr i’r bunt agosaf, er enghraifft 2300.
@@ -263,7 +263,7 @@ whichPensionSchemeWillPayTaxRelief.change.hidden = Pa gynllun pensiwn fydd yn ta
 
 pensionSchemeMemberName.title = cy: What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.heading = Beth yw enw’r person rydych yn gweithredu ar ei ran?
-pensionSchemeMemberName.checkYourAnswersLabel = cy: What is the name of the person you are acting on behalf of?
+pensionSchemeMemberName.checkYourAnswersLabel = Beth yw enw’r person rydych yn gweithredu ar ei ran?
 pensionSchemeMemberName.error.required =  cy: Enter the name of the person you are acting on behalf of
 pensionSchemeMemberName.error.length =  cy: The name of the person you are acting on behalf of must be 30 characters or fewer
 pensionSchemeMemberName.change.hidden = cy: the name of the person you are acting on behalf of
@@ -434,7 +434,7 @@ bankDetails.sortCode = Cod didoli
 bankDetails.sortCode.hint = Rhaid fod yn 6 digid
 bankDetails.accountNumber = Rhif y cyfrif
 bankDetails.accountNumber.hint = Rhaid iddo fod rhwng 6 ac 8 digid o hyd
-bankDetails.checkYourAnswersLabel = cy: What are your bank or building society details?
+bankDetails.checkYourAnswersLabel = Beth yw manylion eich banc neu gymdeithas adeiladu?
 bankDetails.error.accountName.required = Rhowch a Yr enw sydd ar y cyfrif
 bankDetails.error.sortCode.required = Rhowch a Cod didoli
 bankDetails.error.accountNumber.required = Rhowch a Rhif y cyfrif
