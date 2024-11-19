@@ -178,7 +178,7 @@ GET         /uplift-failure                                                     
 
 GET        /calculation-result                                                                                          controllers.CalculationResultController.onPageLoad()
 
-GET        /calculation-results                                                                                          controllers.CalculationResultController.onPageLoad()
+GET        /calculation-results                                                                                          controllers.PrintReviewController.onPageLoad()
 
 GET        /continue-choice                                                                                             controllers.ContinueChoiceController.onPageLoad()
 POST       /continue-choice                                                                                             controllers.ContinueChoiceController.onSubmit()

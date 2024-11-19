@@ -1,0 +1,288 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.calculation.CalculationReviewIndividualAAViewModel
+@import models.calculation.IndividualAASummaryModel
+@import models.calculation.RowViewModel
+@import models.calculation.CalculationReviewViewModel
+
+
+@import views.html.helper.CSPNonce
+@this(
+        printLink: PrintLink,
+        layout: templates.Layout,
+        formHelper: FormWithCSRF,
+        govukButton: GovukButton,
+        govukSummaryList: GovukSummaryList
+
+)
+
+@(form: Form[_],
+calculationReviewIndividualAAViewModel: CalculationReviewIndividualAAViewModel,
+isInCredit: Boolean,
+isInDebit: Boolean,
+outDatesStringValues: Seq[IndividualAASummaryModel],
+inDatesStringValues: Seq[IndividualAASummaryModel],
+calculationReviewViewModel: CalculationReviewViewModel,
+list: SummaryList,
+isLTACompleteWithoutKickout: Boolean,
+includeCompensation2015: Boolean,
+redirectURL:Call,
+hasInDates: Boolean
+)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("printReview.title"))) {
+
+    <h1 class="govuk-heading-xl">@messages("printReview.heading")</h1>
+
+    <p class="govuk-body">@messages("printReview.message1")</p>
+
+    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-top" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
+        </p>
+    <script @{CSPNonce.attr}>document.getElementById("print-result-top").addEventListener("click", () => window.print());</script>
+
+    @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
+    <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
+    }
+
+    <h2 class="govuk-heading-m">@messages("printReview.heading.calculationResults")</h2>
+
+    <p class="govuk-body">@messages("calculationReview.message1")</p>
+
+    <p class="govuk-body">@messages("calculationReview.message2")</p>
+
+    <p class="govuk-body">@messages("calculationReview.message3")</p>
+
+    <p class="govuk-body">@messages("calculationReview.message4")</p>
+
+    <p class="govuk-body">@messages("printReview.message3")</p>
+
+    <ul class="govuk-body">
+        <li>@messages("printReview.bullet1")</li>
+        <li>@messages("printReview.bullet2")</li>
+    </ul>
+
+    <p class="govuk-body">@messages("printReview.message4")</p>
+
+    <h2 class="govuk-heading-m">@messages("printReview.heading.varyAA")</h2>
+
+    <p class="govuk-body">@messages("printReview.message5")</p>
+
+    <p class="govuk-body">@messages("printReview.message6")</p>
+
+    <p class="govuk-body">@messages("printReview.message6.1") <a class="govuk-link" href="https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge" rel="noreferrer noopener" target="_blank"> @messages("printReview.schemepays.link")</a> @messages("printReview.message6.2") <span class="govuk-visually-hidden">(opens in new tab)</span> </p>
+
+    <p class="govuk-body">@messages("printReview.message6.3")</p>
+
+    <h2 class="govuk-heading-m">@messages("printReview.heading.changeOutDates")</h2>
+
+    <p class="govuk-body">@messages("printReview.message7")</p>
+
+    <p class="govuk-body">@messages("printReview.message8")</p>
+
+<!--outDatesOverviewTable-->
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.period")</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.charges")</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        @calculationReviewViewModel.outDatesData.map { data =>
+        @data.map { section =>
+        <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">@messages(section.title)</th>
+            @if(section.totalCharge.getOrElse(0) == 0) {
+            <td class="govuk-table__cell">@messages(section.changeString.get)</td>
+            } else {
+            <td class="govuk-table__cell">@messages(section.changeString.get, section.totalCharge.get)</td>
+            }
+        </tr>
+        }
+        }
+        </tbody>
+    </table>
+
+    <p class="govuk-body">@messages("printReview.message9")</p>
+
+@outDatesStringValues.zipWithIndex.map { outDateStringValues =>
+
+    <h3 class="govuk-heading-s">@messages("calculationReviewIndividualAA.heading2." + outDateStringValues._1.period.toString())</h3>
+
+    <p class="govuk-body">@messages(outDateStringValues._1.changeInTaxChargeString + "message1", outDateStringValues._1.changeInTaxCharge)</p>
+
+
+    @if(outDateStringValues._1.changeInTaxChargeNonAbs < 0) {
+
+        <p class="govuk-body">@messages("calculationReviewIndividualAA.message8")</p>
+
+        <p class="govuk-body">@messages("calculationReviewIndividualAA.message9")</p>
+
+    }
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message1", outDateStringValues._1.totalChargePaid)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message2", outDateStringValues._1.chargePaidByMember)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message3", outDateStringValues._1.chargePaidBySchemes)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message4", outDateStringValues._1.revisedChargeableAmountAfterTaxRate)</p>
+
+    <p class="govuk-body">@messages(outDateStringValues._1.changeInTaxChargeString + "message2", outDateStringValues._1.changeInTaxCharge)</p>
+
+    @if(outDateStringValues._1.changeInTaxChargeNonAbs > 0){
+        <p class="govuk-body">@messages("calculationReviewIndividualAA.message6")</p>
+
+        <ul class="govuk-body">
+            <li>@messages("calculationReviewIndividualAA.bullet.1")</li>
+            <li>@messages("calculationReviewIndividualAA.bullet.2")</li>
+        </ul>
+    }
+
+    <!-- results table -->
+
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">@messages("calculationResults.yourResult")</th>
+            <th scope="col" class="govuk-table__header">@messages("calculationResults.amount")</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        @calculationReviewIndividualAAViewModel.outDatesData(outDateStringValues._2).map { section =>
+        <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">@messages(section.name)</th>
+            <td class="govuk-table__cell">@messages(section.value)</td>
+        </tr>
+        }
+        </tbody>
+    </table>
+    }
+
+    @if(hasInDates) {
+
+    <h2 class="govuk-heading-m">@messages("printReview.heading.changeInDates")</h2>
+
+    <p class="govuk-body">@messages("printReview.message10")</p>
+
+    <p class="govuk-body">@messages("printReview.message11")</p>
+
+
+<!--inDatesOverviewTable-->
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.period")</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.charges")</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        @calculationReviewViewModel.inDatesData.map { data =>
+        @data.map { section =>
+        <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">@messages(section.title)</th>
+            @if(section.totalCharge.getOrElse(0) == 0) {
+            <td class="govuk-table__cell">@messages(section.changeString.get)</td>
+            } else {
+            <td class="govuk-table__cell">@messages(section.changeString.get, section.totalCharge.get)</td>
+            }
+        </tr>
+        }
+        }
+        </tbody>
+    </table>
+
+    @inDatesStringValues.zipWithIndex.map { inDatesStringValues =>
+    <h3 class="govuk-heading-s">@messages("calculationReviewIndividualAA.heading2." + inDatesStringValues._1.period.toString())</h3>
+
+    <p class="govuk-body">@messages(inDatesStringValues._1.changeInTaxChargeString + "message1", inDatesStringValues._1.changeInTaxCharge)</p>
+
+    @if(inDatesStringValues._1.changeInTaxChargeNonAbs < 0) {
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message8")</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message9")</p>
+
+    }
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message1", inDatesStringValues._1.totalChargePaid)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message2", inDatesStringValues._1.chargePaidByMember)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message3", inDatesStringValues._1.chargePaidBySchemes)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message4", inDatesStringValues._1.revisedChargeableAmountAfterTaxRate)</p>
+
+    <p class="govuk-body">@messages(inDatesStringValues._1.changeInTaxChargeString + "message2", inDatesStringValues._1.changeInTaxCharge)</p>
+
+    @if(inDatesStringValues._1.changeInTaxChargeNonAbs > 0){
+        <p class="govuk-body">@messages("calculationReviewIndividualAA.message6")</p>
+
+        <ul class="govuk-body">
+            <li>@messages("calculationReviewIndividualAA.bullet.1")</li>
+            <li>@messages("calculationReviewIndividualAA.bullet.2")</li>
+        </ul>
+    }
+
+    <!-- results table -->
+
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">@messages("calculationResults.yourResult")</th>
+            <th scope="col" class="govuk-table__header">@messages("calculationResults.amount")</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        @calculationReviewIndividualAAViewModel.inDatesData(inDatesStringValues._2).map { section =>
+        <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">@messages(section.name)</th>
+            <td class="govuk-table__cell">@messages(section.value)</td>
+        </tr>
+        }
+        </tbody>
+    </table>
+    }
+}
+    @if(isLTACompleteWithoutKickout) {
+
+    <h2 class="govuk-heading-m">@messages("printReview.heading.lta")</h2>
+
+    <p class="govuk-body">@messages("printReview.message12")</p>
+
+    <p class="govuk-body">@messages("printReview.message13")</p>
+
+    @govukSummaryList(list)
+
+    }
+
+
+    <h2 class="govuk-heading-m">@messages("printReview.heading.print")</h2>
+
+    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-bottom" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
+        </p>
+    <script @{CSPNonce.attr}>document.getElementById("print-result-bottom").addEventListener("click", () => window.print());</script>
+
+    @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
+    <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
+    }
+
+    <p>< <a class="govuk-link" href= @redirectURL>
+            @messages("reviewLTAAnswers.returnToMainResult")
+        </a></p>
+
+}

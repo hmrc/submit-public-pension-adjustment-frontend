@@ -21,22 +21,23 @@ import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.CalculationResultService
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import viewmodels.checkAnswers.lifetimeallowance.{AnnualPaymentValueSummary, DateOfBenefitCrystallisationEventSummary, EnhancementTypeSummary, ExcessLifetimeAllowancePaidSummary, InternationalEnhancementReferenceSummary, LifetimeAllowanceChargeSummary, LtaPensionSchemeDetailsSummary, LtaProtectionOrEnhancementsSummary, LumpSumValueSummary, NewAnnualPaymentValueSummary, NewEnhancementTypeSummary, NewExcessLifetimeAllowancePaidSummary, NewInternationalEnhancementReferenceSummary, NewLumpSumValueSummary, NewPensionCreditReferenceSummary, PensionCreditReferenceSummary, ProtectionEnhancedChangedSummary, ProtectionReferenceSummary, ProtectionTypeSummary, QuarterChargePaidSummary, ReferenceNewProtectionTypeEnhancementSummary, SchemeNameAndTaxRefSummary, UserSchemeDetailsSummary, WhatNewProtectionTypeEnhancementSummary, WhoPaidLTAChargeSummary, WhoPayingExtraLtaChargeSummary, YearChargePaidSummary}
+import viewmodels.checkAnswers.lifetimeallowance._
 import viewmodels.govuk.all.SummaryListViewModel
+import views.html.PrintReviewView
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
-class PrintReviewController @Inject()(
+class PrintReviewController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
-  requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: PrintReviewView,
   calculationResultService: CalculationResultService
@@ -46,7 +47,7 @@ class PrintReviewController @Inject()(
 
   val form = Form("_" -> ignored(()))
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData) { implicit request =>
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     val rows: Seq[Option[SummaryListRow]] = Seq(
@@ -79,38 +80,41 @@ class PrintReviewController @Inject()(
       LtaPensionSchemeDetailsSummary.row(request.submission)
     )
 
-    val isLTACompleteWithoutKickout = LTASection.status(request.userAnswers) == SectionStatus.Completed && !LTASection
-      .kickoutHasBeenReached(request.userAnswers)
+    val calculationInputs = request.submission.calculationInputs
+    val calculation       = request.submission.calculation.get
 
-    calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
-      val outDatesStringValues = calculationResultService.outDatesSummary(calculationResponse)
-      val inDatesStringValues  = calculationResultService.inDatesSummary(calculationResponse)
-      val hasinDates: Boolean  = calculationResponse.inDates.isDefinedAt(0)
+    val isLTAComplete = calculationInputs.lifeTimeAllowance.isDefined
 
-      calculationResultService
-        .calculationReviewIndividualAAViewModel(calculationResponse, None, request.userAnswers)
-        .map { calculationReviewIndividualAAViewModel =>
-          val isInCredit: Boolean              = calculationResponse.totalAmounts.inDatesCredit > 0
-          val isInDebit: Boolean               = calculationResponse.totalAmounts.inDatesDebit > 0
-          val includeCompensation2015: Boolean = calculationResponse.totalAmounts.outDatesCompensation > 0
-          Ok(
-            view(
-              form,
-              calculationReviewIndividualAAViewModel,
-              isInCredit,
-              isInDebit,
-              outDatesStringValues,
-              inDatesStringValues,
-              calculationResultService.calculationReviewViewModel(calculationResponse),
-              SummaryListViewModel(rows.flatten),
-              isLTACompleteWithoutKickout,
-              includeCompensation2015,
-              controllers.routes.CalculationReviewController.onPageLoad(),
-              hasinDates
-            )
-          )
-        }
-    }
+    val outDatesStringValues = calculationResultService.outDatesSummary(calculation)
+    val inDatesStringValues  = calculationResultService.inDatesSummary(calculation)
+    val hasinDates: Boolean  = calculation.inDates.isDefinedAt(0)
+
+    val isInCredit: Boolean              = calculation.totalAmounts.inDatesCredit > 0
+    val isInDebit: Boolean               = calculation.totalAmounts.inDatesDebit > 0
+    val includeCompensation2015: Boolean = calculation.totalAmounts.outDatesCompensation > 0
+
+    val calculationReviewIndividualAAViewModel = calculationResultService
+      .calculationReviewIndividualAAViewModel(calculation, None, calculationInputs)
+
+    val calculationReviewViewModel = calculationResultService.calculationReviewViewModel(calculation)
+
+    Ok(
+      view(
+        form,
+        calculationReviewIndividualAAViewModel,
+        isInCredit,
+        isInDebit,
+        outDatesStringValues,
+        inDatesStringValues,
+        calculationReviewViewModel,
+        SummaryListViewModel(rows.flatten),
+        isLTAComplete,
+        includeCompensation2015,
+        controllers.routes.ContinueChoiceController.onPageLoad().url,
+        hasinDates
+      )
+    )
+
   }
 
 }

@@ -14,26 +14,6 @@
  * limitations under the License.
  */
 
-package utils
+package models.calculation
 
-import utils.CurrencyFormatter.formatNumberString
-
-trait CurrencyFormatter {
-  def currencyFormat(amt: BigInt): String    = f"&pound;$amt"
-  def currencyFormat(amt: Int): String       = f"&pound;$amt"
-  def currencyFormat(string: String): String = formatNumberString(string)
-
-}
-
-object CurrencyFormatter extends CurrencyFormatter {
-  def formatNumberString(input: String): String =
-    if (input.forall(_.isDigit)) {
-      val formattedString = input.reverse
-        .grouped(3)
-        .mkString(",")
-        .reverse
-      "£" + formattedString
-    } else {
-      input
-    }
-}
+case class ReviewRowViewModel(title: String, changeString: Option[String], link: String, totalCharge: Option[Int])
