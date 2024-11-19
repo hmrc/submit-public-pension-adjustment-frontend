@@ -27,6 +27,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.WhenDidYouAskPensionSchemeToPayPage
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -39,9 +40,10 @@ import scala.concurrent.Future
 
 class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new WhenDidYouAskPensionSchemeToPayFormProvider(clockAtFixedInstant)
+  val formProvider                        = new WhenDidYouAskPensionSchemeToPayFormProvider(clockAtFixedInstant)
+  private implicit val messages: Messages = stubMessages()
 
-  private def form = formProvider()
+  private def form = formProvider()(messages)
 
   def onwardRoute = Call("GET", "/foo")
 

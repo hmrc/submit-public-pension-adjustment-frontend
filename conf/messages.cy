@@ -17,6 +17,9 @@ site.opensInNewTab = (yn agor tab newydd)
 date.day = Diwrnod
 date.month = Mis
 date.year = Blwyddyn
+date.error.day = diwrnod
+date.error.month = mis
+date.error.year = blwyddyn
 
 timeout.title = Rydych ar fin cael eich allgofnodi
 timeout.message = Er eich diogelwch, byddwn yn eich allgofnodi cyn pen

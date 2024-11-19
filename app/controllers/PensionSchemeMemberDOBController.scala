@@ -44,10 +44,10 @@ class PensionSchemeMemberDOBController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  def form = formProvider()
-
   def onPageLoad(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+      val form = formProvider()
+
       val preparedForm = request.userAnswers.get(PensionSchemeMemberDOBPage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -58,6 +58,8 @@ class PensionSchemeMemberDOBController @Inject() (
 
   def onSubmit(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+      val form = formProvider()
+
       form
         .bindFromRequest()
         .fold(
