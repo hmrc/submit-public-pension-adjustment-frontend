@@ -110,7 +110,7 @@ class PrintReviewController @Inject() (
         SummaryListViewModel(rows.flatten),
         isLTAComplete,
         includeCompensation2015,
-        controllers.routes.ContinueChoiceController.onPageLoad().url,
+        controllers.routes.ContinueChoiceController.onPageLoad(),
         hasinDates
       )
     )

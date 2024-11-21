@@ -303,7 +303,7 @@ class CalculationResultService @Inject() (
     else inDates
 
   private def taxYearIncomeSubJourney(taxYears: List[TaxYear2016To2023], period: Period): IncomeSubJourney =
-    taxYears.filter(ty => ty.period == period).head match {
+    taxYears.filter(ty => ty.period == period.toCalculationInputsPeriod).head match {
       case ty: NormalTaxYear                  => ty.incomeSubJourney
       case ty: InitialFlexiblyAccessedTaxYear => ty.incomeSubJourney
       case ty: PostFlexiblyAccessedTaxYear    => ty.incomeSubJourney
