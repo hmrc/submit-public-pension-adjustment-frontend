@@ -125,7 +125,8 @@ object CalculationResultsMapper {
         outDate.chargePaidByMember,
         outDate.chargePaidBySchemes,
         outDate.revisedChargableAmountAfterTaxRate,
-        outDate.chargePaidByMember + outDate.chargePaidBySchemes
+        outDate.chargePaidByMember + outDate.chargePaidBySchemes,
+        Some(outDate.revisedChargableAmountAfterTaxRate - (outDate.chargePaidByMember + outDate.chargePaidBySchemes))
       )
     }
 
@@ -202,7 +203,8 @@ object CalculationResultsMapper {
         inDate.chargePaidByMember,
         inDate.chargePaidBySchemes,
         inDate.revisedChargableAmountAfterTaxRate,
-        inDate.chargePaidByMember + inDate.chargePaidBySchemes
+        inDate.chargePaidByMember + inDate.chargePaidBySchemes,
+        None
       )
     }
 
@@ -233,32 +235,12 @@ object CalculationResultsMapper {
         val taxYear: IncomeSubJourney = taxYearIncomeSubJourney(taxYears, outDate.period)
         Seq(
           RowViewModel(
-            "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
-            currencyFormat(outDate.chargePaidBySchemes.toString())
-          ),
-          RowViewModel(
             "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
             currencyFormat(outDate.chargePaidByMember.toString())
           ),
           RowViewModel(
-            "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
-            currencyFormat(outDate.revisedChargableAmountBeforeTaxRate.toString())
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
-            currencyFormat(outDate.revisedChargableAmountAfterTaxRate.toString())
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
-            currencyFormat(outDate.directCompensation.toString())
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
-            currencyFormat(outDate.indirectCompensation.toString())
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
-            currencyFormat(outDate.unusedAnnualAllowance.toString())
+            "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
+            currencyFormat(outDate.chargePaidBySchemes.toString())
           ),
           RowViewModel(
             "calculationReviewIndividualAA.annualResults.reducedNetIncome",
@@ -275,6 +257,30 @@ object CalculationResultsMapper {
           RowViewModel(
             "calculationReviewIndividualAA.annualResults.adjustedIncome",
             currencyFormat(adjustedIncomeMessage(outDate.period, taxYear))
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
+            currencyFormat(outDate.unusedAnnualAllowance.toString())
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
+            currencyFormat(outDate.revisedChargableAmountBeforeTaxRate.toString())
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
+            currencyFormat(outDate.revisedChargableAmountAfterTaxRate.toString())
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.outDates.amountYouOwe",
+            currencyFormat("0")
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
+            currencyFormat(outDate.directCompensation.toString())
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
+            currencyFormat(outDate.indirectCompensation.toString())
           )
         )
       }
@@ -303,12 +309,32 @@ object CalculationResultsMapper {
         val taxYear: IncomeSubJourney = taxYearIncomeSubJourney(taxYears, inDate.period)
         Seq(
           RowViewModel(
+            "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember",
+            currencyFormat(inDate.chargePaidByMember.toString())
+          ),
+          RowViewModel(
             "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes",
             currencyFormat(inDate.chargePaidBySchemes.toString())
           ),
           RowViewModel(
-            "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember",
-            currencyFormat(inDate.chargePaidByMember.toString())
+            "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+            currencyFormat(taxYear.reducedNetIncomeAmount.getOrElse(0).toString)
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.personalAllowance",
+            currencyFormat(taxYear.personalAllowanceAmount.getOrElse(0).toString)
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.thresholdIncome",
+            currencyFormat(thresholdIncomeMessage(inDate.period, taxYear))
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.adjustedIncome",
+            currencyFormat(adjustedIncomeMessage(inDate.period, taxYear))
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
+            currencyFormat(inDate.unusedAnnualAllowance.toString())
           ),
           RowViewModel(
             "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
@@ -329,26 +355,6 @@ object CalculationResultsMapper {
           RowViewModel(
             "calculationReviewIndividualAA.annualResults.inDates.schemeCredit",
             currencyFormat(inDate.schemeCredit.toString())
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
-            currencyFormat(inDate.unusedAnnualAllowance.toString())
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-            currencyFormat(taxYear.reducedNetIncomeAmount.getOrElse(0).toString)
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.personalAllowance",
-            currencyFormat(taxYear.personalAllowanceAmount.getOrElse(0).toString)
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.thresholdIncome",
-            currencyFormat(thresholdIncomeMessage(inDate.period, taxYear))
-          ),
-          RowViewModel(
-            "calculationReviewIndividualAA.annualResults.adjustedIncome",
-            currencyFormat(adjustedIncomeMessage(inDate.period, taxYear))
           )
         )
       }
@@ -373,13 +379,13 @@ object CalculationResultsMapper {
     incomeSubJourney: IncomeSubJourney
   ): String =
     period match {
-      case Period._2016 => "notApplicable"
+      case Period._2016 => "site.notApplicable"
       case _            => incomeSubJourney.thresholdIncomeAmount.map(_.toString).getOrElse("notApplicable")
     }
 
   private def adjustedIncomeMessage(period: Period, incomeSubJourney: IncomeSubJourney): String =
     period match {
-      case Period._2016 => "notApplicable"
+      case Period._2016 => "site.notApplicable"
       case _            => incomeSubJourney.adjustedIncomeAmount.map(_.toString).getOrElse("notApplicable")
     }
 

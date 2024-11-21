@@ -50,7 +50,7 @@ hasInDates: Boolean
 
     <p class="govuk-body">@messages("printReview.message1")</p>
 
-    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-top" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
+    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-top" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>.
         </p>
     <script @{CSPNonce.attr}>document.getElementById("print-result-top").addEventListener("click", () => window.print());</script>
 
@@ -83,7 +83,7 @@ hasInDates: Boolean
 
     <p class="govuk-body">@messages("printReview.message6")</p>
 
-    <p class="govuk-body">@messages("printReview.message6.1") <a class="govuk-link" href="https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge" rel="noreferrer noopener" target="_blank"> @messages("printReview.schemepays.link")</a> @messages("printReview.message6.2") <span class="govuk-visually-hidden">(opens in new tab)</span> </p>
+    <p class="govuk-body">@messages("printReview.message6.1") <a class="govuk-link" href="https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge" rel="noreferrer noopener" target="_blank"> @messages("printReview.schemepays.link")</a>. @messages("printReview.message6.2") <span class="govuk-visually-hidden">(opens in new tab)</span> </p>
 
     <p class="govuk-body">@messages("printReview.message6.3")</p>
 
@@ -142,7 +142,14 @@ hasInDates: Boolean
 
     <p class="govuk-body">@messages("calculationReviewIndividualAA.message4", outDateStringValues._1.revisedChargeableAmountAfterTaxRate)</p>
 
-    <p class="govuk-body">@messages(outDateStringValues._1.changeInTaxChargeString + "message2", outDateStringValues._1.changeInTaxCharge)</p>
+    @if(outDateStringValues._1.changeInTaxCharge > 0) {
+        <p class="govuk-body">@messages(outDateStringValues._1.changeInTaxChargeString + "message2", outDateStringValues._1.changeInTaxCharge)</p>
+    }
+
+    @if(outDateStringValues._1.changeInTaxCharge == 0){
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.annualResults.outDates.writtenOff", outDateStringValues._1.writtenOffAmount.get)</p>
+    }
+
 
     @if(outDateStringValues._1.changeInTaxChargeNonAbs > 0){
         <p class="govuk-body">@messages("calculationReviewIndividualAA.message6")</p>
@@ -229,14 +236,6 @@ hasInDates: Boolean
 
     <p class="govuk-body">@messages(inDatesStringValues._1.changeInTaxChargeString + "message2", inDatesStringValues._1.changeInTaxCharge)</p>
 
-    @if(inDatesStringValues._1.changeInTaxChargeNonAbs > 0){
-        <p class="govuk-body">@messages("calculationReviewIndividualAA.message6")</p>
-
-        <ul class="govuk-body">
-            <li>@messages("calculationReviewIndividualAA.bullet.1")</li>
-            <li>@messages("calculationReviewIndividualAA.bullet.2")</li>
-        </ul>
-    }
 
     <!-- results table -->
 
@@ -273,7 +272,7 @@ hasInDates: Boolean
 
     <h2 class="govuk-heading-m">@messages("printReview.heading.print")</h2>
 
-    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-bottom" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
+    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-bottom" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>.
         </p>
     <script @{CSPNonce.attr}>document.getElementById("print-result-bottom").addEventListener("click", () => window.print());</script>
 

@@ -27,5 +27,6 @@ final case class IndividualAASummaryModel(
   chargePaidByMember: Int,
   chargePaidBySchemes: Int,
   revisedChargeableAmountAfterTaxRate: Int,
-  totalChargePaid: Int
+  totalChargePaid: Int,
+  writtenOffAmount: Option[Int]
 )
