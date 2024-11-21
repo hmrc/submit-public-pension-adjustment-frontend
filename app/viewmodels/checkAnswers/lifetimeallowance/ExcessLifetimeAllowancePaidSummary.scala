@@ -29,7 +29,7 @@ object ExcessLifetimeAllowancePaidSummary {
 
   def row(submission: Submission)(implicit messages: Messages): Option[SummaryListRow] =
     submission.calculationInputs.lifeTimeAllowance.flatMap { lta =>
-      lta.newLifeTimeAllowanceAdditions.newExcessLifetimeAllowancePaid.map { excessLifetimeAllowancePaid =>
+      lta.previousLifetimeAllowanceChargePaymentMethod.map { excessLifetimeAllowancePaid =>
         val value = ValueViewModel(
           HtmlContent(HtmlFormat.escape(messages(s"excessLifetimeAllowancePaid.$excessLifetimeAllowancePaid")))
         )

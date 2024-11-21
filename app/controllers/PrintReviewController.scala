@@ -17,11 +17,11 @@
 package controllers
 
 import controllers.actions._
+import mappers.CalculationResultsMapper
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.CalculationResultService
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -39,8 +39,7 @@ class PrintReviewController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: PrintReviewView,
-  calculationResultService: CalculationResultService
+  view: PrintReviewView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -85,18 +84,18 @@ class PrintReviewController @Inject() (
 
     val isLTAComplete = calculationInputs.lifeTimeAllowance.isDefined
 
-    val outDatesStringValues = calculationResultService.outDatesSummary(calculation)
-    val inDatesStringValues  = calculationResultService.inDatesSummary(calculation)
+    val outDatesStringValues = CalculationResultsMapper.outDatesSummary(calculation)
+    val inDatesStringValues  = CalculationResultsMapper.inDatesSummary(calculation)
     val hasinDates: Boolean  = calculation.inDates.isDefinedAt(0)
 
     val isInCredit: Boolean              = calculation.totalAmounts.inDatesCredit > 0
     val isInDebit: Boolean               = calculation.totalAmounts.inDatesDebit > 0
     val includeCompensation2015: Boolean = calculation.totalAmounts.outDatesCompensation > 0
 
-    val calculationReviewIndividualAAViewModel = calculationResultService
+    val calculationReviewIndividualAAViewModel = CalculationResultsMapper
       .calculationReviewIndividualAAViewModel(calculation, None, calculationInputs)
 
-    val calculationReviewViewModel = calculationResultService.calculationReviewViewModel(calculation)
+    val calculationReviewViewModel = CalculationResultsMapper.calculationReviewViewModel(calculation)
 
     Ok(
       view(

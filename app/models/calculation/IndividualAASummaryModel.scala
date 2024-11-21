@@ -18,7 +18,6 @@ package models.calculation
 
 import models.calculation.response.Period
 
-
 final case class IndividualAASummaryModel(
   period: Period,
   changeInTaxCharge: Int,
