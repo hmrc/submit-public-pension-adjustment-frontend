@@ -256,7 +256,7 @@ class LandingPageAuthActionSpec extends SpecBase {
 
     "controller should be accessed and return successfully" - {
 
-      "when name, saUtr and date of birth are retrieved" in {
+      "when name, saUtr and date of birth are retrieved and AffinityGroup is Individual" in {
 
         val mockAuthConnector = mock[AuthConnector]
 
@@ -268,6 +268,29 @@ class LandingPageAuthActionSpec extends SpecBase {
           new ~(
             new ~(
               new ~(new ~(Some("nino"), Some(AffinityGroup.Individual)), Some(User)),
+              name
+            ),
+            saUtr
+          ),
+          dateOfBirth
+        )
+        whenRetrievalsAre(mockAuthConnector, retrievals)
+
+        controllerShouldBeAccessed(mockAuthConnector)
+      }
+
+      "when name, saUtr and date of birth are retrieved and AffinityGroup is Organisation" in {
+
+        val mockAuthConnector = mock[AuthConnector]
+
+        val name        = Some(ItmpName(Some("firstN"), Some("middleN"), Some("last")))
+        val saUtr       = Some("saUtr")
+        val dateOfBirth = Some(LocalDate.now())
+
+        val retrievals = new ~(
+          new ~(
+            new ~(
+              new ~(new ~(Some("nino"), Some(AffinityGroup.Organisation)), Some(User)),
               name
             ),
             saUtr

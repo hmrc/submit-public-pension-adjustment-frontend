@@ -59,13 +59,16 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
 
     val requiredConfidenceLevel = ConfidenceLevel.fromInt(config.requiredAuthConfidenceLevel.toInt).get
 
-    authorised(AffinityGroup.Individual and requiredConfidenceLevel).retrieve(retrievals) {
-      case Some(nino) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
-        block(IdentifierRequest(request, nino, name, saUtr, dob))
-      case _                                                                                   =>
-        logger.warn(s"Incomplete retrievals")
-        Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
-    } recover {
+    authorised((AffinityGroup.Individual or AffinityGroup.Organisation) and requiredConfidenceLevel)
+      .retrieve(retrievals) {
+        case Some(nino) ~ Some(AffinityGroup.Individual) ~ Some(User) ~ Some(name) ~ saUtr ~ dob   =>
+          block(IdentifierRequest(request, nino, name, saUtr, dob))
+        case Some(nino) ~ Some(AffinityGroup.Organisation) ~ Some(User) ~ Some(name) ~ saUtr ~ dob =>
+          block(IdentifierRequest(request, nino, name, saUtr, dob))
+        case _                                                                                     =>
+          logger.warn(s"Incomplete retrievals")
+          Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
+      } recover {
       case _: NoActiveSession             =>
         noActiveSession(request)
       case _: InsufficientConfidenceLevel =>
@@ -109,7 +112,7 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
     Redirect(
       upliftUrl,
       Map(
-        "origin"          -> Seq(config.upliftOrigin),
+        "origin"          -> Seq(config.origin),
         "confidenceLevel" -> Seq(config.requiredAuthConfidenceLevel),
         "completionURL"   -> Seq(upliftCompletionUrl),
         "failureURL"      -> Seq(upliftFailureUrl)
