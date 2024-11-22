@@ -1,0 +1,86 @@
+{
+  "resubmission": {
+    "isResubmission": true,
+    "reason": "Change in amounts"
+  },
+  "totalAmounts": {
+    "outDatesCompensation": 8400,
+    "inDatesDebit": 0,
+    "inDatesCredit": 0
+  },
+  "outDates": [
+    {
+      "period": "2016",
+      "directCompensation": 0,
+      "indirectCompensation": 0,
+      "chargePaidByMember": 0,
+      "chargePaidBySchemes": 0,
+      "revisedChargableAmountBeforeTaxRate": 0,
+      "revisedChargableAmountAfterTaxRate": 0,
+      "unusedAnnualAllowance": 60000,
+      "taxYearSchemes": [
+        {
+          "name": "Scheme 1",
+          "pensionSchemeTaxReference": "pstrTest1",
+          "compensation": 0
+        }
+      ],
+      "adjustedCompensation": 0
+    },
+    {
+      "period": "2017",
+      "directCompensation": 1200,
+      "indirectCompensation": 0,
+      "chargePaidByMember": 1200,
+      "chargePaidBySchemes": 0,
+      "revisedChargableAmountBeforeTaxRate": 0,
+      "revisedChargableAmountAfterTaxRate": 0,
+      "unusedAnnualAllowance": 0,
+      "taxYearSchemes": [
+        {
+          "name": "Scheme 1",
+          "pensionSchemeTaxReference": "pstrTest1",
+          "compensation": 0
+        }
+      ],
+      "adjustedCompensation": 0
+    },
+    {
+      "period": "2018",
+      "directCompensation": 0,
+      "indirectCompensation": 0,
+      "chargePaidByMember": 0,
+      "chargePaidBySchemes": 0,
+      "revisedChargableAmountBeforeTaxRate": 0,
+      "revisedChargableAmountAfterTaxRate": 0,
+      "unusedAnnualAllowance": 10000,
+      "taxYearSchemes": [
+        {
+          "name": "Scheme 1",
+          "pensionSchemeTaxReference": "pstrTest1",
+          "compensation": 0
+        }
+      ],
+      "adjustedCompensation": 0
+    },
+    {
+      "period": "2019",
+      "directCompensation": 0,
+      "indirectCompensation": 0,
+      "chargePaidByMember": 0,
+      "chargePaidBySchemes": 0,
+      "revisedChargableAmountBeforeTaxRate": 0,
+      "revisedChargableAmountAfterTaxRate": 0,
+      "unusedAnnualAllowance": 30000,
+      "taxYearSchemes": [
+        {
+          "name": "Scheme 1",
+          "pensionSchemeTaxReference": "pstrTest1",
+          "compensation": 0
+        }
+      ],
+      "adjustedCompensation": 0
+    }
+  ],
+  "inDates": []
+}

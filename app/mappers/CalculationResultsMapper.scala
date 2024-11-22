@@ -380,13 +380,13 @@ object CalculationResultsMapper {
   ): String =
     period match {
       case Period._2016 => "site.notApplicable"
-      case _            => incomeSubJourney.thresholdIncomeAmount.map(_.toString).getOrElse("notApplicable")
+      case _            => incomeSubJourney.thresholdIncomeAmount.map(_.toString).getOrElse("site.notApplicable")
     }
 
   private def adjustedIncomeMessage(period: Period, incomeSubJourney: IncomeSubJourney): String =
     period match {
       case Period._2016 => "site.notApplicable"
-      case _            => incomeSubJourney.adjustedIncomeAmount.map(_.toString).getOrElse("notApplicable")
+      case _            => incomeSubJourney.adjustedIncomeAmount.map(_.toString).getOrElse("site.notApplicable")
     }
 
 }
