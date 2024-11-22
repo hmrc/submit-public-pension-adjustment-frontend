@@ -48,16 +48,6 @@ hasInDates: Boolean
 
     <h1 class="govuk-heading-xl">@messages("printReview.heading")</h1>
 
-    <p class="govuk-body">@messages("printReview.message1")</p>
-
-    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-top" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>.
-        </p>
-    <script @{CSPNonce.attr}>document.getElementById("print-result-top").addEventListener("click", () => window.print());</script>
-
-    @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
-    <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
-    }
-
     <h2 class="govuk-heading-m">@messages("printReview.heading.calculationResults")</h2>
 
     <p class="govuk-body">@messages("calculationReview.message1")</p>
@@ -280,8 +270,9 @@ hasInDates: Boolean
     <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
     }
 
-    <p>< <a class="govuk-link" href= @redirectURL>
-            @messages("reviewLTAAnswers.returnToMainResult")
-        </a></p>
+    @govukButton(
+        ButtonViewModel(messages("site.continue"))
+        .asLink(redirectURL.toString)
+    )
 
 }

@@ -700,8 +700,8 @@ calculationReviewIndividualAA.heading2.2021 = Results explained for 6 April 2020
 calculationReviewIndividualAA.heading2.2022 = Results explained for 6 April 2021 to 5 April 2022
 calculationReviewIndividualAA.heading2.2023 = Results explained for 6 April 2022 to 5 April 2023
 
-printReview.title = Print calculation results
-printReview.heading = Print calculation results
+printReview.title = Overview of calculation results
+printReview.heading = Overview of calculation results
 printReview.heading.calculationResults = Calculation results
 printReview.heading.varyAA = How annual allowance tax charges vary each tax year
 printReview.heading.changeOutDates = Change in annual allowance tax charges from 6 April 2015 to 5 April 2019
