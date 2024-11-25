@@ -802,3 +802,7 @@ whoPayingExtraLtaCharge.checkYourAnswersLabel = Who is paying the extra lifetime
 whoPayingExtraLtaCharge.you = You
 whoPayingExtraLtaCharge.pensionScheme = Pension scheme
 ltaPensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the scheme that is paying the extra charge?
+
+submissionWaitingRoom.title = Submission in progress
+submissionWaitingRoom.heading = Submission in progress
+submissionWaitingRoom.message = Do not leave this page.

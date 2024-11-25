@@ -1,6 +1,17 @@
+@import "loading-spinner";
+
 .js-visible {
   display: none !important;
 }
 .js-enabled .js-visible {
   display: inline-block !important;
+}
+
+div:has(div.hods-loading-spinner) { .govuk-grid-column-two-thirds {width:100%;} }
+
+div:has(div.hods-loading-spinner) { .govuk-grid-column-two-thirds {width:100%;} }
+
+.hods-loading-spinner__content {
+    padding-top: 15px;
+    text-align: center;
 }

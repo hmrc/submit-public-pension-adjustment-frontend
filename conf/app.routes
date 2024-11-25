@@ -201,3 +201,5 @@ POST       /submission-service/:period/scheme-election-consent                  
 
 GET        /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /submission-in-progress                       controllers.SubmissionWaitingRoomController.onPageLoad()
