@@ -62,48 +62,8 @@ class DeclarationsController @Inject() (
     }
 
   def onSubmit(): Action[AnyContent] =
-    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      val authRetrievals = AuthRetrievals(
-        request.userId,
-        (request.name.givenName.getOrElse("") + " " + request.name.middleName.getOrElse(
-          ""
-        ) + " " + request.name.familyName.getOrElse("")).trim,
-        request.saUtr,
-        request.dob
-      )
-
-      request.userAnswers.get(UserSubmissionReference()) match {
-        case Some(_) =>
-          val submissionUniqueId = request.submission.uniqueId
-          logger.warn(s"Prevented attempted duplicate submission related to submissionUniqueId : $submissionUniqueId")
-          Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
-        case None    => sendFinalSubmission(request, authRetrievals)
-      }
+    (identify andThen getData andThen requireCalculationData andThen requireData) {
+      Redirect(controllers.routes.SubmissionWaitingRoomController.onPageLoad())
     }
-
-  private def sendFinalSubmission(request: DataRequest[AnyContent], authRetrievals: AuthRetrievals)(implicit
-    headerCarrier: HeaderCarrier
-  ) =
-    submissionService
-      .sendFinalSubmission(
-        authRetrievals,
-        request.submission.calculationInputs,
-        request.submission.calculation,
-        request.userAnswers
-      )
-      .map { finalSubmissionResponse =>
-        persistSubmissionReference(request, finalSubmissionResponse)
-        Redirect(controllers.routes.SubmissionController.onPageLoad())
-      }
-
-  private def persistSubmissionReference(
-    request: DataRequest[AnyContent],
-    finalSubmissionResponse: FinalSubmissionResponse
-  ) = {
-    val hc                              = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    val userSubmissionReference: String = finalSubmissionResponse.userSubmissionReference
-    val updatedAnswers                  = request.userAnswers.set(UserSubmissionReference(), userSubmissionReference)
-    userDataService.set(updatedAnswers.get)(hc)
-  }
 
 }

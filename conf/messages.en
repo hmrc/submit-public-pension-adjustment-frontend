@@ -567,3 +567,6 @@ schemeElectionConsent.message6 = This means you don’t need to tell your pensio
 schemeElectionConsent.message7 = If you are liable for an annual allowance tax charge outside of the remedy period, you must:
 schemeElectionConsent.bullet1 = notify your scheme that you would like to pay the charge through scheme pays
 schemeElectionConsent.bullet2 = report it through self assessment
+
+submissionWaitingRoom.title = submissionWaitingRoom
+submissionWaitingRoom.heading = submissionWaitingRoom
