@@ -676,7 +676,6 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
         summaryModel.size mustBe 4
 
         val year2021 = summaryModel(1)
-        println(year2021)
 
         year2021.period mustBe Period._2021
         year2021.changeInTaxCharge mustBe 0
@@ -704,13 +703,6 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
         rows(index).changeString mustBe expectedString
         rows(index).link mustBe expectedLink
         rows(index).totalCharge mustBe expectedTotalCharge
-      }
-
-      def checkRowNameReviewRowLTA(row: ReviewRowViewModel, expectedTitle: String, expectedLink: String): Unit = {
-        row.title mustBe expectedTitle
-        row.changeString mustBe None
-        row.link mustBe expectedLink
-        row.totalCharge mustBe None
       }
 
       val index = 0
