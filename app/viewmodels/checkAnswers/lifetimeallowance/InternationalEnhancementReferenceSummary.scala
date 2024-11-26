@@ -28,7 +28,7 @@ object InternationalEnhancementReferenceSummary {
 
   def row(submission: Submission)(implicit messages: Messages): Option[SummaryListRow] =
     submission.calculationInputs.lifeTimeAllowance.flatMap { lta =>
-      lta.newLifeTimeAllowanceAdditions.newInternationalEnhancementReference.map { internationalEnhancementReference =>
+      lta.newLifeTimeAllowanceAdditions.internationalEnhancementReference.map { internationalEnhancementReference =>
         SummaryListRowViewModel(
           key = KeyViewModel(s"internationalEnhancementReference.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlFormat.escape(internationalEnhancementReference).toString)

@@ -29,7 +29,7 @@ object LumpSumValueSummary {
 
   def row(submission: Submission)(implicit messages: Messages): Option[SummaryListRow] =
     submission.calculationInputs.lifeTimeAllowance.flatMap { lta =>
-      lta.newLifeTimeAllowanceAdditions.newLumpSumValue.map { lumpSumValue =>
+      lta.newLifeTimeAllowanceAdditions.lumpSumValue.map { lumpSumValue =>
         SummaryListRowViewModel(
           key = KeyViewModel(s"lumpSumValue.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent(currencyFormat(lumpSumValue)))

@@ -17,10 +17,9 @@
 package mappers
 
 import base.SpecBase
-import models.Period
 import models.calculation.inputs.CalculationInputs
-import models.calculation.response.CalculationResponse
-import models.calculation.{CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, RowViewModel}
+import models.calculation.response.{CalculationResponse, Period}
+import models.calculation.{CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, IndividualAASummaryModel, ReviewRowViewModel, RowViewModel}
 import org.mockito.MockitoSugar
 import pages.TestData
 import play.api.libs.json.{JsValue, Json}
@@ -29,7 +28,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.io.Source
 
-class CalculationResultsMapperSpec extends SpecBase with MockitoSugar{
+class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
 
   implicit lazy val headerCarrier: HeaderCarrier = HeaderCarrier()
 
@@ -75,7 +74,6 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar{
     rows(index).name mustBe expectedName
     rows(index).value mustNot be(null)
   }
-
 
   "CalculationResultsMapper" - {
     "resubmission details should be well formed" in {
@@ -348,8 +346,18 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar{
         val _2016Period = sections(0)
         val _2017Period = sections(1)
 
-        checkRowNameAndValue(_2016Period, 0, "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember", "£0")
-        checkRowNameAndValue(_2016Period, 1, "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes", "£0")
+        checkRowNameAndValue(
+          _2016Period,
+          0,
+          "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
+          "£0"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          1,
+          "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
+          "£0"
+        )
         checkRowNameAndValue(
           _2016Period,
           2,
@@ -411,8 +419,18 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar{
           "£0"
         )
 
-        checkRowNameAndValue(_2017Period, 0, "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember", "£1,200")
-        checkRowNameAndValue(_2017Period, 1, "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes", "£0")
+        checkRowNameAndValue(
+          _2017Period,
+          0,
+          "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
+          "£1,200"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          1,
+          "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
+          "£0"
+        )
         checkRowNameAndValue(
           _2017Period,
           2,
@@ -474,7 +492,6 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar{
           "£0"
         )
 
-
       }
 
       "in dates Review AA should be well formed and should return all period when NOT given period" in {
@@ -495,7 +512,6 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar{
         val _2020 = sections(0)
         val _2021 = sections(1)
 
-        println(_2021)
         checkRowNameAndValue(_2020, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "£0")
         checkRowNameAndValue(_2020, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "£0")
         checkRowNameAndValue(
@@ -624,9 +640,170 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar{
 
       }
 
-
     }
 
+    "IndividualAASummaryModel" - {
+      "An out dates year should be well formed" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val summaryModel: Seq[IndividualAASummaryModel] =
+          CalculationResultsMapper.outDatesSummary(
+            calculationResult
+          )
+
+        summaryModel.size mustBe 4
+
+        val year2016 = summaryModel(0)
+
+        year2016.period mustBe Period._2016
+        year2016.changeInTaxCharge mustBe 0
+        year2016.changeInTaxChargeNonAbs mustBe 0
+        year2016.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+        year2016.revisedChargeableAmountBeforeTaxRate mustBe 0
+        year2016.chargePaidByMember mustBe 0
+        year2016.chargePaidBySchemes mustBe 0
+        year2016.revisedChargeableAmountAfterTaxRate mustBe 0
+      }
+
+      "An in date year should be well formed" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val summaryModel: Seq[IndividualAASummaryModel] =
+          CalculationResultsMapper.inDatesSummary(
+            calculationResult
+          )
+
+        summaryModel.size mustBe 4
+
+        val year2021 = summaryModel(1)
+        println(year2021)
+
+        year2021.period mustBe Period._2021
+        year2021.changeInTaxCharge mustBe 0
+        year2021.changeInTaxChargeNonAbs mustBe 0
+        year2021.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+        year2021.revisedChargeableAmountBeforeTaxRate mustBe 0
+        year2021.chargePaidByMember mustBe 0
+        year2021.chargePaidBySchemes mustBe 0
+        year2021.revisedChargeableAmountAfterTaxRate mustBe 0
+
+      }
+    }
+
+    "Calculation review" - {
+
+      def checkRowNameAndValueReviewRow(
+        rows: Seq[ReviewRowViewModel],
+        index: Int,
+        expectedTitle: String,
+        expectedString: Option[String],
+        expectedLink: String,
+        expectedTotalCharge: Option[Int]
+      ): Unit = {
+        rows(index).title mustBe expectedTitle
+        rows(index).changeString mustBe expectedString
+        rows(index).link mustBe expectedLink
+        rows(index).totalCharge mustBe expectedTotalCharge
+      }
+
+      def checkRowNameReviewRowLTA(row: ReviewRowViewModel, expectedTitle: String, expectedLink: String): Unit = {
+        row.title mustBe expectedTitle
+        row.changeString mustBe None
+        row.link mustBe expectedLink
+        row.totalCharge mustBe None
+      }
+
+      val index = 0
+
+      "out dates must be well formed" in {
+
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: CalculationReviewViewModel =
+          CalculationResultsMapper.calculationReviewViewModel(calculationResult)
+
+        val sections: Seq[Seq[ReviewRowViewModel]] = viewModel.outDates
+        sections.size mustBe 4
+
+        checkRowNameAndValueReviewRow(
+          sections(0),
+          index,
+          "calculationReview.period.2016",
+          Some("calculationReview.taxChargeNotChanged"),
+          "N/A",
+          Some(0)
+        )
+        checkRowNameAndValueReviewRow(
+          sections(1),
+          index,
+          "calculationReview.period.2017",
+          Some("calculationReview.taxChargeDecreasedBy"),
+          "N/A",
+          Some(1200)
+        )
+        checkRowNameAndValueReviewRow(
+          sections(2),
+          index,
+          "calculationReview.period.2018",
+          Some("calculationReview.taxChargeNotChanged"),
+          "N/A",
+          Some(0)
+        )
+        checkRowNameAndValueReviewRow(
+          sections(3),
+          index,
+          "calculationReview.period.2019",
+          Some("calculationReview.taxChargeNotChanged"),
+          "N/A",
+          Some(0)
+        )
+      }
+
+      "in dates must be well formed" in {
+
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: CalculationReviewViewModel =
+          CalculationResultsMapper.calculationReviewViewModel(calculationResult)
+
+        val sections: Seq[Seq[ReviewRowViewModel]] = viewModel.inDates
+        sections.size mustBe 4
+
+        checkRowNameAndValueReviewRow(
+          sections(0),
+          index,
+          "calculationReview.period.2020",
+          Some("calculationReview.taxChargeNotChanged"),
+          "N/A",
+          Some(0)
+        )
+        checkRowNameAndValueReviewRow(
+          sections(1),
+          index,
+          "calculationReview.period.2021",
+          Some("calculationReview.taxChargeNotChanged"),
+          "N/A",
+          Some(0)
+        )
+        checkRowNameAndValueReviewRow(
+          sections(2),
+          index,
+          "calculationReview.period.2022",
+          Some("calculationReview.taxChargeNotChanged"),
+          "N/A",
+          Some(0)
+        )
+        checkRowNameAndValueReviewRow(
+          sections(3),
+          index,
+          "calculationReview.period.2023",
+          Some("calculationReview.taxChargeNotChanged"),
+          "N/A",
+          Some(0)
+        )
+      }
+
+    }
 
   }
 

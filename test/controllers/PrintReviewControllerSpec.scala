@@ -147,8 +147,6 @@ class PrintReviewControllerSpec extends SpecBase {
 
   }
 
-
-
   def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
     val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
     val json: JsValue  = Json.parse(source)

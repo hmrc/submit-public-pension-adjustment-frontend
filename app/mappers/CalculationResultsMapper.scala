@@ -116,6 +116,12 @@ object CalculationResultsMapper {
         "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
       }
 
+      def writtenOffAmountFormatter(changeinTaxCharge: Int, writtenOffAmount: Option[Int]): Option[Int] =
+        changeinTaxCharge match {
+          case 0 => writtenOffAmount
+          case _ => None
+        }
+
       IndividualAASummaryModel(
         outDate.period,
         changeInTaxChargeAmount.abs,
@@ -126,7 +132,10 @@ object CalculationResultsMapper {
         outDate.chargePaidBySchemes,
         outDate.revisedChargableAmountAfterTaxRate,
         outDate.chargePaidByMember + outDate.chargePaidBySchemes,
-        Some(outDate.revisedChargableAmountAfterTaxRate - (outDate.chargePaidByMember + outDate.chargePaidBySchemes))
+        writtenOffAmountFormatter(
+          changeInTaxChargeAmount,
+          Some(outDate.revisedChargableAmountAfterTaxRate - (outDate.chargePaidByMember + outDate.chargePaidBySchemes))
+        )
       )
     }
 
@@ -144,7 +153,7 @@ object CalculationResultsMapper {
         ReviewRowViewModel(
           "calculationReview.period." + outDate.period.toString,
           Some(changeInAAOutDateTaxCharge(outDate)),
-          "controllers.routes.CalculationReviewIndividualAAController.onPageLoad(outDate.period).url",
+          "N/A",
           outDate.adjustedCompensation.map(Math.abs).orElse(Some(0))
         )
       )
@@ -165,7 +174,7 @@ object CalculationResultsMapper {
         ReviewRowViewModel(
           "calculationReview.period." + inDate.period.toString,
           Some(changeInAAInDateTaxCharge(inDate)),
-          "controllers.routes.CalculationReviewIndividualAAController.onPageLoad(inDate.period).url",
+          "N/A",
           inDate.totalCompensation.map(Math.abs).orElse(Some(0))
         )
       )
@@ -359,7 +368,6 @@ object CalculationResultsMapper {
         )
       }
   }
-
   private def inDatesReviewAAFiltered(
     period: Option[String],
     inDates: List[InDatesTaxYearsCalculation]
