@@ -35,9 +35,16 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
 
   "row" - {
     "when a radio button is selected, return the summary row" in {
-      val newLifeTimeAllowanceAdditions: NewLifeTimeAllowanceAdditions = TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions.copy(newEnhancementType = Some(NewEnhancementType.InternationalEnhancement))
-      val calculationInputs: CalculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)))
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+      val newLifeTimeAllowanceAdditions: NewLifeTimeAllowanceAdditions =
+        TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions
+          .copy(newEnhancementType = Some(NewEnhancementType.InternationalEnhancement))
+      val calculationInputs: CalculationInputs                         = TestData.calculationInputs.copy(lifeTimeAllowance =
+        Some(
+          TestData.calculationInputs.lifeTimeAllowance.get
+            .copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)
+        )
+      )
+      val submission: Submission                                       = Submission("id", "uniqueId", calculationInputs, None)
 
       WhatNewProtectionTypeEnhancementSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -49,7 +56,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
 
     "when answer unavailable, return empty" in {
       val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       WhatNewProtectionTypeEnhancementSummary.row(submission) shouldBe None
     }

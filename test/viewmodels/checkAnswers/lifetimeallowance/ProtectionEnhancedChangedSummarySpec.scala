@@ -34,9 +34,10 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when a radio button is selected, return the summary row" in {
-      val lifeTimeAllowance = TestData.calculationInputs.lifeTimeAllowance.get.copy(protectionTypeEnhancementChanged = Enhancement)
+      val lifeTimeAllowance =
+        TestData.calculationInputs.lifeTimeAllowance.get.copy(protectionTypeEnhancementChanged = Enhancement)
       val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       ProtectionEnhancedChangedSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -48,7 +49,7 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       ProtectionEnhancedChangedSummary.row(submission) shouldBe None
     }

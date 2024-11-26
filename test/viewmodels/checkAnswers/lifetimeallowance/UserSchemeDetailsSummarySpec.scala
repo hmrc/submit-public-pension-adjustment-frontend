@@ -36,10 +36,13 @@ class UserSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
     "when value is entered, return the summary row" in {
       val newLifeTimeAllowanceAdditions = TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions
         .copy(userSchemeDetails = Some(UserSchemeDetails("Some scheme", "Some Tax Ref")))
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(
-        TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)
-      ))
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val calculationInputs             = TestData.calculationInputs.copy(lifeTimeAllowance =
+        Some(
+          TestData.calculationInputs.lifeTimeAllowance.get
+            .copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)
+        )
+      )
+      val submission                    = Submission("id", "uniqueId", calculationInputs, None)
 
       UserSchemeDetailsSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -51,7 +54,7 @@ class UserSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       UserSchemeDetailsSummary.row(submission) shouldBe None
     }

@@ -34,9 +34,15 @@ class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matcher
 
   "row" - {
     "when Annual payment is selected, return the summary row" in {
-      val newLifeTimeAllowanceAdditions = TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions.copy(newExcessLifetimeAllowancePaid = Some(NewExcessLifetimeAllowancePaid.Annualpayment))
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)))
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val newLifeTimeAllowanceAdditions = TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions
+        .copy(newExcessLifetimeAllowancePaid = Some(NewExcessLifetimeAllowancePaid.Annualpayment))
+      val calculationInputs             = TestData.calculationInputs.copy(lifeTimeAllowance =
+        Some(
+          TestData.calculationInputs.lifeTimeAllowance.get
+            .copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)
+        )
+      )
+      val submission                    = Submission("id", "uniqueId", calculationInputs, None)
 
       NewExcessLifetimeAllowancePaidSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -48,7 +54,7 @@ class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matcher
 
     "when answer unavailable, return empty" in {
       val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       NewExcessLifetimeAllowancePaidSummary.row(submission) shouldBe None
     }

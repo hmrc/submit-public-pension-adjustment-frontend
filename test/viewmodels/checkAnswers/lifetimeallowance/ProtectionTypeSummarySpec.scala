@@ -39,7 +39,7 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
         TestData.calculationInputs.lifeTimeAllowance.get.copy(protectionType = Some(EnhancedProtection))
       val calculationInputs: CalculationInputs =
         TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission: Submission               = Submission("id", "uniqueId", calculationInputs, None)
 
       ProtectionTypeSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -50,7 +50,7 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       ProtectionTypeSummary.row(submission) shouldBe None
     }

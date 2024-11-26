@@ -34,9 +34,11 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when Pension Scheme is selected, return the summary row" in {
-      val lifeTimeAllowance = TestData.calculationInputs.lifeTimeAllowance.get.copy(previousLifetimeAllowanceChargePaidBy = Some(WhoPaidLTACharge.PensionScheme))
-      val calculationInputs: CalculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+      val lifeTimeAllowance                    = TestData.calculationInputs.lifeTimeAllowance.get
+        .copy(previousLifetimeAllowanceChargePaidBy = Some(WhoPaidLTACharge.PensionScheme))
+      val calculationInputs: CalculationInputs =
+        TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
+      val submission: Submission               = Submission("id", "uniqueId", calculationInputs, None)
 
       WhoPaidLTAChargeSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -47,7 +49,7 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       WhoPaidLTAChargeSummary.row(submission) shouldBe None
     }

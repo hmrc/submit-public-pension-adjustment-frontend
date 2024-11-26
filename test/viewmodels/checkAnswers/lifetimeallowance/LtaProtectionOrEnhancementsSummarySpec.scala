@@ -35,9 +35,11 @@ class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when value is entered, return the summary row" in {
-      val lifeTimeAllowance: LifeTimeAllowance = TestData.calculationInputs.lifeTimeAllowance.get.copy(lifetimeAllowanceProtectionOrEnhancements = Protection)
-      val calculationInputs: CalculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+      val lifeTimeAllowance: LifeTimeAllowance =
+        TestData.calculationInputs.lifeTimeAllowance.get.copy(lifetimeAllowanceProtectionOrEnhancements = Protection)
+      val calculationInputs: CalculationInputs =
+        TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
+      val submission: Submission               = Submission("id", "uniqueId", calculationInputs, None)
 
       LtaProtectionOrEnhancementsSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -48,7 +50,7 @@ class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       LtaProtectionOrEnhancementsSummary.row(submission) shouldBe None
     }

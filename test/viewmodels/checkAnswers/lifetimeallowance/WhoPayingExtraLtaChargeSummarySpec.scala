@@ -35,9 +35,11 @@ class WhoPayingExtraLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when a radio button is selected, return the summary row" in {
-      val lifeTimeAllowance = TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifetimeAllowanceChargeWillBePaidBy = Some(PensionScheme))
-      val calculationInputs: CalculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+      val lifeTimeAllowance                    = TestData.calculationInputs.lifeTimeAllowance.get
+        .copy(newLifetimeAllowanceChargeWillBePaidBy = Some(PensionScheme))
+      val calculationInputs: CalculationInputs =
+        TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
+      val submission: Submission               = Submission("id", "uniqueId", calculationInputs, None)
 
       WhoPayingExtraLtaChargeSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -48,7 +50,7 @@ class WhoPayingExtraLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       WhoPayingExtraLtaChargeSummary.row(submission) shouldBe None
     }

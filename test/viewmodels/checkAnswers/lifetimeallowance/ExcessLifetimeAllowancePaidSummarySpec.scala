@@ -34,10 +34,10 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when Annual payment is selected, return the summary row" in {
-      val lifeTimeAllowance = TestData.calculationInputs.lifeTimeAllowance.get.copy(
+      val lifeTimeAllowance      = TestData.calculationInputs.lifeTimeAllowance.get.copy(
         previousLifetimeAllowanceChargePaymentMethod = Some(ExcessLifetimeAllowancePaid.Annualpayment)
       )
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
 
       ExcessLifetimeAllowancePaidSummary.row(submission) shouldBe Some(
@@ -49,10 +49,10 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when Lump sum is selected, return the summary row" in {
-      val lifeTimeAllowance = TestData.calculationInputs.lifeTimeAllowance.get.copy(
+      val lifeTimeAllowance      = TestData.calculationInputs.lifeTimeAllowance.get.copy(
         previousLifetimeAllowanceChargePaymentMethod = Some(ExcessLifetimeAllowancePaid.Lumpsum)
       )
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
 
       ExcessLifetimeAllowancePaidSummary.row(submission) shouldBe Some(
@@ -64,7 +64,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       ExcessLifetimeAllowancePaidSummary.row(submission) shouldBe None
     }

@@ -38,7 +38,7 @@ class SchemeNameAndTaxRefSummarySpec extends AnyFreeSpec with Matchers {
         previousLifetimeAllowanceChargeSchemeNameAndTaxRef = Some(SchemeNameAndTaxRef("Some scheme", "Some Tax Ref"))
       )
       val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       SchemeNameAndTaxRefSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -50,7 +50,7 @@ class SchemeNameAndTaxRefSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       SchemeNameAndTaxRefSummary.row(submission) shouldBe None
     }

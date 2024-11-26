@@ -35,10 +35,13 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
     "when value is entered, return the summary row" in {
       val newLifeTimeAllowanceAdditions = TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions
         .copy(newEnhancementType = Some(NewEnhancementType.InternationalEnhancement))
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(
-        TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)
-      ))
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val calculationInputs             = TestData.calculationInputs.copy(lifeTimeAllowance =
+        Some(
+          TestData.calculationInputs.lifeTimeAllowance.get
+            .copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)
+        )
+      )
+      val submission                    = Submission("id", "uniqueId", calculationInputs, None)
 
       ReferenceNewProtectionTypeEnhancementSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -50,7 +53,7 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
 
     "when answer unavailable, return empty" in {
       val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
-      val submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       ReferenceNewProtectionTypeEnhancementSummary.row(submission) shouldBe None
     }

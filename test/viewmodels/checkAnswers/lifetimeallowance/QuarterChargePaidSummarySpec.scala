@@ -35,10 +35,16 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
   "row" - {
     "when Apr to Jul is selected, return the summary row" in {
       val newLifeTimeAllowanceAdditions: NewLifeTimeAllowanceAdditions =
-        TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions.copy(quarterChargePaid = Some(QuarterChargePaid.AprToJul))
-      val calculationInputs: CalculationInputs =
-        TestData.calculationInputs.copy(lifeTimeAllowance = Some(TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)))
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+        TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions
+          .copy(quarterChargePaid = Some(QuarterChargePaid.AprToJul))
+      val calculationInputs: CalculationInputs                         =
+        TestData.calculationInputs.copy(lifeTimeAllowance =
+          Some(
+            TestData.calculationInputs.lifeTimeAllowance.get
+              .copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)
+          )
+        )
+      val submission: Submission                                       = Submission("id", "uniqueId", calculationInputs, None)
 
       QuarterChargePaidSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -49,7 +55,7 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       QuarterChargePaidSummary.row(submission) shouldBe None
     }

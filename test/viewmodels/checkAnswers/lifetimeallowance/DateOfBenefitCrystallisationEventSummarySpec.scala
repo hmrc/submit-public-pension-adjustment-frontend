@@ -32,14 +32,14 @@ import scala.xml.Text
 class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
-  val validAnswer: LocalDate = LocalDate.of(2015, 4, 6)
+  val validAnswer: LocalDate              = LocalDate.of(2015, 4, 6)
 
   "row" - {
     "when value is entered, return the summary row" in {
-      val lifeTimeAllowance = TestData.calculationInputs.lifeTimeAllowance.get.copy(
+      val lifeTimeAllowance      = TestData.calculationInputs.lifeTimeAllowance.get.copy(
         benefitCrystallisationEventDate = validAnswer
       )
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
 
       DateOfBenefitCrystallisationEventSummary.row(submission) shouldBe Some(
@@ -51,7 +51,7 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       DateOfBenefitCrystallisationEventSummary.row(submission) shouldBe None
     }

@@ -34,10 +34,16 @@ class PensionCreditReferenceSummarySpec extends AnyFreeSpec with Matchers {
   "row" - {
     "when value is entered, return the summary row" in {
       val newLifeTimeAllowanceAdditions: NewLifeTimeAllowanceAdditions =
-        TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions.copy(pensionCreditReference = Some("test123"))
-      val calculationInputs: CalculationInputs =
-        TestData.calculationInputs.copy(lifeTimeAllowance = Some(TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)))
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+        TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions
+          .copy(pensionCreditReference = Some("test123"))
+      val calculationInputs: CalculationInputs                         =
+        TestData.calculationInputs.copy(lifeTimeAllowance =
+          Some(
+            TestData.calculationInputs.lifeTimeAllowance.get
+              .copy(newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions)
+          )
+        )
+      val submission: Submission                                       = Submission("id", "uniqueId", calculationInputs, None)
 
       PensionCreditReferenceSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -48,7 +54,7 @@ class PensionCreditReferenceSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       PensionCreditReferenceSummary.row(submission) shouldBe None
     }

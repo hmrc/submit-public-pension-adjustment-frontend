@@ -34,15 +34,18 @@ class EnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when a radio button is selected, return the summary row" in {
-      val newLifeTimeAllowanceAdditions = TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions.copy(
-        enhancementType = Some(PensionCredit)
+      val newLifeTimeAllowanceAdditions =
+        TestData.calculationInputs.lifeTimeAllowance.get.newLifeTimeAllowanceAdditions.copy(
+          enhancementType = Some(PensionCredit)
+        )
+      val calculationInputs             = TestData.calculationInputs.copy(
+        lifeTimeAllowance = Some(
+          TestData.calculationInputs.lifeTimeAllowance.get.copy(
+            newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions
+          )
+        )
       )
-      val calculationInputs = TestData.calculationInputs.copy(
-        lifeTimeAllowance = Some(TestData.calculationInputs.lifeTimeAllowance.get.copy(
-          newLifeTimeAllowanceAdditions = newLifeTimeAllowanceAdditions
-        ))
-      )
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+      val submission: Submission        = Submission("id", "uniqueId", calculationInputs, None)
 
       EnhancementTypeSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -53,7 +56,7 @@ class EnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       EnhancementTypeSummary.row(submission) shouldBe None
     }

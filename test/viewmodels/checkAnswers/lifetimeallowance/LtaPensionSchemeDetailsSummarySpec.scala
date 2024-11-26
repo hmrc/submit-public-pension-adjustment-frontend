@@ -34,9 +34,13 @@ class LtaPensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when value is entered, return the summary row" in {
-      val lifeTimeAllowance: LifeTimeAllowance = TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifetimeAllowanceChargeSchemeNameAndTaxRef = Some(LtaPensionSchemeDetails("Some scheme", "Some Tax Ref")))
-      val calculationInputs: CalculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
-      val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
+      val lifeTimeAllowance: LifeTimeAllowance =
+        TestData.calculationInputs.lifeTimeAllowance.get.copy(newLifetimeAllowanceChargeSchemeNameAndTaxRef =
+          Some(LtaPensionSchemeDetails("Some scheme", "Some Tax Ref"))
+        )
+      val calculationInputs: CalculationInputs =
+        TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
+      val submission: Submission               = Submission("id", "uniqueId", calculationInputs, None)
 
       LtaPensionSchemeDetailsSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
@@ -47,7 +51,7 @@ class LtaPensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val calculationInputs = TestData.calculationInputs.copy(lifeTimeAllowance = None)
+      val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
       LtaPensionSchemeDetailsSummary.row(submission) shouldBe None
     }
