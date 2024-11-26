@@ -16,24 +16,21 @@
 
 package utils
 
-import utils.CurrencyFormatter.formatNumberString
+import base.SpecBase
+import utils.CurrencyFormatter.currencyFormat
 
-trait CurrencyFormatter {
-  def currencyFormat(amt: BigInt): String    = f"&pound;$amt"
-  def currencyFormat(amt: Int): String       = f"&pound;$amt"
-  def currencyFormat(string: String): String = formatNumberString(string)
+class CurrencyFormatterSpec extends SpecBase {
 
-}
+  "must format string with exclusively digits correctly" in {
+    currencyFormat("123") mustBe "£123"
+    currencyFormat("123456") mustBe "£123,456"
+    currencyFormat("1234567") mustBe "£1,234,567"
+    currencyFormat("12345678") mustBe "£12,345,678"
+    currencyFormat("123456789") mustBe "£123,456,789"
+  }
 
-object CurrencyFormatter extends CurrencyFormatter {
-  def formatNumberString(input: String): String =
-    if (input.forall(_.isDigit)) {
-      val formattedString = input.reverse
-        .grouped(3)
-        .mkString(",")
-        .reverse
-      "£" + formattedString
-    } else {
-      input
-    }
+  "must not format any other strings" in {
+    currencyFormat("notApplicable") mustBe "notApplicable"
+    currencyFormat("1two3") mustBe "1two3"
+  }
 }

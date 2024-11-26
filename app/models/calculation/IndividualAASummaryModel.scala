@@ -14,26 +14,19 @@
  * limitations under the License.
  */
 
-package utils
+package models.calculation
 
-import utils.CurrencyFormatter.formatNumberString
+import models.calculation.response.Period
 
-trait CurrencyFormatter {
-  def currencyFormat(amt: BigInt): String    = f"&pound;$amt"
-  def currencyFormat(amt: Int): String       = f"&pound;$amt"
-  def currencyFormat(string: String): String = formatNumberString(string)
-
-}
-
-object CurrencyFormatter extends CurrencyFormatter {
-  def formatNumberString(input: String): String =
-    if (input.forall(_.isDigit)) {
-      val formattedString = input.reverse
-        .grouped(3)
-        .mkString(",")
-        .reverse
-      "£" + formattedString
-    } else {
-      input
-    }
-}
+final case class IndividualAASummaryModel(
+  period: Period,
+  changeInTaxCharge: Int,
+  changeInTaxChargeNonAbs: Int,
+  changeInTaxChargeString: String,
+  revisedChargeableAmountBeforeTaxRate: Int,
+  chargePaidByMember: Int,
+  chargePaidBySchemes: Int,
+  revisedChargeableAmountAfterTaxRate: Int,
+  totalChargePaid: Int,
+  writtenOffAmount: Option[Int]
+)

@@ -24,7 +24,8 @@
                     "pensionSchemeTaxReference": "pstrTest1",
                     "compensation": 0
                 }
-            ]
+            ],
+            "adjustedCompensation": 0
         },
         {
             "period": "2017",
@@ -41,7 +42,8 @@
                     "pensionSchemeTaxReference": "pstrTest1",
                     "compensation": 0
                 }
-            ]
+            ],
+            "adjustedCompensation": 1200
         },
         {
             "period": "2018",
@@ -58,7 +60,8 @@
                     "pensionSchemeTaxReference": "pstrTest1",
                     "compensation": 0
                 }
-            ]
+            ],
+            "adjustedCompensation": 0
         },
         {
             "period": "2019",
@@ -75,7 +78,8 @@
                     "pensionSchemeTaxReference": "pstrTest1",
                     "compensation": 0
                 }
-            ]
+            ],
+            "adjustedCompensation": 0
         }
     ],
     "inDates": [
@@ -95,7 +99,8 @@
                     "pensionSchemeTaxReference": "pstrTest1",
                     "chargePaidByScheme": 0
                 }
-            ]
+            ],
+            "totalCompensation" : 0
         },
         {
             "period": "2021",
@@ -113,7 +118,8 @@
                     "pensionSchemeTaxReference": "pstrTest1",
                     "chargePaidByScheme": 0
                 }
-            ]
+            ],
+            "totalCompensation" : 0
         },
         {
             "period": "2022",
@@ -131,7 +137,8 @@
                     "pensionSchemeTaxReference": "pstrTest1",
                     "chargePaidByScheme": 0
                 }
-            ]
+            ],
+            "totalCompensation" : 0
         },
         {
             "period": "2023",
@@ -149,7 +156,8 @@
                     "pensionSchemeTaxReference": "pstrTest1",
                     "chargePaidByScheme": 0
                 }
-            ]
+            ],
+            "totalCompensation" : 0
         }
     ]
 }

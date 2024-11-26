@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-package utils
+package models.calculation
 
-import utils.CurrencyFormatter.formatNumberString
+import models.calculation.response.Resubmission
 
-trait CurrencyFormatter {
-  def currencyFormat(amt: BigInt): String    = f"&pound;$amt"
-  def currencyFormat(amt: Int): String       = f"&pound;$amt"
-  def currencyFormat(string: String): String = formatNumberString(string)
+final case class CalculationReviewViewModel(
+  outDates: Seq[Seq[ReviewRowViewModel]],
+  inDates: Seq[Seq[ReviewRowViewModel]],
+  lifetimeAllowance: Seq[ReviewRowViewModel],
+  resubmission: Resubmission
+) {
+  def outDatesData: Seq[Seq[ReviewRowViewModel]] = outDates
 
-}
+  def inDatesData: Seq[Seq[ReviewRowViewModel]] = inDates
 
-object CurrencyFormatter extends CurrencyFormatter {
-  def formatNumberString(input: String): String =
-    if (input.forall(_.isDigit)) {
-      val formattedString = input.reverse
-        .grouped(3)
-        .mkString(",")
-        .reverse
-      "£" + formattedString
-    } else {
-      input
-    }
+  def lifetimeAllowanceData: Seq[ReviewRowViewModel] = lifetimeAllowance
+
+  def resubmissionData: Resubmission = resubmission
 }

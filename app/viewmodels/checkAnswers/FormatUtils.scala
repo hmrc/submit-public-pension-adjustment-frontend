@@ -14,26 +14,10 @@
  * limitations under the License.
  */
 
-package utils
+package viewmodels.checkAnswers
 
-import utils.CurrencyFormatter.formatNumberString
+object FormatUtils {
 
-trait CurrencyFormatter {
-  def currencyFormat(amt: BigInt): String    = f"&pound;$amt"
-  def currencyFormat(amt: Int): String       = f"&pound;$amt"
-  def currencyFormat(string: String): String = formatNumberString(string)
+  val keyCssClass = "govuk-!-width-two-thirds"
 
-}
-
-object CurrencyFormatter extends CurrencyFormatter {
-  def formatNumberString(input: String): String =
-    if (input.forall(_.isDigit)) {
-      val formattedString = input.reverse
-        .grouped(3)
-        .mkString(",")
-        .reverse
-      "£" + formattedString
-    } else {
-      input
-    }
 }
