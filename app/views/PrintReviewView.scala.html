@@ -107,8 +107,6 @@ hasInDates: Boolean
         </tbody>
     </table>
 
-    <p class="govuk-body">@messages("printReview.message9")</p>
-
 @outDatesStringValues.zipWithIndex.map { outDateStringValues =>
 
     <h3 class="govuk-heading-s">@messages("calculationReviewIndividualAA.heading2." + outDateStringValues._1.period.toString())</h3>
@@ -202,6 +200,8 @@ hasInDates: Boolean
         }
         </tbody>
     </table>
+
+    <p class="govuk-body">@messages("printReview.message9")</p>
 
     @inDatesStringValues.zipWithIndex.map { inDatesStringValues =>
     <h3 class="govuk-heading-s">@messages("calculationReviewIndividualAA.heading2." + inDatesStringValues._1.period.toString())</h3>
