@@ -568,5 +568,6 @@ schemeElectionConsent.message7 = If you are liable for an annual allowance tax c
 schemeElectionConsent.bullet1 = notify your scheme that you would like to pay the charge through scheme pays
 schemeElectionConsent.bullet2 = report it through self assessment
 
-submissionWaitingRoom.title = submissionWaitingRoom
-submissionWaitingRoom.heading = submissionWaitingRoom
+submissionWaitingRoom.title = Submission in progress
+submissionWaitingRoom.heading = Submission in progress
+submissionWaitingRoom.message = Do not leave this page.

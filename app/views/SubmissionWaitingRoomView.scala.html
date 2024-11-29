@@ -21,15 +21,18 @@
 
 @()(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("submissionWaitingRoom.title"))) {
+@layout(pageTitle = titleNoForm(messages("submissionWaitingRoom.title")), showSignOut=false, showBackLink = false, serviceBannerClickable = false) {
 
-    <h1 class="govuk-heading-xl">@messages("submissionWaitingRoom.heading")</h1>
+     <div class="loading-spinner">
+      <div
+              class="loading-spinner__spinner"
+              aria-live="polite"
+              role="status"
+      ></div>
+     </div>
 
-<div class="loading-spinner">
- <div
-         class="loading-spinner__spinner"
-         aria-live="polite"
-         role="status"
- ></div>
-</div>
+     <div class="hods-loading-spinner__content">
+        <h1 class="govuk-heading-m">@messages("submissionWaitingRoom.heading")</h1>
+        <p class="govuk-body">@messages("submissionWaitingRoom.message")</p>
+     </div>
 }

@@ -567,3 +567,7 @@ schemeElectionConsent.message6 = cy: This means you don’t need to tell your pe
 schemeElectionConsent.message7 = cy: If you are liable for an annual allowance tax charge outside of the remedy period, you must:
 schemeElectionConsent.bullet1 = cy: notify your scheme that you would like to pay the charge through scheme pays
 schemeElectionConsent.bullet2 = cy: report it through self assessment
+
+submissionWaitingRoom.title = Submission in progress
+submissionWaitingRoom.heading = Submission in progress
+submissionWaitingRoom.message = Do not leave this page.

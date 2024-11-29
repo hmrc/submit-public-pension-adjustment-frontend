@@ -33,7 +33,7 @@
     betaBanner: StandardBetaBanner
 )
 
-@(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, signOutUrl: String = controllers.auth.routes.AuthController.signOut.url)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+@(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, signOutUrl: String = controllers.auth.routes.AuthController.signOut.url, serviceBannerClickable: Boolean = true)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @head = {
 
@@ -91,7 +91,9 @@
     pageTitle   = Some(pageTitle),
     headBlock   = Some(head),
     headerBlock = Some(hmrcStandardHeader(
-        serviceUrl  = Some(routes.IndexController.onPageLoad.url),
+        serviceUrl  = if (serviceBannerClickable) {
+                        Some(routes.IndexController.onPageLoad.url)
+                      } else {None},
         signOutUrl  = if(showSignOut) Some(signOutUrl) else None,
         phaseBanner = Some(betaBanner(appConfig.feedbackUrl))
     )),
