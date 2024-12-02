@@ -802,3 +802,7 @@ whoPayingExtraLtaCharge.checkYourAnswersLabel = cy: Who is paying the extra life
 whoPayingExtraLtaCharge.you = cy: You
 whoPayingExtraLtaCharge.pensionScheme = cy: Pension scheme
 ltaPensionSchemeDetails.checkYourAnswersLabel = cy: What is the name and tax reference of the scheme that is paying the extra charge?
+
+submissionWaitingRoom.title = Submission in progress
+submissionWaitingRoom.heading = Submission in progress
+submissionWaitingRoom.message = Do not leave this page.
