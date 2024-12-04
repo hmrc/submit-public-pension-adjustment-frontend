@@ -42,6 +42,7 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   formProvider: PensionSchemeMemberTaxReferenceFormProvider,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   addressLookupConnector: AddressLookupConnector,
   view: PensionSchemeMemberTaxReferenceView,
@@ -79,7 +80,7 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
                 PensionSchemeMemberTaxReferencePage.navigate(mode, updatedAnswers).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
-            } yield Redirect(initialiseALF)
+            } yield Redirect(initialiseALF, Map("origin" -> Seq(config.origin)))
         )
     }
 }

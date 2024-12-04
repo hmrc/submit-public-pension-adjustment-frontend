@@ -31,15 +31,15 @@ case object PensionSchemeMemberResidencePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PensionSchemeMemberResidencePage) match {
-      case Some(true)  => routes.PensionSchemeMemberUKAddressController.onPageLoad(NormalMode)
-      case Some(false) => routes.PensionSchemeMemberInternationalAddressController.onPageLoad(NormalMode)
+      case Some(true)  => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) => routes.JourneyRecoveryController.onPageLoad(None)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PensionSchemeMemberResidencePage) match {
-      case Some(true)  => routes.PensionSchemeMemberUKAddressController.onPageLoad(CheckMode)
-      case Some(false) => routes.PensionSchemeMemberInternationalAddressController.onPageLoad(CheckMode)
+      case Some(true)  => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) => routes.JourneyRecoveryController.onPageLoad(None)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

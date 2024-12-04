@@ -45,7 +45,8 @@ object PensionSchemeMemberInternationalAddressSummary {
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            routes.PensionSchemeMemberInternationalAddressController.onPageLoad(CheckMode).url
+            //TODO change
+            routes.JourneyRecoveryController.onPageLoad(None).url
           )
             .withVisuallyHiddenText(messages("pensionSchemeMemberInternationalAddress.change.hidden"))
         )

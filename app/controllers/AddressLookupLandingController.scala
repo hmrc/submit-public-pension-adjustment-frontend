@@ -28,9 +28,10 @@ import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import play.api.libs.json._
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class AddressLookupLandingController @Inject() (
                                                  userDataService: UserDataService,
                                                  identify: IdentifierAction,
@@ -42,35 +43,43 @@ class AddressLookupLandingController @Inject() (
 extends FrontendBaseController
 with I18nSupport {
 
-  def redirectAlternativeName(id: Option[String]): Action[AnyContent] = (identify
-    andThen getData
-    andThen requireCalculationData
-    andThen requireData).async { implicit request =>
 
-  for {
-      retrieveAddress <- addressLookupConnector.retrieveAddress(id.get)
-      getCountry = retrieveAddress.address.country.get
-      updatedAnswers <- if (getCountry.code.equals("GB")) {
-        for {
-         answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberUKAddressPage, PensionSchemeMemberUKAddress.apply(retrieveAddress)))
-          cleanedAnswers = answers.remove(PensionSchemeMemberInternationalAddressPage)
-        } yield cleanedAnswers
-      }
-      else {
-        for {
-          answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberInternationalAddress.apply(retrieveAddress)))
-          cleanedAnswers = answers.remove(PensionSchemeMemberUKAddressPage)
-        } yield cleanedAnswers
-      }
-      _ <- userDataService.set(updatedAnswers.get)
-    } yield Redirect(controllers.routes.AlternativeNameController.onPageLoad(NormalMode))
+    def redirectAlternativeName(id: Option[String]): Action[AnyContent] = (identify
+      andThen getData
+      andThen requireCalculationData
+      andThen requireData).async { implicit request =>
 
-  }
+      for {
+        retrieveAddress <- addressLookupConnector.retrieveAddress(id.get)
+        getCountry = retrieveAddress.address.country.get
+        updatedAnswers <- if (getCountry.code.equals("GB")) {
+          for {
+            answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberUKAddressPage, PensionSchemeMemberUKAddress.apply(retrieveAddress)))
+            cleanedAnswers = answers.remove(PensionSchemeMemberInternationalAddressPage)
+          } yield cleanedAnswers
+        }
+        else {
+          for {
+            answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberInternationalAddress.apply(retrieveAddress)))
+            cleanedAnswers = answers.remove(PensionSchemeMemberUKAddressPage)
+          } yield cleanedAnswers
+        }
+        _ <- userDataService.set(updatedAnswers.get)
+      } yield Redirect(controllers.routes.AlternativeNameController.onPageLoad(NormalMode))
+    }
+
+
 }
 
-//  def redirectCheckYourAnswers(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
-//    ???
+
+
+//  def redirectCheckYourAnswersForClaimOnBehalf(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+//    //redirect from alf to cya and set user answer for claim on behalf address page
 //  }
+//
+//def redirectCheckYourAnswersForMember(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+//  //redirect from alf to cya and set user answer for member address page
+//}
 //
 //  def redirectLegacySchemeReference(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
 //    ???
