@@ -30,12 +30,12 @@ case object PensionSchemeMemberTaxReferencePage extends QuestionPage[String] {
 //TODO POINT TO CORRECT PAGE
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PensionSchemeMemberTaxReferencePage) match {
-      case _ => routes.CheckYourAnswersController.onPageLoad
+      case _ => routes.AddressLookupRampOnController.rampOnClaimOnBehalf(NormalMode)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(RunThroughOnBehalfFlow()) match {
-      case Some(true)     => routes.CheckYourAnswersController.onPageLoad
+      case Some(true)     => routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode)
       case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
     }
 }

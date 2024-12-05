@@ -23,7 +23,7 @@ import forms.PensionSchemeMemberTaxReferenceFormProvider
 import models.requests.{AddressLookupOptions, AddressLookupRequest}
 
 import javax.inject.Inject
-import models.{Mode, NavigationState}
+import models.{Mode, NavigationState, NormalMode}
 import pages.PensionSchemeMemberTaxReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.Json
@@ -73,11 +73,11 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              initialiseALF <- addressLookupConnector.start(AddressLookupRequest(options = AddressLookupOptions(returnURL)))
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeMemberTaxReferencePage, value.getOrElse("")))
               _              <- userDataService.set(updatedAnswers)
-            } yield Redirect(initialiseALF)
+              redirectUrl = PensionSchemeMemberTaxReferencePage.navigate(mode, updatedAnswers)
+            } yield Redirect(redirectUrl)
         )
     }
 }
