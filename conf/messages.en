@@ -354,9 +354,9 @@ pensionSchemeMemberTaxReference.heading = What is the Unique Taxpayer Reference 
 pensionSchemeMemberTaxReference.hint1 = The unique tax reference number has 10 digits.
 pensionSchemeMemberTaxReference.hint2 = For example, 1234567890
 pensionSchemeMemberTaxReference.checkYourAnswersLabel = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
-pensionSchemeMemberTaxReference.error.length = The Unique Taxpayer Reference of the person you are acting on behalf of must be 10 digits or less
-pensionSchemeMemberTaxReference.error.invalid = The Unique Taxpayer Reference of the person you are acting on behalf of must only include numbers 0 to 9
-pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference of the person you are acting on behalf of
+pensionSchemeMemberTaxReference.error.length = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must be 10 digits or less
+pensionSchemeMemberTaxReference.error.invalid = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must only include numbers 0 to 9
+pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference (UTR) of the person you are acting on behalf of
 
 calculationPrerequisite.title = Calculation not complete
 calculationPrerequisite.heading = You cannot use the submission service yet
