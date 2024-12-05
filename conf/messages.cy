@@ -356,7 +356,7 @@ pensionSchemeMemberTaxReference.hint2 = Er enghraifft, 1234567890
 pensionSchemeMemberTaxReference.checkYourAnswersLabel = Beth yw Cyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran?
 pensionSchemeMemberTaxReference.error.length = cy: The Unique Taxpayer Reference of the person you are acting on behalf of must be 10 digits or less
 pensionSchemeMemberTaxReference.error.invalid = cy: The Unique Taxpayer Reference of the person you are acting on behalf of must only include numbers 0 to 9
-pensionSchemeMemberTaxReference.change.hidden = cy: unique Taxpayer Reference of the person you are acting on behalf of
+pensionSchemeMemberTaxReference.change.hidden = cy: Unique Taxpayer Reference of the person you are acting on behalf of
 
 calculationPrerequisite.title = Cyfrifiad heb ei gwblhau
 calculationPrerequisite.heading = Ni allwch ddefnyddio’r gwasanaeth cyflwyno eto
