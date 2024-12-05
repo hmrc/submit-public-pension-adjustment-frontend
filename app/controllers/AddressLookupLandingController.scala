@@ -19,8 +19,10 @@ package controllers
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import forms.AreYouAUKResidentFormProvider
-import models.{NormalMode, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, UkAddress, UserAnswers}
-import pages.{PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberUKAddressPage}
+import models.requests.DataRequest
+import models.{CheckMode, Mode, NavigationState, NormalMode, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, UkAddress, UserAnswers}
+import pages.navigationObjects.ClaimOnBehalfPostALFNavigation
+import pages.{PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberResidencePage, PensionSchemeMemberTaxReferencePage, PensionSchemeMemberUKAddressPage}
 import play.api.i18n.I18nSupport
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -30,6 +32,9 @@ import play.api.libs.json._
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+import play.api.mvc._
+import uk.gov.hmrc.http.HeaderCarrier
+
 
 @Singleton
 class AddressLookupLandingController @Inject() (
@@ -43,46 +48,43 @@ class AddressLookupLandingController @Inject() (
 extends FrontendBaseController
 with I18nSupport {
 
+  def redirectClaimOnBehalf(id: Option[String], mode: Mode): Action[AnyContent] = (identify
+    andThen getData
+    andThen requireCalculationData
+    andThen requireData).async { implicit request => {
 
-    def redirectAlternativeName(id: Option[String]): Action[AnyContent] = (identify
-      andThen getData
-      andThen requireCalculationData
-      andThen requireData).async { implicit request =>
-
-      for {
-        retrieveAddress <- addressLookupConnector.retrieveAddress(id.get)
-        getCountry = retrieveAddress.address.country.get
-        updatedAnswers <- if (getCountry.code.equals("GB")) {
-          for {
-            answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberUKAddressPage, PensionSchemeMemberUKAddress.apply(retrieveAddress)))
-            cleanedAnswers = answers.remove(PensionSchemeMemberInternationalAddressPage)
-          } yield cleanedAnswers
-        }
-        else {
-          for {
-            answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberInternationalAddress.apply(retrieveAddress)))
-            cleanedAnswers = answers.remove(PensionSchemeMemberUKAddressPage)
-          } yield cleanedAnswers
-        }
-        _ <- userDataService.set(updatedAnswers.get)
-      } yield Redirect(controllers.routes.AlternativeNameController.onPageLoad(NormalMode))
+    claimOnBehalfAddressHandlerFactory(id, request, mode)
     }
+  }
 
-
+  private def claimOnBehalfAddressHandlerFactory(id: Option[String], request: DataRequest[AnyContent], mode: Mode)(implicit hc: HeaderCarrier) = {
+    id match {
+      case None =>
+        Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
+      case Some(validId) =>
+        for {
+          retrieveAddress <- addressLookupConnector.retrieveAddress(validId)
+          getCountry = retrieveAddress.address.country.get
+          updatedAnswers <- if (getCountry.code.equals("GB")) {
+            for {
+              answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberUKAddressPage, PensionSchemeMemberUKAddress.apply(retrieveAddress)))
+              answers2 = answers.remove(PensionSchemeMemberInternationalAddressPage).get
+              cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
+            } yield cleanedAnswers
+          }
+          else {
+            for {
+              answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberInternationalAddress.apply(retrieveAddress)))
+              answers2 = answers.remove(PensionSchemeMemberUKAddressPage).get
+              cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
+            } yield cleanedAnswers
+          }
+          redirectUrl = ClaimOnBehalfPostALFNavigation.navigate(updatedAnswers.get, request.submission, mode)
+          answersWithNav  = NavigationState.save(updatedAnswers.get, redirectUrl.url)
+          _ <- userDataService.set(answersWithNav)
+        } yield Redirect(redirectUrl)
+    }
+  }
 }
-
-
-
-//  def redirectCheckYourAnswersForClaimOnBehalf(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
-//    //redirect from alf to cya and set user answer for claim on behalf address page
-//  }
-//
-//def redirectCheckYourAnswersForMember(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
-//  //redirect from alf to cya and set user answer for member address page
-//}
-//
-//  def redirectLegacySchemeReference(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
-//    ???
-//  }
 
 

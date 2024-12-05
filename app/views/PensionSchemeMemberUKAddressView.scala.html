@@ -28,7 +28,8 @@
 
 @layout(pageTitle = title(form, messages("pensionSchemeMemberUKAddress.title"))) {
 
-    @formHelper(action = routes.PensionSchemeMemberUKAddressController.onSubmit(mode), 'autoComplete -> "off") {
+//TODO remove
+@formHelper(action = controllers.routes.JourneyRecoveryController.onPageLoad(None), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

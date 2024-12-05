@@ -145,13 +145,13 @@ POST        /submission-service/unique-taxpayer-reference-someone-else          
 GET         /submission-service/change-unique-taxpayer-reference-someone-else                                           controllers.PensionSchemeMemberTaxReferenceController.onPageLoad(mode: Mode = CheckMode)
 POST        /submission-service/change-unique-taxpayer-reference-someone-else                                           controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = CheckMode)
 
-GET         /submission-service/uk-resident-someone-else                                                                controllers.PensionSchemeMemberResidenceController.onPageLoad(mode: Mode = NormalMode)
-POST        /submission-service/uk-resident-someone-else                                                                controllers.PensionSchemeMemberResidenceController.onSubmit(mode: Mode = NormalMode)
+GET         /submission-service/uk-resident-someone-else                                                                controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
+POST        /submission-service/uk-resident-someone-else                                                                controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
 GET         /submission-service/change-uk-resident-someone-else                                                         controllers.PensionSchemeMemberResidenceController.onPageLoad(mode: Mode = CheckMode)
 POST        /submission-service/change-uk-resident-someone-else                                                         controllers.PensionSchemeMemberResidenceController.onSubmit(mode: Mode = CheckMode)
 
-GET         /submission-service/address-someone-else                                                                    controllers.PensionSchemeMemberUKAddressController.onPageLoad(mode: Mode = NormalMode)
-POST        /submission-service/address-someone-else                                                                    controllers.PensionSchemeMemberUKAddressController.onSubmit(mode: Mode = NormalMode)
+GET         /submission-service/address-someone-else                                                                    controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
+POST        /submission-service/address-someone-else                                                                    controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
 GET         /submission-service/change-address-someone-else                                                             controllers.PensionSchemeMemberUKAddressController.onPageLoad(mode: Mode = CheckMode)
 POST        /submission-service/change-address-someone-else                                                             controllers.PensionSchemeMemberUKAddressController.onSubmit(mode: Mode = CheckMode)
 
@@ -204,4 +204,7 @@ POST       /submission-service/:period/change-scheme-election-consent           
 
 GET        /submission-in-progress                       controllers.SubmissionWaitingRoomController.onPageLoad()
 
-GET        /alf-landing/alternative-name                                                                                controllers.AddressLookupLandingController.redirectAlternativeName(id: Option[String] ?= None)
+GET        /alf-landing/claim-on-behalf/normal-mode                                                                     controllers.AddressLookupLandingController.redirectClaimOnBehalf(id: Option[String] ?= None, mode: Mode = NormalMode)
+GET        /alf-landing/claim-on-behalf/check-mode                                                                      controllers.AddressLookupLandingController.redirectClaimOnBehalf(id: Option[String] ?= None, mode: Mode = CheckMode)
+GET        /alf-ramp-on-claim-on-behalf/normal-mode                                                                     controllers.AddressLookupRampOnController.rampOnClaimOnBehalf(mode: Mode = NormalMode)
+GET        /alf-ramp-on-claim-on-behalf/check-mode                                                                      controllers.AddressLookupRampOnController.rampOnClaimOnBehalf(mode: Mode = CheckMode)

@@ -43,7 +43,7 @@ object PensionSchemeMemberUKAddressSummary {
         key = "pensionSchemeMemberUKAddress.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.PensionSchemeMemberUKAddressController.onPageLoad(CheckMode).url)
+          ActionItemViewModel("site.change", routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode).url)
             .withVisuallyHiddenText(messages("pensionSchemeMemberUKAddress.change.hidden"))
         )
       )

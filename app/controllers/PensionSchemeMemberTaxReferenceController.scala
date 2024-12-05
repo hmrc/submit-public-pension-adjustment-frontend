@@ -53,7 +53,7 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
 
   val form = formProvider()
 
-  val returnURL: String = frontendAppConfig.addressLookupReturnAlternateName
+  val returnURL: String = frontendAppConfig.addressLookupReturnClaimOnBehalfNormalMode
 
   def onPageLoad(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
@@ -76,11 +76,8 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
               initialiseALF <- addressLookupConnector.start(AddressLookupRequest(options = AddressLookupOptions(returnURL)))
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeMemberTaxReferencePage, value.getOrElse("")))
-              redirectUrl     =
-                PensionSchemeMemberTaxReferencePage.navigate(mode, updatedAnswers).url
-              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
-            } yield Redirect(initialiseALF, Map("origin" -> Seq(config.origin)))
+              _              <- userDataService.set(updatedAnswers)
+            } yield Redirect(initialiseALF)
         )
     }
 }
