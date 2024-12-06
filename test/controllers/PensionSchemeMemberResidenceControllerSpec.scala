@@ -17,7 +17,6 @@
 package controllers
 
 import base.SpecBase
-import forms.PensionSchemeMemberResidenceFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when

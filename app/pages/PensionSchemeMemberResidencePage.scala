@@ -23,6 +23,7 @@ import controllers.routes
 
 import scala.util.Try
 
+//TODO change extension to gettable/settable and remove nav methods?
 case object PensionSchemeMemberResidencePage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
@@ -31,23 +32,12 @@ case object PensionSchemeMemberResidencePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PensionSchemeMemberResidencePage) match {
-      case Some(true)  => routes.JourneyRecoveryController.onPageLoad(None)
-      case Some(false) => routes.JourneyRecoveryController.onPageLoad(None)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+      case _ => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PensionSchemeMemberResidencePage) match {
-      case Some(true)  => routes.JourneyRecoveryController.onPageLoad(None)
-      case Some(false) => routes.JourneyRecoveryController.onPageLoad(None)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+      case _ => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
-    value
-      .map {
-        case false => userAnswers.remove(PensionSchemeMemberUKAddressPage)
-        case true  => userAnswers.remove(PensionSchemeMemberInternationalAddressPage)
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
 }

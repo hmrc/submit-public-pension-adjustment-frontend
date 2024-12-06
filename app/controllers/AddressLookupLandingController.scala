@@ -58,7 +58,7 @@ class AddressLookupLandingController @Inject() (
   ) =
     id match {
       case None          =>
-        Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
+        Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None)))
       case Some(validId) =>
         for {
           retrieveAddress <- addressLookupConnector.retrieveAddress(validId)

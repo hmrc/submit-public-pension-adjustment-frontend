@@ -147,18 +147,18 @@ POST        /submission-service/change-unique-taxpayer-reference-someone-else   
 
 GET         /submission-service/uk-resident-someone-else                                                                controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
 POST        /submission-service/uk-resident-someone-else                                                                controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
-GET         /submission-service/change-uk-resident-someone-else                                                         controllers.PensionSchemeMemberResidenceController.onPageLoad(mode: Mode = CheckMode)
-POST        /submission-service/change-uk-resident-someone-else                                                         controllers.PensionSchemeMemberResidenceController.onSubmit(mode: Mode = CheckMode)
+GET         /submission-service/change-uk-resident-someone-else                                                         controllers.AddressLookupRampOnController.rampOnClaimOnBehalf(mode: Mode = CheckMode)
+POST        /submission-service/change-uk-resident-someone-else                                                         controllers.AddressLookupRampOnController.rampOnClaimOnBehalf(mode: Mode = CheckMode)
 
 GET         /submission-service/address-someone-else                                                                    controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
 POST        /submission-service/address-someone-else                                                                    controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
-GET         /submission-service/change-address-someone-else                                                             controllers.PensionSchemeMemberUKAddressController.onPageLoad(mode: Mode = CheckMode)
-POST        /submission-service/change-address-someone-else                                                             controllers.PensionSchemeMemberUKAddressController.onSubmit(mode: Mode = CheckMode)
+GET         /submission-service/change-address-someone-else                                                             controllers.AddressLookupRampOnController.rampOnClaimOnBehalf(mode: Mode = CheckMode)
+POST        /submission-service/change-address-someone-else                                                             controllers.AddressLookupRampOnController.rampOnClaimOnBehalf(mode: Mode = CheckMode)
 
 GET         /submission-service/international-address-someone-else                                                      controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
 POST        /submission-service/international-address-someone-else                                                      controllers.PensionSchemeMemberTaxReferenceController.onSubmit(mode: Mode = NormalMode)
-GET         /submission-service/change-international-address-someone-else                                               controllers.PensionSchemeMemberInternationalAddressController.onPageLoad(mode: Mode = CheckMode)
-POST        /submission-service/change-international-address-someone-else                                               controllers.PensionSchemeMemberInternationalAddressController.onSubmit(mode: Mode = CheckMode)
+GET         /submission-service/change-international-address-someone-else                                               controllers.AddressLookupRampOnController.rampOnClaimOnBehalf(mode: Mode = CheckMode)
+POST        /submission-service/change-international-address-someone-else                                               controllers.AddressLookupRampOnController.rampOnClaimOnBehalf(mode: Mode = CheckMode)
 
 GET         /submission-service/date-of-death-someone-else                                                              controllers.MemberDateOfDeathController.onPageLoad(mode: Mode = NormalMode)
 POST        /submission-service/date-of-death-someone-else                                                              controllers.MemberDateOfDeathController.onSubmit(mode: Mode = NormalMode)
