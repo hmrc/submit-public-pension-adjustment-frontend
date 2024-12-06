@@ -19,8 +19,8 @@ package utils
 import utils.CurrencyFormatter.formatNumberString
 
 trait CurrencyFormatter {
-  def currencyFormat(amt: BigInt): String    = f"&pound;$amt"
-  def currencyFormat(amt: Int): String       = f"&pound;$amt"
+  def currencyFormat(amt: BigInt): String    = formatNumberString(amt.toString)
+  def currencyFormat(amt: Int): String       = formatNumberString(amt.toString)
   def currencyFormat(string: String): String = formatNumberString(string)
 
 }

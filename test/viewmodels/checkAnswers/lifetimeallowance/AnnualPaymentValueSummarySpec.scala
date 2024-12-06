@@ -48,7 +48,7 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
       AnnualPaymentValueSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"annualPaymentValue.checkYourAnswersLabel").withCssClass(keyCssClass),
-          value = ValueViewModel(HtmlContent("&pound;999"))
+          value = ValueViewModel(HtmlContent("£999"))
         )
       )
     }
