@@ -47,7 +47,7 @@ class LumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
       LumpSumValueSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"lumpSumValue.checkYourAnswersLabel").withCssClass(keyCssClass),
-          value = ValueViewModel(HtmlContent("&pound;999"))
+          value = ValueViewModel(HtmlContent("£999"))
         )
       )
     }
