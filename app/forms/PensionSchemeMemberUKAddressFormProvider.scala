@@ -53,7 +53,6 @@ class PensionSchemeMemberUKAddressFormProvider @Inject() extends Mappings {
             )
           )
         )
-    )
-    (PensionSchemeMemberUKAddress.apply)(PensionSchemeMemberUKAddress.unapply)
+    )(PensionSchemeMemberUKAddress.apply)(PensionSchemeMemberUKAddress.unapply)
   )
 }

@@ -32,16 +32,16 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class AddressLookupRampOnController @Inject() (
-                                                identify: IdentifierAction,
-                                                getData: DataRetrievalAction,
-                                                requireCalculationData: CalculationDataRequiredAction,
-                                                requireData: DataRequiredAction,
-                                                config: FrontendAppConfig,
-                                                val controllerComponents: MessagesControllerComponents,
-                                                addressLookupConnector: AddressLookupConnector,
-                                                frontendAppConfig: FrontendAppConfig
-                                              )(implicit ec: ExecutionContext)
-  extends FrontendBaseController
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireCalculationData: CalculationDataRequiredAction,
+  requireData: DataRequiredAction,
+  config: FrontendAppConfig,
+  val controllerComponents: MessagesControllerComponents,
+  addressLookupConnector: AddressLookupConnector,
+  frontendAppConfig: FrontendAppConfig
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def rampOnClaimOnBehalf(mode: Mode): Action[AnyContent] =

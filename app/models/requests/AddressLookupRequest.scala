@@ -19,26 +19,26 @@ package models.requests
 import play.api.libs.json.{Format, Json, OFormat}
 
 final case class AddressLookupRequest(
-                                       version: Int = 2,
-                                       options: AddressLookupOptions
-                                     )
+  version: Int = 2,
+  options: AddressLookupOptions
+)
 
 object AddressLookupRequest {
   implicit val addressLookupRequestFormat: OFormat[AddressLookupRequest] = Json.format[AddressLookupRequest]
 }
 
 final case class AddressLookupOptions(
-                                       continueUrl: String,
-                                       timeoutConfig: Option[TimeoutConfig] = None,
-                                       signOutHref: Option[String] = None,
-                                       accessibilityFooterUrl: Option[String] = None,
-                                       selectPageConfig: Option[SelectPageConfig] = None,
-                                       confirmPageConfig: ConfirmPageConfig = ConfirmPageConfig(),
-                                       phaseFeedbackLink: Option[String] = None,
-                                       deskProServiceName: Option[String] = None,
-                                       showPhaseBanner: Option[Boolean] = None,
-                                       ukMode: Option[Boolean] = None
-                                     )
+  continueUrl: String,
+  timeoutConfig: Option[TimeoutConfig] = None,
+  signOutHref: Option[String] = None,
+  accessibilityFooterUrl: Option[String] = None,
+  selectPageConfig: Option[SelectPageConfig] = None,
+  confirmPageConfig: ConfirmPageConfig = ConfirmPageConfig(),
+  phaseFeedbackLink: Option[String] = None,
+  deskProServiceName: Option[String] = None,
+  showPhaseBanner: Option[Boolean] = None,
+  ukMode: Option[Boolean] = None
+)
 
 object AddressLookupOptions {
   implicit val format: OFormat[AddressLookupOptions] = Json.format
@@ -51,20 +51,20 @@ object SelectPageConfig {
 }
 
 final case class ConfirmPageConfig(
-                                    showChangeLink: Option[Boolean] = None,
-                                    showSearchAgainLink: Option[Boolean] = None,
-                                    showConfirmChangeText: Option[Boolean] = None
-                                  )
+  showChangeLink: Option[Boolean] = None,
+  showSearchAgainLink: Option[Boolean] = None,
+  showConfirmChangeText: Option[Boolean] = None
+)
 
 object ConfirmPageConfig {
   implicit val confirmPageConfigFormat: OFormat[ConfirmPageConfig] = Json.format[ConfirmPageConfig]
 }
 
 final case class TimeoutConfig(
-                                timeoutAmount: Int,
-                                timeoutUrl: String,
-                                timeoutKeepAliveUrl: Option[String] = None
-                              )
+  timeoutAmount: Int,
+  timeoutUrl: String,
+  timeoutKeepAliveUrl: Option[String] = None
+)
 
 object TimeoutConfig {
   implicit val timeoutConfigFormat: OFormat[TimeoutConfig] = Json.format[TimeoutConfig]

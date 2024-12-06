@@ -28,13 +28,13 @@ import uk.gov.hmrc.http.client.HttpClientV2
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-
 class AddressLookupConnector @Inject() (
-                                httpClient2: HttpClientV2,
-                                frontendAppConfig: FrontendAppConfig,
-                                configuration: Configuration,
-                                ALFConfig: ALFConfig
-                              )(implicit ec: ExecutionContext) extends Logging {
+  httpClient2: HttpClientV2,
+  frontendAppConfig: FrontendAppConfig,
+  configuration: Configuration,
+  ALFConfig: ALFConfig
+)(implicit ec: ExecutionContext)
+    extends Logging {
 
   val baseUrl: String = ALFConfig.baseUrl
 
@@ -42,10 +42,9 @@ class AddressLookupConnector @Inject() (
 
   lazy val retrieveURL: String = s"$baseUrl/api/confirmed"
 
-
   def start(
-             request: AddressLookupRequest
-           )(implicit hc: HeaderCarrier) = {
+    request: AddressLookupRequest
+  )(implicit hc: HeaderCarrier) =
     httpClient2
       .post(url"$startURL")
       .withBody(Json.toJson(request))
@@ -55,7 +54,7 @@ class AddressLookupConnector @Inject() (
         response.status match {
           case ACCEPTED =>
             Future.successful(response.header("LOCATION").get)
-          case _ =>
+          case _        =>
             logger.error(
               s"Unexpected response from call from ALF : ${response.status}"
             )
@@ -67,20 +66,19 @@ class AddressLookupConnector @Inject() (
             )
         }
       }
-  }
 
   def retrieveAddress(
-                       id: String
-                     )(implicit hc: HeaderCarrier): Future[AddressLookupConfirmation] = {
+    id: String
+  )(implicit hc: HeaderCarrier): Future[AddressLookupConfirmation] =
     httpClient2
-      .get(url"${retrieveURL}?id=$id")
+      .get(url"$retrieveURL?id=$id")
       .execute[HttpResponse]
       .logFailureReason(connectorName = "`AddressLookupConnector` on retrieve")
       .flatMap { response =>
         response.status match {
           case OK =>
             Future.successful(response.json.as[AddressLookupConfirmation])
-          case _ =>
+          case _  =>
             logger.error(
               s"Unexpected response from call from ALF retrieve : ${response.status}"
             )
@@ -92,7 +90,4 @@ class AddressLookupConnector @Inject() (
             )
         }
       }
-  }
 }
-
-

@@ -33,7 +33,8 @@ object UkAddress {
 
   def apply(addressLookupConfirmation: AddressLookupConfirmation): UkAddress = {
     val lines = addressLookupConfirmation.extractAddressLines()
-    new UkAddress(addressLine1 = lines._1,
+    new UkAddress(
+      addressLine1 = lines._1,
       addressLine2 = lines._2,
       addressLine3 = lines._3,
       townOrCity = lines._4,

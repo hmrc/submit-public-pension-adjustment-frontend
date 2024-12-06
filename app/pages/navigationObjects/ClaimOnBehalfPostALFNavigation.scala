@@ -23,81 +23,62 @@ import pages.StatusOfUserPage
 import play.api.mvc.Call
 import services.ClaimOnBehalfNavigationLogicService
 
-object ClaimOnBehalfPostALFNavigation{
+object ClaimOnBehalfPostALFNavigation {
 
-  def navigate(answers: UserAnswers, submission: Submission, mode: Mode): Call = {
+  def navigate(answers: UserAnswers, submission: Submission, mode: Mode): Call =
     if (mode == NormalMode) {
       navigateInNormalMode(answers, submission)
     } else {
       navigateInCheckMode(answers, submission)
     }
-  }
   def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     if (ltaOnly(submission)) {
-      navigateInNormalModeLTAOnly(answers, submission)
+      navigateInNormalModeLTAOnly(answers)
     } else {
       navigateInNormalModeAA(answers, submission)
     }
 
   def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     if (ltaOnly(submission)) {
-      navigateInCheckModeLTAOnly(answers, submission)
+      navigateInCheckModeLTAOnly(answers)
     } else {
       navigateInCheckModeAA(answers, submission)
     }
 
-   def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
-        answers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.AlternativeNameController.onPageLoad(NormalMode)
-          case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
-            ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, NormalMode)
-          case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
+  def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
+    answers.get(StatusOfUserPage) match {
+      case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.AlternativeNameController.onPageLoad(NormalMode)
+      case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
+        ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, NormalMode)
+      case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-   def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
-        answers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad
-          case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
-            ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, CheckMode)
-          case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
+  def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
+    answers.get(StatusOfUserPage) match {
+      case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad
+      case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
+        ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, CheckMode)
+      case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-   def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-        answers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.AlternativeNameController.onPageLoad(NormalMode)
-          case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
-            ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(NormalMode)
-          case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
+  def navigateInNormalModeLTAOnly(answers: UserAnswers): Call =
+    answers.get(StatusOfUserPage) match {
+      case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.AlternativeNameController.onPageLoad(NormalMode)
+      case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
+        ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(NormalMode)
+      case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-   def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-        answers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad
-          case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
-            ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(CheckMode)
-          case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
+  def navigateInCheckModeLTAOnly(answers: UserAnswers): Call =
+    answers.get(StatusOfUserPage) match {
+      case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad
+      case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
+        ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(CheckMode)
+      case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   def ltaOnly(submission: Submission): Boolean = {
     val calculationInputs = submission.calculationInputs
     calculationInputs.lifeTimeAllowance.isDefined && calculationInputs.annualAllowance.forall(_.taxYears.isEmpty)
   }
-
-
-
-  //TODO Cleanup logic???
-
-//   def cleanup(value: Option[PensionSchemeMemberUKAddress], userAnswers: UserAnswers): Try[UserAnswers] = {
-//    val periodsToCleanup = PeriodService.allInDateRemedyPeriods
-//    value
-//      .map { case _ =>
-//        userAnswers.get(StatusOfUserPage) match {
-//          case Some(StatusOfUser.LegalPersonalRepresentative) =>
-//            Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, periodsToCleanup))
-//          case _                                              => super.cleanup(value, userAnswers)
-//        }
-//      }
-//      .getOrElse(super.cleanup(value, userAnswers))
-//  }
-
 }

@@ -18,73 +18,92 @@ package controllers
 
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import forms.AreYouAUKResidentFormProvider
-import models.requests.DataRequest
-import models.{CheckMode, Mode, NavigationState, NormalMode, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, UkAddress, UserAnswers}
+import models.requests.{AddressLookupConfirmation, AddressLookupCountry, DataRequest}
+import models.{Mode, NavigationState, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, Period, StatusOfUser, UkAddress, UserAnswers}
 import pages.navigationObjects.ClaimOnBehalfPostALFNavigation
-import pages.{PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberResidencePage, PensionSchemeMemberTaxReferencePage, PensionSchemeMemberUKAddressPage}
+import pages.{PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberResidencePage, PensionSchemeMemberTaxReferencePage, PensionSchemeMemberUKAddressPage, StatusOfUserPage}
 import play.api.i18n.I18nSupport
-import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
+import services.{ClaimOnBehalfNavigationLogicService, PeriodService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import play.api.libs.json._
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
-import play.api.mvc._
 import uk.gov.hmrc.http.HeaderCarrier
 
+import scala.util.Try
 
 @Singleton
 class AddressLookupLandingController @Inject() (
-                                                 userDataService: UserDataService,
-                                                 identify: IdentifierAction,
-                                                 getData: DataRetrievalAction,
-                                                 requireCalculationData: CalculationDataRequiredAction,
-                                                 requireData: DataRequiredAction,
-                                                 val controllerComponents: MessagesControllerComponents,
-                                                 addressLookupConnector: AddressLookupConnector)(implicit ec: ExecutionContext)
-extends FrontendBaseController
-with I18nSupport {
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireCalculationData: CalculationDataRequiredAction,
+  requireData: DataRequiredAction,
+  val controllerComponents: MessagesControllerComponents,
+  addressLookupConnector: AddressLookupConnector
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   def redirectClaimOnBehalf(id: Option[String], mode: Mode): Action[AnyContent] = (identify
     andThen getData
     andThen requireCalculationData
-    andThen requireData).async { implicit request => {
-
+    andThen requireData).async { implicit request =>
     claimOnBehalfAddressHandlerFactory(id, request, mode)
-    }
   }
 
-  private def claimOnBehalfAddressHandlerFactory(id: Option[String], request: DataRequest[AnyContent], mode: Mode)(implicit hc: HeaderCarrier) = {
+  private def claimOnBehalfAddressHandlerFactory(id: Option[String], request: DataRequest[AnyContent], mode: Mode)(
+    implicit hc: HeaderCarrier
+  ) =
     id match {
-      case None =>
+      case None          =>
         Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
       case Some(validId) =>
         for {
           retrieveAddress <- addressLookupConnector.retrieveAddress(validId)
-          getCountry = retrieveAddress.address.country.get
-          updatedAnswers <- if (getCountry.code.equals("GB")) {
-            for {
-              answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberUKAddressPage, PensionSchemeMemberUKAddress.apply(retrieveAddress)))
-              answers2 = answers.remove(PensionSchemeMemberInternationalAddressPage).get
-              cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
-            } yield cleanedAnswers
-          }
-          else {
-            for {
-              answers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberInternationalAddress.apply(retrieveAddress)))
-              answers2 = answers.remove(PensionSchemeMemberUKAddressPage).get
-              cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
-            } yield cleanedAnswers
-          }
-          redirectUrl = ClaimOnBehalfPostALFNavigation.navigate(updatedAnswers.get, request.submission, mode)
-          answersWithNav  = NavigationState.save(updatedAnswers.get, redirectUrl.url)
-          _ <- userDataService.set(answersWithNav)
+          getCountry       = retrieveAddress.address.country.get
+          updatedAnswers  <- addressLocaleParserClaimOnBehalf(request, retrieveAddress, getCountry)
+          cleanedAnswers   = maybeDebitLoopCleanup(updatedAnswers)
+          redirectUrl      = ClaimOnBehalfPostALFNavigation.navigate(cleanedAnswers.get, request.submission, mode)
+          answersWithNav   = NavigationState.save(updatedAnswers.get, redirectUrl.url)
+          _               <- userDataService.set(answersWithNav)
         } yield Redirect(redirectUrl)
+    }
+
+  private def addressLocaleParserClaimOnBehalf(
+    request: DataRequest[AnyContent],
+    retrieveAddress: AddressLookupConfirmation,
+    getCountry: AddressLookupCountry
+  ) =
+    if (getCountry.code.equals("GB")) {
+      for {
+        answers       <- Future.fromTry(
+                           request.userAnswers
+                             .set(PensionSchemeMemberUKAddressPage, PensionSchemeMemberUKAddress.apply(retrieveAddress))
+                         )
+        answers2       = answers.remove(PensionSchemeMemberInternationalAddressPage).get
+        cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
+      } yield cleanedAnswers
+    } else {
+      for {
+        answers       <- Future.fromTry(
+                           request.userAnswers.set(
+                             PensionSchemeMemberInternationalAddressPage,
+                             PensionSchemeMemberInternationalAddress.apply(retrieveAddress)
+                           )
+                         )
+        answers2       = answers.remove(PensionSchemeMemberUKAddressPage).get
+        cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
+      } yield cleanedAnswers
+    }
+
+  private def maybeDebitLoopCleanup(updatedAnswers: Try[UserAnswers]) = {
+    val periodsToCleanup = PeriodService.allInDateRemedyPeriods
+    if (updatedAnswers.get.get(StatusOfUserPage).contains(StatusOfUser.LegalPersonalRepresentative)) {
+      Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(updatedAnswers.get, periodsToCleanup))
+    } else {
+      updatedAnswers
     }
   }
 }
-
-

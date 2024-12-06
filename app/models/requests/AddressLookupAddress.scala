@@ -19,10 +19,10 @@ package models.requests
 import play.api.libs.json.{Json, OFormat}
 
 case class AddressLookupAddress(
-                                 lines: List[String],
-                                 postcode: Option[String],
-                                 country: Option[AddressLookupCountry]
-                               )
+  lines: List[String],
+  postcode: Option[String],
+  country: Option[AddressLookupCountry]
+)
 
 object AddressLookupAddress {
   implicit val format: OFormat[AddressLookupAddress] = Json.format[AddressLookupAddress]
