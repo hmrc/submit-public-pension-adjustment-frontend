@@ -41,7 +41,7 @@ class HowMuchTaxReliefSummarySpec extends AnyFreeSpec with Matchers {
       HowMuchTaxReliefSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "howMuchTaxRelief.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
