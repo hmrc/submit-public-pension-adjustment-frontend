@@ -27,7 +27,6 @@ case object PensionSchemeMemberTaxReferencePage extends QuestionPage[String] {
 
   override def toString: String = "pensionSchemeMemberTaxReference"
 
-//TODO POINT TO CORRECT PAGE
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PensionSchemeMemberTaxReferencePage) match {
       case _ => routes.AddressLookupRampOnController.rampOnClaimOnBehalf(NormalMode)

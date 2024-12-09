@@ -19,14 +19,11 @@ package controllers
 import config.FrontendAppConfig
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import forms.PensionSchemeMemberTaxReferenceFormProvider
 import models.{Mode, NormalMode}
 import models.requests.{AddressLookupOptions, AddressLookupRequest}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.PensionSchemeMemberTaxReferenceView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -51,6 +48,20 @@ class AddressLookupRampOnController @Inject() (
       } else {
         frontendAppConfig.addressLookupReturnClaimOnBehalfCheckMode
       }
+      for {
+        initialiseALF <- addressLookupConnector.start(AddressLookupRequest(options = AddressLookupOptions(returnURL)))
+      } yield Redirect(initialiseALF)
+    }
+
+  def rampOnUserAddress(mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+      val returnURL = if (mode == NormalMode) {
+        frontendAppConfig.addressLookupReturnUserAddressNormalMode
+      } else {
+        frontendAppConfig.addressLookupReturnUserAddressCheckMode
+      }
+      println("===================")
+      println(returnURL)
       for {
         initialiseALF <- addressLookupConnector.start(AddressLookupRequest(options = AddressLookupOptions(returnURL)))
       } yield Redirect(initialiseALF)

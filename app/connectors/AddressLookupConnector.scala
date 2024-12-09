@@ -36,10 +36,8 @@ class AddressLookupConnector @Inject() (
 )(implicit ec: ExecutionContext)
     extends Logging {
 
-  val baseUrl: String = ALFConfig.baseUrl
-
-  val startURL: String = s"$baseUrl/api/init"
-
+  lazy val baseUrl: String     = ALFConfig.baseUrl
+  lazy val startURL: String    = s"$baseUrl/api/init"
   lazy val retrieveURL: String = s"$baseUrl/api/confirmed"
 
   def start(

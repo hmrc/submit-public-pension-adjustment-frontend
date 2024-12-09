@@ -47,16 +47,17 @@ class UkAddressFormProvider @Inject() extends Mappings {
         text("pensionSchemeMemberUKAddress.error.county.required")
           .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.county.length"))
       ),
-      "postCode"     -> optional(text("pensionSchemeMemberUKAddress.error.postCode.required")
-        .verifying(
-          firstError(
-            maxLength(8, "pensionSchemeMemberUKAddress.error.postCode.length"),
-            regexp(
-              """[a-zA-Z]{1,2}[0-9][0-9a-zA-Z]? ?[0-9][a-zA-Z]{2}""",
-              "pensionSchemeMemberUKAddress.error.postCode.invalid"
+      "postCode"     -> optional(
+        text("pensionSchemeMemberUKAddress.error.postCode.required")
+          .verifying(
+            firstError(
+              maxLength(8, "pensionSchemeMemberUKAddress.error.postCode.length"),
+              regexp(
+                """[a-zA-Z]{1,2}[0-9][0-9a-zA-Z]? ?[0-9][a-zA-Z]{2}""",
+                "pensionSchemeMemberUKAddress.error.postCode.invalid"
+              )
             )
           )
-        )
       )
     )(UkAddress.apply)(UkAddress.unapply)
   )

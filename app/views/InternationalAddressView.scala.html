@@ -28,7 +28,7 @@
 
 @layout(pageTitle = title(form, messages("internationalAddress.title"))) {
 
-    @formHelper(action = routes.InternationalAddressController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = controllers.routes.JourneyRecoveryController.onPageLoad(None), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

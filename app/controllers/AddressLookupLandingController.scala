@@ -20,8 +20,8 @@ import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.requests.{AddressLookupConfirmation, AddressLookupCountry, DataRequest}
 import models.{InternationalAddress, Mode, NavigationState, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, Period, StatusOfUser, UkAddress, UserAnswers}
-import pages.navigationObjects.ClaimOnBehalfPostALFNavigation
-import pages.{PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberResidencePage, PensionSchemeMemberTaxReferencePage, PensionSchemeMemberUKAddressPage, StatusOfUserPage}
+import pages.navigationObjects.{ClaimOnBehalfPostALFNavigation, UserAddressPostALFNavigation}
+import pages.{AreYouAUKResidentPage, InternationalAddressPage, PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberResidencePage, PensionSchemeMemberTaxReferencePage, PensionSchemeMemberUKAddressPage, StatusOfUserPage, UkAddressPage}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{ClaimOnBehalfNavigationLogicService, PeriodService, UserDataService}
@@ -53,6 +53,13 @@ class AddressLookupLandingController @Inject() (
     claimOnBehalfAddressHandlerFactory(id, request, mode)
   }
 
+  def redirectUserAddress(id: Option[String], mode: Mode): Action[AnyContent] = (identify
+    andThen getData
+    andThen requireCalculationData
+    andThen requireData).async { implicit request =>
+    userAddressHandlerFactory(id, request, mode)
+  }
+
   private def claimOnBehalfAddressHandlerFactory(id: Option[String], request: DataRequest[AnyContent], mode: Mode)(
     implicit hc: HeaderCarrier
   ) =
@@ -66,7 +73,7 @@ class AddressLookupLandingController @Inject() (
           updatedAnswers  <- addressLocaleParserClaimOnBehalf(request, retrieveAddress, getCountry)
           cleanedAnswers   = maybeDebitLoopCleanup(updatedAnswers)
           redirectUrl      = ClaimOnBehalfPostALFNavigation.navigate(cleanedAnswers.get, request.submission, mode)
-          answersWithNav   = NavigationState.save(updatedAnswers.get, redirectUrl.url)
+          answersWithNav   = NavigationState.save(cleanedAnswers.get, redirectUrl.url)
           _               <- userDataService.set(answersWithNav)
         } yield Redirect(redirectUrl)
     }
@@ -95,6 +102,50 @@ class AddressLookupLandingController @Inject() (
                          )
         answers2       = answers.remove(PensionSchemeMemberUKAddressPage).get
         cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
+      } yield cleanedAnswers
+    }
+
+  private def userAddressHandlerFactory(id: Option[String], request: DataRequest[AnyContent], mode: Mode)(implicit
+    hc: HeaderCarrier
+  ) =
+    id match {
+      case None          =>
+        Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None)))
+      case Some(validId) =>
+        for {
+          retrieveAddress <- addressLookupConnector.retrieveAddress(validId)
+          getCountry       = retrieveAddress.address.country.get
+          updatedAnswers  <- addressLocaleParserUserAddress(request, retrieveAddress, getCountry)
+          redirectUrl      = UserAddressPostALFNavigation.navigate(request.submission, mode)
+          answersWithNav   = NavigationState.save(updatedAnswers.get, redirectUrl.url)
+          _               <- userDataService.set(answersWithNav)
+        } yield Redirect(redirectUrl)
+    }
+
+  private def addressLocaleParserUserAddress(
+    request: DataRequest[AnyContent],
+    retrieveAddress: AddressLookupConfirmation,
+    getCountry: AddressLookupCountry
+  ) =
+    if (getCountry.code.equals("GB")) {
+      for {
+        answers       <- Future.fromTry(
+                           request.userAnswers
+                             .set(UkAddressPage, UkAddress.apply(retrieveAddress))
+                         )
+        answers2       = answers.remove(InternationalAddressPage).get
+        cleanedAnswers = answers2.remove(AreYouAUKResidentPage)
+      } yield cleanedAnswers
+    } else {
+      for {
+        answers       <- Future.fromTry(
+                           request.userAnswers.set(
+                             InternationalAddressPage,
+                             InternationalAddress.apply(retrieveAddress)
+                           )
+                         )
+        answers2       = answers.remove(UkAddressPage).get
+        cleanedAnswers = answers2.remove(AreYouAUKResidentPage)
       } yield cleanedAnswers
     }
 

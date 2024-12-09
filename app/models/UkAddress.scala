@@ -20,7 +20,7 @@ import models.requests.AddressLookupConfirmation
 import play.api.libs.json._
 
 case class UkAddress(
-                    organisation: Option[String],
+  organisation: Option[String],
   addressLine1: String,
   addressLine2: Option[String],
   addressLine3: Option[String],
