@@ -60,8 +60,6 @@ class AddressLookupRampOnController @Inject() (
       } else {
         frontendAppConfig.addressLookupReturnUserAddressCheckMode
       }
-      println("===================")
-      println(returnURL)
       for {
         initialiseALF <- addressLookupConnector.start(AddressLookupRequest(options = AddressLookupOptions(returnURL)))
       } yield Redirect(initialiseALF)
