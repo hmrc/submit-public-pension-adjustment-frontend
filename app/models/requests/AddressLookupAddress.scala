@@ -19,6 +19,7 @@ package models.requests
 import play.api.libs.json.{Json, OFormat}
 
 case class AddressLookupAddress(
+                               organisation: Option[String],
   lines: List[String],
   postcode: Option[String],
   country: Option[AddressLookupCountry]

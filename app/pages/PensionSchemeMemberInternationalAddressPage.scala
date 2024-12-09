@@ -16,18 +16,17 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, StatusOfUser, UserAnswers}
+import models.{InternationalAddress, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.routes
 import models.submission.Submission
-import services.{ClaimOnBehalfNavigationLogicService, PeriodService}
 
 import scala.util.Try
 
 //TODO change extension to gettable/settable and remove nav methods?
 case object PensionSchemeMemberInternationalAddressPage
-    extends QuestionPageWithLTAOnlyNavigation[PensionSchemeMemberInternationalAddress] {
+    extends QuestionPageWithLTAOnlyNavigation[InternationalAddress] {
 
   override def path: JsPath = JsPath \ toString
 

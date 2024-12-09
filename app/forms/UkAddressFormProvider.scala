@@ -27,6 +27,10 @@ class UkAddressFormProvider @Inject() extends Mappings {
 
   def apply(): Form[UkAddress] = Form(
     mapping(
+      "organisation" -> optional(
+        text("pensionSchemeMemberUKAddress.error.addressLine2.required")
+          .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.addressLine2.length"))
+      ),
       "addressLine1" -> text("pensionSchemeMemberUKAddress.error.addressLine1.required")
         .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.addressLine1.length")),
       "addressLine2" -> optional(
@@ -43,7 +47,7 @@ class UkAddressFormProvider @Inject() extends Mappings {
         text("pensionSchemeMemberUKAddress.error.county.required")
           .verifying(maxLength(100, "pensionSchemeMemberUKAddress.error.county.length"))
       ),
-      "postCode"     -> text("pensionSchemeMemberUKAddress.error.postCode.required")
+      "postCode"     -> optional(text("pensionSchemeMemberUKAddress.error.postCode.required")
         .verifying(
           firstError(
             maxLength(8, "pensionSchemeMemberUKAddress.error.postCode.length"),
@@ -53,6 +57,7 @@ class UkAddressFormProvider @Inject() extends Mappings {
             )
           )
         )
+      )
     )(UkAddress.apply)(UkAddress.unapply)
   )
 }

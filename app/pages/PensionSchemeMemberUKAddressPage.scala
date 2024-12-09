@@ -16,14 +16,14 @@
 
 package pages
 
-import models.{PensionSchemeMemberUKAddress, UserAnswers}
+import models.{PensionSchemeMemberUKAddress, UkAddress, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.routes
 import models.submission.Submission
 
 //TODO Replace extension with Gettable/Settable and remove nav methods?
-case object PensionSchemeMemberUKAddressPage extends QuestionPageWithLTAOnlyNavigation[PensionSchemeMemberUKAddress] {
+case object PensionSchemeMemberUKAddressPage extends QuestionPageWithLTAOnlyNavigation[UkAddress] {
 
   override def path: JsPath = JsPath \ toString
 

@@ -19,7 +19,7 @@ package controllers
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.requests.{AddressLookupConfirmation, AddressLookupCountry, DataRequest}
-import models.{Mode, NavigationState, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, Period, StatusOfUser, UkAddress, UserAnswers}
+import models.{InternationalAddress, Mode, NavigationState, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, Period, StatusOfUser, UkAddress, UserAnswers}
 import pages.navigationObjects.ClaimOnBehalfPostALFNavigation
 import pages.{PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberResidencePage, PensionSchemeMemberTaxReferencePage, PensionSchemeMemberUKAddressPage, StatusOfUserPage}
 import play.api.i18n.I18nSupport
@@ -80,7 +80,7 @@ class AddressLookupLandingController @Inject() (
       for {
         answers       <- Future.fromTry(
                            request.userAnswers
-                             .set(PensionSchemeMemberUKAddressPage, PensionSchemeMemberUKAddress.apply(retrieveAddress))
+                             .set(PensionSchemeMemberUKAddressPage, UkAddress.apply(retrieveAddress))
                          )
         answers2       = answers.remove(PensionSchemeMemberInternationalAddressPage).get
         cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
@@ -90,7 +90,7 @@ class AddressLookupLandingController @Inject() (
         answers       <- Future.fromTry(
                            request.userAnswers.set(
                              PensionSchemeMemberInternationalAddressPage,
-                             PensionSchemeMemberInternationalAddress.apply(retrieveAddress)
+                             InternationalAddress.apply(retrieveAddress)
                            )
                          )
         answers2       = answers.remove(PensionSchemeMemberUKAddressPage).get

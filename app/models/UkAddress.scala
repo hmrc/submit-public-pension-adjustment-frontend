@@ -20,12 +20,13 @@ import models.requests.AddressLookupConfirmation
 import play.api.libs.json._
 
 case class UkAddress(
+                    organisation: Option[String],
   addressLine1: String,
   addressLine2: Option[String],
   addressLine3: Option[String],
   townOrCity: String,
   county: Option[String],
-  postCode: String
+  postCode: Option[String]
 )
 
 object UkAddress {
@@ -34,11 +35,12 @@ object UkAddress {
   def apply(addressLookupConfirmation: AddressLookupConfirmation): UkAddress = {
     val lines = addressLookupConfirmation.extractAddressLines()
     new UkAddress(
+      organisation = addressLookupConfirmation.address.organisation,
       addressLine1 = lines._1,
       addressLine2 = lines._2,
       addressLine3 = lines._3,
       townOrCity = lines._4,
-      postCode = addressLookupConfirmation.address.postcode.getOrElse(""),
+      postCode = addressLookupConfirmation.address.postcode,
       county = None
     )
   }
