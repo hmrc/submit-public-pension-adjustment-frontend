@@ -129,7 +129,7 @@ pensionSchemeDetails.checkYourAnswersLabel = cy: What is the name and tax refere
 pensionSchemeDetails.error.pensionSchemeName.required = Nodwch enw’r cynllun pensiwn
 pensionSchemeDetails.error.pensionSchemeName.length = Mae’n rhaid i enw’r cynllun pensiwn fod yn 100 o gymeriadau neu lai
 pensionSchemeDetails.error.pensionSchemeTaxReference.required = Enter the Pension Scheme Tax Reference (PSTR)
-pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = Mae’n rhaid i Gyfeirnod Treth y Cynllun Pensiwn gynnwys y llythrennau a i z a’r rhifau 0 i 9 yn unig
+pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = cy: The Pension Scheme Tax Reference (PSTR) must only include letters a to z and numbers 0 to 9
 pensionSchemeDetails.pensionSchemeName.change.hidden = Enw’r cynllun pensiwn
 
 whichPensionSchemeWillPay.title = Pa gynllun pensiwn fydd yn talu’r tâl treth?
