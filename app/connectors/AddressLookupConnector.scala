@@ -16,10 +16,10 @@
 
 package connectors
 
-import config.{ALFConfig, FrontendAppConfig}
+import config.ALFConfig
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.requests.{AddressLookupConfirmation, AddressLookupRequest}
-import play.api.{Configuration, Logging}
+import play.api.Logging
 import play.api.http.Status.{ACCEPTED, OK}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
@@ -30,15 +30,12 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class AddressLookupConnector @Inject() (
   httpClient2: HttpClientV2,
-  frontendAppConfig: FrontendAppConfig,
-  configuration: Configuration,
   ALFConfig: ALFConfig
 )(implicit ec: ExecutionContext)
     extends Logging {
 
-  lazy val baseUrl: String     = ALFConfig.baseUrl
-  lazy val startURL: String    = s"$baseUrl/api/init"
-  lazy val retrieveURL: String = s"$baseUrl/api/confirmed"
+  lazy val startURL: String    = ALFConfig.startURL
+  lazy val retrieveURL: String = ALFConfig.retrieveURL
 
   def start(
     request: AddressLookupRequest

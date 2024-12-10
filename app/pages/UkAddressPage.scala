@@ -22,6 +22,7 @@ import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.SchemeService
 
+//TODO change extension to gettable settable and remove nav methods?
 case object UkAddressPage extends QuestionPage[UkAddress] {
 
   override def path: JsPath = JsPath \ toString
@@ -30,17 +31,11 @@ case object UkAddressPage extends QuestionPage[UkAddress] {
 
   override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(UkAddressPage) match {
-      case Some(_) =>
-        val firstPstr = PSTR(
-          SchemeService.allPensionSchemeDetails(submission.calculationInputs).head.pensionSchemeTaxReference
-        )
-        controllers.routes.LegacyPensionSchemeReferenceController.onPageLoad(NormalMode, firstPstr)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(UkAddressPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, PensionSchemeMemberUKAddress, UserAnswers}
+import models.{CheckMode, PensionSchemeMemberUKAddress, UkAddress, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.PensionSchemeMemberUKAddressPage
@@ -31,8 +31,7 @@ class PensionSchemeMemberUKAddressSummarySpec extends AnyFreeSpec with Matchers 
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
-  val mockAddress = PensionSchemeMemberUKAddress("line1", None, "town", None, "AA1 1AA")
-
+  val mockAddress = UkAddress(None, "line1", None, None, "town", None, Some("AA1 1AA"))
   "row" - {
     "when user submits address, return the summary row" in {
 
@@ -50,7 +49,7 @@ class PensionSchemeMemberUKAddressSummarySpec extends AnyFreeSpec with Matchers 
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.PensionSchemeMemberUKAddressController.onPageLoad(CheckMode).url
+              routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode).url
             )
               .withVisuallyHiddenText("pensionSchemeMemberUKAddress.change.hidden")
           )

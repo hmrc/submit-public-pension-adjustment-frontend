@@ -34,6 +34,7 @@ final case class AddressLookupOptions(
   accessibilityFooterUrl: Option[String] = None,
   selectPageConfig: Option[SelectPageConfig] = None,
   confirmPageConfig: ConfirmPageConfig = ConfirmPageConfig(),
+  disableTranslations: Boolean,
   phaseFeedbackLink: Option[String] = None,
   deskProServiceName: Option[String] = None,
   showPhaseBanner: Option[Boolean] = None,

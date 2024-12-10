@@ -28,11 +28,13 @@ case object ContactNumberPage extends QuestionPage[String] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ContactNumberPage) match {
-      case _ => routes.AddressLookupRampOnController.rampOnUserAddress(NormalMode)
+      case Some(_) => routes.AddressLookupRampOnController.rampOnUserAddress(NormalMode)
+      case _       => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ContactNumberPage) match {
-      case _ => routes.AddressLookupRampOnController.rampOnUserAddress(CheckMode)
+      case Some(_) => routes.CheckYourAnswersController.onPageLoad
+      case _       => routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

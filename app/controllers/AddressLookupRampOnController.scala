@@ -16,14 +16,16 @@
 
 package controllers
 
-import config.FrontendAppConfig
+import config.ALFConfig
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{Mode, NormalMode}
-import models.requests.{AddressLookupOptions, AddressLookupRequest}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import models.requests.{AddressLookupOptions, AddressLookupRequest, TimeoutConfig}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -33,35 +35,56 @@ class AddressLookupRampOnController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
-  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   addressLookupConnector: AddressLookupConnector,
-  frontendAppConfig: FrontendAppConfig
+  ALFConfig: ALFConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
+  def existingUrlFragmentClaimOnBehalfHandler(mode: Mode): Action[AnyContent] =
+    rampOnClaimOnBehalf(mode)
+
+  def existingUrlFragmentUserAddressHandler(mode: Mode): Action[AnyContent] =
+    rampOnUserAddress(mode)
+
   def rampOnClaimOnBehalf(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      val returnURL = if (mode == NormalMode) {
-        frontendAppConfig.addressLookupReturnClaimOnBehalfNormalMode
+      implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+      val returnURL                  = if (mode == NormalMode) {
+        ALFConfig.addressLookupReturnClaimOnBehalfNormalMode
       } else {
-        frontendAppConfig.addressLookupReturnClaimOnBehalfCheckMode
+        ALFConfig.addressLookupReturnClaimOnBehalfCheckMode
       }
+      val alfRequest                 = requestBuilder(true, returnURL)
       for {
-        initialiseALF <- addressLookupConnector.start(AddressLookupRequest(options = AddressLookupOptions(returnURL)))
+        initialiseALF <- addressLookupConnector.start(alfRequest)
       } yield Redirect(initialiseALF)
     }
 
   def rampOnUserAddress(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      val returnURL = if (mode == NormalMode) {
-        frontendAppConfig.addressLookupReturnUserAddressNormalMode
+      implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+      val returnURL                  = if (mode == NormalMode) {
+        ALFConfig.addressLookupReturnUserAddressNormalMode
       } else {
-        frontendAppConfig.addressLookupReturnUserAddressCheckMode
+        ALFConfig.addressLookupReturnUserAddressCheckMode
       }
+      val alfRequest                 = requestBuilder(false, returnURL)
       for {
-        initialiseALF <- addressLookupConnector.start(AddressLookupRequest(options = AddressLookupOptions(returnURL)))
+        initialiseALF <- addressLookupConnector.start(alfRequest)
       } yield Redirect(initialiseALF)
     }
+
+  private def requestBuilder(isClaimOnBehalf: Boolean, returnURL: String): AddressLookupRequest = {
+    lazy val keepAlive = Some(ALFConfig.keepAlive)
+    AddressLookupRequest(
+      2,
+      AddressLookupOptions(
+        continueUrl = returnURL,
+        timeoutConfig = Option(TimeoutConfig(900, "", keepAlive)),
+        disableTranslations = true
+      )
+    )
+  }
 }

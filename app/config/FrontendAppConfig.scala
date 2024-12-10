@@ -41,25 +41,17 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
     s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=$safeBackUrl"
   }
 
-  val baseUrl: String                                    = configuration.get[String]("urls.base")
-  val loginUrl: String                                   = configuration.get[String]("urls.login")
-  val calculateFrontend: String                          = configuration.get[String]("urls.calculateFrontend")
-  val confidenceUpliftUrl: String                        = configuration.get[String]("urls.confidenceUplift")
-  val upliftCompletionUrl                                = configuration.get[String]("urls.upliftCompletion")
-  val upliftFailureUrl                                   = configuration.get[String]("urls.upliftFailure")
-  val landingPageLoginContinueUrl: String                = configuration.get[String]("urls.landingPageLoginContinue")
-  val requiredAuthConfidenceLevel                        = configuration.get[String]("required-auth-confidence-level")
-  val origin                                             = configuration.get[String]("origin")
-  val signOutUrl: String                                 = configuration.get[String]("urls.signOut")
-  val redirectToStartPage: String                        = configuration.get[String]("urls.redirectToStartPage")
-  val addressLookupReturnClaimOnBehalfNormalMode: String =
-    configuration.get[String]("urls.addressLookupReturnClaimOnBehalfNormalMode")
-  val addressLookupReturnClaimOnBehalfCheckMode: String  =
-    configuration.get[String]("urls.addressLookupReturnClaimOnBehalfCheckMode")
-  val addressLookupReturnUserAddressNormalMode: String   =
-    configuration.get[String]("urls.addressLookupReturnUserAddressNormalMode")
-  val addressLookupReturnUserAddressCheckMode: String    =
-    configuration.get[String]("urls.addressLookupReturnUserAddressCheckMode")
+  val baseUrl: String                     = configuration.get[String]("urls.base")
+  val loginUrl: String                    = configuration.get[String]("urls.login")
+  val calculateFrontend: String           = configuration.get[String]("urls.calculateFrontend")
+  val confidenceUpliftUrl: String         = configuration.get[String]("urls.confidenceUplift")
+  val upliftCompletionUrl                 = configuration.get[String]("urls.upliftCompletion")
+  val upliftFailureUrl                    = configuration.get[String]("urls.upliftFailure")
+  val landingPageLoginContinueUrl: String = configuration.get[String]("urls.landingPageLoginContinue")
+  val requiredAuthConfidenceLevel         = configuration.get[String]("required-auth-confidence-level")
+  val origin                              = configuration.get[String]("origin")
+  val signOutUrl: String                  = configuration.get[String]("urls.signOut")
+  val redirectToStartPage: String         = configuration.get[String]("urls.redirectToStartPage")
 
   private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
   val exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/submit-public-pension-adjustment-frontend"

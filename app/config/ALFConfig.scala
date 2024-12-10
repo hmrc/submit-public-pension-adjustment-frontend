@@ -16,11 +16,26 @@
 
 package config
 
+import play.api.Configuration
+
 import javax.inject.Inject
+import javax.inject.Singleton
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
-case class ALFConfig(baseUrl: String) {
-  @Inject
-  def this(servicesConfig: ServicesConfig) =
-    this(servicesConfig.baseUrl("alf"))
+@Singleton
+case class ALFConfig @Inject() (configuration: Configuration, servicesConfig: ServicesConfig) {
+
+  val baseUrl: String     = servicesConfig.baseUrl("alf")
+  val startURL: String    = s"$baseUrl/api/init"
+  val retrieveURL: String = s"$baseUrl/api/confirmed"
+
+  val keepAlive: String                                  = configuration.get[String]("urls.keepAlive")
+  val addressLookupReturnClaimOnBehalfNormalMode: String =
+    configuration.get[String]("urls.addressLookupReturnClaimOnBehalfNormalMode")
+  val addressLookupReturnClaimOnBehalfCheckMode: String  =
+    configuration.get[String]("urls.addressLookupReturnClaimOnBehalfCheckMode")
+  val addressLookupReturnUserAddressNormalMode: String   =
+    configuration.get[String]("urls.addressLookupReturnUserAddressNormalMode")
+  val addressLookupReturnUserAddressCheckMode: String    =
+    configuration.get[String]("urls.addressLookupReturnUserAddressCheckMode")
 }

@@ -53,8 +53,6 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
 
   val form = formProvider()
 
-  val returnURL: String = frontendAppConfig.addressLookupReturnClaimOnBehalfNormalMode
-
   def onPageLoad(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
       val preparedForm = request.userAnswers.get(PensionSchemeMemberTaxReferencePage) match {
