@@ -41,7 +41,7 @@ class AddressLookupConnector @Inject() (
 
   def start(
     request: AddressLookupRequest
-  )(implicit hc: HeaderCarrier) =
+  )(implicit hc: HeaderCarrier): Future[String] =
     httpClient2
       .post(url"$startURL")
       .withBody(Json.toJson(request))
@@ -51,7 +51,19 @@ class AddressLookupConnector @Inject() (
       .flatMap { response =>
         response.status match {
           case ACCEPTED =>
-            Future.successful(response.header("LOCATION").get)
+            response.header("LOCATION") match {
+              case Some(redirectUrl) => Future.successful(redirectUrl)
+              case None =>
+                logger.error(
+                  s"ALF post call response missing location : ${response.status}"
+                )
+                Future.failed(
+                  UpstreamErrorResponse(
+                    "ALF post call response missing location",
+                    response.status
+                  )
+                )
+            }
           case _        =>
             logger.error(
               s"Unexpected response from call from ALF : ${response.status}"
