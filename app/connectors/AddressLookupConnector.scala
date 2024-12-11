@@ -16,10 +16,11 @@
 
 package connectors
 
-import config.ALFConfig
+import config.{ALFConfig, FrontendAppConfig}
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.requests.{AddressLookupConfirmation, AddressLookupRequest}
 import play.api.Logging
+import play.api.http.HeaderNames
 import play.api.http.Status.{ACCEPTED, OK}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
@@ -30,7 +31,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class AddressLookupConnector @Inject() (
   httpClient2: HttpClientV2,
-  ALFConfig: ALFConfig
+  ALFConfig: ALFConfig,
+  frontendAppConfig: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends Logging {
 
@@ -43,6 +45,7 @@ class AddressLookupConnector @Inject() (
     httpClient2
       .post(url"$startURL")
       .withBody(Json.toJson(request))
+      .setHeader((HeaderNames.USER_AGENT, frontendAppConfig.userAgent))
       .execute[HttpResponse]
       .logFailureReason(connectorName = "`AddressLookupConnector` on start")
       .flatMap { response =>
@@ -67,6 +70,7 @@ class AddressLookupConnector @Inject() (
   )(implicit hc: HeaderCarrier): Future[AddressLookupConfirmation] =
     httpClient2
       .get(url"$retrieveURL?id=$id")
+      .setHeader((HeaderNames.USER_AGENT, frontendAppConfig.userAgent))
       .execute[HttpResponse]
       .logFailureReason(connectorName = "`AddressLookupConnector` on retrieve")
       .flatMap { response =>
