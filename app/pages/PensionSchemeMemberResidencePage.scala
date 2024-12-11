@@ -16,28 +16,13 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
-import controllers.routes
+import queries.{Gettable, Settable}
 
-import scala.util.Try
-
-//TODO change extension to gettable/settable and remove nav methods?
-case object PensionSchemeMemberResidencePage extends QuestionPage[Boolean] {
+case object PensionSchemeMemberResidencePage extends Gettable[Boolean] with Settable[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "pensionSchemeMemberResidence"
-
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeMemberResidencePage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PensionSchemeMemberResidencePage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
 
 }

@@ -22,11 +22,18 @@ class InternationalAddressPageSpec extends PageBehaviours {
 
   "InternationalAddressPage" - {
 
-    beRetrievable[InternationalAddress](InternationalAddressPage)
+    "should save address" in {
 
-    beSettable[InternationalAddress](InternationalAddressPage)
+      val updatedUserAnswers = emptyUserAnswers
+        .set(
+          InternationalAddressPage,
+          InternationalAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), "United Kingdom")
+        )
+        .get
 
-    beRemovable[InternationalAddress](InternationalAddressPage)
-
+      updatedUserAnswers.get(InternationalAddressPage) mustBe Some(
+        InternationalAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), "United Kingdom")
+      )
+    }
   }
 }

@@ -16,26 +16,14 @@
 
 package pages
 
-import models.submission.Submission
-import models.{InternationalAddress, NormalMode, PSTR, UserAnswers}
+import models.InternationalAddress
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
-import services.SchemeService
+import queries.{Gettable, Settable}
 
-//TODO change extension to gettable settable and remove nav methods?
-case object InternationalAddressPage extends QuestionPage[InternationalAddress] {
+case object InternationalAddressPage extends Gettable[InternationalAddress] with Settable[InternationalAddress] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "internationalAddress"
 
-  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
-    answers.get(InternationalAddressPage) match {
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
-    answers.get(InternationalAddressPage) match {
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
 }

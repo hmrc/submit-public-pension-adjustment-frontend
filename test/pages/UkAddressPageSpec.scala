@@ -22,11 +22,14 @@ class UkAddressPageSpec extends PageBehaviours {
 
   "UkAddressPage" - {
 
-    beRetrievable[UkAddress](UkAddressPage)
+    "should save address" in {
 
-    beSettable[UkAddress](UkAddressPage)
+      val updatedUserAnswers =
+        emptyUserAnswers.set(UkAddressPage, UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"))).get
 
-    beRemovable[UkAddress](UkAddressPage)
-
+      updatedUserAnswers.get(UkAddressPage) mustBe Some(
+        UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"))
+      )
+    }
   }
 }

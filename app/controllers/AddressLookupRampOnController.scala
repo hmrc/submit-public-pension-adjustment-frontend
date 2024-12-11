@@ -19,8 +19,8 @@ package controllers
 import config.ALFConfig
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{Mode, NormalMode}
 import models.requests.{AddressLookupOptions, AddressLookupRequest, TimeoutConfig}
+import models.{Mode, NormalMode}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -28,7 +28,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class AddressLookupRampOnController @Inject() (
   identify: IdentifierAction,
@@ -58,7 +58,7 @@ class AddressLookupRampOnController @Inject() (
       }
       val alfRequest                 = requestBuilder(true, returnURL)
       for {
-        initialiseALF <- addressLookupConnector.start(alfRequest)
+        initialiseALF <- addressLookupConnector.initialiseJourney(alfRequest)
       } yield Redirect(initialiseALF)
     }
 
@@ -72,7 +72,7 @@ class AddressLookupRampOnController @Inject() (
       }
       val alfRequest                 = requestBuilder(false, returnURL)
       for {
-        initialiseALF <- addressLookupConnector.start(alfRequest)
+        initialiseALF <- addressLookupConnector.initialiseJourney(alfRequest)
       } yield Redirect(initialiseALF)
     }
 

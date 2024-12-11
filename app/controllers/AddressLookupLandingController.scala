@@ -18,19 +18,18 @@ package controllers
 
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.requests.{AddressLookupConfirmation, AddressLookupCountry, DataRequest}
-import models.{InternationalAddress, Mode, NavigationState, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, Period, StatusOfUser, UkAddress, UserAnswers}
+import models.requests.{AddressLookupConfirmation, DataRequest}
+import models.{InternationalAddress, Mode, NavigationState, StatusOfUser, UkAddress, UserAnswers}
 import pages.navigationObjects.{ClaimOnBehalfPostALFNavigation, UserAddressPostALFNavigation}
-import pages.{AreYouAUKResidentPage, InternationalAddressPage, PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberResidencePage, PensionSchemeMemberTaxReferencePage, PensionSchemeMemberUKAddressPage, StatusOfUserPage, UkAddressPage}
+import pages._
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{ClaimOnBehalfNavigationLogicService, PeriodService, UserDataService}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
-import uk.gov.hmrc.http.HeaderCarrier
-
 import scala.util.Try
 
 @Singleton
@@ -69,8 +68,7 @@ class AddressLookupLandingController @Inject() (
       case Some(validId) =>
         for {
           retrieveAddress <- addressLookupConnector.retrieveAddress(validId)
-          getCountry       = retrieveAddress.address.country.get
-          updatedAnswers  <- addressLocaleParserClaimOnBehalf(request, retrieveAddress, getCountry)
+          updatedAnswers  <- addressLocaleParserClaimOnBehalf(request, retrieveAddress)
           cleanedAnswers   = maybeDebitLoopCleanup(updatedAnswers)
           redirectUrl      = ClaimOnBehalfPostALFNavigation.navigate(cleanedAnswers.get, request.submission, mode)
           answersWithNav   = NavigationState.save(cleanedAnswers.get, redirectUrl.url)
@@ -80,9 +78,9 @@ class AddressLookupLandingController @Inject() (
 
   private def addressLocaleParserClaimOnBehalf(
     request: DataRequest[AnyContent],
-    retrieveAddress: AddressLookupConfirmation,
-    getCountry: AddressLookupCountry
-  ) =
+    retrieveAddress: AddressLookupConfirmation
+  ) = {
+    val getCountry = retrieveAddress.address.country.get
     if (getCountry.code.equals("GB")) {
       for {
         answers       <- Future.fromTry(
@@ -104,6 +102,7 @@ class AddressLookupLandingController @Inject() (
         cleanedAnswers = answers2.remove(PensionSchemeMemberResidencePage)
       } yield cleanedAnswers
     }
+  }
 
   private def userAddressHandlerFactory(id: Option[String], request: DataRequest[AnyContent], mode: Mode)(implicit
     hc: HeaderCarrier
@@ -114,8 +113,7 @@ class AddressLookupLandingController @Inject() (
       case Some(validId) =>
         for {
           retrieveAddress <- addressLookupConnector.retrieveAddress(validId)
-          getCountry       = retrieveAddress.address.country.get
-          updatedAnswers  <- addressLocaleParserUserAddress(request, retrieveAddress, getCountry)
+          updatedAnswers  <- addressLocaleParserUserAddress(request, retrieveAddress)
           redirectUrl      = UserAddressPostALFNavigation.navigate(request.submission, mode)
           answersWithNav   = NavigationState.save(updatedAnswers.get, redirectUrl.url)
           _               <- userDataService.set(answersWithNav)
@@ -124,9 +122,9 @@ class AddressLookupLandingController @Inject() (
 
   private def addressLocaleParserUserAddress(
     request: DataRequest[AnyContent],
-    retrieveAddress: AddressLookupConfirmation,
-    getCountry: AddressLookupCountry
-  ) =
+    retrieveAddress: AddressLookupConfirmation
+  ) = {
+    val getCountry = retrieveAddress.address.country.get
     if (getCountry.code.equals("GB")) {
       for {
         answers       <- Future.fromTry(
@@ -148,6 +146,7 @@ class AddressLookupLandingController @Inject() (
         cleanedAnswers = answers2.remove(AreYouAUKResidentPage)
       } yield cleanedAnswers
     }
+  }
 
   private def maybeDebitLoopCleanup(updatedAnswers: Try[UserAnswers]) = {
     val periodsToCleanup = PeriodService.allInDateRemedyPeriods

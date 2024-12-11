@@ -39,7 +39,7 @@ class AddressLookupConnector @Inject() (
   lazy val startURL: String    = ALFConfig.startURL
   lazy val retrieveURL: String = ALFConfig.retrieveURL
 
-  def start(
+  def initialiseJourney(
     request: AddressLookupRequest
   )(implicit hc: HeaderCarrier): Future[String] =
     httpClient2
@@ -53,7 +53,7 @@ class AddressLookupConnector @Inject() (
           case ACCEPTED =>
             response.header("LOCATION") match {
               case Some(redirectUrl) => Future.successful(redirectUrl)
-              case None =>
+              case None              =>
                 logger.error(
                   s"ALF post call response missing location : ${response.status}"
                 )

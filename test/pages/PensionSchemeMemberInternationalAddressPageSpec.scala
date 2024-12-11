@@ -22,10 +22,18 @@ class PensionSchemeMemberInternationalAddressPageSpec extends PageBehaviours {
 
   "PensionSchemeMemberInternationalAddressPage" - {
 
-    beRetrievable[InternationalAddress](PensionSchemeMemberInternationalAddressPage)
+    "should save address" in {
 
-    beSettable[InternationalAddress](PensionSchemeMemberInternationalAddressPage)
+      val updatedUserAnswers = emptyUserAnswers
+        .set(
+          PensionSchemeMemberInternationalAddressPage,
+          InternationalAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), "United Kingdom")
+        )
+        .get
 
-    beRemovable[InternationalAddress](PensionSchemeMemberInternationalAddressPage)
+      updatedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) mustBe Some(
+        InternationalAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), "United Kingdom")
+      )
+    }
   }
 }

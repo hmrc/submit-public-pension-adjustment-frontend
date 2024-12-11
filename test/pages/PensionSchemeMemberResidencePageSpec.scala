@@ -20,10 +20,11 @@ class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
   "PensionSchemeMemberResidencePage" - {
 
-    beRetrievable[Boolean](PensionSchemeMemberResidencePage)
+    "should save residence" in {
 
-    beSettable[Boolean](PensionSchemeMemberResidencePage)
+      val updatedUserAnswers = emptyUserAnswers.set(PensionSchemeMemberResidencePage, true).get
 
-    beRemovable[Boolean](PensionSchemeMemberResidencePage)
+      updatedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe Some(true)
+    }
   }
 }

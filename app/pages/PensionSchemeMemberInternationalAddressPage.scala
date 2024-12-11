@@ -16,39 +16,16 @@
 
 package pages
 
-import models.{InternationalAddress, UserAnswers}
+import models.InternationalAddress
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
-import controllers.routes
-import models.submission.Submission
+import queries.{Gettable, Settable}
 
-import scala.util.Try
-
-//TODO change extension to gettable/settable and remove nav methods?
 case object PensionSchemeMemberInternationalAddressPage
-    extends QuestionPageWithLTAOnlyNavigation[InternationalAddress] {
+    extends Gettable[InternationalAddress]
+    with Settable[InternationalAddress] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "pensionSchemeMemberInternationalAddress"
 
-  override def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberInternationalAddressPage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberInternationalAddressPage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberInternationalAddressPage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberInternationalAddressPage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
 }

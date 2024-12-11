@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, PensionSchemeMemberUKAddress, UkAddress, UserAnswers}
+import models.{CheckMode, UkAddress, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.PensionSchemeMemberUKAddressPage

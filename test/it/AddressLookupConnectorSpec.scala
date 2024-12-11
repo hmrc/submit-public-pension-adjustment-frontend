@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package it
 
 import base.SpecBase
@@ -9,7 +25,7 @@ import play.api.Application
 import play.api.http.Status.ACCEPTED
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.running
-import uk.gov.hmrc.http.{HeaderCarrier}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.util.Try
 
@@ -22,30 +38,31 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
       .configure("microservice.services.alf.port" -> server.port)
       .build()
 
-  lazy val alfRequest: AddressLookupRequest = AddressLookupRequest(2,
+  lazy val alfRequest: AddressLookupRequest = AddressLookupRequest(
+    2,
     AddressLookupOptions(
       continueUrl = "/rampOffUrl",
       timeoutConfig = Some(TimeoutConfig(900, "/timeOut", Some("/keepalive"))),
       disableTranslations = true
-    ))
+    )
+  )
 
-
-  "start" - {
+  "initialiseJourney" - {
 
     "must return a result when the server responds with Accepted" in {
       val app = application
       running(app) {
 
-        val url = "/api/init"
+        val url       = "/api/init"
         val connector = app.injector.instanceOf[AddressLookupConnector]
         server.stubFor(
           post(urlEqualTo(url))
             .willReturn(aResponse.withStatus(ACCEPTED).withHeader("LOCATION", "/some-redirectUrl"))
         )
 
-        val result = connector.start(alfRequest).futureValue
+        val result = connector.initialiseJourney(alfRequest).futureValue
 
-        result mustBe ("/some-redirectUrl")
+        result mustBe "/some-redirectUrl"
       }
     }
 
@@ -53,14 +70,14 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
       val app = application
       running(app) {
 
-        val url = "/api/init"
+        val url       = "/api/init"
         val connector = app.injector.instanceOf[AddressLookupConnector]
         server.stubFor(
           post(urlEqualTo(url))
             .willReturn(aResponse.withStatus(500))
         )
 
-        val result = Try(connector.start(alfRequest).futureValue)
+        val result = Try(connector.initialiseJourney(alfRequest).futureValue)
 
         result.isFailure mustBe true
       }
@@ -70,14 +87,14 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
       val app = application
       running(app) {
 
-        val url = "/api/init"
+        val url       = "/api/init"
         val connector = app.injector.instanceOf[AddressLookupConnector]
         server.stubFor(
           post(urlEqualTo(url))
             .willReturn(aResponse.withStatus(ACCEPTED))
         )
 
-        val result = Try(connector.start(alfRequest).futureValue)
+        val result = Try(connector.initialiseJourney(alfRequest).futureValue)
 
         result.isFailure mustBe true
       }
@@ -105,7 +122,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
       val app = application
       running(app) {
 
-        val url = "/api/confirmed?id=1738"
+        val url       = "/api/confirmed?id=1738"
         val connector = app.injector.instanceOf[AddressLookupConnector]
         server.stubFor(
           get(urlEqualTo(url))
@@ -132,7 +149,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
       val app = application
       running(app) {
 
-        val url = "/api/confirmed?id=1738"
+        val url       = "/api/confirmed?id=1738"
         val connector = app.injector.instanceOf[AddressLookupConnector]
         server.stubFor(
           get(urlEqualTo(url))

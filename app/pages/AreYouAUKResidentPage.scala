@@ -16,27 +16,13 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
+import queries.{Gettable, Settable}
 
-import scala.util.Try
-
-//TODO remove extension and change to gettable settable?
-case object AreYouAUKResidentPage extends QuestionPage[Boolean] {
+case object AreYouAUKResidentPage extends Gettable[Boolean] with Settable[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "areYouAUKResident"
-
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(AreYouAUKResidentPage) match {
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(AreYouAUKResidentPage) match {
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
 
 }

@@ -22,10 +22,15 @@ class PensionSchemeMemberUKAddressPageSpec extends PageBehaviours {
 
   "PensionSchemeMemberUKAddressPage" - {
 
-    beRetrievable[UkAddress](PensionSchemeMemberUKAddressPage)
+    "should save address" in {
 
-    beSettable[UkAddress](PensionSchemeMemberUKAddressPage)
+      val updatedUserAnswers = emptyUserAnswers
+        .set(PensionSchemeMemberUKAddressPage, UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ")))
+        .get
 
-    beRemovable[UkAddress](PensionSchemeMemberUKAddressPage)
+      updatedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe Some(
+        UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"))
+      )
+    }
   }
 }

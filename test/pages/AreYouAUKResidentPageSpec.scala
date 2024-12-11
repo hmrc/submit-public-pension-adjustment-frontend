@@ -20,11 +20,11 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
 
   "AreYouAUKResidentPage" - {
 
-    beRetrievable[Boolean](AreYouAUKResidentPage)
+    "should save residence" in {
 
-    beSettable[Boolean](AreYouAUKResidentPage)
+      val updatedUserAnswers = emptyUserAnswers.set(AreYouAUKResidentPage, true).get
 
-    beRemovable[Boolean](AreYouAUKResidentPage)
-
+      updatedUserAnswers.get(AreYouAUKResidentPage) mustBe Some(true)
+    }
   }
 }

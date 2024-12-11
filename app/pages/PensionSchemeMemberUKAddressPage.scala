@@ -16,36 +16,15 @@
 
 package pages
 
-import models.{PensionSchemeMemberUKAddress, UkAddress, UserAnswers}
+import models.UkAddress
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
-import controllers.routes
-import models.submission.Submission
 
-//TODO Replace extension with Gettable/Settable and remove nav methods?
-case object PensionSchemeMemberUKAddressPage extends QuestionPageWithLTAOnlyNavigation[UkAddress] {
+import queries.{Gettable, Settable}
+
+case object PensionSchemeMemberUKAddressPage extends Gettable[UkAddress] with Settable[UkAddress] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "pensionSchemeMemberUKAddress"
 
-  override def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberUKAddressPage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberUKAddressPage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberUKAddressPage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberUKAddressPage) match {
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
-    }
 }
