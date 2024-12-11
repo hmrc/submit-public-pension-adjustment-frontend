@@ -128,8 +128,8 @@ pensionSchemeDetails.pensionSchemeTaxReference.hint = You may find this on your 
 pensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the private pension scheme paying the tax charge?
 pensionSchemeDetails.error.pensionSchemeName.required = Enter the name of the pension scheme
 pensionSchemeDetails.error.pensionSchemeName.length = The name of the pension scheme must be 100 characters or fewer
-pensionSchemeDetails.error.pensionSchemeTaxReference.required = cy: Enter the Pension Scheme Tax Reference (PSTR)
-pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = cy: The Pension Scheme Tax Reference (PSTR) must only include letters a to z and numbers 0 to 9
+pensionSchemeDetails.error.pensionSchemeTaxReference.required = Enter the Pension Scheme Tax Reference (PSTR)
+pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = The Pension Scheme Tax Reference (PSTR) must only include letters a to z and numbers 0 to 9
 pensionSchemeDetails.change.hidden = name and tax reference of the private pension scheme paying the tax charge
 
 whichPensionSchemeWillPay.title = Which pension scheme will pay the tax charge?
