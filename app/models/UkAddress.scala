@@ -26,7 +26,8 @@ case class UkAddress(
   addressLine3: Option[String],
   townOrCity: String,
   county: Option[String],
-  postCode: Option[String]
+  postCode: Option[String],
+  country: Option[String]
 )
 
 object UkAddress {
@@ -41,7 +42,8 @@ object UkAddress {
       addressLine3 = lines._3,
       townOrCity = lines._4,
       postCode = addressLookupConfirmation.address.postcode,
-      county = None
+      county = None,
+      country = Some(addressLookupConfirmation.address.country.name)
     )
   }
 }

@@ -32,7 +32,7 @@ class InternationalAddressSpec extends SpecBase with Matchers {
           organisation = None,
           lines = lines,
           postcode = Some("postcode"),
-          country = Some(AddressLookupCountry("GB", "United Kingdom"))
+          country = AddressLookupCountry("GB", "United Kingdom")
         )
       )
 

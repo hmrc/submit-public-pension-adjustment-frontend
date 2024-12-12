@@ -80,7 +80,8 @@ trait ModelGenerators {
         townOrCity   <- arbitrary[String]
         county       <- arbitrary[Option[String]]
         postCode     <- arbitrary[Option[String]]
-      } yield UkAddress(organisation, addressLine1, addressLine2, addressLine3, townOrCity, county, postCode)
+        country      <- arbitrary[Option[String]]
+      } yield UkAddress(organisation, addressLine1, addressLine2, addressLine3, townOrCity, county, postCode, country)
     }
 
   implicit lazy val arbitraryInternationalAddress: Arbitrary[InternationalAddress] =

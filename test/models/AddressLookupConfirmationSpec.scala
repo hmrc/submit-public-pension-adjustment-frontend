@@ -17,7 +17,7 @@
 package models
 
 import base.SpecBase
-import models.requests.{AddressLookupAddress, AddressLookupConfirmation}
+import models.requests.{AddressLookupAddress, AddressLookupConfirmation, AddressLookupCountry}
 import org.scalatest.matchers.must.Matchers
 
 class AddressLookupConfirmationSpec extends SpecBase with Matchers {
@@ -28,7 +28,12 @@ class AddressLookupConfirmationSpec extends SpecBase with Matchers {
       AddressLookupConfirmation(
         auditRef = "ref",
         id = Some("id"),
-        address = AddressLookupAddress(organisation = None, lines = lines, postcode = Some("postcode"), country = None)
+        address = AddressLookupAddress(
+          organisation = None,
+          lines = lines,
+          postcode = Some("postcode"),
+          country = AddressLookupCountry("GB", "United Kingdom")
+        )
       )
 
     "extract address lines" - {

@@ -106,7 +106,9 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         "Test User",
         None,
         Some(LocalDate.of(1968, 11, 30)),
-        Some(UkAddress(None, "Test Address line 1", None, None, "Test city", Some("Test county"), Some("AB1 2CD"))),
+        Some(
+          UkAddress(None, "Test Address line 1", None, None, "Test city", Some("Test county"), Some("AB1 2CD"), None)
+        ),
         None,
         None,
         None,

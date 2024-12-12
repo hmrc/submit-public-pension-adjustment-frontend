@@ -17,7 +17,7 @@
 package models
 
 import base.SpecBase
-import models.requests.{AddressLookupAddress, AddressLookupConfirmation}
+import models.requests.{AddressLookupAddress, AddressLookupConfirmation, AddressLookupCountry}
 import org.scalatest.matchers.must.Matchers
 
 class UkAddressSpec extends SpecBase with Matchers {
@@ -28,7 +28,12 @@ class UkAddressSpec extends SpecBase with Matchers {
       AddressLookupConfirmation(
         auditRef = "ref",
         id = Some("id"),
-        address = AddressLookupAddress(organisation = None, lines = lines, postcode = Some("postcode"), country = None)
+        address = AddressLookupAddress(
+          organisation = None,
+          lines = lines,
+          postcode = Some("postcode"),
+          country = AddressLookupCountry("GB", "United Kingdom")
+        )
       )
 
     "extract address lines" - {
@@ -42,19 +47,38 @@ class UkAddressSpec extends SpecBase with Matchers {
           Some("line3"),
           "line4",
           None,
-          Some("postcode")
+          Some("postcode"),
+          Some("United Kingdom")
         )
       }
 
       "three address lines are returned" in {
         val confirmation = addressLookupConfirmation(List("line1", "line2", "line3"))
         UkAddress
-          .apply(confirmation) mustBe UkAddress(None, "line1", Some("line2"), None, "line3", None, Some("postcode"))
+          .apply(confirmation) mustBe UkAddress(
+          None,
+          "line1",
+          Some("line2"),
+          None,
+          "line3",
+          None,
+          Some("postcode"),
+          Some("United Kingdom")
+        )
       }
 
       "two address lines are returned" in {
         val confirmation = addressLookupConfirmation(List("line1", "line2"))
-        UkAddress.apply(confirmation) mustBe UkAddress(None, "line1", None, None, "line2", None, Some("postcode"))
+        UkAddress.apply(confirmation) mustBe UkAddress(
+          None,
+          "line1",
+          None,
+          None,
+          "line2",
+          None,
+          Some("postcode"),
+          Some("United Kingdom")
+        )
       }
     }
   }

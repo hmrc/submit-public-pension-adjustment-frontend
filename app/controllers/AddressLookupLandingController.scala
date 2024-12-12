@@ -64,8 +64,11 @@ class AddressLookupLandingController @Inject() (
   ) =
     id match {
       case None          =>
+        // TODO remove
+        println("===================")
         Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None)))
       case Some(validId) =>
+        println("===================")
         for {
           retrieveAddress <- addressLookupConnector.retrieveAddress(validId)
           updatedAnswers  <- addressLocaleParserClaimOnBehalf(request, retrieveAddress)
@@ -80,7 +83,7 @@ class AddressLookupLandingController @Inject() (
     request: DataRequest[AnyContent],
     retrieveAddress: AddressLookupConfirmation
   ) = {
-    val getCountry = retrieveAddress.address.country.get
+    val getCountry = retrieveAddress.address.country
     if (getCountry.code.equals("GB")) {
       for {
         answers       <- Future.fromTry(
@@ -124,7 +127,7 @@ class AddressLookupLandingController @Inject() (
     request: DataRequest[AnyContent],
     retrieveAddress: AddressLookupConfirmation
   ) = {
-    val getCountry = retrieveAddress.address.country.get
+    val getCountry = retrieveAddress.address.country
     if (getCountry.code.equals("GB")) {
       for {
         answers       <- Future.fromTry(

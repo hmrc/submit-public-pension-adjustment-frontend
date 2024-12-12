@@ -25,8 +25,7 @@ case class PensionSchemeMemberInternationalAddress(
   addressLine3: Option[String],
   townOrCity: String,
   stateOrRegion: Option[String],
-  postCode: Option[String],
-  country: String
+  postCode: Option[String]
 )
 
 object PensionSchemeMemberInternationalAddress {
@@ -40,8 +39,7 @@ object PensionSchemeMemberInternationalAddress {
       addressLine3 = lines._3,
       townOrCity = lines._4,
       postCode = addressLookupConfirmation.address.postcode,
-      stateOrRegion = None,
-      country = addressLookupConfirmation.address.country.get.name
+      stateOrRegion = None
     )
   }
 }

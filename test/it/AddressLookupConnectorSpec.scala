@@ -17,17 +17,15 @@
 package it
 
 import base.SpecBase
-import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, get, ok, post, urlEqualTo}
+import com.github.tomakehurst.wiremock.client.WireMock._
 import connectors.{AddressLookupConnector, WireMockHelper}
-import models.requests.{AddressLookupAddress, AddressLookupConfirmation, AddressLookupCountry, AddressLookupOptions, AddressLookupRequest, TimeoutConfig}
+import models.requests._
 import org.scalatest.matchers.must.Matchers
 import play.api.Application
 import play.api.http.Status.ACCEPTED
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.running
 import uk.gov.hmrc.http.HeaderCarrier
-
-import scala.util.Try
 
 class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Matchers {
 
@@ -77,9 +75,9 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
             .willReturn(aResponse.withStatus(500))
         )
 
-        val result = Try(connector.initialiseJourney(alfRequest).futureValue)
+        val result = connector.initialiseJourney(alfRequest).failed.futureValue
 
-        result.isFailure mustBe true
+        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
 
@@ -94,9 +92,9 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
             .willReturn(aResponse.withStatus(ACCEPTED))
         )
 
-        val result = Try(connector.initialiseJourney(alfRequest).futureValue)
+        val result = connector.initialiseJourney(alfRequest).failed.futureValue
 
-        result.isFailure mustBe true
+        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
   }
@@ -138,7 +136,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
             None,
             List("64 Zoo Lane", "Anyplace", "Anytown"),
             Some("ZZ1 1ZZ"),
-            Some(AddressLookupCountry("GB", "United Kingdom"))
+            AddressLookupCountry("GB", "United Kingdom")
           )
         )
       }
@@ -156,9 +154,9 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
             .willReturn(aResponse.withStatus(500))
         )
 
-        val result = Try(connector.retrieveAddress("1738").futureValue)
+        val result = connector.retrieveAddress("1738").failed.futureValue
 
-        result.isFailure mustBe true
+        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
   }

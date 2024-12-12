@@ -43,7 +43,7 @@ object InternationalAddress {
       townOrCity = lines._4,
       postCode = addressLookupConfirmation.address.postcode,
       stateOrRegion = None,
-      country = addressLookupConfirmation.address.country.get.name
+      country = addressLookupConfirmation.address.country.name
     )
   }
 }

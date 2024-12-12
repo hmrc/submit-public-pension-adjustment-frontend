@@ -25,11 +25,11 @@ class PensionSchemeMemberUKAddressPageSpec extends PageBehaviours {
     "should save address" in {
 
       val updatedUserAnswers = emptyUserAnswers
-        .set(PensionSchemeMemberUKAddressPage, UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ")))
+        .set(PensionSchemeMemberUKAddressPage, UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), None))
         .get
 
       updatedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe Some(
-        UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"))
+        UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), None)
       )
     }
   }

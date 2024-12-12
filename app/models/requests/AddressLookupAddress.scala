@@ -22,7 +22,7 @@ case class AddressLookupAddress(
   organisation: Option[String],
   lines: List[String],
   postcode: Option[String],
-  country: Option[AddressLookupCountry]
+  country: AddressLookupCountry
 )
 
 object AddressLookupAddress {

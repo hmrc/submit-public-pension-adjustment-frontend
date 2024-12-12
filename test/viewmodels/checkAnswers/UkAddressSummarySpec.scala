@@ -31,7 +31,7 @@ class UkAddressSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
-  val mockAddress = UkAddress(None, "line1", None, None, "town", None, Some("AA1 1AA"))
+  val mockAddress = UkAddress(None, "line1", None, None, "town", None, Some("AA1 1AA"), Some("United Kingdom"))
 
   "row" - {
     "when user submits address, return the summary row" in {

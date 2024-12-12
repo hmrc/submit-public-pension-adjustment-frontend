@@ -25,10 +25,12 @@ class UkAddressPageSpec extends PageBehaviours {
     "should save address" in {
 
       val updatedUserAnswers =
-        emptyUserAnswers.set(UkAddressPage, UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"))).get
+        emptyUserAnswers
+          .set(UkAddressPage, UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), Some("United Kingdom")))
+          .get
 
       updatedUserAnswers.get(UkAddressPage) mustBe Some(
-        UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"))
+        UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), Some("United Kingdom"))
       )
     }
   }

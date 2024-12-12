@@ -16,11 +16,11 @@
 
 package controllers
 
-import config.ALFConfig
+import config.{ALFConfig, FrontendAppConfig}
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.requests.{AddressLookupOptions, AddressLookupRequest, TimeoutConfig}
 import models.{Mode, NormalMode}
+import models.requests.{AddressLookupOptions, AddressLookupRequest, TimeoutConfig}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -28,7 +28,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class AddressLookupRampOnController @Inject() (
   identify: IdentifierAction,
@@ -37,6 +37,7 @@ class AddressLookupRampOnController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   addressLookupConnector: AddressLookupConnector,
+  frontendAppConfig: FrontendAppConfig,
   ALFConfig: ALFConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
@@ -76,15 +77,13 @@ class AddressLookupRampOnController @Inject() (
       } yield Redirect(initialiseALF)
     }
 
-  private def requestBuilder(isClaimOnBehalf: Boolean, returnURL: String): AddressLookupRequest = {
-    lazy val keepAlive = Some(ALFConfig.keepAlive)
+  private def requestBuilder(isClaimOnBehalf: Boolean, returnURL: String): AddressLookupRequest =
     AddressLookupRequest(
       2,
       AddressLookupOptions(
         continueUrl = returnURL,
-        timeoutConfig = Option(TimeoutConfig(900, "", keepAlive)),
+        timeoutConfig = Option(TimeoutConfig(900, frontendAppConfig.signOutUrl, Some(ALFConfig.keepAlive))),
         disableTranslations = true
       )
     )
-  }
 }
