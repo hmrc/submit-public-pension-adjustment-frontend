@@ -31,15 +31,4 @@ case class PensionSchemeMemberUKAddress(
 object PensionSchemeMemberUKAddress {
   implicit val format = Json.format[PensionSchemeMemberUKAddress]
 
-  def apply(addressLookupConfirmation: AddressLookupConfirmation): PensionSchemeMemberUKAddress = {
-    val lines = addressLookupConfirmation.extractAddressLines()
-    new PensionSchemeMemberUKAddress(
-      addressLine1 = lines._1,
-      addressLine2 = lines._2,
-      addressLine3 = lines._3,
-      townOrCity = lines._4,
-      postCode = addressLookupConfirmation.address.postcode.getOrElse(""),
-      county = None
-    )
-  }
 }
