@@ -40,8 +40,8 @@ class AddressLookupRampOnControllerSpec extends SpecBase with MockitoSugar {
     routes.AddressLookupRampOnController.existingUrlFragmentUserAddressHandler(NormalMode).url
   lazy val claimOnBehalfRouteNormalMode = routes.AddressLookupRampOnController.rampOnClaimOnBehalf(NormalMode).url
   lazy val claimOnBehalfRouteCheckMode  = routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode).url
-  lazy val userAddressRouteNormalMode   = routes.AddressLookupRampOnController.rampOnClaimOnBehalf(NormalMode).url
-  lazy val userAddressRouteCheckMode    = routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode).url
+  lazy val userAddressRouteNormalMode   = routes.AddressLookupRampOnController.rampOnUserAddress(NormalMode).url
+  lazy val userAddressRouteCheckMode    = routes.AddressLookupRampOnController.rampOnUserAddress(CheckMode).url
 
   "AddressLookupRampOnController" - {
 

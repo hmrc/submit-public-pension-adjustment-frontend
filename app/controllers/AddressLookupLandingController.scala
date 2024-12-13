@@ -64,11 +64,8 @@ class AddressLookupLandingController @Inject() (
   ) =
     id match {
       case None          =>
-        // TODO remove
-        println("===================")
         Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None)))
       case Some(validId) =>
-        println("===================")
         for {
           retrieveAddress <- addressLookupConnector.retrieveAddress(validId)
           updatedAnswers  <- addressLocaleParserClaimOnBehalf(request, retrieveAddress)

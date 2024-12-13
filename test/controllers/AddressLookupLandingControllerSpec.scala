@@ -18,18 +18,22 @@ package controllers
 
 import base.SpecBase
 import connectors.AddressLookupConnector
-import models.NormalMode
+import models.calculation.response.TaxYearScheme
 import models.requests.{AddressLookupAddress, AddressLookupConfirmation, AddressLookupCountry}
+import models.submission.Submission
+import models.{Done, InternationalAddress, NormalMode, PensionSchemeDetails, Period, StatusOfUser, UkAddress, UserAnswers, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{verify, when}
+import org.mockito.captor.ArgCaptor
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ClaimOnBehalfPage
+import pages._
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
@@ -79,9 +83,31 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
           "store uk address to PensionSchemeMemberUKAddressPage and cleanup other answers" in {
 
+            val userAnswers = emptyUserAnswers
+              .set(ClaimOnBehalfPage, true)
+              .get
+              .set(PensionSchemeMemberResidencePage, false)
+              .get
+              .set(
+                PensionSchemeMemberInternationalAddressPage,
+                InternationalAddress(
+                  None,
+                  "l1",
+                  None,
+                  None,
+                  "town",
+                  None,
+                  None,
+                  "Antarctica"
+                )
+              )
+              .get
+
             val mockAddressLookupConnector = mock[AddressLookupConnector]
             val mockUserDataService        = mock[UserDataService]
+            val userAnswersCaptor          = ArgCaptor[UserAnswers]
 
+            when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
             when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
               AddressLookupConfirmation(
                 "someAuditRef",
@@ -100,12 +126,12 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
             val application =
               applicationBuilder(
-                userAnswers = Some(emptyUserAnswers.set(ClaimOnBehalfPage, true).get),
+                userAnswers = Some(userAnswers),
                 submission = Some(submission)
               )
                 .overrides(
-                  bind[AddressLookupConnector].toInstance(mockAddressLookupConnector),
-                  bind[UserDataService].toInstance(mockUserDataService)
+                  bind[UserDataService].toInstance(mockUserDataService),
+                  bind[AddressLookupConnector].toInstance(mockAddressLookupConnector)
                 )
                 .build()
 
@@ -115,16 +141,191 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
               val result = route(application, request).value
 
-              // TO FINISH
+              status(result) mustEqual SEE_OTHER
+              verify(mockUserDataService).set(userAnswersCaptor)(any())
+              val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
+              capturedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe Some(
+                UkAddress(
+                  None,
+                  "UK Address Line 1",
+                  Some("UK Address Line 1"),
+                  Some("UK Address Line 3"),
+                  "town",
+                  None,
+                  Some("ZZ1 1ZZ"),
+                  Some("United Kingdom")
+                )
+              )
+              capturedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe None
+              capturedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) mustBe None
             }
-
           }
 
         }
 
         "when international address retrieved" - {
 
-          "store uk address to PensionSchemeMemberInternationalAddressPage and cleanup other answers" in {}
+          "store uk address to PensionSchemeMemberInternationalAddressPage and cleanup other answers" in {
+
+            val userAnswers = emptyUserAnswers
+              .set(ClaimOnBehalfPage, true)
+              .get
+              .set(PensionSchemeMemberResidencePage, true)
+              .get
+              .set(
+                PensionSchemeMemberUKAddressPage,
+                UkAddress(
+                  None,
+                  "UK Address Line 1",
+                  Some("UK Address Line 1"),
+                  Some("UK Address Line 3"),
+                  "town",
+                  None,
+                  Some("ZZ1 1ZZ"),
+                  Some("United Kingdom")
+                )
+              )
+              .get
+
+            val mockAddressLookupConnector = mock[AddressLookupConnector]
+            val mockUserDataService        = mock[UserDataService]
+            val userAnswersCaptor          = ArgCaptor[UserAnswers]
+
+            when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+            when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+              AddressLookupConfirmation(
+                "someAuditRef",
+                Some("someId"),
+                AddressLookupAddress(
+                  None,
+                  List("Address Line 1", "Address Line 1", "Address Line 3", "town"),
+                  None,
+                  AddressLookupCountry(
+                    "AQ",
+                    "Antarctica"
+                  )
+                )
+              )
+            )
+
+            val application =
+              applicationBuilder(
+                userAnswers = Some(userAnswers),
+                submission = Some(submission)
+              )
+                .overrides(
+                  bind[UserDataService].toInstance(mockUserDataService),
+                  bind[AddressLookupConnector].toInstance(mockAddressLookupConnector)
+                )
+                .build()
+
+            running(application) {
+
+              val request = FakeRequest(GET, claimOnBehalfRouteNormalModeWithId)
+
+              val result = route(application, request).value
+
+              status(result) mustEqual SEE_OTHER
+              verify(mockUserDataService).set(userAnswersCaptor)(any())
+              val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
+              capturedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) mustBe Some(
+                InternationalAddress(
+                  None,
+                  "Address Line 1",
+                  Some("Address Line 1"),
+                  Some("Address Line 3"),
+                  "town",
+                  None,
+                  None,
+                  "Antarctica"
+                )
+              )
+              capturedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe None
+              capturedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe None
+            }
+          }
+        }
+
+        "should cleanup debit loop pages when status of user page == legal representative" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(ClaimOnBehalfPage, true)
+            .get
+            .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
+            .get
+            .set(WhoWillPayPage(Period._2020), WhoWillPay.PensionScheme)
+            .get
+            .set(WhichPensionSchemeWillPayPage(Period._2020), "scheme")
+            .get
+            .set(
+              PensionSchemeDetailsPage(Period._2020),
+              PensionSchemeDetails(
+                "schemeName",
+                "pstr"
+              )
+            )
+            .get
+            .set(AskedPensionSchemeToPayTaxChargePage(Period._2020), true)
+            .get
+            .set(WhenWillYouAskPensionSchemeToPayPage(Period._2020), WhenWillYouAskPensionSchemeToPay.JanToMar24)
+            .get
+            .set(WhenDidYouAskPensionSchemeToPayPage(Period._2020), LocalDate.of(2019, 7, 31))
+            .get
+            .set(SchemeElectionConsentPage(Period._2020), true)
+            .get
+            .set(WhoWillPayPage(Period._2021), WhoWillPay.PensionScheme)
+            .get
+
+          val mockAddressLookupConnector = mock[AddressLookupConnector]
+          val mockUserDataService        = mock[UserDataService]
+          val userAnswersCaptor          = ArgCaptor[UserAnswers]
+
+          when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+          when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+            AddressLookupConfirmation(
+              "someAuditRef",
+              Some("someId"),
+              AddressLookupAddress(
+                None,
+                List("UK Address Line 1", "UK Address Line 1", "UK Address Line 3", "town"),
+                Some("ZZ1 1ZZ"),
+                AddressLookupCountry(
+                  "GB",
+                  "United Kingdom"
+                )
+              )
+            )
+          )
+
+          val application =
+            applicationBuilder(
+              userAnswers = Some(userAnswers),
+              submission = Some(submission)
+            )
+              .overrides(
+                bind[UserDataService].toInstance(mockUserDataService),
+                bind[AddressLookupConnector].toInstance(mockAddressLookupConnector)
+              )
+              .build()
+
+          running(application) {
+
+            val request = FakeRequest(GET, claimOnBehalfRouteNormalModeWithId)
+
+            val result = route(application, request).value
+
+            status(result) mustEqual SEE_OTHER
+            verify(mockUserDataService).set(userAnswersCaptor)(any())
+            val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
+            capturedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe None
+            capturedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2020)) mustBe None
+            capturedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) mustBe None
+            capturedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2020)) mustBe None
+            capturedUserAnswers.get(WhenWillYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
+            capturedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
+            capturedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) mustBe None
+            capturedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe None
+          }
         }
       }
     }
@@ -159,13 +360,174 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
         "when uk address retrieved" - {
 
-          "store uk address to UKAddressPage and cleanup other answers" in {}
+          "store uk address to UKAddressPage and cleanup other answers" in {
 
+            val userAnswers = emptyUserAnswers
+              .set(ClaimOnBehalfPage, true)
+              .get
+              .set(AreYouAUKResidentPage, false)
+              .get
+              .set(
+                InternationalAddressPage,
+                InternationalAddress(
+                  None,
+                  "l1",
+                  None,
+                  None,
+                  "town",
+                  None,
+                  None,
+                  "Antarctica"
+                )
+              )
+              .get
+
+            val mockAddressLookupConnector = mock[AddressLookupConnector]
+            val mockUserDataService        = mock[UserDataService]
+            val userAnswersCaptor          = ArgCaptor[UserAnswers]
+
+            when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+            when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+              AddressLookupConfirmation(
+                "someAuditRef",
+                Some("someId"),
+                AddressLookupAddress(
+                  None,
+                  List("UK Address Line 1", "UK Address Line 1", "UK Address Line 3", "town"),
+                  Some("ZZ1 1ZZ"),
+                  AddressLookupCountry(
+                    "GB",
+                    "United Kingdom"
+                  )
+                )
+              )
+            )
+
+            val submission: Submission =
+              submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+
+            val application =
+              applicationBuilder(
+                userAnswers = Some(userAnswers),
+                submission = Some(submission)
+              )
+                .overrides(
+                  bind[UserDataService].toInstance(mockUserDataService),
+                  bind[AddressLookupConnector].toInstance(mockAddressLookupConnector)
+                )
+                .build()
+
+            running(application) {
+
+              val request = FakeRequest(GET, userAddressRouteNormalModeWithId)
+
+              val result = route(application, request).value
+
+              status(result) mustEqual SEE_OTHER
+              verify(mockUserDataService).set(userAnswersCaptor)(any())
+              val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
+              capturedUserAnswers.get(UkAddressPage) mustBe Some(
+                UkAddress(
+                  None,
+                  "UK Address Line 1",
+                  Some("UK Address Line 1"),
+                  Some("UK Address Line 3"),
+                  "town",
+                  None,
+                  Some("ZZ1 1ZZ"),
+                  Some("United Kingdom")
+                )
+              )
+              capturedUserAnswers.get(AreYouAUKResidentPage) mustBe None
+              capturedUserAnswers.get(InternationalAddressPage) mustBe None
+            }
+          }
         }
 
         "when international address retrieved" - {
 
-          "store uk address to InternationalAddressPage and cleanup other answers" in {}
+          "store uk address to InternationalAddressPage and cleanup other answers" in {
+
+            val userAnswers = emptyUserAnswers
+              .set(ClaimOnBehalfPage, true)
+              .get
+              .set(PensionSchemeMemberResidencePage, true)
+              .get
+              .set(
+                UkAddressPage,
+                UkAddress(
+                  None,
+                  "UK Address Line 1",
+                  Some("UK Address Line 1"),
+                  Some("UK Address Line 3"),
+                  "town",
+                  None,
+                  Some("ZZ1 1ZZ"),
+                  Some("United Kingdom")
+                )
+              )
+              .get
+
+            val mockAddressLookupConnector = mock[AddressLookupConnector]
+            val mockUserDataService        = mock[UserDataService]
+            val userAnswersCaptor          = ArgCaptor[UserAnswers]
+
+            when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+            when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+              AddressLookupConfirmation(
+                "someAuditRef",
+                Some("someId"),
+                AddressLookupAddress(
+                  None,
+                  List("Address Line 1", "Address Line 1", "Address Line 3", "town"),
+                  None,
+                  AddressLookupCountry(
+                    "AQ",
+                    "Antarctica"
+                  )
+                )
+              )
+            )
+
+            val submission: Submission =
+              submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+
+            val application =
+              applicationBuilder(
+                userAnswers = Some(userAnswers),
+                submission = Some(submission)
+              )
+                .overrides(
+                  bind[UserDataService].toInstance(mockUserDataService),
+                  bind[AddressLookupConnector].toInstance(mockAddressLookupConnector)
+                )
+                .build()
+
+            running(application) {
+
+              val request = FakeRequest(GET, userAddressRouteNormalModeWithId)
+
+              val result = route(application, request).value
+
+              status(result) mustEqual SEE_OTHER
+              verify(mockUserDataService).set(userAnswersCaptor)(any())
+              val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
+              capturedUserAnswers.get(InternationalAddressPage) mustBe Some(
+                InternationalAddress(
+                  None,
+                  "Address Line 1",
+                  Some("Address Line 1"),
+                  Some("Address Line 3"),
+                  "town",
+                  None,
+                  None,
+                  "Antarctica"
+                )
+              )
+              capturedUserAnswers.get(AreYouAUKResidentPage) mustBe None
+              capturedUserAnswers.get(UkAddressPage) mustBe None
+            }
+          }
         }
       }
     }
