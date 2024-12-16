@@ -567,7 +567,7 @@ schemeElectionConsent.message5 = cy: HMRC will tell your pension scheme administ
 schemeElectionConsent.message6 = cy: This means you don’t need to tell your pension scheme administrator about this charge.
 schemeElectionConsent.message7 = cy: If you are liable for an annual allowance tax charge outside of the remedy period, you must:
 schemeElectionConsent.bullet1 = cy: notify your scheme that you would like to pay the charge through scheme pays
-schemeElectionConsent.bullet2 = cy: report it through self assessment
+schemeElectionConsent.bullet2 = cy: report it through Self Assessment
 
 calculationReview.title = cy: Calculation results
 calculationReview.heading = cy: Calculation results
