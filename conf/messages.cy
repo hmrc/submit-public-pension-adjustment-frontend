@@ -354,9 +354,9 @@ pensionSchemeMemberTaxReference.heading = Beth yw Cyfeirnod Unigryw y Trethdalwr
 pensionSchemeMemberTaxReference.hint1 = Mae cyfeirnod unigryw y trethdalwr yn 10 digid.
 pensionSchemeMemberTaxReference.hint2 = Er enghraifft, 1234567890
 pensionSchemeMemberTaxReference.checkYourAnswersLabel = Beth yw Cyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran?
-pensionSchemeMemberTaxReference.error.length = cy: The Unique Taxpayer Reference of the person you are acting on behalf of must be 10 digits or less
-pensionSchemeMemberTaxReference.error.invalid = cy: The Unique Taxpayer Reference of the person you are acting on behalf of must only include numbers 0 to 9
-pensionSchemeMemberTaxReference.change.hidden = cy: unique Taxpayer Reference of the person you are acting on behalf of
+pensionSchemeMemberTaxReference.error.length = cy: The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must be 10 digits or less
+pensionSchemeMemberTaxReference.error.invalid = cy: The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must only include numbers 0 to 9
+pensionSchemeMemberTaxReference.change.hidden = cy: Unique Taxpayer Reference (UTR) of the person you are acting on behalf of
 
 calculationPrerequisite.title = Cyfrifiad heb ei gwblhau
 calculationPrerequisite.heading = Ni allwch ddefnyddio’r gwasanaeth cyflwyno eto
@@ -567,7 +567,7 @@ schemeElectionConsent.message5 = cy: HMRC will tell your pension scheme administ
 schemeElectionConsent.message6 = cy: This means you don’t need to tell your pension scheme administrator about this charge.
 schemeElectionConsent.message7 = cy: If you are liable for an annual allowance tax charge outside of the remedy period, you must:
 schemeElectionConsent.bullet1 = cy: notify your scheme that you would like to pay the charge through scheme pays
-schemeElectionConsent.bullet2 = cy: report it through self assessment
+schemeElectionConsent.bullet2 = cy: report it through Self Assessment
 
 calculationReview.title = cy: Calculation results
 calculationReview.heading = cy: Calculation results
