@@ -350,10 +350,10 @@ pensionSchemeMemberNino.error.invalid = The National Insurance number of the per
 pensionSchemeMemberNino.change.hidden = the National Insurance number of the person you are acting on behalf of
 
 pensionSchemeMemberTaxReference.title = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
-pensionSchemeMemberTaxReference.heading = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
+pensionSchemeMemberTaxReference.heading = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.hint1 = The unique tax reference number has 10 digits.
 pensionSchemeMemberTaxReference.hint2 = For example, 1234567890
-pensionSchemeMemberTaxReference.checkYourAnswersLabel = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of?
+pensionSchemeMemberTaxReference.checkYourAnswersLabel = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.error.length = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must be 10 digits or less
 pensionSchemeMemberTaxReference.error.invalid = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must only include numbers 0 to 9
 pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference (UTR) of the person you are acting on behalf of
