@@ -27,13 +27,15 @@
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-    <p>@messages("howMuchTaxRelief.hint1")
-        <a class="govuk-link" href="https://www.gov.uk/log-in-file-self-assessment-tax-return" rel="noreferrer noopener" target="_blank">
-            @messages("howMuchTaxRelief.here")
-        </a>
+    <p class="govuk-body">@messages("howMuchTaxRelief.hint1")
+
+    <a class="govuk-link" href="https://www.gov.uk/log-in-file-self-assessment-tax-return" rel="noreferrer noopener" target="_blank">
+        @messages("howMuchTaxRelief.here")
+    </a>
+
     </p>
 
-    <p>@messages("howMuchTaxRelief.hint2")</p>
+    <p class="govuk-hint">@messages("howMuchTaxRelief.hint2")</p>
 }
 
 @layout(pageTitle = title(form, messages("howMuchTaxRelief.title"))) {
