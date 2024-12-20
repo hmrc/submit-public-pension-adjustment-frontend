@@ -393,7 +393,7 @@ pensionSchemeMemberUKAddress.error.townOrCity.length = Mae’n rhaid i dref neu 
 pensionSchemeMemberUKAddress.error.county.length = Mae’n rhaid i sir y person rydych yn gweithredu ar ei ran fod yn 100 o gymeriadau neu lai
 pensionSchemeMemberUKAddress.error.postCode.length = Mae’n rhaid i god post y person rydych yn gweithredu ar ei ran fod yn 8 o gymeriadau neu lai
 pensionSchemeMemberUKAddress.error.postCode.invalid = Mae’n rhaid i god post y person rydych yn gweithredu ar ei ran gynnwys y llythrennau a i z a’r rhifau 0 i 9 yn unig
-pensionSchemeMemberUKAddress.change.hidden = the address of the person you are acting on behalf of
+pensionSchemeMemberUKAddress.change.hidden = cy: the address of the person you are acting on behalf of
 
 pensionSchemeMemberInternationalAddress.title = Beth yw cyfeiriad y person?
 pensionSchemeMemberInternationalAddress.heading = Beth yw cyfeiriad y person?
@@ -803,6 +803,6 @@ whoPayingExtraLtaCharge.you = cy: You
 whoPayingExtraLtaCharge.pensionScheme = cy: Pension scheme
 ltaPensionSchemeDetails.checkYourAnswersLabel = cy: What is the name and tax reference of the scheme that is paying the extra charge?
 
-submissionWaitingRoom.title = Submission in progress
-submissionWaitingRoom.heading = Submission in progress
-submissionWaitingRoom.message = Do not leave this page.
+submissionWaitingRoom.title = cy: Submission in progress
+submissionWaitingRoom.heading = cy: Submission in progress
+submissionWaitingRoom.message = cy: Do not leave this page.
