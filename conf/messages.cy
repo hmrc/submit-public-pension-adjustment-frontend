@@ -350,10 +350,10 @@ pensionSchemeMemberNino.error.invalid = cy: The National Insurance number of the
 pensionSchemeMemberNino.change.hidden = cy: the National Insurance number of the person you are acting on behalf of
 
 pensionSchemeMemberTaxReference.title = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
-pensionSchemeMemberTaxReference.heading = Beth yw Cyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran?
+pensionSchemeMemberTaxReference.heading = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.hint1 = Mae cyfeirnod unigryw y trethdalwr yn 10 digid.
 pensionSchemeMemberTaxReference.hint2 = Er enghraifft, 1234567890
-pensionSchemeMemberTaxReference.checkYourAnswersLabel = Beth yw Cyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran?
+pensionSchemeMemberTaxReference.checkYourAnswersLabel = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.error.length = cy: The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must be 10 digits or less
 pensionSchemeMemberTaxReference.error.invalid = cy: The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must only include numbers 0 to 9
 pensionSchemeMemberTaxReference.change.hidden = cy: Unique Taxpayer Reference (UTR) of the person you are acting on behalf of
