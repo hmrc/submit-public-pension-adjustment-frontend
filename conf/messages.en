@@ -218,11 +218,11 @@ ukAddress.change.hidden = your home address
 
 legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.heading = What is your legacy individual pension scheme reference? (optional)
-legacyPensionSchemeReference.hint1 = Legacy public service pension schemes are pensions from before 2015. This is not the same as your Pension Scheme Tax Reference (PSTR).
-legacyPensionSchemeReference.hint2 = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
+legacyPensionSchemeReference.message1 = Legacy public service pension schemes are pensions from before 2015.
+legacyPensionSchemeReference.hint = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme. This is not the same as your Pension Scheme Tax Reference (PSTR). For example, 00348916RT.
 legacyPensionSchemeReference.checkYourAnswersLabel = What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 15 characters or less
-legacyPensionSchemeReference.change.hidden = your legacy individual pension scheme reference
+legacyPensionSchemeReference.change.hidden = your legacy individual pension scheme reference (optional)
 legacyPensionSchemeReference.caption = Relating to scheme
 
 reformPensionSchemeReference.title = What is your reform individual pension scheme reference? (optional)
@@ -268,7 +268,8 @@ whichPensionSchemeWillPayTaxRelief.change.hidden = which pension scheme will pay
 pensionSchemeMemberName.title = What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.heading = What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.checkYourAnswersLabel = What is the name of the person you are acting on behalf of?
-pensionSchemeMemberName.error.required =  Enter the name of the person you are acting on behalf of
+pensionSchemeMemberName.error.required = Enter the name of the person you are acting on behalf of
+pensionSchemeMemberName.error.invalid = The name of the person you are acting on behalf of must only include letters a to z and numbers 0 to 9
 pensionSchemeMemberName.error.length =  The name of the person you are acting on behalf of must be 30 characters or fewer
 pensionSchemeMemberName.change.hidden = the name of the person you are acting on behalf of
 
@@ -300,14 +301,22 @@ enterAlternativeName.heading.onBehalf = What is their name?
 enterAlternativeName.checkYourAnswersLabel = What is your name?
 enterAlternativeName.checkYourAnswersLabel.onBehalf = What is their name?
 enterAlternativeName.error.required = Enter your name
+enterAlternativeName.error.invalid = Your name must only include letters, hyphens, apostrophes and spaces
+enterAlternativeName.error.min = Your name must be at least 1 character
+enterAlternativeName.error.max = Your name must be {0} characters or fewer
 enterAlternativeName.error.length = Your name must be 100 characters or fewer
 enterAlternativeName.change.hidden = your name
 
 contactNumber.title = What is your contact number? (optional)
 contactNumber.heading = What is your contact number? (optional)
+contactNumber.message1 = This is the telephone number we will use to contact you if we need any other information from you.
+contactNumber.hint = For example, 01632 960 001, 07700 900 982 or +44 123 456 7891
 contactNumber.checkYourAnswersLabel = What is your contact number? (optional)
-contactNumber.error.invalid = Your contact number must only include numbers 0 to 9
-contactNumber.change.hidden = your contact number
+contactNumber.error.invalidFormat = Enter your contact number in the correct format
+contactNumber.error.invalidCharacters = Your contact number must only include numbers, spaces and the + symbol
+contactNumber.error.min = Your contact number must have at least {0} digits
+contactNumber.error.max = Your contact number must have no more than {0} digits
+contactNumber.change.hidden = your contact number (optional)
 
 declarations.title = Declarations
 declarations.heading = Declarations
@@ -351,12 +360,11 @@ pensionSchemeMemberNino.change.hidden = the National Insurance number of the per
 
 pensionSchemeMemberTaxReference.title = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.heading = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
-pensionSchemeMemberTaxReference.hint1 = The unique tax reference number has 10 digits.
-pensionSchemeMemberTaxReference.hint2 = For example, 1234567890
+pensionSchemeMemberTaxReference.hint = The UTR number has 10 digits, for example, 1234567890
 pensionSchemeMemberTaxReference.checkYourAnswersLabel = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.error.length = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must be 10 digits or less
 pensionSchemeMemberTaxReference.error.invalid = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must only include numbers 0 to 9
-pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference (UTR) of the person you are acting on behalf of
+pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference (UTR) of the person you are acting on behalf of (optional)
 
 calculationPrerequisite.title = Calculation not complete
 calculationPrerequisite.heading = You cannot use the submission service yet

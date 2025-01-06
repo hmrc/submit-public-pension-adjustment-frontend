@@ -218,11 +218,10 @@ ukAddress.change.hidden = cy: your home address
 
 legacyPensionSchemeReference.title = Beth yw cyfeirnod eich cynllun pensiwn unigol hanesyddol? (dewisol)
 legacyPensionSchemeReference.heading = Beth yw cyfeirnod eich cynllun pensiwn unigol hanesyddol? (dewisol)
-legacyPensionSchemeReference.hint1 = Mae cynlluniau pensiwn gwasanaeth cyhoeddus hanesyddol yn bensiynau cyn 2015. Nid yw hyn yr un peth â’ch Cyfeirnod Treth y Cynllun Pensiwn (PSTR).
-legacyPensionSchemeReference.hint2 = Efallai y byddwch yn dod o hyd i hwn ar ddatganiad blynyddol eich cynllun pensiwn neu efallai y bydd angen i chi gysylltu â’ch cynllun pensiwn.
+legacyPensionSchemeReference.hint = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme. This is not the same as your Pension Scheme Tax Reference (PSTR). For example, 00348916RT.
 legacyPensionSchemeReference.checkYourAnswersLabel = cy: What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.error.length = Mae’n rhaid i gyfeirnod cynllun pensiwn unigol hanesyddol fod yn 15 o gymeriadau neu lai
-legacyPensionSchemeReference.change.hidden = cy: your legacy individual pension scheme reference
+legacyPensionSchemeReference.change.hidden = cy: your legacy individual pension scheme reference (optional)
 legacyPensionSchemeReference.caption = Yn ymwneud â’r cynllun
 
 reformPensionSchemeReference.title = Beth yw cyfeirnod eich cynllun pensiwn unigol ôl-ddiwygio? (dewisol)
@@ -269,6 +268,7 @@ pensionSchemeMemberName.title = cy: What is the name of the person you are actin
 pensionSchemeMemberName.heading = Beth yw enw’r person rydych yn gweithredu ar ei ran?
 pensionSchemeMemberName.checkYourAnswersLabel = Beth yw enw’r person rydych yn gweithredu ar ei ran?
 pensionSchemeMemberName.error.required =  cy: Enter the name of the person you are acting on behalf of
+pensionSchemeMemberName.error.invalid = cy: The name of the person you are acting on behalf of must only include letters a to z and numbers 0 to 9
 pensionSchemeMemberName.error.length =  cy: The name of the person you are acting on behalf of must be 30 characters or fewer
 pensionSchemeMemberName.change.hidden = cy: the name of the person you are acting on behalf of
 
@@ -300,14 +300,22 @@ enterAlternativeName.heading.onBehalf = Beth yw ei enw?
 enterAlternativeName.checkYourAnswersLabel = Beth yw eich enw?
 enterAlternativeName.checkYourAnswersLabel.onBehalf = Beth yw ei enw?
 enterAlternativeName.error.required = Nodwch eich enw
-enterAlternativeName.error.length = Mae’n rhaid i’ch enw fod yn 100 o gymeriadau neu lai
+enterAlternativeName.error.invalid = cy: Your name must only include letters, hyphens, apostrophes and spaces
+enterAlternativeName.error.min = cy: Your name must be at least 1 character
+enterAlternativeName.error.max = cy: Your name must be {0} characters or fewer
+enterAlternativeName.error.length = cy: Mae’n rhaid i’ch enw fod yn 100 o gymeriadau neu lai
 enterAlternativeName.change.hidden = Beth yw eich enw?
 
 contactNumber.title = Beth yw eich rhif cyswllt? (dewisol)
 contactNumber.heading = Beth yw eich rhif cyswllt? (dewisol)
 contactNumber.checkYourAnswersLabel = cy: What is your contact number? (optional)
-contactNumber.error.invalid = Mae’n rhaid i’ch rhif cyswllt gynnwys y rhifau 0 i 9 yn unig
-contactNumber.change.hidden = cy: your contact number
+contactNumber.message1 = cy: This is the telephone number we will use to contact you if we need any other information from you.
+contactNumber.hint = cy: For example, 01632 960 001, 07700 900 982 or +44 123 456 7891
+contactNumber.error.invalidFormat = cy: Enter your contact number in the correct format
+contactNumber.error.invalidCharacters = cy: Your contact number must only include numbers, spaces and the + symbol
+contactNumber.error.min = cy: Your contact number must have at least {0} digits
+contactNumber.error.max = cy: Your contact number must have no more than {0} digits
+contactNumber.change.hidden = cy: your contact number (optional)
 
 declarations.title = Datganiadau
 declarations.heading = Datganiadau
@@ -351,12 +359,11 @@ pensionSchemeMemberNino.change.hidden = cy: the National Insurance number of the
 
 pensionSchemeMemberTaxReference.title = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.heading = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
-pensionSchemeMemberTaxReference.hint1 = Mae cyfeirnod unigryw y trethdalwr yn 10 digid.
-pensionSchemeMemberTaxReference.hint2 = Er enghraifft, 1234567890
+pensionSchemeMemberTaxReference.hint = Mae cyfeirnod unigryw y trethdalwr yn 10 digid , er enghraifft, 1234567890
 pensionSchemeMemberTaxReference.checkYourAnswersLabel = cy: What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.error.length = cy: The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must be 10 digits or less
 pensionSchemeMemberTaxReference.error.invalid = cy: The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must only include numbers 0 to 9
-pensionSchemeMemberTaxReference.change.hidden = cy: Unique Taxpayer Reference (UTR) of the person you are acting on behalf of
+pensionSchemeMemberTaxReference.change.hidden = cy: Unique Taxpayer Reference (UTR) of the person you are acting on behalf of (optional)
 
 calculationPrerequisite.title = Cyfrifiad heb ei gwblhau
 calculationPrerequisite.heading = Ni allwch ddefnyddio’r gwasanaeth cyflwyno eto

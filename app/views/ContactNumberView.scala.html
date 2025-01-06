@@ -26,6 +26,9 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-hint">@messages("contactNumber.hint")</p>
+}
 
 @layout(pageTitle = title(form, messages("contactNumber.title"))) {
 
@@ -36,15 +39,16 @@
         }
 
         <p class="govuk-caption-xl">@messages("submissionService.caption")</p>
+        <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("contactNumber.heading")</h1>
+        <p class="govuk-body">@messages("contactNumber.message1")</p>
 
-
-        @govukInput(
+@govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("contactNumber.heading")).asPageHeading()
-            )
+                label = Label(isPageHeading = false))
             .withInputMode("numeric")
             .withWidth(Full)
+            .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(
