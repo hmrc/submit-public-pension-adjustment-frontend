@@ -21,11 +21,12 @@ import play.api.data.FormError
 
 class EnterAlternativeNameFormProviderSpec extends StringFieldBehaviours {
 
-  val requiredKey = "enterAlternativeName.error.required"
-  val lengthKey   = "enterAlternativeName.error.length"
-  val maxLength   = 100
+  val requiredKey       = "enterAlternativeName.error.required"
+  val lengthKey         = "enterAlternativeName.error.length"
+  val maxLength         = 100
+  val isClaimOnBehalfOf = false
 
-  val form = new EnterAlternativeNameFormProvider()()
+  val form = new EnterAlternativeNameFormProvider()(isClaimOnBehalfOf)
 
   ".value" - {
 
