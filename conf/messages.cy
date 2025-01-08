@@ -128,8 +128,8 @@ pensionSchemeDetails.pensionSchemeTaxReference.hint = Efallai y byddwch yn gallu
 pensionSchemeDetails.checkYourAnswersLabel = cy: What is the name and tax reference of the private pension scheme paying the tax charge?
 pensionSchemeDetails.error.pensionSchemeName.required = Nodwch enw’r cynllun pensiwn
 pensionSchemeDetails.error.pensionSchemeName.length = Mae’n rhaid i enw’r cynllun pensiwn fod yn 100 o gymeriadau neu lai
-pensionSchemeDetails.error.pensionSchemeTaxReference.required = cy: Enter the Pension Scheme Tax Reference (PSTR)
-pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = cy: The Pension Scheme Tax Reference (PSTR) must only include letters a to z and numbers 0 to 9
+pensionSchemeDetails.error.pensionSchemeTaxReference.required = cy: Enter the Pension Scheme Tax Reference
+pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = cy: The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
 pensionSchemeDetails.pensionSchemeName.change.hidden = Enw’r cynllun pensiwn
 
 whichPensionSchemeWillPay.title = Pa gynllun pensiwn fydd yn talu’r tâl treth?
@@ -218,7 +218,8 @@ ukAddress.change.hidden = cy: your home address
 
 legacyPensionSchemeReference.title = Beth yw cyfeirnod eich cynllun pensiwn unigol hanesyddol? (dewisol)
 legacyPensionSchemeReference.heading = Beth yw cyfeirnod eich cynllun pensiwn unigol hanesyddol? (dewisol)
-legacyPensionSchemeReference.hint = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme. This is not the same as your Pension Scheme Tax Reference (PSTR). For example, 00348916RT.
+legacyPensionSchemeReference.message1 = cy: Legacy public service pension schemes are pensions from before 2015. This reference is not the same as your Pension Scheme Tax Reference (PSTR).
+legacyPensionSchemeReference.hint = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 legacyPensionSchemeReference.checkYourAnswersLabel = cy: What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.error.length = Mae’n rhaid i gyfeirnod cynllun pensiwn unigol hanesyddol fod yn 15 o gymeriadau neu lai
 legacyPensionSchemeReference.change.hidden = cy: your legacy individual pension scheme reference (optional)
@@ -230,7 +231,7 @@ reformPensionSchemeReference.hint1 = Mae cynlluniau pensiwn gwasanaeth cyhoeddus
 reformPensionSchemeReference.hint2 = Efallai y byddwch yn dod o hyd i hwn ar ddatganiad blynyddol eich cynllun pensiwn neu efallai y bydd angen i chi gysylltu â’ch cynllun pensiwn.
 reformPensionSchemeReference.checkYourAnswersLabel = cy: What is your reform individual pension scheme reference? (optional)
 reformPensionSchemeReference.error.length = Mae’n rhaid i gyfeirnod cynllun pensiwn unigol ôl-ddiwygio fod yn 15 o gymeriadau neu lai
-reformPensionSchemeReference.change.hidden = cy: your reform individual pension scheme reference
+reformPensionSchemeReference.change.hidden = cy: your reform individual pension scheme reference (optional)
 reformPensionSchemeReference.caption = Yn ymwneud â’r cynllun
 
 claimingHigherOrAdditionalTaxRateRelief.title = A ydych yn hawlio am ryddhad treth ar y gyfradd uwch neu ychwanegol?
@@ -268,7 +269,6 @@ pensionSchemeMemberName.title = cy: What is the name of the person you are actin
 pensionSchemeMemberName.heading = Beth yw enw’r person rydych yn gweithredu ar ei ran?
 pensionSchemeMemberName.checkYourAnswersLabel = Beth yw enw’r person rydych yn gweithredu ar ei ran?
 pensionSchemeMemberName.error.required =  cy: Enter the name of the person you are acting on behalf of
-pensionSchemeMemberName.error.invalid = cy: The name of the person you are acting on behalf of must only include letters a to z and numbers 0 to 9
 pensionSchemeMemberName.error.length =  cy: The name of the person you are acting on behalf of must be 30 characters or fewer
 pensionSchemeMemberName.change.hidden = cy: the name of the person you are acting on behalf of
 
@@ -300,10 +300,7 @@ enterAlternativeName.heading.onBehalf = Beth yw ei enw?
 enterAlternativeName.checkYourAnswersLabel = Beth yw eich enw?
 enterAlternativeName.checkYourAnswersLabel.onBehalf = Beth yw ei enw?
 enterAlternativeName.error.required = Nodwch eich enw
-enterAlternativeName.error.invalid = cy: Your name must only include letters, hyphens, apostrophes and spaces
-enterAlternativeName.error.min = cy: Your name must be at least 1 character
-enterAlternativeName.error.max = cy: Your name must be {0} characters or fewer
-enterAlternativeName.error.length = cy: Mae’n rhaid i’ch enw fod yn 100 o gymeriadau neu lai
+enterAlternativeName.error.length = Mae’n rhaid i’ch enw fod yn 100 o gymeriadau neu lai
 enterAlternativeName.change.hidden = Beth yw eich enw?
 
 contactNumber.title = Beth yw eich rhif cyswllt? (dewisol)
@@ -311,10 +308,7 @@ contactNumber.heading = Beth yw eich rhif cyswllt? (dewisol)
 contactNumber.checkYourAnswersLabel = cy: What is your contact number? (optional)
 contactNumber.message1 = cy: This is the telephone number we will use to contact you if we need any other information from you.
 contactNumber.hint = cy: For example, 01632 960 001, 07700 900 982 or +44 123 456 7891
-contactNumber.error.invalidFormat = cy: Enter your contact number in the correct format
-contactNumber.error.invalidCharacters = cy: Your contact number must only include numbers, spaces and the + symbol
-contactNumber.error.min = cy: Your contact number must have at least {0} digits
-contactNumber.error.max = cy: Your contact number must have no more than {0} digits
+contactNumber.error.invalid = cy: Enter a real contact number
 contactNumber.change.hidden = cy: your contact number (optional)
 
 declarations.title = Datganiadau

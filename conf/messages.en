@@ -128,8 +128,8 @@ pensionSchemeDetails.pensionSchemeTaxReference.hint = You may find this on your 
 pensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the private pension scheme paying the tax charge?
 pensionSchemeDetails.error.pensionSchemeName.required = Enter the name of the pension scheme
 pensionSchemeDetails.error.pensionSchemeName.length = The name of the pension scheme must be 100 characters or fewer
-pensionSchemeDetails.error.pensionSchemeTaxReference.required = Enter the Pension Scheme Tax Reference (PSTR)
-pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = The Pension Scheme Tax Reference (PSTR) must only include letters a to z and numbers 0 to 9
+pensionSchemeDetails.error.pensionSchemeTaxReference.required = Enter the Pension Scheme Tax Reference
+pensionSchemeDetails.error.pensionSchemeTaxReference.invalid = The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
 pensionSchemeDetails.change.hidden = name and tax reference of the private pension scheme paying the tax charge
 
 whichPensionSchemeWillPay.title = Which pension scheme will pay the tax charge?
@@ -218,8 +218,8 @@ ukAddress.change.hidden = your home address
 
 legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.heading = What is your legacy individual pension scheme reference? (optional)
-legacyPensionSchemeReference.message1 = Legacy public service pension schemes are pensions from before 2015.
-legacyPensionSchemeReference.hint = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme. This is not the same as your Pension Scheme Tax Reference (PSTR). For example, 00348916RT.
+legacyPensionSchemeReference.message1 = Legacy public service pension schemes are pensions from before 2015. This reference is not the same as your Pension Scheme Tax Reference (PSTR).
+legacyPensionSchemeReference.hint = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 legacyPensionSchemeReference.checkYourAnswersLabel = What is your legacy individual pension scheme reference? (optional)
 legacyPensionSchemeReference.error.length = Legacy individual pension scheme reference must be 15 characters or less
 legacyPensionSchemeReference.change.hidden = your legacy individual pension scheme reference (optional)
@@ -227,11 +227,11 @@ legacyPensionSchemeReference.caption = Relating to scheme
 
 reformPensionSchemeReference.title = What is your reform individual pension scheme reference? (optional)
 reformPensionSchemeReference.heading = What is your reform individual pension scheme reference? (optional)
-reformPensionSchemeReference.hint1 = Reform public service pension schemes are pensions from 2015 onwards. This is not the same as your Pension Scheme Tax Reference (PSTR).
-reformPensionSchemeReference.hint2 = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
+reformPensionSchemeReference.message1 = Reform public service pension schemes are pensions from 2015 onwards. This reference is not the same as your Pension Scheme Tax Reference (PSTR).
+reformPensionSchemeReference.hint = You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme.
 reformPensionSchemeReference.checkYourAnswersLabel = What is your reform individual pension scheme reference? (optional)
 reformPensionSchemeReference.error.length = Reform individual pension scheme reference must be 15 characters or less
-reformPensionSchemeReference.change.hidden = your reform individual pension scheme reference
+reformPensionSchemeReference.change.hidden = your reform individual pension scheme reference (optional)
 reformPensionSchemeReference.caption = Relating to scheme
 
 claimingHigherOrAdditionalTaxRateRelief.title = Are you claiming for higher or additional tax rate relief?
@@ -269,7 +269,6 @@ pensionSchemeMemberName.title = What is the name of the person you are acting on
 pensionSchemeMemberName.heading = What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.checkYourAnswersLabel = What is the name of the person you are acting on behalf of?
 pensionSchemeMemberName.error.required = Enter the name of the person you are acting on behalf of
-pensionSchemeMemberName.error.invalid = The name of the person you are acting on behalf of must only include letters a to z and numbers 0 to 9
 pensionSchemeMemberName.error.length =  The name of the person you are acting on behalf of must be 30 characters or fewer
 pensionSchemeMemberName.change.hidden = the name of the person you are acting on behalf of
 
@@ -301,9 +300,6 @@ enterAlternativeName.heading.onBehalf = What is their name?
 enterAlternativeName.checkYourAnswersLabel = What is your name?
 enterAlternativeName.checkYourAnswersLabel.onBehalf = What is their name?
 enterAlternativeName.error.required = Enter your name
-enterAlternativeName.error.invalid = Your name must only include letters, hyphens, apostrophes and spaces
-enterAlternativeName.error.min = Your name must be at least 1 character
-enterAlternativeName.error.max = Your name must be {0} characters or fewer
 enterAlternativeName.error.length = Your name must be 100 characters or fewer
 enterAlternativeName.change.hidden = your name
 
@@ -312,10 +308,7 @@ contactNumber.heading = What is your contact number? (optional)
 contactNumber.message1 = This is the telephone number we will use to contact you if we need any other information from you.
 contactNumber.hint = For example, 01632 960 001, 07700 900 982 or +44 123 456 7891
 contactNumber.checkYourAnswersLabel = What is your contact number? (optional)
-contactNumber.error.invalidFormat = Enter your contact number in the correct format
-contactNumber.error.invalidCharacters = Your contact number must only include numbers, spaces and the + symbol
-contactNumber.error.min = Your contact number must have at least {0} digits
-contactNumber.error.max = Your contact number must have no more than {0} digits
+contactNumber.error.invalid = Enter a real contact number
 contactNumber.change.hidden = your contact number (optional)
 
 declarations.title = Declarations
