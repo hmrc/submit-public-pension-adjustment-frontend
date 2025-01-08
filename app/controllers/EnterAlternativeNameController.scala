@@ -44,10 +44,11 @@ class EnterAlternativeNameController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData) { implicit request =>
+      val form = formProvider(isClaimOnBehalf(request.userAnswers))
+
       val preparedForm = request.userAnswers.get(EnterAlternativeNamePage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -58,6 +59,8 @@ class EnterAlternativeNameController @Inject() (
 
   def onSubmit(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+      val form = formProvider(isClaimOnBehalf(request.userAnswers))
+
       form
         .bindFromRequest()
         .fold(
