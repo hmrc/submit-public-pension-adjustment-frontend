@@ -213,7 +213,7 @@ ukAddress.error.addressLine2.length = Your address line 2 must be 100 characters
 ukAddress.error.townOrCity.length = Your town or city must be 100 characters or fewer
 ukAddress.error.county.length = Your County must be 100 characters or fewer
 ukAddress.error.postCode.length = Your postcode must be 8 characters or fewer
-ukAddress.error.postCode.invalid = Your postcode must only include letters a to z, numbers 0 to 9
+ukAddress.error.postCode.invalid = Enter a real UK postcode, such as SW1A 1AA
 ukAddress.change.hidden = your home address
 
 legacyPensionSchemeReference.title = What is your legacy individual pension scheme reference? (optional)
@@ -395,7 +395,7 @@ pensionSchemeMemberUKAddress.error.addressLine2.length = Address line 2 of who y
 pensionSchemeMemberUKAddress.error.townOrCity.length = Town or city of who you are acting on behalf of must be 100 characters or fewer
 pensionSchemeMemberUKAddress.error.county.length = County of who you are acting on behalf of must be 100 characters or fewer
 pensionSchemeMemberUKAddress.error.postCode.length = Postcode of who you are acting on behalf of must be 8 characters or fewer
-pensionSchemeMemberUKAddress.error.postCode.invalid = Postcode of who you are acting on behalf of must only include letters a to z, numbers 0 to 9
+pensionSchemeMemberUKAddress.error.postCode.invalid = Enter a real UK postcode for the person you are acting on behalf of, such as SW1A 1AA
 pensionSchemeMemberUKAddress.change.hidden = the address of the person you are acting on behalf of
 
 pensionSchemeMemberInternationalAddress.title = What is their address?
