@@ -36,8 +36,9 @@ class EnterAlternativeNameControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new EnterAlternativeNameFormProvider()
-  val form         = formProvider()
+  val formProvider      = new EnterAlternativeNameFormProvider()
+  val isClaimOnBehalfOf = false
+  val form              = formProvider(isClaimOnBehalfOf)
 
   lazy val enterAlternativeNameRoute = routes.EnterAlternativeNameController.onPageLoad(NormalMode).url
 

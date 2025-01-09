@@ -301,6 +301,8 @@ enterAlternativeName.checkYourAnswersLabel = Beth yw eich enw?
 enterAlternativeName.checkYourAnswersLabel.onBehalf = Beth yw ei enw?
 enterAlternativeName.error.required = Nodwch eich enw
 enterAlternativeName.error.length = Mae’n rhaid i’ch enw fod yn 100 o gymeriadau neu lai
+enterAlternativeName.error.onBehalf.required = cy: Enter their name
+enterAlternativeName.error.onBehalf.length = cy: Their name must be 100 characters or fewer
 enterAlternativeName.change.hidden = Beth yw eich enw?
 
 contactNumber.title = Beth yw eich rhif cyswllt? (dewisol)

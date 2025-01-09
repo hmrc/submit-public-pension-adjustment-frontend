@@ -23,9 +23,16 @@ import play.api.data.Form
 
 class EnterAlternativeNameFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[String] =
+  def apply(isClaimOnBehalf: Boolean): Form[String] =
     Form(
-      "value" -> text("enterAlternativeName.error.required")
-        .verifying(maxLength(100, "enterAlternativeName.error.length"))
+      "value" -> text(
+        if (isClaimOnBehalf) "enterAlternativeName.error.onBehalf.required" else "enterAlternativeName.error.required"
+      )
+        .verifying(
+          maxLength(
+            100,
+            if (isClaimOnBehalf) "enterAlternativeName.error.onBehalf.length" else "enterAlternativeName.error.length"
+          )
+        )
     )
 }

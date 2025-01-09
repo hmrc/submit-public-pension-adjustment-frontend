@@ -301,6 +301,8 @@ enterAlternativeName.checkYourAnswersLabel = What is your name?
 enterAlternativeName.checkYourAnswersLabel.onBehalf = What is their name?
 enterAlternativeName.error.required = Enter your name
 enterAlternativeName.error.length = Your name must be 100 characters or fewer
+enterAlternativeName.error.onBehalf.required = Enter their name
+enterAlternativeName.error.onBehalf.length = Their name must be 100 characters or fewer
 enterAlternativeName.change.hidden = your name
 
 contactNumber.title = What is your contact number? (optional)
