@@ -30,6 +30,12 @@
     <p class="govuk-hint">@messages("contactNumber.hint")</p>
 }
 
+@pageContent = {
+    <h2 class="govuk-caption-xl">@messages("submissionService.caption")</h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("contactNumber.heading")</h1>
+    <p class="govuk-body">@messages("contactNumber.message1")</p>
+}
+
 @layout(pageTitle = title(form, messages("contactNumber.title"))) {
 
     @formHelper(action = routes.ContactNumberController.onSubmit(mode)) {
@@ -38,14 +44,12 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <p class="govuk-caption-xl">@messages("submissionService.caption")</p>
-        <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("contactNumber.heading")</h1>
-        <p class="govuk-body">@messages("contactNumber.message1")</p>
-
 @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = Label(isPageHeading = false))
+                label = Label(
+                    isPageHeading = false,
+                    content = HtmlContent(pageContent)))
             .withInputMode("numeric")
             .withWidth(Full)
             .withHint(HintViewModel(HtmlContent(contentHint)))
