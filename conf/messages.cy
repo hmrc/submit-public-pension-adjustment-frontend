@@ -395,7 +395,7 @@ pensionSchemeMemberUKAddress.error.addressLine2.length = Mae’n rhaid i linell 
 pensionSchemeMemberUKAddress.error.townOrCity.length = Mae’n rhaid i dref neu ddinas y person rydych yn gweithredu ar ei rhan fod yn 100 o gymeriadau neu lai
 pensionSchemeMemberUKAddress.error.county.length = Mae’n rhaid i sir y person rydych yn gweithredu ar ei ran fod yn 100 o gymeriadau neu lai
 pensionSchemeMemberUKAddress.error.postCode.length = Mae’n rhaid i god post y person rydych yn gweithredu ar ei ran fod yn 8 o gymeriadau neu lai
-pensionSchemeMemberUKAddress.error.postCode.invalid = cy: Enter a real UK postcode for the person you are acting on behalf of, such as SW1A 1AA'
+pensionSchemeMemberUKAddress.error.postCode.invalid = cy: Enter a real UK postcode for the person you are acting on behalf of, such as SW1A 1AA
 pensionSchemeMemberUKAddress.change.hidden = cy: the address of the person you are acting on behalf of
 
 pensionSchemeMemberInternationalAddress.title = Beth yw cyfeiriad y person?
