@@ -213,7 +213,7 @@ ukAddress.error.addressLine2.length = Mae’n rhaid i linell 2 eich cyfeiriad fo
 ukAddress.error.townOrCity.length = Mae’n rhaid i’ch tref neu ddinas fod yn 100 o gymeriadau neu lai
 ukAddress.error.county.length = Mae’n rhaid i’ch gwlad fod yn 100 o gymeriadau neu lai
 ukAddress.error.postCode.length = Mae’n rhaid i’ch cod post fod yn 8 o gymeriadau neu lai
-ukAddress.error.postCode.invalid = Mae’n rhaid i’ch cod post gynnwys y llythrennau a i z a’r rhifau 0 i 9 yn unig
+ukAddress.error.postCode.invalid = cy: Enter a real UK postcode, such as SW1A 1AA
 ukAddress.change.hidden = cy: your home address
 
 legacyPensionSchemeReference.title = Beth yw cyfeirnod eich cynllun pensiwn unigol hanesyddol? (dewisol)
@@ -395,7 +395,7 @@ pensionSchemeMemberUKAddress.error.addressLine2.length = Mae’n rhaid i linell 
 pensionSchemeMemberUKAddress.error.townOrCity.length = Mae’n rhaid i dref neu ddinas y person rydych yn gweithredu ar ei rhan fod yn 100 o gymeriadau neu lai
 pensionSchemeMemberUKAddress.error.county.length = Mae’n rhaid i sir y person rydych yn gweithredu ar ei ran fod yn 100 o gymeriadau neu lai
 pensionSchemeMemberUKAddress.error.postCode.length = Mae’n rhaid i god post y person rydych yn gweithredu ar ei ran fod yn 8 o gymeriadau neu lai
-pensionSchemeMemberUKAddress.error.postCode.invalid = Mae’n rhaid i god post y person rydych yn gweithredu ar ei ran gynnwys y llythrennau a i z a’r rhifau 0 i 9 yn unig
+pensionSchemeMemberUKAddress.error.postCode.invalid = cy: Enter a real UK postcode for the person you are acting on behalf of, such as SW1A 1AA'
 pensionSchemeMemberUKAddress.change.hidden = cy: the address of the person you are acting on behalf of
 
 pensionSchemeMemberInternationalAddress.title = Beth yw cyfeiriad y person?
