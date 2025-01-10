@@ -29,7 +29,7 @@ object WhatNewProtectionTypeEnhancementSummary {
 
   def row(submission: Submission)(implicit messages: Messages): Option[SummaryListRow] =
     submission.calculationInputs.lifeTimeAllowance.flatMap { lta =>
-      lta.newLifeTimeAllowanceAdditions.newEnhancementType.map { enhancementType =>
+      lta.newProtectionTypeOrEnhancement.map { enhancementType =>
         val value = ValueViewModel(
           HtmlContent(HtmlFormat.escape(messages(s"whatNewProtectionTypeEnhancement.$enhancementType")))
         )
