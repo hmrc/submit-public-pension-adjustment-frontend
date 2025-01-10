@@ -49,7 +49,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
       WhatNewProtectionTypeEnhancementSummary.row(submission) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"whatNewProtectionTypeEnhancement.checkYourAnswersLabel").withCssClass(keyCssClass),
-          value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.internationalEnhancement"))
+          value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.individualProtection2014"))
         )
       )
     }
