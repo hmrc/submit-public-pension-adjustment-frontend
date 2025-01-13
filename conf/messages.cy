@@ -386,7 +386,7 @@ upliftFailed.title = Rydym wedi methu â chadarnhau pwy ydych
 upliftFailed.heading = Rydym wedi methu â chadarnhau pwy ydych
 upliftFailed.cannotConfirm = Ni allwn gadarnhau pwy ydych
 upliftFailed.evidence = Os na allwch roi tystiolaeth i ni i gadarnhau pwy ydych, ni allwch fewngofnodi a defnyddio ein gwasanaethau ar-lein.
-upliftFailed.contact = Gallwch gysylltu â ni i gael mynediad at ein gwasanaethau a siarad ag ymgynghorydd. Gall ein hymgynghorwyr eich helpu i gyflawni’ch tasg a rhoi gwybodaeth i chi dros y ffôn neu drwy sgwrsio dros y we. Ni allant gadarnhau pwy ydych ar-lein ar eich rhan.upliftFailed.details = Fel arall, rhowch fanylion i ni o un neu ddau o’r mathau o dystiolaeth a restrir, a rhowch gynnig arall ar gadarnhau pwy ydych ar-lein.
+upliftFailed.contact = Gallwch gysylltu â ni i gael mynediad at ein gwasanaethau a siarad ag ymgynghorydd. Gall ein hymgynghorwyr eich helpu i gyflawni’ch tasg a rhoi gwybodaeth i chi dros y ffôn neu drwy sgwrsio dros y we. Ni allant gadarnhau pwy ydych ar-lein ar eich rhan
 upliftFailed.support = Rydym hefyd yn cynnig cymorth technegol os nad yw eich manylion yn cyd-fynd â’n cofnodion.
 
 cannotUseServiceNotIndividual.title = Nid oes modd defnyddio’r gwasanaeth cyflwyno
