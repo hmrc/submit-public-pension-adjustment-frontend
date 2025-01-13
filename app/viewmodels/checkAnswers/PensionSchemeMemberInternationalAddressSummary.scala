@@ -45,7 +45,7 @@ object PensionSchemeMemberInternationalAddressSummary {
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            routes.PensionSchemeMemberInternationalAddressController.onPageLoad(CheckMode).url
+            routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode).url
           )
             .withVisuallyHiddenText(messages("pensionSchemeMemberInternationalAddress.change.hidden"))
         )
