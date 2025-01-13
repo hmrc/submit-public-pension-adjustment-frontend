@@ -52,50 +52,49 @@ class AddressLookupRampOnController @Inject() (
 
   def rampOnClaimOnBehalf(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      val language: Lang = controllerComponents.messagesApi.preferred(request).lang
+      val language: Lang             = controllerComponents.messagesApi.preferred(request).lang
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-      val returnURL = if (mode == NormalMode) {
+      val returnURL                  = if (mode == NormalMode) {
         ALFConfig.addressLookupReturnClaimOnBehalfNormalMode
       } else {
         ALFConfig.addressLookupReturnClaimOnBehalfCheckMode
       }
       for {
         initialiseALF <- addressLookupConnector.initialiseJourney(
-          requestBuilder(isClaimOnBehalf = true, returnURL, language, request)
-
-        )
+                           requestBuilder(isClaimOnBehalf = true, returnURL, language, request)
+                         )
       } yield Redirect(initialiseALF)
     }
 
   def rampOnUserAddress(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      val language: Lang = controllerComponents.messagesApi.preferred(request).lang
+      val language: Lang             = controllerComponents.messagesApi.preferred(request).lang
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-      val returnURL = if (mode == NormalMode) {
+      val returnURL                  = if (mode == NormalMode) {
         ALFConfig.addressLookupReturnUserAddressNormalMode
       } else {
         ALFConfig.addressLookupReturnUserAddressCheckMode
       }
       for {
         initialiseALF <- addressLookupConnector.initialiseJourney(
-          requestBuilder(isClaimOnBehalf = false, returnURL, language, request)
-        )
+                           requestBuilder(isClaimOnBehalf = false, returnURL, language, request)
+                         )
       } yield Redirect(initialiseALF)
     }
 
   private def requestBuilder(
-                              isClaimOnBehalf: Boolean,
-                              returnURL: String,
-                              language: Lang,
-                              requestHeader: RequestHeader
-                            ) = {
+    isClaimOnBehalf: Boolean,
+    returnURL: String,
+    language: Lang,
+    requestHeader: RequestHeader
+  ) =
     if (isClaimOnBehalf) {
-      Json.toJson(ALFConfig.claimOnBehalfRequestConfig(continueUrl = s"$returnURL", language, requestHeader))
+      Json
+        .toJson(ALFConfig.claimOnBehalfRequestConfig(continueUrl = s"$returnURL", language, requestHeader))
         .as[AddressLookupRequest]
     } else {
-      Json.toJson(ALFConfig.userAddressRequestConfig(continueUrl = s"$returnURL", language, requestHeader))
+      Json
+        .toJson(ALFConfig.userAddressRequestConfig(continueUrl = s"$returnURL", language, requestHeader))
         .as[AddressLookupRequest]
     }
-  }
 }
-

@@ -44,7 +44,7 @@ final case class AddressLookupOptions(
   selectPageConfig: Option[SelectPageConfig] = None,
   confirmPageConfig: Option[ConfirmPageConfig] = None,
   timeoutConfig: Option[TimeoutConfig] = None
-                                     )
+)
 
 object AddressLookupOptions {
   implicit val format: OFormat[AddressLookupOptions] = Json.format
@@ -77,80 +77,79 @@ object TimeoutConfig {
 }
 
 final case class Labels(
-                                en: Option[PageLabels] = None,
-                                cy: Option[PageLabels] = None
-                              )
+  en: Option[PageLabels] = None,
+  cy: Option[PageLabels] = None
+)
 
 object Labels {
   implicit val LabelsFormat: OFormat[Labels] = Json.format[Labels]
 }
 
 final case class PageLabels(
-                             appLevelLabels: Option[AppLevelLabels] = None,
-                             countryPickerLabels: Option[CountryPickerLabels] = None,
-                             lookupPageLabels: Option[LookupPageLabels] = None,
-                             editPageLabels: Option[EditPageLabels] = None,
-                             selectPageLabels: Option[SelectPageLabels] = None,
-                             confirmPageLabels: Option[ConfirmPageLabels] = None
-                       )
-
+  appLevelLabels: Option[AppLevelLabels] = None,
+  countryPickerLabels: Option[CountryPickerLabels] = None,
+  lookupPageLabels: Option[LookupPageLabels] = None,
+  editPageLabels: Option[EditPageLabels] = None,
+  selectPageLabels: Option[SelectPageLabels] = None,
+  confirmPageLabels: Option[ConfirmPageLabels] = None
+)
 
 object PageLabels {
   implicit val PageLabelsFormat: OFormat[PageLabels] = Json.format[PageLabels]
 }
 
 case class AppLevelLabels(
-                           navTitle: Option[String] = None
-                         )
+  navTitle: Option[String] = None
+)
 
 object AppLevelLabels {
   implicit val AppLevelLabelsFormat: OFormat[AppLevelLabels] = Json.format[AppLevelLabels]
 }
 
 final case class CountryPickerLabels(
-                                title: Option[String] = None,
-                                heading: Option[String] = None,
-                                countryLabel: Option[String] = None
-                              )
+  title: Option[String] = None,
+  heading: Option[String] = None,
+  countryLabel: Option[String] = None
+)
 
 object CountryPickerLabels {
   implicit val CountryPickerLabelsFormat: OFormat[CountryPickerLabels] = Json.format[CountryPickerLabels]
 }
 
 final case class LookupPageLabels(
-                             title: Option[String] = None,
-                             heading: Option[String] = None,
-                             manualAddressLinkText: Option[String] = None
-                           )
+  title: Option[String] = None,
+  heading: Option[String] = None,
+  manualAddressLinkText: Option[String] = None
+)
 
 object LookupPageLabels {
   implicit val LookupPageLabelsFormat: OFormat[LookupPageLabels] = Json.format[LookupPageLabels]
 }
 
 final case class EditPageLabels(
-                           title: Option[String] = None,
-                           heading: Option[String] = None
-                         )
+  title: Option[String] = None,
+  heading: Option[String] = None
+)
 
 object EditPageLabels {
   implicit val EditPageLabelsFormat: OFormat[EditPageLabels] = Json.format[EditPageLabels]
 }
 
 final case class SelectPageLabels(
-                             title: Option[String] = None,
-                             heading: Option[String] = None,
-                             editAddressLinkText: Option[String] = None
-                           )
+  title: Option[String] = None,
+  heading: Option[String] = None,
+  editAddressLinkText: Option[String] = None
+)
 
 object SelectPageLabels {
   implicit val SelectPageLabelsFormat: OFormat[SelectPageLabels] = Json.format[SelectPageLabels]
 }
 
 final case class ConfirmPageLabels(
-                              title: Option[String] = None,
-                              heading: Option[String] = None,
-                              changeLinkText: Option[String] = None
-                            )
+  title: Option[String] = None,
+  heading: Option[String] = None,
+  changeLinkText: Option[String] = None
+)
 
 object ConfirmPageLabels {
   implicit val ConfirmPageLabelsFormat: OFormat[ConfirmPageLabels] = Json.format[ConfirmPageLabels]

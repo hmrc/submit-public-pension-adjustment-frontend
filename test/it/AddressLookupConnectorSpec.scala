@@ -41,7 +41,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
   def readRequestData(requestFileName: String) = {
     val source: String = Source.fromFile(requestFileName).getLines().mkString
-    val json = Json.parse(source)
+    val json           = Json.parse(source)
     json.as[AddressLookupRequest]
   }
 

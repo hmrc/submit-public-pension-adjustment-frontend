@@ -50,7 +50,7 @@ case class ALFConfig @Inject() (
 
   val homePage: String      =
     frontendAppConfig.landingPageLoginContinueUrl
-  val signOutPage: String =
+  val signOutPage: String   =
     frontendAppConfig.signOutUrl
   val serviceOrigin: String =
     configuration.get[String]("contact-frontend.serviceId")
@@ -106,7 +106,9 @@ case class ALFConfig @Inject() (
              |        "lookupPageLabels": {
              |          "title": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.title")(language)}",
              |          "heading": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.heading")(language)}",
-             |          "manualAddressLinkText": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.manualAddressLinkText")(language)}"
+             |          "manualAddressLinkText": "${messagesApi(
+          "addressLookup.claimOnBehalf.lookupPage.manualAddressLinkText"
+        )(language)}"
              |        },
              |        "editPageLabels": {
              |          "title": "${messagesApi("addressLookup.claimOnBehalf.editPage.title")(language)}",
@@ -115,12 +117,16 @@ case class ALFConfig @Inject() (
              |        "selectPageLabels": {
              |          "title": "${messagesApi("addressLookup.claimOnBehalf.selectPage.title")(language)}",
              |          "heading": "${messagesApi("addressLookup.claimOnBehalf.selectPage.heading")(language)}",
-             |          "editAddressLinkText": "${messagesApi("addressLookup.claimOnBehalf.selectPage.editAddressLinkText")(language)}"
+             |          "editAddressLinkText": "${messagesApi(
+          "addressLookup.claimOnBehalf.selectPage.editAddressLinkText"
+        )(language)}"
              |        },
              |        "confirmPageLabels": {
              |        "title": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.title")(language)}",
              |        "heading": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.heading")(language)}",
-             |        "changeLinkText": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.changeLinkText")(language)}"
+             |        "changeLinkText": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.changeLinkText")(
+          language
+        )}"
              |      }
              |      },
              |      "cy": {
@@ -135,7 +141,9 @@ case class ALFConfig @Inject() (
              |        "lookupPageLabels": {
              |          "title": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.title")(language)}",
              |          "heading": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.heading")(language)}",
-             |          "manualAddressLinkText": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.manualAddressLinkText")(language)}"
+             |          "manualAddressLinkText": "${messagesApi(
+          "addressLookup.claimOnBehalf.lookupPage.manualAddressLinkText"
+        )(language)}"
              |        },
              |        "editPageLabels": {
              |          "title": "${messagesApi("addressLookup.claimOnBehalf.editPage.title")(language)}",
@@ -144,12 +152,16 @@ case class ALFConfig @Inject() (
              |        "selectPageLabels": {
              |          "title": "${messagesApi("addressLookup.claimOnBehalf.selectPage.title")(language)}",
              |          "heading": "${messagesApi("addressLookup.claimOnBehalf.selectPage.heading")(language)}",
-             |          "editAddressLinkText": "${messagesApi("addressLookup.claimOnBehalf.selectPage.editAddressLinkText")(language)}"
+             |          "editAddressLinkText": "${messagesApi(
+          "addressLookup.claimOnBehalf.selectPage.editAddressLinkText"
+        )(language)}"
              |        },
              |        "confirmPageLabels": {
              |        "title": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.title")(language)}",
              |        "heading": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.heading")(language)}",
-             |        "changeLinkText": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.changeLinkText")(language)}"
+             |        "changeLinkText": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.changeLinkText")(
+          language
+        )}"
              |      }
              |      }
              |    }
@@ -159,7 +171,6 @@ case class ALFConfig @Inject() (
 
   // noinspection ScalaStyle
   def userAddressRequestConfig(continueUrl: String, language: Lang, requestHeader: RequestHeader) = {
-
 
     val feedbackUrl: String =
       frontendAppConfig.feedbackUrl(requestHeader)
@@ -209,7 +220,9 @@ case class ALFConfig @Inject() (
          |        "lookupPageLabels": {
          |          "title": "${messagesApi("addressLookup.user.lookupPage.title")(language)}",
          |          "heading": "${messagesApi("addressLookup.user.lookupPage.heading")(language)}",
-         |          "manualAddressLinkText": "${messagesApi("addressLookup.user.lookupPage.manualAddressLinkText")(language)}"
+         |          "manualAddressLinkText": "${messagesApi("addressLookup.user.lookupPage.manualAddressLinkText")(
+          language
+        )}"
          |        },
          |        "editPageLabels": {
          |          "title": "${messagesApi("addressLookup.user.editPage.title")(language)}",
@@ -218,7 +231,9 @@ case class ALFConfig @Inject() (
          |        "selectPageLabels": {
          |          "title": "${messagesApi("addressLookup.user.selectPage.title")(language)}",
          |          "heading": "${messagesApi("addressLookup.user.selectPage.heading")(language)}",
-         |          "editAddressLinkText": "${messagesApi("addressLookup.user.selectPage.editAddressLinkText")(language)}"
+         |          "editAddressLinkText": "${messagesApi("addressLookup.user.selectPage.editAddressLinkText")(
+          language
+        )}"
          |        },
          |        "confirmPageLabels": {
          |        "title": "${messagesApi("addressLookup.user.confirmPage.title")(language)}",
@@ -238,7 +253,9 @@ case class ALFConfig @Inject() (
          |        "lookupPageLabels": {
          |          "title": "${messagesApi("addressLookup.user.lookupPage.title")(language)}",
          |          "heading": "${messagesApi("addressLookup.user.lookupPage.heading")(language)}",
-         |          "manualAddressLinkText": "${messagesApi("addressLookup.user.lookupPage.manualAddressLinkText")(language)}"
+         |          "manualAddressLinkText": "${messagesApi("addressLookup.user.lookupPage.manualAddressLinkText")(
+          language
+        )}"
          |        },
          |        "editPageLabels": {
          |          "title": "${messagesApi("addressLookup.user.editPage.title")(language)}",
@@ -247,7 +264,9 @@ case class ALFConfig @Inject() (
          |        "selectPageLabels": {
          |          "title": "${messagesApi("addressLookup.user.selectPage.title")(language)}",
          |          "heading": "${messagesApi("addressLookup.user.selectPage.heading")(language)}",
-         |          "editAddressLinkText": "${messagesApi("addressLookup.user.selectPage.editAddressLinkText")(language)}"
+         |          "editAddressLinkText": "${messagesApi("addressLookup.user.selectPage.editAddressLinkText")(
+          language
+        )}"
          |        },
          |        "confirmPageLabels": {
          |        "title": "${messagesApi("addressLookup.user.confirmPage.title")(language)}",
