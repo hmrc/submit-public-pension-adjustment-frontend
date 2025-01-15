@@ -26,7 +26,7 @@ import uk.gov.hmrc.play.bootstrap.binders.{AbsoluteWithHostnameFromAllowlist, Re
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 @Singleton
-class FrontendAppConfig @Inject() (val servicesConfig: ServicesConfig, configuration: Configuration) {
+class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val host: String    = configuration.get[String]("host")
   val appName: String = configuration.get[String]("appName")
@@ -91,7 +91,5 @@ class FrontendAppConfig @Inject() (val servicesConfig: ServicesConfig, configura
 
   val submissionUserSelectionRestartAuditEventName =
     configuration.get[String]("auditing.submission-user-selection-restart-event-name")
-
-  val bankAccountValidationFrontendUrl = servicesConfig.baseUrl("bank-account-verification-frontend-web")
 
 }

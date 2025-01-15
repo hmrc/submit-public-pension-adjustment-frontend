@@ -24,8 +24,10 @@ import play.api.http.Status.OK
 import play.api.i18n.Lang.logger
 import play.api.libs.json._
 import uk.gov.hmrc.http.client.HttpClientV2
-import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOps, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpReads, HttpResponse, StringContextOps}
 
+import javax.inject.Inject
+import scala.concurrent.{ExecutionContext, Future}
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -60,58 +62,26 @@ class BavfConnector @Inject()(httpClient: HttpClientV2, appConfig: BavfConfig, f
       maxCallCountRedirectUrl = Some("/too-many-attempts"))
 
     val url = s"${baseUrl}/api/v2/init"
+
     httpClient.post(url"$startURL")
       .withBody(Json.toJson(request))
       .setHeader((HeaderNames.USER_AGENT, frontendAppConfig.userAgent))
       .execute[HttpResponse]
-      .logFailureReason(connectorName = "`BavfConnector` on start")
       .flatMap { response =>
         response.status match {
           case OK =>
-            Some(response.json.as[InitResponse].startUrl) match {
-              case Some(redirectUrl) => Future.successful(redirectUrl)
-              case _ =>
-                logger.error(
-                  s"ALF post call response missing location : ${response.status}"
-                )
-                Future.failed(
-                  UpstreamErrorResponse(
-                    "ALF post call response missing location",
-                    response.status
-                  )
-                )
-            }
+            println("================================")
+            println(response.json.as[InitResponse].startUrl)
+            Future.successful(response.json.as[InitResponse].startUrl)
           case _ =>
-            logger.error(
-              s"Unexpected response from call from ALF : ${response.status}"
-            )
-            Future.failed(
-              UpstreamErrorResponse(
-                "Unexpected response from ALF",
-                response.status
-              )
-            )
+            println("================================")
+            println(response)
+            Future.successful(response.json.as[InitResponse].startUrl)
+
         }
       }
   }
 }
-
-//  def complete(journeyId: String)(
-//      implicit ec: ExecutionContext,
-//      hc: HeaderCarrier
-//  ): Future[Option[CompleteResponse]] = {
-//    import CompleteResponse._
-//    import HttpReads.Implicits.readRaw
-//
-//    val url = s"${appConfig.bavfApiBaseUrl}/api/v3/complete/$journeyId"
-//    httpClient.GET[HttpResponse](url).map {
-//      case r if r.status == 200 =>
-//        Some(r.json.as[CompleteResponse])
-//      case _                    =>
-//        None
-//    }
-//  }
-//}
 
 case class InitRequest(serviceIdentifier: String,
                        continueUrl: String,
