@@ -16,10 +16,22 @@
 
 package models
 
+import models.bavf.BavfCompleteResponse
 import play.api.libs.json.{Json, OFormat}
 
-case class BankDetails(accountName: String, sortCode: String, accountNumber: String)
+case class BankDetails(accountName: String, sortCode: String, accountNumber: String, rollNumber: Option[String])
 
 object BankDetails {
-  implicit val bankDetails: OFormat[BankDetails] = Json.format[BankDetails]
+  implicit val format: OFormat[BankDetails] = Json.format[BankDetails]
+
+  def apply(completeResponse: BavfCompleteResponse): BankDetails = {
+    val personal = completeResponse.personal.get
+    new BankDetails(
+      accountName = personal.accountName,
+      sortCode = personal.sortCode,
+      accountNumber = personal.accountNumber,
+      rollNumber = personal.rollNumber
+    )
+  }
+
 }

@@ -18,7 +18,12 @@ package models.finalsubmission
 
 import play.api.libs.json.{Format, Json}
 
-case class BankAccountDetails(accountName: String, sortCode: String, accountNumber: String) {}
+case class BankAccountDetails(
+  accountName: String,
+  sortCode: String,
+  accountNumber: String,
+  rollNumber: Option[String]
+) {}
 
 object BankAccountDetails {
 

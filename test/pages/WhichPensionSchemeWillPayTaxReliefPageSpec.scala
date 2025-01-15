@@ -82,7 +82,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
     "must navigate correctly in NormalMode" - {
 
-      "to BARS when Pension scheme b scheme selected and member is in credit" in {
+      "ramp on to BAVF when Pension scheme b scheme selected and member is in credit" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
@@ -106,7 +106,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           Submission("id", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
         val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua, submission).url
 
-        checkNavigation(result, "/bank-details")
+        checkNavigation(result, "/bavf-ramp-on/normal-mode")
       }
 
       "to CYA when Pension scheme b scheme selected and member is in credit" in {
@@ -176,7 +176,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
         checkNavigation(result, "/check-your-answers")
       }
 
-      "to BARS when Pension scheme b scheme selected and member is in credit in Check mode" in {
+      "ramp on to BAVF when Pension scheme b scheme selected and member is in credit in Check mode" in {
         val ua = emptyUserAnswers
           .set(
             WhichPensionSchemeWillPayTaxReliefPage,
@@ -186,7 +186,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
           .value
           .set(
             BankDetailsPage,
-            BankDetails("Testuser One", "111111", "11111111")
+            BankDetails("Testuser One", "111111", "11111111", None)
           )
           .success
           .value
@@ -209,9 +209,9 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
         val submission: Submission =
           Submission("id", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))
-        val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(NormalMode, ua, submission).url
+        val result                 = WhichPensionSchemeWillPayTaxReliefPage.navigate(CheckMode, ua, submission).url
 
-        checkNavigation(result, "/bank-details")
+        checkNavigation(result, "/bavf-ramp-on/check-mode")
       }
 
       "to JourneyRecovery when not answered" in {

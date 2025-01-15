@@ -57,6 +57,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefController @Inject() (
 
   def onSubmit(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
+      val memberCredit = request.submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
       form
         .bindFromRequest()
         .fold(
@@ -68,7 +69,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefController @Inject() (
               redirectUrl     =
                 ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(mode, updatedAnswers, request.submission).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              _              <- if (memberCredit > 0) userDataService.set(updatedAnswers) else userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

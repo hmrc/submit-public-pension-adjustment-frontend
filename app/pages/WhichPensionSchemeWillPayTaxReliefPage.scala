@@ -17,7 +17,7 @@
 package pages
 
 import models.submission.Submission
-import models.{Mode, NormalMode, UserAnswers}
+import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -37,9 +37,13 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOn
     }
   }
 
-  override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
-    navigateInNormalModeAA(answers, submission)
-
+  override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call       = {
+    val selectedScheme: Option[String] = answers.get(WhichPensionSchemeWillPayTaxReliefPage)
+    selectedScheme match {
+      case Some(_) => isMemberCredit(submission, CheckMode)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  }
   override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     controllers.routes.CheckYourAnswersController.onPageLoad()
 
@@ -49,7 +53,7 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOn
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
     val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
     if (memberCredit > 0) {
-      controllers.routes.BankDetailsController.onPageLoad(mode)
+      controllers.routes.BavfRampOnController.rampOnBavf(mode)
     } else {
       controllers.routes.CheckYourAnswersController.onPageLoad()
     }

@@ -146,7 +146,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
       }
     }
 
-    "to bank details controller when member is in credit and only 1 scheme" in {
+    "ramp on to BAVF when member is in credit and only 1 scheme" in {
 
       val ua = emptyUserAnswers
         .set(
@@ -158,7 +158,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
       val result = HowMuchTaxReliefPage.navigate(NormalMode, ua, submissionInCreditWithOneScheme).url
 
-      checkNavigation(result, "/bank-details")
+      checkNavigation(result, "/bavf-ramp-on/normal-mode")
     }
 
     "to CYA when member is in credit and only 1 scheme" in {
@@ -194,7 +194,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           .value
           .set(
             BankDetailsPage,
-            BankDetails("Testuser One", "111111", "11111111")
+            BankDetails("Testuser One", "111111", "11111111", None)
           )
           .success
           .value
@@ -205,10 +205,10 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionWithMultipleSchemes).url
 
-        checkNavigation(result, "/submission-service/which-pension-scheme-will-pay-tax-relief")
+        checkNavigation(result, "/submission-service/change-which-pension-scheme-will-pay-tax-relief")
       }
 
-      "to BankDetails when there is a single scheme and member is in credit" in {
+      "ramp on to bavf when there is a single scheme and member is in credit" in {
         val ua = emptyUserAnswers
           .set(
             HowMuchTaxReliefPage,
@@ -224,7 +224,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           .value
           .set(
             BankDetailsPage,
-            BankDetails("Testuser One", "111111", "11111111")
+            BankDetails("Testuser One", "111111", "11111111", None)
           )
           .success
           .value
@@ -235,7 +235,7 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionInCreditWithOneScheme).url
 
-        checkNavigation(result, "/bank-details")
+        checkNavigation(result, "/bavf-ramp-on/check-mode")
       }
 
       "to CYA when there is a single scheme and member is not in credit" in {

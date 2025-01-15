@@ -540,7 +540,8 @@ object TestData {
              |  "bankDetails" : {
              |    "accountName": "TestFName TestLName",
              |    "sortCode": "012345",
-             |    "accountNumber": "12345678"
+             |    "accountNumber": "12345678",
+             |    "rollNumber": "1222"
              |  },
              |  "aa": {
              |    "schemes": {

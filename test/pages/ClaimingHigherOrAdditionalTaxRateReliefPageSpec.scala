@@ -79,7 +79,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/there-is-a-problem")
       }
 
-      "to BankDetails when answered no and member is in credit" in {
+      "ramp on to bavf when answered no and member is in credit" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -90,7 +90,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(NormalMode, ua, submissionInCredit).url
 
-        checkNavigation(result, "/bank-details")
+        checkNavigation(result, "/bavf-ramp-on/normal-mode")
       }
 
       "to CYA when answered no and member is not in credit" in {
@@ -210,7 +210,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
         checkNavigation(result, "/check-your-answers")
       }
 
-      "to BankDetails when answered no and member is in credit" in {
+      "ramp on to bavf when answered no and member is in credit" in {
         val ua = emptyUserAnswers
           .set(
             ClaimingHigherOrAdditionalTaxRateReliefPage,
@@ -221,7 +221,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
         val result = ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(CheckMode, ua, submissionInCredit).url
 
-        checkNavigation(result, "/bank-details")
+        checkNavigation(result, "/bavf-ramp-on/check-mode")
       }
 
       "to JourneyRecovery when not selected" in {
@@ -250,7 +250,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
           .set(
             BankDetailsPage,
-            BankDetails("Testuser One", "111111", "11111111")
+            BankDetails("Testuser One", "111111", "11111111", None)
           )
           .success
           .value
@@ -277,7 +277,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
           .set(
             BankDetailsPage,
-            BankDetails("Testuser One", "111111", "11111111")
+            BankDetails("Testuser One", "111111", "11111111", None)
           )
           .success
           .value
