@@ -16,11 +16,11 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, StatusOfUser, UserAnswers}
-import play.api.libs.json.JsPath
-import play.api.mvc.Call
 import controllers.routes
 import models.submission.Submission
+import models.{CheckMode, NormalMode, PensionSchemeMemberInternationalAddress, StatusOfUser, UserAnswers}
+import play.api.libs.json.JsPath
+import play.api.mvc.Call
 import services.{ClaimOnBehalfNavigationLogicService, PeriodService}
 
 import scala.util.Try

@@ -18,7 +18,7 @@ package pages
 
 import controllers.routes
 import models.submission.Submission
-import models.{CheckMode, Mode, NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.{ClaimOnBehalfNavigationLogicService, PeriodService}

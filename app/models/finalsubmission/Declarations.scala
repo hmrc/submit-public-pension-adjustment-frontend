@@ -16,7 +16,6 @@
 
 package models.finalsubmission
 
-import models.SchemeCreditConsent
 import play.api.libs.json.{Format, Json}
 
 case class Declarations(

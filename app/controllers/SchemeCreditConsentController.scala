@@ -17,17 +17,14 @@
 package controllers
 
 import controllers.actions._
-import models.{NormalMode, SchemeCreditConsent, UserAnswers}
-
-import javax.inject.Inject
+import models.SchemeCreditConsent
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SchemeCreditConsentView
-import pages.ConfirmEditAnswersPage
-import services.UserDataService
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class SchemeCreditConsentController @Inject() (
