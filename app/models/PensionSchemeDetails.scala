@@ -21,5 +21,5 @@ import play.api.libs.json._
 case class PensionSchemeDetails(pensionSchemeName: String, pensionSchemeTaxReference: String)
 
 object PensionSchemeDetails {
-  implicit val format = Json.format[PensionSchemeDetails]
+  implicit val format: OFormat[PensionSchemeDetails] = Json.format[PensionSchemeDetails]
 }

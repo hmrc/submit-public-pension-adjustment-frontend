@@ -51,7 +51,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
         val badRequestResponse = Future.successful(HttpResponse(BAD_REQUEST, Json.toJson(barsErrorResponse).toString()))
         val barsService        = new BarsService(mockBarsConnectorWithResponse(badRequestResponse))
 
-        val response = barsService.preVerify(badRequestResponse)(headerCarrier)
+        val response = barsService.preVerify(badRequestResponse)
 
         response.futureValue shouldBe SortCodeOnDenyList(barsErrorResponse)
       }
@@ -61,7 +61,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
           Future.successful(HttpResponse(INTERNAL_SERVER_ERROR, "Internal server error occurred"))
         val barsService               = new BarsService(mockBarsConnectorWithResponse(notOKOrBadRequestResponse))
 
-        val response = barsService.preVerify(notOKOrBadRequestResponse)(headerCarrier)
+        val response = barsService.preVerify(notOKOrBadRequestResponse)
 
         whenReady(response.failed) { e =>
           e                                                shouldBe an[UpstreamErrorResponse]
@@ -73,7 +73,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
         val notParsableOkResponse = Future.successful(HttpResponse(OK, "Non parsable JSON"))
         val barsService           = new BarsService(mockBarsConnectorWithResponse(notParsableOkResponse))
 
-        val response = barsService.preVerify(notParsableOkResponse)(headerCarrier)
+        val response = barsService.preVerify(notParsableOkResponse)
 
         whenReady(response.failed) { e =>
           e shouldBe UpstreamErrorResponse("Non parsable JSON", OK)
@@ -85,7 +85,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
           Future.successful(HttpResponse(BAD_REQUEST, """{ "malformed": "BarsErrorResponse" }"""))
         val barsService                   = new BarsService(mockBarsConnectorWithResponse(notParsableBadRequestResponse))
 
-        val response = barsService.preVerify(notParsableBadRequestResponse)(headerCarrier)
+        val response = barsService.preVerify(notParsableBadRequestResponse)
 
         whenReady(response.failed) { e =>
           e                                                shouldBe an[UpstreamErrorResponse]
@@ -104,7 +104,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
 
         val response = barsService.verifyPersonal(
           barsConnector.verifyPersonal(BarsVerifyPersonalRequest(bankAccount, subject))(headerCarrier)
-        )(headerCarrier)
+        )
 
         response.futureValue shouldBe VerifyResponse(validResponse)
       }
@@ -120,7 +120,7 @@ class BarsServiceSpec extends SpecBase with MockitoSugar {
 
         val response = barsService.verifyPersonal(
           barsConnector.verifyPersonal(BarsVerifyPersonalRequest(bankAccount, separateSubject))(headerCarrier)
-        )(headerCarrier)
+        )
 
         response.futureValue shouldBe VerifyResponse(validResponse)
       }

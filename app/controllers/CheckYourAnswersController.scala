@@ -32,7 +32,6 @@ import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.{CheckYourAnswersView, IncompleteDataCaptureView}
 
-import scala.concurrent.ExecutionContext
 
 class CheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -43,7 +42,7 @@ class CheckYourAnswersController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   checkYourAnswersView: CheckYourAnswersView,
   incompleteDataCaptureView: IncompleteDataCaptureView
-)(implicit ec: ExecutionContext)
+)
     extends FrontendBaseController
     with I18nSupport
     with Logging {
