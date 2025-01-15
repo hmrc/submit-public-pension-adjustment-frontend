@@ -33,7 +33,7 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
 
   override def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(ClaimOnBehalfPage) match {
-      case Some(true)  => routes.StatusOfUserController.onPageLoad(NormalMode)
+      case Some(true)  => routes.BavfRampOnController.rampOnBavf(NormalMode)
       case Some(false) =>
         ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)

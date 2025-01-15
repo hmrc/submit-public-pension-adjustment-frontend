@@ -23,9 +23,10 @@ import play.api.mvc.RequestHeader
 import uk.gov.hmrc.play.bootstrap.binders.RedirectUrl._
 import uk.gov.hmrc.play.bootstrap.binders.RedirectUrlPolicy.Id
 import uk.gov.hmrc.play.bootstrap.binders.{AbsoluteWithHostnameFromAllowlist, RedirectUrl, RedirectUrlPolicy}
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 @Singleton
-class FrontendAppConfig @Inject() (configuration: Configuration) {
+class FrontendAppConfig @Inject() (val servicesConfig: ServicesConfig, configuration: Configuration) {
 
   val host: String    = configuration.get[String]("host")
   val appName: String = configuration.get[String]("appName")
@@ -43,6 +44,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val baseUrl: String                     = configuration.get[String]("urls.base")
   val loginUrl: String                    = configuration.get[String]("urls.login")
+  val userAgent: String                   = configuration.get[String]("user-agent")
   val calculateFrontend: String           = configuration.get[String]("urls.calculateFrontend")
   val confidenceUpliftUrl: String         = configuration.get[String]("urls.confidenceUplift")
   val upliftCompletionUrl                 = configuration.get[String]("urls.upliftCompletion")
@@ -89,5 +91,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val submissionUserSelectionRestartAuditEventName =
     configuration.get[String]("auditing.submission-user-selection-restart-event-name")
+
+  val bankAccountValidationFrontendUrl = servicesConfig.baseUrl("bank-account-verification-frontend-web")
 
 }
