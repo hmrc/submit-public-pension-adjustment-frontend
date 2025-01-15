@@ -49,7 +49,7 @@ case object WhichPensionSchemeWillPayTaxReliefPage extends QuestionPageWithLTAOn
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
     val memberCredit = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
     if (memberCredit > 0) {
-      controllers.routes.BankDetailsController.onPageLoad(mode)
+      controllers.routes.BavfRampOnController.rampOnBavf(mode)
     } else {
       controllers.routes.CheckYourAnswersController.onPageLoad()
     }

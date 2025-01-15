@@ -67,8 +67,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefController @Inject() (
                 Future.fromTry(request.userAnswers.set(ClaimingHigherOrAdditionalTaxRateReliefPage, value))
               redirectUrl     =
                 ClaimingHigherOrAdditionalTaxRateReliefPage.navigate(mode, updatedAnswers, request.submission).url
-              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              _              <- userDataService.set(updatedAnswers)
             } yield Redirect(redirectUrl)
         )
     }

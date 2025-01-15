@@ -74,7 +74,7 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
 
   private def whenMemberIsInCredit(mode: Mode, numberOfSchemes: Int) =
     if (numberOfSchemes == 1) {
-      controllers.routes.BankDetailsController.onPageLoad(mode)
+      controllers.routes.BavfRampOnController.rampOnBavf(mode)
     } else {
       controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
     }

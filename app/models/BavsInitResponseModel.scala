@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,10 @@
 
 package models
 
-import models.bavf.CompleteResponse
 import play.api.libs.json.{Json, OFormat}
 
-case class BankDetails(accountName: String, sortCode: String, accountNumber: String, rollNumber: Option[String])
+case class BavsInitResponseModel(journeyId: String, startUrl: String, completeUrl: String, detailsUrl: Option[String])
 
-object BankDetails {
-  implicit val format = Json.format[BankDetails]
-
-  def apply(completeResponse: CompleteResponse): BankDetails = {
-    val personal = completeResponse.personal.get
-    new BankDetails(
-      accountName = personal.accountName,
-      sortCode = personal.sortCode,
-      accountNumber = personal.accountNumber,
-      rollNumber = personal.rollNumber
-    )
-  }
-
+object BavsInitResponseModel {
+  implicit val format: OFormat[BavsInitResponseModel] = Json.format[BavsInitResponseModel]
 }

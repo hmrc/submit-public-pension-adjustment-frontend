@@ -52,7 +52,7 @@ case object ClaimingHigherOrAdditionalTaxRateReliefPage extends QuestionPageWith
   private def isMemberCredit(submission: Submission, mode: Mode): Call = {
     val memberCredit: Int = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
     if (memberCredit > 0) {
-      controllers.routes.BankDetailsController.onPageLoad(mode)
+      controllers.routes.BavfRampOnController.rampOnBavf(mode)
     } else {
       controllers.routes.CheckYourAnswersController.onPageLoad()
     }
