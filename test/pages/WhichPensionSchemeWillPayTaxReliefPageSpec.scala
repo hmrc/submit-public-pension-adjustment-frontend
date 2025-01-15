@@ -16,7 +16,7 @@
 
 package pages
 
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission, Setup}
+import models.calculation.inputs._
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
 import models.{BankDetails, CheckMode, NormalMode}

@@ -17,9 +17,9 @@
 package pages
 
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow}
+import org.scalacheck.Arbitrary
 
 import java.time.LocalDate
-import org.scalacheck.Arbitrary
 
 class MemberDateOfDeathPageSpec extends PageBehaviours {
 

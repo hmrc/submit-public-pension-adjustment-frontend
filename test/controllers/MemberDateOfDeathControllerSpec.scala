@@ -16,7 +16,6 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import forms.MemberDateOfDeathFormProvider
 import models.{Done, NormalMode, UserAnswers}
@@ -32,6 +31,7 @@ import play.api.test.Helpers._
 import services.UserDataService
 import views.html.MemberDateOfDeathView
 
+import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
 class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {

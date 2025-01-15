@@ -16,9 +16,9 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, Period}
 import models.calculation.inputs.CalculationInputs
 import models.submission.Submission
+import models.{CheckMode, NormalMode, Period}
 import org.mockito.MockitoSugar.mock
 
 class SchemeElectionConsentPageSpec extends PageBehaviours {

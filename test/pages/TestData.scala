@@ -16,13 +16,13 @@
 
 package pages
 
-import models.{PSTR, PensionSchemeMemberInternationalAddress, SchemeCreditConsent, UkAddress, UserAnswers}
 import models.calculation.inputs.Income.{AboveThreshold, BelowThreshold}
 import models.calculation.inputs.TaxYear2016To2023.{NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.calculation.inputs._
 import models.calculation.response.{CalculationResponse, InDatesTaxYearSchemeCalculation, InDatesTaxYearsCalculation, OutOfDatesTaxYearSchemeCalculation, OutOfDatesTaxYearsCalculation, Period => responsePeriod, Resubmission => responseResubmission, TaxYearScheme, TotalAmounts}
 import models.finalsubmission.OnBehalfOfMemberType.PowerOfAttorney
-import models.finalsubmission.{AdministrativeDetails, AuthRetrievals, ClaimantDetails, Declarations, FinalSubmission, IndividualSchemeIdentifier, OnBehalfOfMember, PaymentElection, PersonalCharge, PersonalDetails, SchemeCharge, SchemeDetails, SchemeTaxRelief, SubmissionInputs, TaxIdentifiers}
+import models.finalsubmission._
+import models.{PSTR, PensionSchemeMemberInternationalAddress, UkAddress, UserAnswers}
 import play.api.libs.json.{JsObject, Json}
 
 import java.time.LocalDate

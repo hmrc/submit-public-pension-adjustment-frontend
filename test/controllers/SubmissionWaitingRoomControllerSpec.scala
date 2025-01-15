@@ -25,12 +25,11 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
 import org.mockito.MockitoSugar.mock
 import org.mockito.captor.ArgCaptor
-import pages.{AskedPensionSchemeToPayTaxChargePage, ClaimOnBehalfPage, PensionSchemeDetailsPage, WhenDidYouAskPensionSchemeToPayPage, WhenWillYouAskPensionSchemeToPayPage, WhichPensionSchemeWillPayPage, WhoWillPayPage}
+import pages._
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.{SubmissionDataService, SubmissionService, UserDataService}
-import views.html.SubmissionWaitingRoomView
 
 import java.time.LocalDate
 import scala.concurrent.Future

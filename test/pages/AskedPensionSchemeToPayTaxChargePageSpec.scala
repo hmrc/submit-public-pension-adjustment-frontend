@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, Period, WhenWillYouAskPensionSchemeToPay}
+import models.{CheckMode, NormalMode, Period}
 
 import java.time.LocalDate
 

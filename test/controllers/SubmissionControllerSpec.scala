@@ -17,6 +17,7 @@
 package controllers
 
 import base.SpecBase
+import config.FrontendAppConfig
 import connectors.SubmitBackendConnector
 import models.{Done, UserAnswers, UserSubmissionReference}
 import org.mockito.ArgumentMatchers.any
@@ -24,7 +25,6 @@ import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import config.FrontendAppConfig
 import services.{CalculateBackendDataService, SubmissionDataService, SubmissionService, UserDataService}
 import views.html.SubmissionView
 
