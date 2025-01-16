@@ -203,3 +203,5 @@ GET        /submission-service/:period/change-scheme-election-consent           
 POST       /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onSubmit(mode: Mode = CheckMode, period:Period)
 
 GET        /submission-in-progress                       controllers.SubmissionWaitingRoomController.onPageLoad()
+
+GET        /submission-service/review-your-lifetime-allowance-answers                                                   controllers.ViewYourLTAAnswersController.onPageLoad()

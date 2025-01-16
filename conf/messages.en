@@ -5,6 +5,7 @@ site.remove = Remove
 site.change = Change
 site.no = No
 site.yes = Yes
+site.continue.noSave = Continue
 site.continue = Save and continue
 site.agreeAndContinue = Agree and continue
 site.start = Start now
@@ -813,3 +814,9 @@ ltaPensionSchemeDetails.checkYourAnswersLabel = What is the name and tax referen
 submissionWaitingRoom.title = Submission in progress
 submissionWaitingRoom.heading = Submission in progress
 submissionWaitingRoom.message = Do not leave this page.
+
+viewYourLTAAnswers.title = Review your lifetime allowance answers
+viewYourLTAAnswers.heading = Review your lifetime allowance answers
+viewYourLTAAnswers.message1 = To keep a record of this, you should
+viewYourLTAAnswers.message1.link = print this page
+viewYourLTAAnswers.message2 = You will not be able to do this after you submit your results.

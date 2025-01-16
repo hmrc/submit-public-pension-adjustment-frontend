@@ -31,6 +31,24 @@ class PrintReviewControllerSpec extends SpecBase {
 
   "PrintReview Controller" - {
 
+    "must redirect to view LTA answers when LTA only" in {
+
+      val calculationInputs: CalculationInputs = TestData.calculationInputsLTAOnly
+
+      val submission = Submission("", "", calculationInputs, None)
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, routes.PrintReviewController.onPageLoad().url)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.routes.ViewYourLTAAnswersController.onPageLoad().url
+      }
+    }
+
     "must return OK with includeCompensation2015 and return the correct view for a GET" in {
 
       val calculationResult: CalculationResponse =
