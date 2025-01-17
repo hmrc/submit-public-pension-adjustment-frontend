@@ -37,7 +37,8 @@ object UkAddressSummary {
         answer.addressLine3.map(HtmlFormat.escape),
         Some(HtmlFormat.escape(answer.townOrCity)),
         answer.county.map(HtmlFormat.escape),
-        answer.postCode.map(HtmlFormat.escape)
+        answer.postCode.map(HtmlFormat.escape),
+        answer.country.map(HtmlFormat.escape)
       ).flatten.mkString("<br/>")
 
       SummaryListRowViewModel(

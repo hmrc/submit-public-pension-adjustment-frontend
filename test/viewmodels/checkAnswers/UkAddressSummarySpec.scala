@@ -46,7 +46,7 @@ class UkAddressSummarySpec extends AnyFreeSpec with Matchers {
       UkAddressSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "ukAddress.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("line1<br/>town<br/>AA1 1AA")),
+          value = ValueViewModel(HtmlContent("line1<br/>town<br/>AA1 1AA<br/>United Kingdom")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

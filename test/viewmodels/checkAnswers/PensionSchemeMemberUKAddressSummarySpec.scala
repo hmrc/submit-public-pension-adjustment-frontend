@@ -46,7 +46,7 @@ class PensionSchemeMemberUKAddressSummarySpec extends AnyFreeSpec with Matchers 
       PensionSchemeMemberUKAddressSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberUKAddress.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("line1<br/>town<br/>AA1 1AA")),
+          value = ValueViewModel(HtmlContent("line1<br/>town<br/>AA1 1AA<br/>United Kingdom")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
