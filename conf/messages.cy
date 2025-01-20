@@ -5,6 +5,7 @@ site.remove = Dileu
 site.change = Newid
 site.no = Na
 site.yes = Iawn
+site.continue.noSave = cy: Continue
 site.continue = Cadw ac yn eich blaen
 site.agreeAndContinue = Cytuno ac yn eich blaen
 site.start = Dechrau nawr
@@ -813,3 +814,9 @@ ltaPensionSchemeDetails.checkYourAnswersLabel = Beth yw enw a chyfeirnod treth y
 submissionWaitingRoom.title = Cyflwyniad ar y gweill
 submissionWaitingRoom.heading = Cyflwyniad ar y gweill
 submissionWaitingRoom.message = Peidiwch â gadael y dudalen hon.
+
+viewYourLTAAnswers.title = cy: Review your lifetime allowance answers
+viewYourLTAAnswers.heading = cy: Review your lifetime allowance answers
+viewYourLTAAnswers.message1 = cy: To keep a record of this, you should
+viewYourLTAAnswers.message1.link = cy: print this page
+viewYourLTAAnswers.message2 = cy: You will not be able to do this after you submit your results.

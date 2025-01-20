@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,38 +17,27 @@
 package controllers
 
 import controllers.actions._
-import mappers.CalculationResultsMapper
-import play.api.data.Form
-import play.api.data.Forms.ignored
+
+import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import viewmodels.checkAnswers.lifetimeallowance._
+import viewmodels.checkAnswers.lifetimeallowance.{AnnualPaymentValueSummary, DateOfBenefitCrystallisationEventSummary, EnhancementTypeSummary, ExcessLifetimeAllowancePaidSummary, InternationalEnhancementReferenceSummary, LifetimeAllowanceChargeSummary, LtaPensionSchemeDetailsSummary, LtaProtectionOrEnhancementsSummary, LumpSumValueSummary, NewAnnualPaymentValueSummary, NewEnhancementTypeSummary, NewExcessLifetimeAllowancePaidSummary, NewInternationalEnhancementReferenceSummary, NewLumpSumValueSummary, NewPensionCreditReferenceSummary, PensionCreditReferenceSummary, ProtectionEnhancedChangedSummary, ProtectionReferenceSummary, ProtectionTypeSummary, QuarterChargePaidSummary, ReferenceNewProtectionTypeEnhancementSummary, SchemeNameAndTaxRefSummary, UserSchemeDetailsSummary, WhatNewProtectionTypeEnhancementSummary, WhoPaidLTAChargeSummary, WhoPayingExtraLtaChargeSummary, YearChargePaidSummary}
 import viewmodels.govuk.all.SummaryListViewModel
-import views.html.PrintReviewView
+import views.html.ViewYourLTAAnswersView
 
-import javax.inject.Inject
-import scala.concurrent.ExecutionContext
-
-class PrintReviewController @Inject() (
+class ViewYourLTAAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: PrintReviewView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+  view: ViewYourLTAAnswersView
+) extends FrontendBaseController
     with I18nSupport {
 
-  val form = Form("_" -> ignored(()))
-
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData) { implicit request =>
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-
     val rows: Seq[Option[SummaryListRow]] = Seq(
       DateOfBenefitCrystallisationEventSummary.row(request.submission),
       LtaProtectionOrEnhancementsSummary.row(request.submission),
@@ -78,44 +67,6 @@ class PrintReviewController @Inject() (
       WhoPayingExtraLtaChargeSummary.row(request.submission),
       LtaPensionSchemeDetailsSummary.row(request.submission)
     )
-
-    val calculationInputs = request.submission.calculationInputs
-    if (calculationInputs.annualAllowance.isEmpty) {
-      Redirect(controllers.routes.ViewYourLTAAnswersController.onPageLoad())
-    } else {
-      val calculation = request.submission.calculation.get
-
-      val isLTAComplete = calculationInputs.lifeTimeAllowance.isDefined
-
-      val outDatesStringValues = CalculationResultsMapper.outDatesSummary(calculation)
-      val inDatesStringValues  = CalculationResultsMapper.inDatesSummary(calculation)
-      val hasinDates: Boolean  = calculation.inDates.isDefinedAt(0)
-
-      val isInCredit: Boolean              = calculation.totalAmounts.inDatesCredit > 0
-      val isInDebit: Boolean               = calculation.totalAmounts.inDatesDebit > 0
-      val includeCompensation2015: Boolean = calculation.totalAmounts.outDatesCompensation > 0
-
-      val calculationReviewIndividualAAViewModel = CalculationResultsMapper
-        .calculationReviewIndividualAAViewModel(calculation, None, calculationInputs)
-
-      val calculationReviewViewModel = CalculationResultsMapper.calculationReviewViewModel(calculation)
-
-      Ok(
-        view(
-          form,
-          calculationReviewIndividualAAViewModel,
-          isInCredit,
-          isInDebit,
-          outDatesStringValues,
-          inDatesStringValues,
-          calculationReviewViewModel,
-          SummaryListViewModel(rows.flatten),
-          isLTAComplete,
-          includeCompensation2015,
-          controllers.routes.ContinueChoiceController.onPageLoad(),
-          hasinDates
-        )
-      )
-    }
+    Ok(view(SummaryListViewModel(rows.flatten)))
   }
 }

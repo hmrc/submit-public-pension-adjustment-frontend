@@ -247,6 +247,58 @@ object TestData {
     )
   )
 
+  val calculationInputsLTAOnly: CalculationInputs = CalculationInputs(
+    Resubmission(false, None),
+    Setup(
+      None,
+      Some(
+        LifetimeAllowanceSetup(
+          Some(true),
+          Some(false),
+          Some(true),
+          Some(false),
+          Some(false),
+          Some(false),
+          Some(true)
+        )
+      )
+    ),
+    None,
+    Some(
+      LifeTimeAllowance(
+        LocalDate.parse("2018-10-27"),
+        LtaProtectionOrEnhancements.Protection,
+        Some(ProtectionType.FixedProtection2014),
+        Some("R41AB678TR23355"),
+        ProtectionEnhancedChanged.Protection,
+        Some(WhatNewProtectionTypeEnhancement.IndividualProtection2014),
+        Some("2134567801"),
+        true,
+        Some(ExcessLifetimeAllowancePaid.Annualpayment),
+        Some(WhoPaidLTACharge.PensionScheme),
+        Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
+        Some(WhoPayingExtraLtaCharge.You),
+        None,
+        NewLifeTimeAllowanceAdditions(
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None,
+          None
+        )
+      )
+    )
+  )
+
   val calculation = Some(
     CalculationResponse(
       responseResubmission(false, None),
