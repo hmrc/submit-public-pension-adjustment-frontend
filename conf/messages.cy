@@ -308,9 +308,9 @@ enterAlternativeName.change.hidden = Beth yw eich enw?
 
 contactNumber.title = Beth yw eich rhif cyswllt? (dewisol)
 contactNumber.heading = Beth yw eich rhif cyswllt? (dewisol)
-contactNumber.checkYourAnswersLabel = Beth yw eich rhif cyswllt? (dewisol)
 contactNumber.message1 = Dyma’r rhif ffôn y byddwn yn ei ddefnyddio i gysylltu â chi os oes angen unrhyw wybodaeth arall arnoch.
 contactNumber.hint = Er enghraifft, 01632 960 001, 07700 900 982 neu +44 123 456 7891
+contactNumber.checkYourAnswersLabel = Beth yw eich rhif cyswllt? (dewisol)
 contactNumber.error.invalid = Nodwch rif cyswllt go iawn
 contactNumber.change.hidden = eich rhif cyswllt (dewisol)
 
