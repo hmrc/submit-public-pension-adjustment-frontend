@@ -31,7 +31,7 @@ class InternationalAddressSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
-  val mockAddress = InternationalAddress("line1", None, "town", None, None, "France")
+  val mockAddress = InternationalAddress(None, "line1", None, None, "town", None, None, "France")
 
   "row" - {
     "when user submits address, return the summary row" in {
@@ -50,7 +50,7 @@ class InternationalAddressSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.InternationalAddressController.onPageLoad(CheckMode).url
+              routes.AddressLookupRampOnController.rampOnUserAddress(CheckMode).url
             )
               .withVisuallyHiddenText("internationalAddress.change.hidden")
           )

@@ -16,123 +16,15 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
-
 class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
   "PensionSchemeMemberResidencePage" - {
 
-    beRetrievable[Boolean](PensionSchemeMemberResidencePage)
+    "should save residence" in {
 
-    beSettable[Boolean](PensionSchemeMemberResidencePage)
+      val updatedUserAnswers = emptyUserAnswers.set(PensionSchemeMemberResidencePage, true).get
 
-    beRemovable[Boolean](PensionSchemeMemberResidencePage)
-  }
-
-  "must redirect to enter their uk address page when user selects yes" in {
-
-    val page = PensionSchemeMemberResidencePage
-
-    val userAnswers = emptyUserAnswers
-      .set(page, true)
-      .success
-      .value
-
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/submission-service/address-someone-else")
-  }
-
-  "must redirect to enter their international address page when user selects no" in {
-
-    val page = PensionSchemeMemberResidencePage
-
-    val userAnswers = emptyUserAnswers
-      .set(page, false)
-      .success
-      .value
-
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/submission-service/international-address-someone-else")
-  }
-
-  "must redirect to enter their uk address page when user selects yes in check mode" in {
-
-    val page = PensionSchemeMemberResidencePage
-
-    val userAnswers = emptyUserAnswers
-      .set(page, true)
-      .success
-      .value
-
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/submission-service/change-address-someone-else")
-  }
-
-  "must redirect to enter their international address page when user selects no in check mode" in {
-
-    val page = PensionSchemeMemberResidencePage
-
-    val userAnswers = emptyUserAnswers
-      .set(page, false)
-      .success
-      .value
-
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/submission-service/change-international-address-someone-else")
-  }
-
-  "must redirect to JourneyRecoveryPage when not answered in normal mode" in {
-
-    val page = PensionSchemeMemberResidencePage
-
-    val userAnswers = emptyUserAnswers
-
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/there-is-a-problem")
-  }
-
-  "must redirect to JourneyRecoveryPage when not answered in check mode" in {
-
-    val page = PensionSchemeMemberResidencePage
-
-    val userAnswers = emptyUserAnswers
-
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/there-is-a-problem")
-  }
-
-  "cleanup" - {
-
-    "must cleanup correctly when answered no" in {
-      val ua = emptyUserAnswers
-        .set(
-          PensionSchemeMemberUKAddressPage,
-          arbitraryPensionSchemeMemberUKAddress.arbitrary.sample.value
-        )
-        .success
-        .value
-
-      val cleanedUserAnswers = PensionSchemeMemberResidencePage.cleanup(Some(false), ua).success.value
-      cleanedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe None
-    }
-
-    "must cleanup correctly when answered yes" in {
-      val ua = emptyUserAnswers
-        .set(
-          PensionSchemeMemberInternationalAddressPage,
-          arbitraryPensionSchemeMemberInternationalAddress.arbitrary.sample.value
-        )
-        .success
-        .value
-
-      val cleanedUserAnswers = PensionSchemeMemberResidencePage.cleanup(Some(true), ua).success.value
-      cleanedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) mustBe None
+      updatedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe Some(true)
     }
   }
 }

@@ -31,16 +31,10 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(ContinueChoicePage.type, JsValue)] ::
       arbitrary[(ConfirmEditAnswersPage.type, JsValue)] ::
       arbitrary[(ContinueChoicePage.type, JsValue)] ::
-      arbitrary[(PensionSchemeMemberInternationalAddressPage.type, JsValue)] ::
-      arbitrary[(PensionSchemeMemberUKAddressPage.type, JsValue)] ::
-      arbitrary[(PensionSchemeMemberResidencePage.type, JsValue)] ::
       arbitrary[(MemberDateOfDeathPage.type, JsValue)] ::
       arbitrary[(BankDetailsPage.type, JsValue)] ::
       arbitrary[(HowMuchTaxReliefPage.type, JsValue)] ::
       arbitrary[(ClaimingHigherOrAdditionalTaxRateReliefPage.type, JsValue)] ::
-      arbitrary[(UkAddressPage.type, JsValue)] ::
-      arbitrary[(InternationalAddressPage.type, JsValue)] ::
-      arbitrary[(AreYouAUKResidentPage.type, JsValue)] ::
       arbitrary[(StatusOfUserPage.type, JsValue)] ::
       arbitrary[(ClaimOnBehalfPage.type, JsValue)] ::
       arbitrary[(PensionSchemeMemberDOBPage.type, JsValue)] ::

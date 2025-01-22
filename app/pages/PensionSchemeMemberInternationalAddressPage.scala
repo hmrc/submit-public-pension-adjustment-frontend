@@ -16,84 +16,16 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, StatusOfUser, UserAnswers}
+import models.InternationalAddress
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
-import controllers.routes
-import models.submission.Submission
-import services.{ClaimOnBehalfNavigationLogicService, PeriodService}
-
-import scala.util.Try
+import queries.{Gettable, Settable}
 
 case object PensionSchemeMemberInternationalAddressPage
-    extends QuestionPageWithLTAOnlyNavigation[PensionSchemeMemberInternationalAddress] {
+    extends Gettable[InternationalAddress]
+    with Settable[InternationalAddress] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "pensionSchemeMemberInternationalAddress"
-
-  override def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberInternationalAddressPage) match {
-      case Some(_) =>
-        answers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.AlternativeNameController.onPageLoad(NormalMode)
-          case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
-            ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, NormalMode)
-          case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
-        }
-      case _       => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberInternationalAddressPage) match {
-      case Some(_) =>
-        answers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad
-          case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
-            ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, CheckMode)
-          case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
-        }
-      case _       => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberInternationalAddressPage) match {
-      case Some(_) =>
-        answers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.AlternativeNameController.onPageLoad(NormalMode)
-          case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
-            ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(NormalMode)
-          case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
-        }
-      case _       => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
-    answers.get(PensionSchemeMemberInternationalAddressPage) match {
-      case Some(_) =>
-        answers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad
-          case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
-            ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(CheckMode)
-          case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
-        }
-      case _       => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def cleanup(
-    value: Option[PensionSchemeMemberInternationalAddress],
-    userAnswers: UserAnswers
-  ): Try[UserAnswers] = {
-    val periodsToCleanup = PeriodService.allInDateRemedyPeriods
-    value
-      .map { case _ =>
-        userAnswers.get(StatusOfUserPage) match {
-          case Some(StatusOfUser.LegalPersonalRepresentative) =>
-            Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, periodsToCleanup))
-          case _                                              => super.cleanup(value, userAnswers)
-        }
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
-  }
 
 }

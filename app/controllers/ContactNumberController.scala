@@ -65,10 +65,8 @@ class ContactNumberController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(ContactNumberPage, value.getOrElse("")))
-              redirectUrl     =
-                ContactNumberPage.navigate(mode, updatedAnswers).url
-              answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              _              <- userDataService.set(updatedAnswers)
+              redirectUrl     = ContactNumberPage.navigate(mode, updatedAnswers)
             } yield Redirect(redirectUrl)
         )
     }

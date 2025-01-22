@@ -27,8 +27,8 @@ case class PersonalDetails(
   dateOfBirth: Option[LocalDate],
   address: Option[UkAddress],
   internationalAddress: Option[InternationalAddress],
-  pensionSchemeMemberAddress: Option[PensionSchemeMemberUKAddress],
-  pensionSchemeMemberInternationalAddress: Option[PensionSchemeMemberInternationalAddress],
+  pensionSchemeMemberAddress: Option[UkAddress],
+  pensionSchemeMemberInternationalAddress: Option[InternationalAddress],
   contactPhoneNumber: Option[String]
 ) {}
 

@@ -18,12 +18,15 @@ package connectors
 
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock
-import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, urlEqualTo}
+import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, post, urlEqualTo}
 import generators.Generators
 import models.UniqueId
+import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import pages.TestData
 import play.api.Application
-import play.api.http.Status.{NOT_FOUND, OK}
+import play.api.http.Status.{ACCEPTED, NOT_FOUND, OK}
+import play.api.libs.json.Json
 import play.api.test.Helpers.running
 import uk.gov.hmrc.http.{HeaderCarrier, NotFoundException}
 
@@ -37,6 +40,47 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
     applicationBuilder()
       .configure("microservice.services.submit-public-pension-adjustment.port" -> server.port)
       .build()
+
+  ".sendFinalSubmission" - {
+
+    "must return OK when submission successful" in {
+      val url                  = s"/submit-public-pension-adjustment/final-submission"
+      val app                  = application
+      val responseJson: String = Json.toJson(FinalSubmissionResponse("ref")).toString()
+      val submission           = TestData.finalSubmission1
+      running(app) {
+        val connector = app.injector.instanceOf[SubmitBackendConnector]
+
+        server.stubFor(
+          post(urlEqualTo(url))
+            .willReturn(aResponse().withBody(responseJson).withStatus(OK))
+        )
+
+        val result: FinalSubmissionResponse = connector.sendFinalSubmission(submission).futureValue
+
+        result mustBe FinalSubmissionResponse("ref")
+      }
+    }
+
+    "must return an upstream error response when fail" in {
+      val url                  = s"/submit-public-pension-adjustment/final-submission"
+      val app                  = application
+      val responseJson: String = Json.toJson(FinalSubmissionResponse("ref")).toString()
+      val submission           = TestData.finalSubmission1
+      running(app) {
+
+        val connector = app.injector.instanceOf[SubmitBackendConnector]
+        server.stubFor(
+          post(urlEqualTo(url))
+            .willReturn(aResponse.withStatus(500))
+        )
+
+        val result = connector.sendFinalSubmission(submission).failed.futureValue
+
+        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+      }
+    }
+  }
 
   ".sendSubmissionSignal" - {
 

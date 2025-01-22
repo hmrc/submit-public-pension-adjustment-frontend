@@ -429,7 +429,7 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
         .set(PensionSchemeMemberResidencePage, true)
         .success
         .value
-        .set(PensionSchemeMemberUKAddressPage, arbitraryPensionSchemeMemberUKAddress.arbitrary.sample.value)
+        .set(PensionSchemeMemberUKAddressPage, arbitraryUkAddress.arbitrary.sample.value)
         .success
         .value
 

@@ -43,7 +43,7 @@ object InternationalAddressSummary {
         key = "internationalAddress.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.InternationalAddressController.onPageLoad(CheckMode).url)
+          ActionItemViewModel("site.change", routes.AddressLookupRampOnController.rampOnUserAddress(CheckMode).url)
             .withVisuallyHiddenText(messages("internationalAddress.change.hidden"))
         )
       )

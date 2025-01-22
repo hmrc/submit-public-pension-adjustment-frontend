@@ -18,7 +18,7 @@ package services
 
 import base.SpecBase
 import connectors.SubmitBackendConnector
-import models.{PensionSchemeMemberInternationalAddress, SchemeCreditConsent, UkAddress}
+import models.{InternationalAddress, PensionSchemeMemberInternationalAddress, SchemeCreditConsent, UkAddress}
 import models.finalsubmission.{BankAccountDetails, Declarations, FinalSubmissionResponse, PersonalDetails, TaxIdentifiers}
 import org.mockito.{ArgumentMatchers, MockitoSugar}
 import pages.TestData
@@ -106,7 +106,9 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         "Test User",
         None,
         Some(LocalDate.of(1968, 11, 30)),
-        Some(UkAddress("Test Address line 1", None, "Test city", Some("Test county"), "AB1 2CD")),
+        Some(
+          UkAddress(None, "Test Address line 1", None, None, "Test city", Some("Test county"), Some("AB1 2CD"), None)
+        ),
         None,
         None,
         None,
@@ -130,9 +132,11 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         None,
         None,
         Some(
-          PensionSchemeMemberInternationalAddress(
+          InternationalAddress(
+            None,
             "Test Address line 1",
             Some("Test Address line 2"),
+            None,
             "Test city",
             None,
             Some("NP4 9KL"),

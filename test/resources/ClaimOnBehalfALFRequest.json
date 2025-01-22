@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "options": {
+    "continueUrl": "continueUrl",
+    "homeNavHref": "homePage",
+    "accessibilityFooterUrl": "claimOnBehalf",
+    "deskProServiceName": "claimOnBehalf",
+    "showPhaseBanner": true,
+    "phaseFeedbackLink": "/feedback",
+    "alphaPhase": false,
+    "showBackButtons": true,
+    "includeHMRCBranding": false,
+    "disableTranslations": true,
+    "ukMode": false,
+    "selectPageConfig": {
+      "proposalListLimit": 50,
+      "showSearchLinkAgain": true
+    },
+    "confirmPageConfig": {
+      "showChangeLink": true,
+      "showSubHeadingAndInfo": true,
+      "showSearchAgainLink": true,
+      "showConfirmChangeText": true
+    },
+    "timeoutConfig": {
+      "timeoutAmount": 890,
+      "timeoutUrl": "/claimOnBehalf",
+      "timeoutKeepAliveUrl": "/keepAlive"
+    }
+  },
+  "labels": {
+    "en": {
+      "appLevelLabels": {
+        "navTitle": "claimOnBehalf"
+      },
+      "countryPickerLabels": {
+        "title": "claimOnBehalf",
+        "heading": "$claimOnBehalf",
+        "countryLabel": "claimOnBehalf"
+      },
+      "lookupPageLabels": {
+        "title": "claimOnBehalf",
+        "heading": "claimOnBehalf",
+        "manualAddressLinkText": "claimOnBehalf"
+      },
+      "editPageLabels": {
+        "title": "claimOnBehalf",
+        "heading": "claimOnBehalf"
+      },
+      "selectPageLabels": {
+        "title": "claimOnBehalf",
+        "heading": "claimOnBehalf",
+        "editAddressLinkText": "claimOnBehalf"
+      },
+      "confirmPageLabels": {
+        "title": "claimOnBehalf",
+        "heading": "claimOnBehalf",
+        "changeLinkText": "claimOnBehalf"
+      }
+    }
+  }
+}
