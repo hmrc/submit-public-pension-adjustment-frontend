@@ -18,8 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.ContinueChoiceFormProvider
-
-import javax.inject.Inject
 import models.{NormalMode, UserAnswers}
 import pages.ContinueChoicePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -28,6 +26,7 @@ import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ContinueChoiceView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ContinueChoiceController @Inject() (

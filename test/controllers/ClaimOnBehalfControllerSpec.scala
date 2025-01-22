@@ -30,8 +30,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.SubmissionDataService
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 import views.html.ClaimOnBehalfView
 
 import scala.concurrent.Future

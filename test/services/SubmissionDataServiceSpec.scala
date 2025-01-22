@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import connectors.SubmissionsConnector
 import models.Done
-import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Resubmission, Setup}
+import models.calculation.inputs._
 import models.submission.Submission
 import org.mockito.MockitoSugar.when
 import org.scalatest.concurrent.ScalaFutures

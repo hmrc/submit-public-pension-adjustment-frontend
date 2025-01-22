@@ -16,13 +16,12 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import forms.WhenDidYouAskPensionSchemeToPayFormProvider
-import models.{Done, NormalMode, Period, UserAnswers}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
+import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -32,10 +31,10 @@ import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.SubmissionDataService
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 import views.html.WhenDidYouAskPensionSchemeToPayView
 
+import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
 class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with MockitoSugar {

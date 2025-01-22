@@ -16,9 +16,9 @@
 
 package forms.mappings
 
+import models.{Enumerable, PSTR}
 import play.api.data.FormError
 import play.api.data.format.Formatter
-import models.{Enumerable, PSTR}
 
 import scala.util.control.Exception.nonFatalCatch
 

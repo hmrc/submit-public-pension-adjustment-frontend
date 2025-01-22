@@ -17,12 +17,10 @@
 package services
 
 import controllers.routes
-import models.{CheckMode, Mode, NormalMode, Period, UserAnswers}
 import models.submission.Submission
-import pages.{AskedPensionSchemeToPayTaxChargePage, MemberDateOfDeathPage, PensionSchemeDetailsPage, PensionSchemeMemberDOBPage, PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberNamePage, PensionSchemeMemberNinoPage, PensionSchemeMemberResidencePage, PensionSchemeMemberTaxReferencePage, PensionSchemeMemberUKAddressPage, SchemeElectionConsentPage, StatusOfUserPage, WhenDidYouAskPensionSchemeToPayPage, WhenWillYouAskPensionSchemeToPayPage, WhichPensionSchemeWillPayPage, WhoWillPayPage}
+import models.{CheckMode, Mode, Period, UserAnswers}
+import pages._
 import play.api.mvc.Call
-
-import scala.util.Try
 
 object ClaimOnBehalfNavigationLogicService {
 

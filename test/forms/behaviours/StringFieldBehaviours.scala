@@ -16,8 +16,8 @@
 
 package forms.behaviours
 
-import play.api.data.{Field, Form, FormError}
 import org.scalacheck.Gen
+import play.api.data.{Field, Form, FormError}
 
 trait StringFieldBehaviours extends FieldBehaviours {
 

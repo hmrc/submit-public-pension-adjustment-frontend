@@ -16,11 +16,11 @@
 
 package pages
 
-import play.api.libs.json.JsPath
-import uk.gov.hmrc.domain.Nino
 import controllers.routes
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
+import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import uk.gov.hmrc.domain.Nino
 
 case object PensionSchemeMemberNinoPage extends QuestionPage[Nino] {
 

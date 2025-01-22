@@ -16,12 +16,12 @@
 
 package forms
 
-import javax.inject.Inject
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms._
 
+import javax.inject.Inject
 import scala.util.Try
 
 class ContactNumberFormProvider @Inject() extends Mappings {

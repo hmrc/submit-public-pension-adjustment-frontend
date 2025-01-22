@@ -16,12 +16,10 @@
 
 package models.calculation.response
 
+import models.calculation.inputs.{Period => InputsPeriod}
+import models.{Period => CorePeriod}
 import play.api.Logging
 import play.api.libs.json._
-
-import models.calculation.inputs.{Period => InputsPeriod}
-
-import models.{Period => CorePeriod}
 
 import scala.util.{Failure, Success, Try}
 

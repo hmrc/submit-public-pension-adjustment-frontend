@@ -24,8 +24,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.SubmissionDataService
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 
 import scala.concurrent.Future
 

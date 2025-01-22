@@ -18,7 +18,7 @@ package controllers.actions
 
 import base.SpecBase
 import models.UserAnswers
-import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Resubmission, Setup}
+import models.calculation.inputs._
 import models.requests.{IdentifierRequest, OptionalDataRequest}
 import models.submission.Submission
 import org.mockito.ArgumentMatchers.{any, anyString}

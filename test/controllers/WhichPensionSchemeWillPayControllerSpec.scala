@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.WhichPensionSchemeWillPayFormProvider
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
+import models.calculation.inputs._
 import models.calculation.response.{CalculationResponse, TaxYearScheme}
 import models.submission.Submission
 import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPay}

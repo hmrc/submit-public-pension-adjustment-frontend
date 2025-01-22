@@ -18,8 +18,8 @@ package connectors
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import models.{Done, UniqueId}
 import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
+import models.{Done, UniqueId}
 import play.api.Logging
 import play.api.http.Status.{NO_CONTENT, OK}
 import play.api.libs.json.Json

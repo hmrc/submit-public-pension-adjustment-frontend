@@ -16,9 +16,9 @@
 
 package models.requests
 
-import play.api.mvc.{Request, WrappedRequest}
 import models.UserAnswers
 import models.submission.Submission
+import play.api.mvc.{Request, WrappedRequest}
 import uk.gov.hmrc.auth.core.retrieve.ItmpName
 
 import java.time.LocalDate

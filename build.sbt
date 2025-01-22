@@ -2,9 +2,8 @@ import com.typesafe.sbt.web.Import.pipelineStages
 import play.sbt.routes.RoutesKeys
 import sbt.Def
 import scoverage.ScoverageKeys
-import uk.gov.hmrc.DefaultBuildSettings.targetJvm
+import uk.gov.hmrc.DefaultBuildSettings.{itSettings, targetJvm}
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
-import uk.gov.hmrc.DefaultBuildSettings.itSettings
 
 lazy val appName: String = "submit-public-pension-adjustment-frontend"
 

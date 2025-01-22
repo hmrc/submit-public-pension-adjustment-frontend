@@ -28,8 +28,7 @@ import play.api.Application
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.SubmissionDataService
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency

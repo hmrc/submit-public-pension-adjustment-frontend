@@ -17,7 +17,7 @@
 package pages
 
 import models.StatusOfUser.Deputyship
-import models.calculation.inputs.{AnnualAllowance, CalculationInputs, LifeTimeAllowance, Resubmission, Setup}
+import models.calculation.inputs._
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, WhoWillPay}

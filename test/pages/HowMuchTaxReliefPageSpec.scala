@@ -16,9 +16,9 @@
 
 package pages
 
-import models.calculation.inputs.{AnnualAllowanceSetup, CalculationInputs, ExcessLifetimeAllowancePaid, LifetimeAllowanceSetup, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, ProtectionEnhancedChanged, ProtectionType, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
+import models.calculation.inputs._
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{BankDetails, CheckMode, NormalMode}

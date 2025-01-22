@@ -16,18 +16,16 @@
 
 package bars
 
+import bars.barsmodel.request
 import bars.barsmodel.request._
 import bars.barsmodel.response._
 import play.api.http.Status._
 import play.api.libs.json._
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, UpstreamErrorResponse}
-import bars.barsmodel.request
-
 import utils.HttpResponseUtils.HttpResponseOps
 
 import javax.inject.Inject
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class BarsService @Inject() (
   barsConnector: BarsConnector

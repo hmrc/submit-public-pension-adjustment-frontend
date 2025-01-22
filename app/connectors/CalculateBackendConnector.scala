@@ -19,8 +19,8 @@ package connectors
 import config.{FrontendAppConfig, Service}
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.Done
+import play.api.http.Status.{NO_CONTENT, OK}
 import play.api.{Configuration, Logging}
-import play.api.http.Status.{NOT_FOUND, NO_CONTENT, OK}
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}

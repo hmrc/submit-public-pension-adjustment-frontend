@@ -16,11 +16,11 @@
 
 package forms
 
-import javax.inject.Inject
-
 import forms.mappings.Mappings
-import play.api.data.Form
 import models.WhoWillPay
+import play.api.data.Form
+
+import javax.inject.Inject
 
 class WhoWillPayFormProvider @Inject() extends Mappings {
 

@@ -17,11 +17,11 @@
 package pages
 
 import controllers.routes
-
-import java.time.LocalDate
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import java.time.LocalDate
 
 case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
 

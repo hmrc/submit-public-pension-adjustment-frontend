@@ -18,8 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.PensionSchemeMemberDOBFormProvider
-
-import javax.inject.Inject
 import models.{Mode, NavigationState}
 import pages.PensionSchemeMemberDOBPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -28,6 +26,7 @@ import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PensionSchemeMemberDOBView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PensionSchemeMemberDOBController @Inject() (

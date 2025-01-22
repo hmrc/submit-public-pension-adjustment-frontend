@@ -17,12 +17,12 @@
 package pages
 
 import models.submission.Submission
-
-import java.time.LocalDate
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
+
+import java.time.LocalDate
 
 case class WhenDidYouAskPensionSchemeToPayPage(period: Period) extends QuestionPage[LocalDate] {
 

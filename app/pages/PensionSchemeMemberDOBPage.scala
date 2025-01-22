@@ -19,10 +19,10 @@ package pages
 import controllers.routes
 import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
-
-import java.time.LocalDate
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import java.time.LocalDate
 
 case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
 

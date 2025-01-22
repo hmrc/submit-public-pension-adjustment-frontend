@@ -26,8 +26,8 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.ConfirmEditAnswersView
 import services.UserDataService
+import views.html.ConfirmEditAnswersView
 
 import scala.concurrent.Future
 

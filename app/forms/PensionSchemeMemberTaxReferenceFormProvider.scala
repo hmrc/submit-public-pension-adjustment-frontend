@@ -16,10 +16,11 @@
 
 package forms
 
-import javax.inject.Inject
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.data.Forms.optional
+
+import javax.inject.Inject
 
 class PensionSchemeMemberTaxReferenceFormProvider @Inject() extends Mappings {
 

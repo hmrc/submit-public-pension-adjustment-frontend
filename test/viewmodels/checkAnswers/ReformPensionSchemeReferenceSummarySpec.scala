@@ -21,12 +21,12 @@ import models.{CheckMode, PSTR, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.ReformPensionSchemeReferencePage
-
-import scala.xml.Text
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+
+import scala.xml.Text
 
 class ReformPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers {
 

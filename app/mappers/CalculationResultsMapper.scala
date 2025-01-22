@@ -16,10 +16,10 @@
 
 package mappers
 
+import models.calculation._
 import models.calculation.inputs.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.calculation.inputs.{CalculationInputs, IncomeSubJourney, TaxYear2016To2023}
-import models.calculation.{CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, IndividualAASummaryModel, ReviewRowViewModel, RowViewModel}
-import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, OutOfDatesTaxYearsCalculation, Period, Resubmission}
+import models.calculation.response._
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.CurrencyFormatter.currencyFormat
 

@@ -21,10 +21,6 @@ import models.UserSubmissionReference
 import models.finalsubmission.{AuthRetrievals, FinalSubmissionResponse}
 import models.requests.DataRequest
 import play.api.i18n.Lang.logger
-
-import scala.concurrent.{Await, Future}
-import scala.concurrent.ExecutionContext.Implicits.global
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{SubmissionService, UserDataService}
@@ -32,6 +28,10 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.SubmissionWaitingRoomView
+
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class SubmissionWaitingRoomController @Inject() (
   override val messagesApi: MessagesApi,
