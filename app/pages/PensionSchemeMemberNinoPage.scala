@@ -37,6 +37,6 @@ case object PensionSchemeMemberNinoPage extends QuestionPage[Nino] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(RunThroughOnBehalfFlow()) match {
       case Some(true)     => controllers.routes.PensionSchemeMemberTaxReferenceController.onPageLoad(CheckMode)
-      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
+      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad()
     }
 }

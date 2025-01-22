@@ -47,6 +47,6 @@ case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
           case Some(PowerOfAttorney)                                                         => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
           case _                                                                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
         }
-      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
+      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad()
     }
 }

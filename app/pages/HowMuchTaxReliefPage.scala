@@ -45,7 +45,7 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
         val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
         numberOfSchemes match {
           case 0 => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-          case 1 => controllers.routes.CheckYourAnswersController.onPageLoad
+          case 1 => controllers.routes.CheckYourAnswersController.onPageLoad()
           case _ => controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(NormalMode)
         }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
@@ -67,7 +67,7 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
 
   private def whenMemberIsNotInCredit(mode: Mode, numberOfSchemes: Int) =
     if (numberOfSchemes == 1) {
-      controllers.routes.CheckYourAnswersController.onPageLoad
+      controllers.routes.CheckYourAnswersController.onPageLoad()
     } else {
       controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
     }

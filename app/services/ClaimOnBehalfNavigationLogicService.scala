@@ -35,7 +35,7 @@ object ClaimOnBehalfNavigationLogicService {
           navigateWhenTotalAmountsHasInDateDebit(submission, mode)
         } else {
           if (mode == CheckMode) {
-            routes.CheckYourAnswersController.onPageLoad
+            routes.CheckYourAnswersController.onPageLoad()
           } else {
             routes.AlternativeNameController.onPageLoad(mode)
           }
@@ -55,7 +55,7 @@ object ClaimOnBehalfNavigationLogicService {
     mode: Mode
   ): Call =
     if (mode == CheckMode) {
-      routes.CheckYourAnswersController.onPageLoad
+      routes.CheckYourAnswersController.onPageLoad()
     } else {
       routes.AlternativeNameController.onPageLoad(mode)
     }

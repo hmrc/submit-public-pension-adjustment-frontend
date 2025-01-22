@@ -26,7 +26,7 @@
 
 @layout(pageTitle = title(form, messages("memberDateOfDeath.title"))) {
 
-    @formHelper(action = routes.MemberDateOfDeathController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.MemberDateOfDeathController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value.day")))

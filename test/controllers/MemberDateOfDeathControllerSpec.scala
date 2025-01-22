@@ -69,12 +69,12 @@ class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         val view = application.injector.instanceOf[MemberDateOfDeathView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode)(getRequest(), messages(application)).toString
       }
     }
 
@@ -87,11 +87,11 @@ class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val view = application.injector.instanceOf[MemberDateOfDeathView]
 
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
-          getRequest,
+          getRequest(),
           messages(application)
         ).toString
       }
@@ -143,7 +143,7 @@ class MemberDateOfDeathControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url

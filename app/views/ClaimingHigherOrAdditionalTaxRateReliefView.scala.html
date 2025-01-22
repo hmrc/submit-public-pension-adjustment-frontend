@@ -43,7 +43,7 @@
 
 @layout(pageTitle = title(form, messages("claimingHigherOrAdditionalTaxRateRelief.title"))) {
 
-    @formHelper(action = routes.ClaimingHigherOrAdditionalTaxRateReliefController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ClaimingHigherOrAdditionalTaxRateReliefController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

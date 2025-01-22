@@ -26,7 +26,7 @@
 
 @layout(pageTitle = title(form, messages("askedPensionSchemeToPayTaxCharge.title"))) {
 
-    @formHelper(action = routes.AskedPensionSchemeToPayTaxChargeController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = routes.AskedPensionSchemeToPayTaxChargeController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

@@ -34,7 +34,7 @@ case object ContactNumberPage extends QuestionPage[String] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ContactNumberPage) match {
-      case Some(_) => routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => routes.CheckYourAnswersController.onPageLoad()
       case _       => routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

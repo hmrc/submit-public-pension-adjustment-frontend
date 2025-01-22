@@ -33,7 +33,7 @@
 
 @layout(pageTitle = title(form, messages("confirmEditAnswers.title"))) {
 
-    @formHelper(action = routes.ConfirmEditAnswersController.onSubmit(), 'autoComplete -> "off") {
+    @formHelper(action = routes.ConfirmEditAnswersController.onSubmit(), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

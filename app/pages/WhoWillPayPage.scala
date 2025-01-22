@@ -50,8 +50,8 @@ case class WhoWillPayPage(period: Period) extends QuestionPage[WhoWillPay] {
       case Some(You)           =>
         val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
         nextDebitPeriod match {
-          case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-          case None    => controllers.routes.CheckYourAnswersController.onPageLoad
+          case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad()
+          case None    => controllers.routes.CheckYourAnswersController.onPageLoad()
         }
       case _                   => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

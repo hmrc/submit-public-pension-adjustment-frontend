@@ -49,7 +49,7 @@ case class WhichPensionSchemeWillPayPage(period: Period) extends QuestionPage[St
       case Some(_)                         =>
         if (answers.get(AskedPensionSchemeToPayTaxChargePage(period)).isEmpty)
           controllers.routes.AskedPensionSchemeToPayTaxChargeController.onPageLoad(CheckMode, period)
-        else controllers.routes.CheckYourAnswersController.onPageLoad
+        else controllers.routes.CheckYourAnswersController.onPageLoad()
       case _                               => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

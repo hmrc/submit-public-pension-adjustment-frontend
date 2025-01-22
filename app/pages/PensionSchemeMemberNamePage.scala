@@ -33,6 +33,6 @@ case object PensionSchemeMemberNamePage extends QuestionPage[String] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(RunThroughOnBehalfFlow()) match {
       case Some(true)     => controllers.routes.PensionSchemeMemberDOBController.onPageLoad(CheckMode)
-      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
+      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad()
     }
 }
