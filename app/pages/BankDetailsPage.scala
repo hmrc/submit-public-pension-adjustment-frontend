@@ -28,7 +28,7 @@ case object BankDetailsPage extends QuestionPage[BankDetails] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(BankDetailsPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

@@ -30,7 +30,7 @@ class CalculationDataRequiredActionImpl @Inject() (implicit val executionContext
   override protected def refine[A](request: OptionalDataRequest[A]): Future[Either[Result, CalculationDataRequest[A]]] =
     request.submission match {
       case None             =>
-        Future.successful(Left(Redirect(routes.CalculationPrerequisiteController.onPageLoad.url)))
+        Future.successful(Left(Redirect(routes.CalculationPrerequisiteController.onPageLoad().url)))
       case Some(submission) =>
         Future.successful(
           Right(

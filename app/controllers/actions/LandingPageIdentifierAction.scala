@@ -97,7 +97,7 @@ class AuthenticatedLandingPageIdentifierAction @Inject() (
         }
       case None                     =>
         logger.error("No submissionUniqueId is specified")
-        Redirect(routes.CalculationPrerequisiteController.onPageLoad.url)
+        Redirect(routes.CalculationPrerequisiteController.onPageLoad().url)
     }
 
   private def insufficientConfidence[A](request: Request[A]) = {

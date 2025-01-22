@@ -26,7 +26,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.CalculationResultView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class CalculationResultController @Inject() (
   override val messagesApi: MessagesApi,
@@ -35,7 +34,7 @@ class CalculationResultController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   view: CalculationResultView
-)(implicit ec: ExecutionContext)
+)
     extends FrontendBaseController
     with I18nSupport {
 

@@ -18,7 +18,6 @@ package views.helpers
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import scala.language.implicitConversions
 
 trait ImplicitDateFormatter {
   lazy val welshMonths = Map(

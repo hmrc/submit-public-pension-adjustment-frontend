@@ -39,7 +39,7 @@ case object AlternativeNamePage extends QuestionPage[Boolean] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AlternativeNamePage) match {
       case Some(false) => routes.EnterAlternativeNameController.onPageLoad(CheckMode)
-      case Some(true)  => routes.CheckYourAnswersController.onPageLoad
+      case Some(true)  => routes.CheckYourAnswersController.onPageLoad()
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

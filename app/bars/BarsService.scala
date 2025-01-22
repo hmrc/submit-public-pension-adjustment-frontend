@@ -30,7 +30,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class BarsService @Inject() (
   barsConnector: BarsConnector
 )(implicit ec: ExecutionContext) {
-  def preVerify(barsResponse: Future[HttpResponse])(implicit hc: HeaderCarrier): Future[BarsResponse] =
+  def preVerify(barsResponse: Future[HttpResponse]): Future[BarsResponse] =
     barsResponse.map { httpResponse: HttpResponse =>
       httpResponse.status match {
         case OK =>
@@ -52,9 +52,7 @@ class BarsService @Inject() (
       }
     }
 
-  def verifyPersonal(barsResponse: Future[HttpResponse])(implicit
-    hc: HeaderCarrier
-  ): Future[VerifyResponse] =
+  def verifyPersonal(barsResponse: Future[HttpResponse]): Future[VerifyResponse] =
     barsResponse.map(response => response.json.as[BarsVerifyResponse]).map(VerifyResponse.apply)
 
   def verifyBankDetails(
