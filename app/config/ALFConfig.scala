@@ -32,7 +32,7 @@ case class ALFConfig @Inject() (
   frontendAppConfig: FrontendAppConfig
 ) {
 
-  val baseUrl: String     = servicesConfig.baseUrl("alf")
+  val baseUrl: String     = servicesConfig.baseUrl("address-lookup-frontend")
   val startURL: String    = s"$baseUrl/api/init"
   val retrieveURL: String = s"$baseUrl/api/confirmed"
 
