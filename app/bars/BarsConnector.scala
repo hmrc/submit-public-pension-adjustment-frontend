@@ -48,5 +48,5 @@ class BarsConnector @Inject() (
       .post(url"$verifyPersonalUrl")
       .withBody(Json.toJson(barsVerifyPersonalRequest))
       .setHeader((HeaderNames.USER_AGENT, "calculate-public-pension-adjustment"))
-      .execute
+      .execute[HttpResponse]
 }

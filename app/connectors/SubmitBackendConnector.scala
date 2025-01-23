@@ -21,6 +21,7 @@ import config.FrontendAppConfig
 import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
 import models.{Done, UniqueId}
 import play.api.Logging
+import uk.gov.hmrc.http.HttpReads.Implicits._
 import play.api.http.Status.{NO_CONTENT, OK}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -41,7 +42,7 @@ class SubmitBackendConnector @Inject() (
     httpClient2
       .post(url"${config.sppaBaseUrl}/submit-public-pension-adjustment/final-submission")
       .withBody(Json.toJson(finalSubmission))
-      .execute
+      .execute[HttpResponse]
       .flatMap { response =>
         response.status match {
           case OK =>
@@ -62,7 +63,7 @@ class SubmitBackendConnector @Inject() (
   def sendSubmissionSignal(submissionUniqueId: Option[UniqueId])(implicit hc: HeaderCarrier): Future[Boolean] =
     httpClient2
       .get(url"${config.sppaBaseUrl}/submit-public-pension-adjustment/submission-signal/$submissionUniqueId")
-      .execute
+      .execute[HttpResponse]
       .flatMap { response =>
         response.status match {
           case OK =>
@@ -83,7 +84,7 @@ class SubmitBackendConnector @Inject() (
   def sendCalcUserAnswerSignal(submissionUniqueId: Option[UniqueId])(implicit hc: HeaderCarrier): Future[Boolean] =
     httpClient2
       .get(url"${config.sppaBaseUrl}/submit-public-pension-adjustment/calc-user-answers-signal/$submissionUniqueId")
-      .execute
+      .execute[HttpResponse]
       .flatMap { response =>
         response.status match {
           case OK =>

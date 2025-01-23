@@ -28,7 +28,7 @@ import play.api.Application
 import play.api.http.Status.{ACCEPTED, NOT_FOUND, OK}
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
-import uk.gov.hmrc.http.{HeaderCarrier, NotFoundException}
+import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
 
 import scala.concurrent.Future
 
@@ -121,7 +121,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         val resultFut: Future[Boolean] = connector.sendSubmissionSignal(uniqueId)
 
         whenReady(resultFut.failed) { e =>
-          e mustBe a[NotFoundException]
+          e mustBe a[UpstreamErrorResponse]
         }
       }
     }
@@ -166,7 +166,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         val resultFut: Future[Boolean] = connector.sendCalcUserAnswerSignal(uniqueId)
 
         whenReady(resultFut.failed) { e =>
-          e mustBe a[NotFoundException]
+          e mustBe a[UpstreamErrorResponse]
         }
       }
     }
