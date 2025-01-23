@@ -37,7 +37,7 @@ class CannotUseServiceNotIndividualControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[CannotUseServiceNotIndividualView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(controllers.auth.routes.AuthController.signOutUnauthorised.url)(
+        contentAsString(result) mustEqual view(controllers.auth.routes.AuthController.signOutUnauthorised().url)(
           request,
           messages(application)
         ).toString

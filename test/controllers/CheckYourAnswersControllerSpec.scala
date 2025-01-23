@@ -39,9 +39,9 @@ import scala.concurrent.Future
 
 class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
-  lazy val checkYourAnswerRoute         = controllers.routes.CheckYourAnswersController.onPageLoad.url
+  lazy val checkYourAnswerRoute         = controllers.routes.CheckYourAnswersController.onPageLoad().url
   lazy val declarationRoute             = controllers.routes.DeclarationsController.onPageLoad
-  lazy val schemeCreditConsentRoute     = controllers.routes.SchemeCreditConsentController.onPageLoad
+  lazy val schemeCreditConsentRoute     = controllers.routes.SchemeCreditConsentController.onPageLoad()
   lazy val calculationPrerequisiteRoute = controllers.routes.CalculationPrerequisiteController.onPageLoad().url
 
   "Check Your Answers Controller" - {
@@ -131,7 +131,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
-        val request = FakeRequest(GET, controllers.routes.CheckYourAnswersController.onPageLoad.url)
+        val request = FakeRequest(GET, controllers.routes.CheckYourAnswersController.onPageLoad().url)
 
         val result = route(application, request).value
 

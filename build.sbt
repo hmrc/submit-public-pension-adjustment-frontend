@@ -19,14 +19,13 @@ lazy val it = project
   .settings(libraryDependencies ++= AppDependencies.itDependencies)
 
 lazy val root = (project in file("."))
-  .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin, AutomateHeaderPlugin, BuildInfoPlugin)
+  .enablePlugins(PlayScala, SbtDistributablesPlugin, AutomateHeaderPlugin, BuildInfoPlugin)
   .disablePlugins(JUnitXmlReportPlugin) // Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(inConfig(Test)(testSettings): _*)
   .settings(majorVersion := 0)
   .settings(ThisBuild / useSuperShell := false)
   .settings(
     scalaVersion := "2.13.12",
-    targetJvm := "jvm-11",
     name := appName,
     RoutesKeys.routesImport ++= Seq(
       "models._",

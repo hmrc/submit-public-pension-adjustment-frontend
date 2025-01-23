@@ -34,7 +34,7 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
   private val mockSubmissionService = mock[SubmissionService]
 
-  lazy val submissionRoute = routes.SubmissionController.onPageLoad.url
+  lazy val submissionRoute = routes.SubmissionController.onPageLoad().url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 

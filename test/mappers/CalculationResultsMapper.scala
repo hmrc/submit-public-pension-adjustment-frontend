@@ -25,7 +25,6 @@ import pages.TestData
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HeaderCarrier
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.io.Source
 
 class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {

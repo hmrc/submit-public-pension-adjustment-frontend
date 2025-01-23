@@ -79,7 +79,6 @@ object Period {
 
   implicit lazy val writes: Writes[Period] = Writes { case Period.Year(year) =>
     JsString(year.toString)
-  case _  => JsString("notRecorded")
   }
 
   implicit lazy val ordering: Ordering[Period] =

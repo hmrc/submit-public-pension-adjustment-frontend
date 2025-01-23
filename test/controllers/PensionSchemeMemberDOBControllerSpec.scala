@@ -69,12 +69,12 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         val view = application.injector.instanceOf[PensionSchemeMemberDOBView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode)(getRequest(), messages(application)).toString
       }
     }
 
@@ -87,11 +87,11 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val view = application.injector.instanceOf[PensionSchemeMemberDOBView]
 
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
-          getRequest,
+          getRequest(),
           messages(application)
         ).toString
       }
@@ -110,7 +110,7 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
           )
           .build()
       running(application) {
-        val result = route(application, postRequest).value
+        val result = route(application, postRequest()).value
         status(result) mustEqual SEE_OTHER
       }
     }
@@ -140,7 +140,7 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
@@ -152,7 +152,7 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
-        val result = route(application, postRequest).value
+        val result = route(application, postRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
@@ -164,7 +164,7 @@ class PensionSchemeMemberDOBControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual calculationPrerequisiteRoute
