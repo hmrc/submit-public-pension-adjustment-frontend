@@ -18,8 +18,8 @@ package services
 
 import base.SpecBase
 import connectors.SubmitBackendConnector
-import models.{InternationalAddress, PensionSchemeMemberInternationalAddress, SchemeCreditConsent, UkAddress}
-import models.finalsubmission.{BankAccountDetails, Declarations, FinalSubmissionResponse, PersonalDetails, TaxIdentifiers}
+import models.finalsubmission._
+import models.{InternationalAddress, UkAddress}
 import org.mockito.{ArgumentMatchers, MockitoSugar}
 import pages.TestData
 import uk.gov.hmrc.http.HeaderCarrier

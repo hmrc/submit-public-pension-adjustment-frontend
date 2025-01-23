@@ -16,7 +16,6 @@
 
 package models.requests
 
-import models.UkAddress
 import play.api.libs.json.{Json, OFormat}
 
 case class AddressLookupConfirmation(

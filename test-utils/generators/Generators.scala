@@ -46,7 +46,7 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
       firstDigits <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
       secondChars <- Gen.listOfN(2, Gen.alphaChar).map(_.mkString)
     } yield s"$firstDigits $secondChars".toUpperCase.replaceAll(" ", "")
-    if (pstr == "00348916RT") {
+    if (pstr.toString == "00348916RT") {
       validPstrs
     } else {
       pstr
@@ -71,7 +71,7 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     arbitrary[BigDecimal]
       .suchThat(_.abs < Int.MaxValue)
       .suchThat(!_.isValidInt)
-      .map(_.formatted("%f"))
+      .map(value => "%f".format(value))
 
   def intsBelowValue(value: Int): Gen[Int] =
     arbitrary[Int] suchThat (_ < value)

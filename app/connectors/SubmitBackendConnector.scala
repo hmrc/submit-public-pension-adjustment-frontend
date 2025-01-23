@@ -21,9 +21,9 @@ import config.FrontendAppConfig
 import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
 import models.{Done, UniqueId}
 import play.api.Logging
-import uk.gov.hmrc.http.HttpReads.Implicits._
 import play.api.http.Status.{NO_CONTENT, OK}
 import play.api.libs.json.Json
+import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 

@@ -16,16 +16,11 @@
 
 package viewmodels.checkAnswers
 
-import config.FrontendAppConfig
-import connectors.AddressLookupConnector
 import controllers.routes
-import models.requests.{AddressLookupOptions, AddressLookupRequest}
 import models.{CheckMode, UserAnswers}
 import pages.PensionSchemeMemberResidencePage
 import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.viewmodels.cookiebanner.Action
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 

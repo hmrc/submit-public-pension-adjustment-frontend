@@ -21,11 +21,11 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, post, urlEqualTo}
 import generators.Generators
 import models.UniqueId
-import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
+import models.finalsubmission.FinalSubmissionResponse
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.TestData
 import play.api.Application
-import play.api.http.Status.{ACCEPTED, NOT_FOUND, OK}
+import play.api.http.Status.{NOT_FOUND, OK}
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
 import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}

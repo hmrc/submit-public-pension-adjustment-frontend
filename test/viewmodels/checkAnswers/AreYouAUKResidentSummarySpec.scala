@@ -23,7 +23,6 @@ import org.scalatest.matchers.should.Matchers
 import pages.AreYouAUKResidentPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.checkAnswers.AreYouAUKResidentSummary
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 

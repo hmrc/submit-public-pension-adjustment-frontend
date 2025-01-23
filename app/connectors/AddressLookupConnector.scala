@@ -21,12 +21,13 @@ import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.requests.{AddressLookupConfirmation, AddressLookupRequest}
 import play.api.Logging
 import play.api.http.HeaderNames
+import uk.gov.hmrc.http.HttpReads.Implicits._
 import play.api.http.Status.{ACCEPTED, OK}
 import play.api.i18n.Lang
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}

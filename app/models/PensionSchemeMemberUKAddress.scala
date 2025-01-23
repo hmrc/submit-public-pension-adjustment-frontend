@@ -16,7 +16,6 @@
 
 package models
 
-import models.requests.AddressLookupConfirmation
 import play.api.libs.json._
 
 case class PensionSchemeMemberUKAddress(
@@ -29,6 +28,6 @@ case class PensionSchemeMemberUKAddress(
 )
 
 object PensionSchemeMemberUKAddress {
-  implicit val format = Json.format[PensionSchemeMemberUKAddress]
+  implicit val format: OFormat[PensionSchemeMemberUKAddress] = Json.format[PensionSchemeMemberUKAddress]
 
 }
