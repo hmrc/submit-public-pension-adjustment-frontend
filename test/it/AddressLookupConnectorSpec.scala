@@ -38,7 +38,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
   private def application: Application =
     new GuiceApplicationBuilder()
-      .configure("microservice.services.alf.port" -> server.port)
+      .configure("microservice.services.address-lookup-frontend.port" -> server.port)
       .build()
 
   "initialiseJourney" - {
