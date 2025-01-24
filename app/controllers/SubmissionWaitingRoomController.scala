@@ -42,7 +42,8 @@ class SubmissionWaitingRoomController @Inject() (
   view: SubmissionWaitingRoomView,
   submissionService: SubmissionService,
   userDataService: UserDataService
-)(implicit ec: ExecutionContext) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] =
