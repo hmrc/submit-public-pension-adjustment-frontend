@@ -30,7 +30,6 @@ sealed trait Period {
 
 object Period {
 
-
   case class Year(year: Int) extends Period {
 
     override lazy val toString: String = year.toString

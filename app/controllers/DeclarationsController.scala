@@ -37,8 +37,7 @@ class DeclarationsController @Inject() (
   view: DeclarationsView,
   submissionService: SubmissionService,
   userDataService: UserDataService
-)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {

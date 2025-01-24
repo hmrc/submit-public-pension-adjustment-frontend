@@ -37,8 +37,7 @@ class PrintReviewController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: PrintReviewView
-)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   val form = Form("_" -> ignored(()))

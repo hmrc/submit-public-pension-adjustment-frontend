@@ -30,8 +30,7 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.SubmissionWaitingRoomView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class SubmissionWaitingRoomController @Inject() (
   override val messagesApi: MessagesApi,
@@ -43,7 +42,7 @@ class SubmissionWaitingRoomController @Inject() (
   view: SubmissionWaitingRoomView,
   submissionService: SubmissionService,
   userDataService: UserDataService
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] =

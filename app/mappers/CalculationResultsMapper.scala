@@ -22,7 +22,6 @@ import models.calculation.inputs.{CalculationInputs, IncomeSubJourney, TaxYear20
 import models.calculation.response._
 import utils.CurrencyFormatter.currencyFormat
 
-
 object CalculationResultsMapper {
   def calculationResultsViewModel(calculationResponse: CalculationResponse): CalculationResultsViewModel = {
     val resubmissionVal: Seq[RowViewModel]  = resubmission(calculationResponse)

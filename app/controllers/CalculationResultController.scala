@@ -34,8 +34,7 @@ class CalculationResultController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   view: CalculationResultView
-)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   val form = Form("_" -> ignored(()))

@@ -28,6 +28,7 @@ case class PensionSchemeMemberInternationalAddress(
 )
 
 object PensionSchemeMemberInternationalAddress {
-  implicit val format: OFormat[PensionSchemeMemberInternationalAddress] = Json.format[PensionSchemeMemberInternationalAddress]
+  implicit val format: OFormat[PensionSchemeMemberInternationalAddress] =
+    Json.format[PensionSchemeMemberInternationalAddress]
 
 }
