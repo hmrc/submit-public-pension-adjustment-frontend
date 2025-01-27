@@ -16,6 +16,7 @@
 
 package models.calculation.response
 
+import exceptions.InvalidInputException
 import models.calculation.inputs.{Period => InputsPeriod}
 import models.{Period => CorePeriod}
 import play.api.Logging
@@ -40,6 +41,7 @@ sealed trait Period {
       case Period._2021 => InputsPeriod._2021
       case Period._2022 => InputsPeriod._2022
       case Period._2023 => InputsPeriod._2023
+      case _            => throw InvalidInputException("Invalid taxyear encountered while toCalculationInputsPeriod")
     }
 
   def toCorePeriod: CorePeriod =
@@ -57,11 +59,15 @@ sealed trait Period {
       case Period._2021 => CorePeriod._2021
       case Period._2022 => CorePeriod._2022
       case Period._2023 => CorePeriod._2023
+      case _            => throw InvalidInputException("Invalid taxyear encountered while toCorePeriod")
     }
 
 }
 
 object Period extends Logging {
+
+  private val JsonValue2016Pre  = "2016-pre"
+  private val JsonValue2016Post = "2016-post"
 
   case class Year(year: Int) extends Period {
 
@@ -104,8 +110,10 @@ object Period extends Logging {
       }
     }
 
-  implicit lazy val writes: Writes[Period] = Writes { case Period.Year(year) =>
-    JsString(year.toString)
+  implicit lazy val writes: Writes[Period] = Writes {
+    case Period.Year(year)         => JsString(year.toString)
+    case Period._2016PreAlignment  => JsString(JsonValue2016Pre)
+    case Period._2016PostAlignment => JsString(JsonValue2016Post)
   }
 
   implicit lazy val ordering: Ordering[Period] =

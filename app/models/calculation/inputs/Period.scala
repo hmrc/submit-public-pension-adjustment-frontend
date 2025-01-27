@@ -30,6 +30,9 @@ sealed trait Period {
 
 object Period {
 
+  private val JsonValue2016Pre  = "2016-pre"
+  private val JsonValue2016Post = "2016-post"
+
   case class Year(year: Int) extends Period {
 
     override lazy val toString: String = year.toString
@@ -77,8 +80,10 @@ object Period {
       }
     }
 
-  implicit lazy val writes: Writes[Period] = Writes { case Period.Year(year) =>
-    JsString(year.toString)
+  implicit lazy val writes: Writes[Period] = Writes {
+    case Period.Year(year)         => JsString(year.toString)
+    case Period._2016PreAlignment  => JsString(JsonValue2016Pre)
+    case Period._2016PostAlignment => JsString(JsonValue2016Post)
   }
 
   implicit lazy val ordering: Ordering[Period] =
