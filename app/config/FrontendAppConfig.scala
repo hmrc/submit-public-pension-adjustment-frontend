@@ -51,6 +51,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val requiredAuthConfidenceLevel         = configuration.get[String]("required-auth-confidence-level")
   val origin                              = configuration.get[String]("origin")
   val signOutUrl: String                  = configuration.get[String]("urls.signOut")
+  val signOutWithGuidance: String         = configuration.get[String]("urls.signOutWithGuidance")
   val redirectToStartPage: String         = configuration.get[String]("urls.redirectToStartPage")
 
   private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
