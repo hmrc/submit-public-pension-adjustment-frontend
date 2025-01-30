@@ -148,7 +148,8 @@ object SelectPageLabels {
 final case class ConfirmPageLabels(
   title: Option[String] = None,
   heading: Option[String] = None,
-  changeLinkText: Option[String] = None
+  changeLinkText: Option[String] = None,
+  submitLabel: Option[String] = None
 )
 
 object ConfirmPageLabels {

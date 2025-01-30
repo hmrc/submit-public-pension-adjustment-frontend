@@ -51,9 +51,12 @@ case class ALFConfig @Inject() (
   val homePage: String      =
     frontendAppConfig.landingPageLoginContinueUrl
   val signOutPage: String   =
-    frontendAppConfig.signOutUrl
+    frontendAppConfig.signOutWithGuidance
   val serviceOrigin: String =
     configuration.get[String]("contact-frontend.serviceId")
+
+  val cy: Lang = Lang("CY")
+  val en: Lang = Lang("EN")
 
   // noinspection ScalaStyle
   def claimOnBehalfRequestConfig(continueUrl: String, requestHeader: RequestHeader)(implicit language: Lang) = {
@@ -61,7 +64,6 @@ case class ALFConfig @Inject() (
     val feedbackUrl: String =
       frontendAppConfig.feedbackUrl(requestHeader)
 
-    val cy       = Lang("CY")
     val v2Config =
       s"""{
              |  "version": 2,
@@ -97,35 +99,36 @@ case class ALFConfig @Inject() (
              |    "labels": {
              |      "en": {
              |        "appLevelLabels": {
-             |          "navTitle": "${messagesApi("service.name")}"
+             |          "navTitle": "${messagesApi("service.name")(en)}"
              |        },
              |        "countryPickerLabels": {
-             |        "title": "${messagesApi("addressLookup.claimOnBehalf.countryPicker.title")}",
-             |        "heading": "${messagesApi("addressLookup.claimOnBehalf.countryPicker.heading")}",
-             |        "countryLabel": "${messagesApi("addressLookup.claimOnBehalf.countryPicker.inputLabel")}"
+             |        "title": "${messagesApi("addressLookup.claimOnBehalf.countryPicker.title")(en)}",
+             |        "heading": "${messagesApi("addressLookup.claimOnBehalf.countryPicker.heading")(en)}",
+             |        "countryLabel": "${messagesApi("addressLookup.claimOnBehalf.countryPicker.inputLabel")(en)}"
              |      },
              |        "lookupPageLabels": {
-             |          "title": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.title")}",
-             |          "heading": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.heading")}",
+             |          "title": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.title")(en)}",
+             |          "heading": "${messagesApi("addressLookup.claimOnBehalf.lookupPage.heading")(en)}",
              |          "manualAddressLinkText": "${messagesApi(
           "addressLookup.claimOnBehalf.lookupPage.manualAddressLinkText"
-        )}"
+        )(en)}"
              |        },
              |        "editPageLabels": {
-             |          "title": "${messagesApi("addressLookup.claimOnBehalf.editPage.title")}",
-             |          "heading": "${messagesApi("addressLookup.claimOnBehalf.editPage.heading")}"
+             |          "title": "${messagesApi("addressLookup.claimOnBehalf.editPage.title")(en)}",
+             |          "heading": "${messagesApi("addressLookup.claimOnBehalf.editPage.heading")(en)}"
              |        },
              |        "selectPageLabels": {
-             |          "title": "${messagesApi("addressLookup.claimOnBehalf.selectPage.title")}",
-             |          "heading": "${messagesApi("addressLookup.claimOnBehalf.selectPage.heading")}",
+             |          "title": "${messagesApi("addressLookup.claimOnBehalf.selectPage.title")(en)}",
+             |          "heading": "${messagesApi("addressLookup.claimOnBehalf.selectPage.heading")(en)}",
              |          "editAddressLinkText": "${messagesApi(
           "addressLookup.claimOnBehalf.selectPage.editAddressLinkText"
-        )}"
+        )(en)}"
              |        },
              |        "confirmPageLabels": {
-             |        "title": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.title")}",
-             |        "heading": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.heading")}",
-             |        "changeLinkText": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.changeLinkText")}"
+             |        "title": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.title")(en)}",
+             |        "heading": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.heading")(en)}",
+             |        "changeLinkText": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.changeLinkText")(en)}",
+             |        "submitLabel": "${messagesApi("site.continue")(en)}"
              |      }
              |      },
              |      "cy": {
@@ -158,7 +161,8 @@ case class ALFConfig @Inject() (
              |        "confirmPageLabels": {
              |        "title": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.title")(cy)}",
              |        "heading": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.heading")(cy)}",
-             |        "changeLinkText": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.changeLinkText")(cy)}"
+             |        "changeLinkText": "${messagesApi("addressLookup.claimOnBehalf.confirmPage.changeLinkText")(cy)}",
+             |        "submitLabel": "${messagesApi("site.continue")(cy)}"
              |      }
              |      }
              |    }
@@ -172,7 +176,6 @@ case class ALFConfig @Inject() (
     val feedbackUrl: String =
       frontendAppConfig.feedbackUrl(requestHeader)
 
-    val cy       = Lang("CY")
     val v2Config =
       s"""{
          |  "version": 2,
@@ -208,31 +211,32 @@ case class ALFConfig @Inject() (
          |    "labels": {
          |      "en": {
          |        "appLevelLabels": {
-         |          "navTitle": "${messagesApi("service.name")}"
+         |          "navTitle": "${messagesApi("service.name")(en)}"
          |        },
          |        "countryPickerLabels": {
-         |        "title": "${messagesApi("addressLookup.user.countryPicker.title")}",
-         |        "heading": "${messagesApi("addressLookup.user.countryPicker.heading")}",
-         |        "countryLabel": "${messagesApi("addressLookup.user.countryPicker.inputLabel")}"
+         |        "title": "${messagesApi("addressLookup.user.countryPicker.title")(en)}",
+         |        "heading": "${messagesApi("addressLookup.user.countryPicker.heading")(en)}",
+         |        "countryLabel": "${messagesApi("addressLookup.user.countryPicker.inputLabel")(en)}"
          |      },
          |        "lookupPageLabels": {
-         |          "title": "${messagesApi("addressLookup.user.lookupPage.title")}",
-         |          "heading": "${messagesApi("addressLookup.user.lookupPage.heading")}",
-         |          "manualAddressLinkText": "${messagesApi("addressLookup.user.lookupPage.manualAddressLinkText")}"
+         |          "title": "${messagesApi("addressLookup.user.lookupPage.title")(en)}",
+         |          "heading": "${messagesApi("addressLookup.user.lookupPage.heading")(en)}",
+         |          "manualAddressLinkText": "${messagesApi("addressLookup.user.lookupPage.manualAddressLinkText")(en)}"
          |        },
          |        "editPageLabels": {
-         |          "title": "${messagesApi("addressLookup.user.editPage.title")}",
-         |          "heading": "${messagesApi("addressLookup.user.editPage.heading")}"
+         |          "title": "${messagesApi("addressLookup.user.editPage.title")(en)}",
+         |          "heading": "${messagesApi("addressLookup.user.editPage.heading")(en)}"
          |        },
          |        "selectPageLabels": {
-         |          "title": "${messagesApi("addressLookup.user.selectPage.title")}",
-         |          "heading": "${messagesApi("addressLookup.user.selectPage.heading")}",
-         |          "editAddressLinkText": "${messagesApi("addressLookup.user.selectPage.editAddressLinkText")}"
+         |          "title": "${messagesApi("addressLookup.user.selectPage.title")(en)}",
+         |          "heading": "${messagesApi("addressLookup.user.selectPage.heading")(en)}",
+         |          "editAddressLinkText": "${messagesApi("addressLookup.user.selectPage.editAddressLinkText")(en)}"
          |        },
          |        "confirmPageLabels": {
-         |        "title": "${messagesApi("addressLookup.user.confirmPage.title")}",
-         |        "heading": "${messagesApi("addressLookup.user.confirmPage.heading")}",
-         |        "changeLinkText": "${messagesApi("addressLookup.user.confirmPage.changeLinkText")}"
+         |        "title": "${messagesApi("addressLookup.user.confirmPage.title")(en)}",
+         |        "heading": "${messagesApi("addressLookup.user.confirmPage.heading")(en)}",
+         |        "changeLinkText": "${messagesApi("addressLookup.user.confirmPage.changeLinkText")(en)}",
+         |        "submitLabel": "${messagesApi("site.continue")(en)}"
          |      }
          |      },
          |      "cy": {
@@ -261,7 +265,8 @@ case class ALFConfig @Inject() (
          |        "confirmPageLabels": {
          |        "title": "${messagesApi("addressLookup.user.confirmPage.title")(cy)}",
          |        "heading": "${messagesApi("addressLookup.user.confirmPage.heading")(cy)}",
-         |        "changeLinkText": "${messagesApi("addressLookup.user.confirmPage.changeLinkText")(cy)}"
+         |        "changeLinkText": "${messagesApi("addressLookup.user.confirmPage.changeLinkText")(cy)}",
+         |        "submitLabel": "${messagesApi("site.continue")(cy)}"
          |      }
          |      }
          |    }
