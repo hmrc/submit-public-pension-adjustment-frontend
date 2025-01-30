@@ -16,15 +16,15 @@
 
 package viewmodels.checkAnswers
 
+import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
+import pages.ClaimingHigherOrAdditionalTaxRateReliefPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
-import pages.ClaimingHigherOrAdditionalTaxRateReliefPage
-import controllers.routes
 
 class ClaimingHigherOrAdditionalTaxRateReliefSummarySpec extends AnyFreeSpec with Matchers {
 

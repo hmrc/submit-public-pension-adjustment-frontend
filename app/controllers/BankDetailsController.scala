@@ -29,8 +29,8 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.BankDetailsView
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
+import views.html.BankDetailsView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}

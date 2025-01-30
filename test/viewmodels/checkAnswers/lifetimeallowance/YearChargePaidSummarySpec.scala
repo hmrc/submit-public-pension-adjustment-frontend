@@ -18,7 +18,6 @@ package viewmodels.checkAnswers.lifetimeallowance
 
 import models.calculation.inputs.{CalculationInputs, NewLifeTimeAllowanceAdditions, YearChargePaid}
 import models.submission.Submission
-import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.TestData

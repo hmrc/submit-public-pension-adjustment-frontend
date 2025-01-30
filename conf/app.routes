@@ -14,9 +14,9 @@ GET         /continue-session                                                   
 
 GET         /there-is-a-problem                                                                                         controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
-GET         /account/sign-out-survey                                                                                    controllers.auth.AuthController.signOut
-GET         /account/sign-out                                                                                           controllers.auth.AuthController.signOutNoSurvey
-GET         /account/sign-out-unauthorised                                                                              controllers.auth.AuthController.signOutUnauthorised
+GET         /account/sign-out-survey                                                                                    controllers.auth.AuthController.signOut()
+GET         /account/sign-out                                                                                           controllers.auth.AuthController.signOutNoSurvey()
+GET         /account/sign-out-unauthorised                                                                              controllers.auth.AuthController.signOutUnauthorised()
 GET         /account/signed-out                                                                                         controllers.auth.SignedOutController.onPageLoad
 
 GET         /unauthorised                                                                                               controllers.UnauthorisedController.onPageLoad
@@ -170,7 +170,7 @@ POST        /bank-details                                                       
 GET         /change-bank-details                                                                                        controllers.BankDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-bank-details                                                                                        controllers.BankDetailsController.onSubmit(mode: Mode = CheckMode)
 
-GET         /check-your-answers                                                                                         controllers.CheckYourAnswersController.onPageLoad
+GET         /check-your-answers                                                                                         controllers.CheckYourAnswersController.onPageLoad()
 GET         /submit-your-answers                                                                                        controllers.DeclarationsController.onSubmit()
 GET         /submission                                                                                                 controllers.SubmissionController.onPageLoad()
 

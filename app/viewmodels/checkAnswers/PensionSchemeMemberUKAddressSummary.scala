@@ -17,7 +17,6 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.requests.{AddressLookupOptions, AddressLookupRequest}
 import models.{CheckMode, UserAnswers}
 import pages.PensionSchemeMemberUKAddressPage
 import play.api.i18n.Messages

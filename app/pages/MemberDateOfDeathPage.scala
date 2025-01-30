@@ -17,11 +17,11 @@
 package pages
 
 import controllers.routes
-
-import java.time.LocalDate
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import java.time.LocalDate
 
 case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
 
@@ -38,6 +38,6 @@ case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(RunThroughOnBehalfFlow()) match {
       case Some(true)     => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
-      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
+      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad()
     }
 }

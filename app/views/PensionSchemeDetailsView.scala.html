@@ -28,7 +28,7 @@
 
 @layout(pageTitle = title(form, messages("pensionSchemeDetails.title"))) {
 
-    @formHelper(action = routes.PensionSchemeDetailsController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = routes.PensionSchemeDetailsController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

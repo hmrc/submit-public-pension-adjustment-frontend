@@ -16,15 +16,12 @@
 
 package controllers
 
-import com.fasterxml.jackson.core.PrettyPrinter
 import config.ALFConfig
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.requests.AddressLookupRequest
 import models.{Mode, NormalMode}
 import play.api.i18n.{I18nSupport, Lang}
-import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, RequestHeader}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter

@@ -18,7 +18,6 @@ package pages
 
 import models.UkAddress
 import play.api.libs.json.JsPath
-
 import queries.{Gettable, Settable}
 
 case object PensionSchemeMemberUKAddressPage extends Gettable[UkAddress] with Settable[UkAddress] {

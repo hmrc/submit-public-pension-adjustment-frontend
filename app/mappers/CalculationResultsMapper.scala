@@ -16,14 +16,11 @@
 
 package mappers
 
+import models.calculation._
 import models.calculation.inputs.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.calculation.inputs.{CalculationInputs, IncomeSubJourney, TaxYear2016To2023}
-import models.calculation.{CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, IndividualAASummaryModel, ReviewRowViewModel, RowViewModel}
-import models.calculation.response.{CalculationResponse, InDatesTaxYearsCalculation, OutOfDatesTaxYearsCalculation, Period, Resubmission}
-import uk.gov.hmrc.http.HeaderCarrier
+import models.calculation.response._
 import utils.CurrencyFormatter.currencyFormat
-
-import scala.concurrent.ExecutionContext
 
 object CalculationResultsMapper {
   def calculationResultsViewModel(calculationResponse: CalculationResponse): CalculationResultsViewModel = {
@@ -221,7 +218,7 @@ object CalculationResultsMapper {
     calculateResponse: CalculationResponse,
     period: Option[String],
     calculationInputs: CalculationInputs
-  )(implicit ec: ExecutionContext, hc: HeaderCarrier): CalculationReviewIndividualAAViewModel = {
+  ): CalculationReviewIndividualAAViewModel = {
     val outDates: Seq[Seq[RowViewModel]] = outDatesReviewAA(calculateResponse, period, calculationInputs)
     val inDates: Seq[Seq[RowViewModel]]  = inDatesReviewAA(calculateResponse, period, calculationInputs)
 

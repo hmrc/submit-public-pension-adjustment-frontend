@@ -17,7 +17,7 @@
 package pages
 
 import models.submission.Submission
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
@@ -43,8 +43,8 @@ case class SchemeElectionConsentPage(period: Period) extends QuestionPage[Boolea
       case Some(true) =>
         val nextDebitPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, period)
         nextDebitPeriod match {
-          case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
-          case None    => controllers.routes.CheckYourAnswersController.onPageLoad
+          case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad()
+          case None    => controllers.routes.CheckYourAnswersController.onPageLoad()
         }
       case _          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

@@ -25,10 +25,9 @@ import org.mockito.MockitoSugar.mock
 import org.scalatest.concurrent.Eventually.eventually
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.time.{Seconds, Span}
-import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, redirectLocation, route, running}
-import play.api.test.Helpers._
 import play.api.inject.bind
+import play.api.test.FakeRequest
+import play.api.test.Helpers._
 import services.{CalculateBackendDataService, SubmissionDataService, UserDataService}
 
 import scala.concurrent.Future

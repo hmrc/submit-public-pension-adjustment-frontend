@@ -23,15 +23,12 @@ import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import viewmodels.checkAnswers.lifetimeallowance._
 import viewmodels.govuk.all.SummaryListViewModel
 import views.html.PrintReviewView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class PrintReviewController @Inject() (
   override val messagesApi: MessagesApi,
@@ -40,15 +37,12 @@ class PrintReviewController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: PrintReviewView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   val form = Form("_" -> ignored(()))
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData) { implicit request =>
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-
     val rows: Seq[Option[SummaryListRow]] = Seq(
       DateOfBenefitCrystallisationEventSummary.row(request.submission),
       LtaProtectionOrEnhancementsSummary.row(request.submission),

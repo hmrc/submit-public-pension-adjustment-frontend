@@ -54,7 +54,7 @@ case class ReformPensionSchemeReferencePage(pstr: PSTR, schemeName: String) exte
     answers.get(
       ReformPensionSchemeReferencePage(pstr, SchemeService.schemeName(pstr, submission.calculationInputs))
     ) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

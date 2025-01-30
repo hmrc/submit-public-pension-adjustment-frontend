@@ -32,8 +32,6 @@ import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.{CheckYourAnswersView, IncompleteDataCaptureView}
 
-import scala.concurrent.ExecutionContext
-
 class CheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
@@ -43,8 +41,7 @@ class CheckYourAnswersController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   checkYourAnswersView: CheckYourAnswersView,
   incompleteDataCaptureView: IncompleteDataCaptureView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport
     with Logging {
 
@@ -77,7 +74,7 @@ class CheckYourAnswersController @Inject() (
     submission.calculation match {
       case Some(calculation) =>
         if (calculation.inDates.map(_.schemeCredit).sum > 0) {
-          controllers.routes.SchemeCreditConsentController.onPageLoad
+          controllers.routes.SchemeCreditConsentController.onPageLoad()
         } else {
           controllers.routes.DeclarationsController.onPageLoad
         }

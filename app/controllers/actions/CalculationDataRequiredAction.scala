@@ -16,12 +16,12 @@
 
 package controllers.actions
 
-import javax.inject.Inject
 import controllers.routes
 import models.requests.{CalculationDataRequest, OptionalDataRequest}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class CalculationDataRequiredActionImpl @Inject() (implicit val executionContext: ExecutionContext)
@@ -30,7 +30,7 @@ class CalculationDataRequiredActionImpl @Inject() (implicit val executionContext
   override protected def refine[A](request: OptionalDataRequest[A]): Future[Either[Result, CalculationDataRequest[A]]] =
     request.submission match {
       case None             =>
-        Future.successful(Left(Redirect(routes.CalculationPrerequisiteController.onPageLoad.url)))
+        Future.successful(Left(Redirect(routes.CalculationPrerequisiteController.onPageLoad().url)))
       case Some(submission) =>
         Future.successful(
           Right(

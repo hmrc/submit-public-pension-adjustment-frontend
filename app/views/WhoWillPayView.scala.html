@@ -30,7 +30,7 @@
 
 @layout(pageTitle = title(form, messages("whoWillPay.title"))) {
 
-    @formHelper(action = routes.WhoWillPayController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = routes.WhoWillPayController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

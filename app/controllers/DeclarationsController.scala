@@ -17,22 +17,15 @@
 package controllers
 
 import controllers.actions._
-import models.{UserAnswers, UserSubmissionReference}
-import models.finalsubmission.{AuthRetrievals, FinalSubmissionResponse}
-import models.requests.DataRequest
+import models.UserAnswers
 import pages.{ClaimOnBehalfPage, PensionSchemeMemberNamePage}
-import play.api.i18n.Lang.logger
-
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{SubmissionService, UserDataService}
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.DeclarationsView
 
-import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.Inject
 
 class DeclarationsController @Inject() (
   override val messagesApi: MessagesApi,
@@ -44,8 +37,7 @@ class DeclarationsController @Inject() (
   view: DeclarationsView,
   submissionService: SubmissionService,
   userDataService: UserDataService
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireCalculationData andThen requireData) {

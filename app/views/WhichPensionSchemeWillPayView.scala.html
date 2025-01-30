@@ -26,7 +26,7 @@
 
 @layout(pageTitle = title(form, messages("whichPensionSchemeWillPay.title"))) {
 
-    @formHelper(action = routes.WhichPensionSchemeWillPayController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = routes.WhichPensionSchemeWillPayController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
@@ -38,7 +38,7 @@
                     legend = HmrcPageHeadingLegend(
                         content = messages("whichPensionSchemeWillPay.heading"),
                         caption = HmrcSectionCaption(messages("chargeDetails.caption." + period) )),
-                        items  = whichPensionSchemeWillPay.options
+                        items  = whichPensionSchemeWillPay.options()
             ).withHint(HintViewModel(messages("whichPensionSchemeWillPay.hint")))
         )
 

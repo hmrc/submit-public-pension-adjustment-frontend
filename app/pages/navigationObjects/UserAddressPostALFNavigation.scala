@@ -16,8 +16,8 @@
 
 package pages.navigationObjects
 
-import models.{Mode, NormalMode, PSTR}
 import models.submission.Submission
+import models.{Mode, NormalMode, PSTR}
 import play.api.mvc.Call
 import services.SchemeService
 
@@ -38,6 +38,6 @@ object UserAddressPostALFNavigation {
   }
 
   private def navigateInCheckMode(): Call =
-    controllers.routes.CheckYourAnswersController.onPageLoad
+    controllers.routes.CheckYourAnswersController.onPageLoad()
 
 }

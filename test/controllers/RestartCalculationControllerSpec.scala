@@ -18,7 +18,6 @@ package controllers
 
 import base.SpecBase
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, redirectLocation, route, running}
 import play.api.test.Helpers._
 
 class RestartCalculationControllerSpec extends SpecBase {

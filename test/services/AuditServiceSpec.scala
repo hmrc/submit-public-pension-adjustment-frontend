@@ -16,9 +16,9 @@
 
 package services
 
-import org.apache.pekko.util.Timeout
 import base.SpecBase
 import models.{SubmissionSaveAndReturnAuditEvent, SubmissionStartAuditEvent}
+import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder

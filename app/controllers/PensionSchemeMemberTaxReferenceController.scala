@@ -20,18 +20,15 @@ import config.FrontendAppConfig
 import connectors.AddressLookupConnector
 import controllers.actions._
 import forms.PensionSchemeMemberTaxReferenceFormProvider
-import models.requests.{AddressLookupOptions, AddressLookupRequest}
-
-import javax.inject.Inject
-import models.{Mode, NavigationState, NormalMode}
+import models.Mode
 import pages.PensionSchemeMemberTaxReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PensionSchemeMemberTaxReferenceView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PensionSchemeMemberTaxReferenceController @Inject() (

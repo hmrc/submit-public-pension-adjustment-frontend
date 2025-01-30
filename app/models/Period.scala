@@ -80,8 +80,10 @@ object Period {
       }
     }
 
-  implicit lazy val writes: Writes[Period] = Writes { case Period.Year(year) =>
-    JsString(year.toString)
+  implicit lazy val writes: Writes[Period] = Writes {
+    case Period.Year(year)         => JsString(year.toString)
+    case Period._2016PreAlignment  => JsString(JsonValue2016Pre)
+    case Period._2016PostAlignment => JsString(JsonValue2016Post)
   }
 
   implicit lazy val ordering: Ordering[Period] =

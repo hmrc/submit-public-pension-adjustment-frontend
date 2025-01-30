@@ -19,8 +19,6 @@ package controllers
 import connectors.SubmitBackendConnector
 import controllers.actions._
 import forms.ConfirmRestartAnswersFormProvider
-
-import javax.inject.Inject
 import models.{NormalMode, SubmissionSaveAndReturnAuditEvent, UserAnswers}
 import pages.ConfirmRestartAnswersPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -29,6 +27,7 @@ import services.{AuditService, CalculateBackendDataService, SubmissionDataServic
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ConfirmRestartAnswersView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ConfirmRestartAnswersController @Inject() (

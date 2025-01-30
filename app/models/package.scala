@@ -143,6 +143,7 @@ package object models {
                   }
                 }
             }
+        case _                                                                         => JsError(s"cannot find a key on $jsValue")
       }
   }
 }

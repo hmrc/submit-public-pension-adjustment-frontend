@@ -21,14 +21,14 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, post, urlEqualTo}
 import generators.Generators
 import models.UniqueId
-import models.finalsubmission.{FinalSubmission, FinalSubmissionResponse}
+import models.finalsubmission.FinalSubmissionResponse
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.TestData
 import play.api.Application
-import play.api.http.Status.{ACCEPTED, NOT_FOUND, OK}
+import play.api.http.Status.{NOT_FOUND, OK}
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
-import uk.gov.hmrc.http.{HeaderCarrier, NotFoundException}
+import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
 
 import scala.concurrent.Future
 
@@ -121,7 +121,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         val resultFut: Future[Boolean] = connector.sendSubmissionSignal(uniqueId)
 
         whenReady(resultFut.failed) { e =>
-          e mustBe a[NotFoundException]
+          e mustBe a[UpstreamErrorResponse]
         }
       }
     }
@@ -166,7 +166,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         val resultFut: Future[Boolean] = connector.sendCalcUserAnswerSignal(uniqueId)
 
         whenReady(resultFut.failed) { e =>
-          e mustBe a[NotFoundException]
+          e mustBe a[UpstreamErrorResponse]
         }
       }
     }

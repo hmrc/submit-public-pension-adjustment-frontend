@@ -35,6 +35,6 @@ case object PensionSchemeMemberTaxReferencePage extends QuestionPage[String] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(RunThroughOnBehalfFlow()) match {
       case Some(true)     => routes.AddressLookupRampOnController.rampOnClaimOnBehalf(CheckMode)
-      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
+      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad()
     }
 }

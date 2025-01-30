@@ -19,18 +19,15 @@ package it
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
 import connectors.{AddressLookupConnector, WireMockHelper}
-import models.requests.{AddressLookupAddress, AddressLookupConfirmation, AddressLookupCountry, AddressLookupRequest}
+import models.requests.{AddressLookupAddress, AddressLookupConfirmation, AddressLookupCountry}
 import org.scalatest.matchers.must.Matchers
 import play.api.Application
 import play.api.http.Status.ACCEPTED
 import play.api.i18n.Lang
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.{JsValue, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.running
 import uk.gov.hmrc.http.HeaderCarrier
-
-import scala.io.Source
 
 class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Matchers {
 

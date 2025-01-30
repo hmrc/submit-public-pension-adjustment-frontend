@@ -18,9 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.ContactNumberFormProvider
-
-import javax.inject.Inject
-import models.{Mode, NavigationState}
+import models.Mode
 import pages.ContactNumberPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -28,6 +26,7 @@ import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ContactNumberView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ContactNumberController @Inject() (

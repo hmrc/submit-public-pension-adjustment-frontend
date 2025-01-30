@@ -27,7 +27,7 @@
 @if(isClaimOnBehalf) {
     @layout(pageTitle = title(form, messages("alternativeName.title.onBehalf"))) {
 
-        @formHelper(action = routes.AlternativeNameController.onSubmit(mode), 'autoComplete -> "off") {
+        @formHelper(action = routes.AlternativeNameController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @if(form.errors.nonEmpty) {
                 @govukErrorSummary(ErrorSummaryViewModel(form))
@@ -51,7 +51,7 @@
 } else {
     @layout(pageTitle = title(form, messages("alternativeName.title"))) {
 
-        @formHelper(action = routes.AlternativeNameController.onSubmit(mode), 'autoComplete -> "off") {
+        @formHelper(action = routes.AlternativeNameController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
             @if(form.errors.nonEmpty) {
                 @govukErrorSummary(ErrorSummaryViewModel(form))

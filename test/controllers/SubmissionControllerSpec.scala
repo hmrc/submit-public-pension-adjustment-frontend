@@ -17,6 +17,7 @@
 package controllers
 
 import base.SpecBase
+import config.FrontendAppConfig
 import connectors.SubmitBackendConnector
 import models.{Done, UserAnswers, UserSubmissionReference}
 import org.mockito.ArgumentMatchers.any
@@ -24,7 +25,6 @@ import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import config.FrontendAppConfig
 import services.{CalculateBackendDataService, SubmissionDataService, SubmissionService, UserDataService}
 import views.html.SubmissionView
 
@@ -34,7 +34,7 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
   private val mockSubmissionService = mock[SubmissionService]
 
-  lazy val submissionRoute = routes.SubmissionController.onPageLoad.url
+  lazy val submissionRoute = routes.SubmissionController.onPageLoad().url
 
   lazy val calculationPrerequisiteRoute = routes.CalculationPrerequisiteController.onPageLoad().url
 

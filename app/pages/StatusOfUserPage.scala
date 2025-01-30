@@ -16,11 +16,11 @@
 
 package pages
 
+import controllers.routes
+import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
 import models.{CheckMode, NormalMode, StatusOfUser, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.routes
-import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
 
 import scala.util.Try
 
@@ -38,7 +38,7 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(StatusOfUserPage) match {
-      case Some(PowerOfAttorney) => routes.CheckYourAnswersController.onPageLoad
+      case Some(PowerOfAttorney) => routes.CheckYourAnswersController.onPageLoad()
       case Some(_)               => routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
       case None                  => routes.JourneyRecoveryController.onPageLoad(None)
     }

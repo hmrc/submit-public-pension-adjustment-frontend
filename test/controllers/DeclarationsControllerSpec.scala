@@ -16,23 +16,10 @@
 
 package controllers
 import base.SpecBase
-import models.{Done, PensionSchemeDetails, Period, UserAnswers, UserSubmissionReference, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
-import models.calculation.inputs.{CalculationInputs, Resubmission}
-import models.finalsubmission.FinalSubmissionResponse
-import models.submission.Submission
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{verify, verifyNoInteractions, when}
-import org.mockito.MockitoSugar.mock
-import org.mockito.captor.ArgCaptor
-import play.api.inject.bind
-import pages.{AskedPensionSchemeToPayTaxChargePage, ClaimOnBehalfPage, PensionSchemeDetailsPage, PensionSchemeMemberNamePage, WhenDidYouAskPensionSchemeToPayPage, WhenWillYouAskPensionSchemeToPayPage, WhichPensionSchemeWillPayPage, WhoWillPayPage}
+import pages.{ClaimOnBehalfPage, PensionSchemeMemberNamePage}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.{SubmissionDataService, SubmissionService, UserDataService}
 import views.html.DeclarationsView
-
-import java.time.LocalDate
-import scala.concurrent.Future
 
 class DeclarationsControllerSpec extends SpecBase {
 
@@ -118,8 +105,6 @@ class DeclarationsControllerSpec extends SpecBase {
         val request = FakeRequest(GET, submitYourAnswerRoute)
 
         val result = route(application, request).value
-
-        val view = application.injector.instanceOf[DeclarationsView]
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual controllers.routes.SubmissionWaitingRoomController.onPageLoad().url

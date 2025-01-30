@@ -17,15 +17,14 @@
 package mappers
 
 import base.SpecBase
+import models.calculation._
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, Period}
-import models.calculation.{CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, IndividualAASummaryModel, ReviewRowViewModel, RowViewModel}
 import org.mockito.MockitoSugar
 import pages.TestData
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HeaderCarrier
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.io.Source
 
 class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {

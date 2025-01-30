@@ -33,7 +33,7 @@
 
 @layout(pageTitle = title(form, messages("confirmRestartAnswers.title"))) {
 
-    @formHelper(action = routes.ConfirmRestartAnswersController.onSubmit(), 'autoComplete -> "off") {
+    @formHelper(action = routes.ConfirmRestartAnswersController.onSubmit(), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

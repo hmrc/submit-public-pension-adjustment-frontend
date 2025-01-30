@@ -16,13 +16,12 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import forms.WhenDidYouAskPensionSchemeToPayFormProvider
-import models.{Done, NormalMode, Period, UserAnswers}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
+import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -32,10 +31,10 @@ import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.SubmissionDataService
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 import views.html.WhenDidYouAskPensionSchemeToPayView
 
+import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
 class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with MockitoSugar {
@@ -74,13 +73,13 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         val view = application.injector.instanceOf[WhenDidYouAskPensionSchemeToPayView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode, Period._2020)(
-          getRequest,
+          getRequest(),
           messages(application)
         ).toString
       }
@@ -96,11 +95,11 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
       running(application) {
         val view = application.injector.instanceOf[WhenDidYouAskPensionSchemeToPayView]
 
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2020)(
-          getRequest,
+          getRequest(),
           messages(application)
         ).toString
       }
@@ -132,7 +131,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
           .build()
 
       running(application) {
-        val result = route(application, postRequest).value
+        val result = route(application, postRequest()).value
 
         status(result) mustEqual SEE_OTHER
       }
@@ -166,7 +165,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
       val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
@@ -178,7 +177,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
       val application = applicationBuilder(userAnswers = None, submission = Some(submission)).build()
 
       running(application) {
-        val result = route(application, postRequest).value
+        val result = route(application, postRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
@@ -190,7 +189,7 @@ class WhenDidYouAskPensionSchemeToPayControllerSpec extends SpecBase with Mockit
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual calculationPrerequisiteRoute

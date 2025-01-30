@@ -16,7 +16,7 @@
 
 package models.finalsubmission
 
-import models.{InternationalAddress, PensionSchemeMemberInternationalAddress, PensionSchemeMemberUKAddress, UkAddress}
+import models.{InternationalAddress, UkAddress}
 import play.api.libs.json.{Format, Json}
 
 import java.time.LocalDate

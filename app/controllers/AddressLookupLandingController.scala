@@ -20,8 +20,8 @@ import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.requests.{AddressLookupConfirmation, DataRequest}
 import models.{InternationalAddress, Mode, NavigationState, StatusOfUser, UkAddress, UserAnswers}
-import pages.navigationObjects.{ClaimOnBehalfPostALFNavigation, UserAddressPostALFNavigation}
 import pages._
+import pages.navigationObjects.{ClaimOnBehalfPostALFNavigation, UserAddressPostALFNavigation}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{ClaimOnBehalfNavigationLogicService, PeriodService, UserDataService}

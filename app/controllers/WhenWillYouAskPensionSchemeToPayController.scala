@@ -18,8 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.WhenWillYouAskPensionSchemeToPayFormProvider
-
-import javax.inject.Inject
 import models.{Mode, NavigationState, Period}
 import pages.WhenWillYouAskPensionSchemeToPayPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -28,6 +26,7 @@ import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.WhenWillYouAskPensionSchemeToPayView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class WhenWillYouAskPensionSchemeToPayController @Inject() (

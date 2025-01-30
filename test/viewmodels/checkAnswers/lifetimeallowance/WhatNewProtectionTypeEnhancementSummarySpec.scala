@@ -17,7 +17,6 @@
 package viewmodels.checkAnswers.lifetimeallowance
 
 import models.calculation.inputs.{CalculationInputs, NewEnhancementType, NewLifeTimeAllowanceAdditions}
-import models.calculation.inputs.WhatNewProtectionTypeEnhancement.PrimaryProtection
 import models.submission.Submission
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers

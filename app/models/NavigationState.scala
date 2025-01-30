@@ -22,7 +22,7 @@ import queries.{Gettable, Settable}
 object NavigationState {
 
   val dataCaptureStartUrl: String = controllers.routes.ClaimOnBehalfController.onPageLoad(NormalMode).url
-  val checkYourAnswersUrl: String = controllers.routes.CheckYourAnswersController.onPageLoad.url
+  val checkYourAnswersUrl: String = controllers.routes.CheckYourAnswersController.onPageLoad().url
   val declarations: String        = controllers.routes.DeclarationsController.onPageLoad.url
 
   def isDataCaptureComplete(answers: UserAnswers): Boolean =

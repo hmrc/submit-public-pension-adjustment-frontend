@@ -16,8 +16,9 @@
 
 package forms.mappings
 
-import java.time.LocalDate
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+
+import java.time.LocalDate
 
 trait Constraints {
   private val validAccountNameRegex: String = """^[a-z0-9A-Z &`\-'.\^]*$"""

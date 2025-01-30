@@ -17,8 +17,8 @@
 package pages.navigationObjects
 
 import controllers.routes
-import models.{CheckMode, Mode, NormalMode, StatusOfUser, UserAnswers}
 import models.submission.Submission
+import models.{CheckMode, Mode, NormalMode, StatusOfUser, UserAnswers}
 import pages.StatusOfUserPage
 import play.api.mvc.Call
 import services.ClaimOnBehalfNavigationLogicService
@@ -55,7 +55,7 @@ object ClaimOnBehalfPostALFNavigation {
 
   def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(StatusOfUserPage) match {
-      case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad
+      case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad()
       case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
         ClaimOnBehalfNavigationLogicService.handleNavigateInAA(submission, answers, CheckMode)
       case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)
@@ -71,7 +71,7 @@ object ClaimOnBehalfPostALFNavigation {
 
   def navigateInCheckModeLTAOnly(answers: UserAnswers): Call =
     answers.get(StatusOfUserPage) match {
-      case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad
+      case Some(StatusOfUser.LegalPersonalRepresentative)                     => routes.CheckYourAnswersController.onPageLoad()
       case Some(status) if status != StatusOfUser.LegalPersonalRepresentative =>
         ClaimOnBehalfNavigationLogicService.handleNavigateInLTA(CheckMode)
       case _                                                                  => routes.JourneyRecoveryController.onPageLoad(None)

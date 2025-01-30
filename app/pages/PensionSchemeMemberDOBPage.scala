@@ -19,10 +19,10 @@ package pages
 import controllers.routes
 import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
-
-import java.time.LocalDate
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import java.time.LocalDate
 
 case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
 
@@ -47,6 +47,6 @@ case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
           case Some(PowerOfAttorney)                                                         => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
           case _                                                                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
         }
-      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad
+      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad()
     }
 }

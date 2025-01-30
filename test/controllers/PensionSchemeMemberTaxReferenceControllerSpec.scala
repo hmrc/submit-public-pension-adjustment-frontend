@@ -106,8 +106,7 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
         val result = route(application, request).value
 
-        val expectedAnswers =
-          emptyUserAnswers.set(PensionSchemeMemberTaxReferencePage, validAnswer).success.value
+        emptyUserAnswers.set(PensionSchemeMemberTaxReferencePage, validAnswer).success.value
 
         status(result) mustEqual SEE_OTHER
       }

@@ -17,9 +17,9 @@
 package pages.navigationObjects
 
 import base.SpecBase
-import models.{CheckMode, NormalMode}
 import models.calculation.response.TaxYearScheme
 import models.submission.Submission
+import models.{CheckMode, NormalMode}
 import pages.{PageBehaviours, UkAddressPage}
 
 class UserAddressPostALFNavigationSpec extends PageBehaviours with SpecBase {
