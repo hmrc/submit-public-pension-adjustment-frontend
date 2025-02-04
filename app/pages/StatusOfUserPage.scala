@@ -46,7 +46,7 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
           case None => routes.JourneyRecoveryController.onPageLoad()
           case _ => routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
         }
-      case false => noClaimOnBehalfRunThroughNavLogic(answers, submission)
+      case Some(false) => noClaimOnBehalfRunThroughNavLogic(answers, submission)
       case _ => routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
     }
   }
@@ -65,11 +65,14 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
   override def cleanup(value: Option[StatusOfUser], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case PowerOfAttorney || Deputyship =>
+        case PowerOfAttorney =>
+          userAnswers.remove(MemberDateOfDeathPage)
+
+        case Deputyship =>
           userAnswers.remove(MemberDateOfDeathPage)
 
         case LegalPersonalRepresentative =>
-          ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, PeriodService.allInDateRemedyPeriods)
+          Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, PeriodService.allInDateRemedyPeriods))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
