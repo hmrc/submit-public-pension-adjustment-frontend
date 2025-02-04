@@ -18,6 +18,9 @@ package controllers
 
 import base.SpecBase
 import forms.MemberDateOfDeathFormProvider
+import models.calculation.inputs.{AnnualAllowance, CalculationInputs, Resubmission, Setup}
+import models.calculation.response.{CalculationResponse, TotalAmounts}
+import models.submission.Submission
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -28,7 +31,7 @@ import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 import views.html.MemberDateOfDeathView
 
 import java.time.{LocalDate, ZoneOffset}
