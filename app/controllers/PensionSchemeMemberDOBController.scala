@@ -67,7 +67,7 @@ class PensionSchemeMemberDOBController @Inject() (
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PensionSchemeMemberDOBPage, value))
               redirectUrl     =
-                PensionSchemeMemberDOBPage.navigate(mode, updatedAnswers).url
+                PensionSchemeMemberDOBPage.navigate(mode, updatedAnswers, request.submission).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)

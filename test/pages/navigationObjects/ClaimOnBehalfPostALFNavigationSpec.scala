@@ -20,9 +20,9 @@ import base.SpecBase
 import models.calculation.inputs._
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
-import models.{CheckMode, NormalMode, StatusOfUser}
+import models.{CheckMode, NormalMode, StatusOfUser, WhoWillPay}
 import org.mockito.MockitoSugar.mock
-import pages.{PageBehaviours, PensionSchemeMemberUKAddressPage, StatusOfUserPage}
+import pages.{PageBehaviours, PensionSchemeMemberUKAddressPage, StatusOfUserPage, WhoWillPayPage}
 
 class ClaimOnBehalfPostALFNavigationSpec extends PageBehaviours with SpecBase {
 
@@ -281,7 +281,7 @@ class ClaimOnBehalfPostALFNavigationSpec extends PageBehaviours with SpecBase {
     checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
 
-  "must redirect to who-will-pay-new-tax-charge when user doesn't select LegalPersonalRepresentative,when answered in check mode" in {
+  "must redirect to who-will-pay-new-tax-charge in normal mode when user doesn't select LegalPersonalRepresentative with debit and no debit answers" in {
 
     val userAnswers = emptyUserAnswers
       .set(PensionSchemeMemberUKAddressPage, arbitraryUkAddress.arbitrary.sample.value)
@@ -300,7 +300,32 @@ class ClaimOnBehalfPostALFNavigationSpec extends PageBehaviours with SpecBase {
 
     val nextPageUrl: String = navigationObject.navigate(userAnswers, submission, CheckMode).url
 
-    checkNavigation(nextPageUrl, "/submission-service/2020/change-who-will-pay-new-tax-charge")
+    checkNavigation(nextPageUrl, "/submission-service/2020/who-will-pay-new-tax-charge")
+  }
+
+  "must redirect to CYA when user doesn't select LegalPersonalRepresentative with debit and debit answers" in {
+
+    val userAnswers = emptyUserAnswers
+      .set(PensionSchemeMemberUKAddressPage, arbitraryUkAddress.arbitrary.sample.value)
+      .success
+      .value
+      .set(StatusOfUserPage, StatusOfUser.PowerOfAttorney)
+      .success
+      .value
+      .set(WhoWillPayPage(models.Period._2020), WhoWillPay.You)
+      .success
+      .value
+
+    val submission: Submission = Submission(
+      "id",
+      "submissionUniqueId",
+      mockCalculationInputsWithAA,
+      Some(aCalculationResponseWithAnInDateDebitYear)
+    )
+
+    val nextPageUrl: String = navigationObject.navigate(userAnswers, submission, CheckMode).url
+
+    checkNavigation(nextPageUrl, "/check-your-answers")
   }
 
   "must redirect to CYA page when user selects LegalPersonalRepresentative when answered in check mode" in {

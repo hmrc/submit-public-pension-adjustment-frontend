@@ -174,27 +174,6 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/submission-service/change-authority-someone-else")
   }
 
-  "must redirect to who paid charge page when user selects no and user is in debit in check mode" in {
-
-    val page = ClaimOnBehalfPage
-
-    val userAnswers = emptyUserAnswers
-      .set(page, false)
-      .success
-      .value
-
-    val submission: Submission = Submission(
-      "id",
-      "submissionUniqueId",
-      mockCalculationInputsWithAA,
-      Some(aCalculationResponseWithAnInDateDebitYear)
-    )
-
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
-
-    checkNavigation(nextPageUrl, "/submission-service/2020/change-who-will-pay-new-tax-charge")
-  }
-
   "must redirect to check your answers page when user selects no and is in credit/direct comp/indirect comp " in {
 
     val page = ClaimOnBehalfPage
@@ -492,13 +471,13 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
       val cleanedUserAnswers = ClaimOnBehalfPage.cleanup(Some(true), ua).success.value
 
-      cleanedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe None
-      cleanedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) mustBe None
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe Some(WhoWillPay.You)
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe Some(WhoWillPay.PensionScheme)
+      cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2021)) mustBe Some("Private pension scheme")
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) mustBe Some(PensionSchemeDetails("name", "pstr"))
+      cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) mustBe Some(true)
+      cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe Some(LocalDate.of(2020, 1, 1))
+      cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) mustBe Some(true)
 
     }
   }
