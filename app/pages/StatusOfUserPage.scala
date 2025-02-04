@@ -18,9 +18,12 @@ package pages
 
 import controllers.routes
 import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
-import models.{CheckMode, NormalMode, StatusOfUser, UserAnswers}
+import models.submission.Submission
+import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, StatusOfUser, UserAnswers}
+import pages.navigationObjects.ClaimOnBehalfPostALFNavigation
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import services.{ClaimOnBehalfNavigationLogicService, PeriodService}
 
 import scala.util.Try
 
@@ -30,17 +33,27 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
 
   override def toString: String = "statusOfUser"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(StatusOfUserPage) match {
       case Some(_) => routes.PensionSchemeMemberNameController.onPageLoad(NormalMode)
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
+    if (answers.get(RunThroughOnBehalfFlow()).getOrElse(false)) {
+      routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
+    } else {
+      noClaimOnBehalfRunThroughNavLogic(answers, submission)
+    }
+
+  private def noClaimOnBehalfRunThroughNavLogic(answers: UserAnswers, submission: Submission): Call =
     answers.get(StatusOfUserPage) match {
-      case Some(PowerOfAttorney) => routes.CheckYourAnswersController.onPageLoad()
-      case Some(_)               => routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
-      case None                  => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(LegalPersonalRepresentative) if answers.get(MemberDateOfDeathPage).isDefined =>
+        ClaimOnBehalfPostALFNavigation.navigate(answers, submission, CheckMode)
+      case Some(LegalPersonalRepresentative)                                                 =>
+        routes.MemberDateOfDeathController.onPageLoad(CheckMode)
+      case Some(_)                                                                           => ClaimOnBehalfPostALFNavigation.navigate(answers, submission, CheckMode)
+      case _                                                                                 => routes.JourneyRecoveryController.onPageLoad()
     }
 
   override def cleanup(value: Option[StatusOfUser], userAnswers: UserAnswers): Try[UserAnswers] =
@@ -49,11 +62,11 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
         case PowerOfAttorney =>
           userAnswers.remove(MemberDateOfDeathPage)
 
-        case LegalPersonalRepresentative =>
-          super.cleanup(value, userAnswers)
-
         case Deputyship =>
-          super.cleanup(value, userAnswers)
+          userAnswers.remove(MemberDateOfDeathPage)
+
+        case LegalPersonalRepresentative =>
+          Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, PeriodService.allInDateRemedyPeriods))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
