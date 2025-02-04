@@ -19,7 +19,7 @@ package controllers
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.requests.{AddressLookupConfirmation, DataRequest}
-import models.{InternationalAddress, Mode, NavigationState, StatusOfUser, UkAddress, UserAnswers}
+import models.{InternationalAddress, Mode, NavigationState, RunThroughOnBehalfFlow, StatusOfUser, UkAddress, UserAnswers}
 import pages._
 import pages.navigationObjects.{ClaimOnBehalfPostALFNavigation, UserAddressPostALFNavigation}
 import play.api.i18n.I18nSupport
@@ -67,12 +67,13 @@ class AddressLookupLandingController @Inject() (
         Future.successful(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None)))
       case Some(validId) =>
         for {
-          retrieveAddress <- addressLookupConnector.retrieveAddress(validId)
-          updatedAnswers  <- addressLocaleParserClaimOnBehalf(request, retrieveAddress)
-          cleanedAnswers   = maybeDebitLoopCleanup(updatedAnswers)
-          redirectUrl      = ClaimOnBehalfPostALFNavigation.navigate(cleanedAnswers.get, request.submission, mode)
-          answersWithNav   = NavigationState.save(cleanedAnswers.get, redirectUrl.url)
-          _               <- userDataService.set(answersWithNav)
+          retrieveAddress   <- addressLookupConnector.retrieveAddress(validId)
+          updatedAnswers    <- addressLocaleParserClaimOnBehalf(request, retrieveAddress)
+          cleanedAnswers     = maybeDebitLoopCleanup(updatedAnswers)
+          answersWithoutFlag = cleanedAnswers.get.remove(RunThroughOnBehalfFlow())
+          redirectUrl        = ClaimOnBehalfPostALFNavigation.navigate(answersWithoutFlag.get, request.submission, mode)
+          answersWithNav     = NavigationState.save(answersWithoutFlag.get, redirectUrl.url)
+          _                 <- userDataService.set(answersWithNav)
         } yield Redirect(redirectUrl)
     }
 
