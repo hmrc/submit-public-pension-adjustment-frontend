@@ -16,6 +16,9 @@ site.next = Next
 site.opensInNewTab = (opens in a new tab)
 site.notApplicable = Not applicable
 
+rounding.up.hint = Round this amount up to the nearest pound, for example, enter £2,501 for £2,500.01.
+rounding.down.hint = Round this amount down to the nearest pound, for example, enter £1,200 for £1,200.99.
+
 date.day = Day
 date.month = Month
 date.year = Year
@@ -212,7 +215,6 @@ claimingHigherOrAdditionalTaxRateRelief.change.hidden = if you are claiming for 
 howMuchTaxRelief.title = How much higher or additional tax relief are you claiming for?
 howMuchTaxRelief.heading = How much higher or additional tax relief are you claiming for?
 howMuchTaxRelief.hint1 = You can find this information on your Self Assessment tax return form. If you file online, you may find it when you
-howMuchTaxRelief.hint2 = Amount must be rounded down to the nearest pound, for example 2300.
 howMuchTaxRelief.here = sign in to file your Self Assessment tax return
 howMuchTaxRelief.caption = Submission service
 howMuchTaxRelief.checkYourAnswersLabel = How much higher or additional tax relief are you claiming for?

@@ -16,6 +16,9 @@ site.next = Nesaf
 site.opensInNewTab = (yn agor tab newydd)
 site.notApplicable = Amherthnasol
 
+rounding.up.hint = cy: Round this amount up to the nearest pound, for example, enter £2,501 for £2,500.01.
+rounding.down.hint = cy: Round this amount down to the nearest pound, for example, enter £1,200 for £1,200.99.
+
 date.day = Diwrnod
 date.month = Mis
 date.year = Blwyddyn
@@ -212,7 +215,6 @@ claimingHigherOrAdditionalTaxRateRelief.change.hidden = gwasanaeth cyflwyno yn h
 howMuchTaxRelief.title = Faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano?
 howMuchTaxRelief.heading = Faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano?
 howMuchTaxRelief.hint1 = Gallwch ddod o hyd i’r wybodaeth hon ar eich Ffurflen Dreth Hunanasesiad. Os ydych chi’n cyflwyno ar-lein, mae’n bosibl y byddwch yn dod o hyd iddo pan fyddwch yn
-howMuchTaxRelief.hint2 = Mae’n rhaid talgrynnu’r swm i lawr i’r bunt agosaf, er enghraifft 2300.
 howMuchTaxRelief.here = mewngofnodi i gyflwyno’ch Ffurflen Dreth Hunanasesiad.
 howMuchTaxRelief.caption = Gwasanaeth cyflwyno
 howMuchTaxRelief.checkYourAnswersLabel = Faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano?
