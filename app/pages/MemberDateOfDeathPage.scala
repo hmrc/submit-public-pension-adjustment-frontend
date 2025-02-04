@@ -17,7 +17,10 @@
 package pages
 
 import controllers.routes
+import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative}
+import models.submission.Submission
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
+import pages.navigationObjects.ClaimOnBehalfPostALFNavigation
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -32,12 +35,17 @@ case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(MemberDateOfDeathPage) match {
       case Some(_) => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(RunThroughOnBehalfFlow()) match {
       case Some(true)     => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
-      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad()
+      case Some(_) => answers.get(StatusOfUserPage) match {
+        case Some(LegalPersonalRepresentative) => routes.CheckYourAnswersController.onPageLoad()
+        case Some(_) => ClaimOnBehalfPostALFNavigation.navigate(answers, submission, CheckMode)
+        case _ => routes.JourneyRecoveryController.onPageLoad()
+      }
+      case _ => routes.JourneyRecoveryController.onPageLoad()
     }
 }

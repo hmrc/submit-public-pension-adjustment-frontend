@@ -62,14 +62,13 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
-    val periodsToCleanup = PeriodService.allInDateRemedyPeriods
     value
       .map {
         case false =>
           onBehalfOfCleanup(userAnswers)
 
         case true =>
-          Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, periodsToCleanup))
+          super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
   }

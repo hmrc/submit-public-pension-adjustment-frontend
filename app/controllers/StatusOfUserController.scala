@@ -72,7 +72,7 @@ class StatusOfUserController @Inject() (
                                     .set(RunThroughOnBehalfFlow(), shouldRunThroughOnBehalfFlow)
                                 )
               redirectUrl     =
-                StatusOfUserPage.navigate(mode, updatedAnswers).url
+                StatusOfUserPage.navigate(mode, updatedAnswers, request.submission).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)

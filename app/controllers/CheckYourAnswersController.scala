@@ -18,10 +18,11 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions._
+import models.StatusOfUser.{Deputyship, PowerOfAttorney}
 import models.requests.DataRequest
 import models.submission.Submission
 import models.{NavigationState, PSTR, Period, UserAnswers}
-import pages.ClaimOnBehalfPage
+import pages.{ClaimOnBehalfPage, StatusOfUserPage}
 import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
@@ -53,7 +54,11 @@ class CheckYourAnswersController @Inject() (
 
         val mayBePeriodRowBlock: Option[Seq[Option[SummaryListRow]]] =
           request.userAnswers.get(ClaimOnBehalfPage) match {
-            case Some(claimingOnBehalf) if !claimingOnBehalf => periodRowBlock(relevantPeriods, request.userAnswers)
+            case Some(false) => periodRowBlock(relevantPeriods, request.userAnswers)
+            case Some(true) => request.userAnswers.get(StatusOfUserPage) match {
+              case Some(Deputyship | PowerOfAttorney) => periodRowBlock(relevantPeriods, request.userAnswers)
+              case _ => None
+            }
             case _                                           => None
           }
 
