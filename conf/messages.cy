@@ -16,7 +16,7 @@ site.next = Nesaf
 site.opensInNewTab = (yn agor tab newydd)
 site.notApplicable = Amherthnasol
 
-rounding.up.hint = cy: Round this amount up to the nearest pound, for example, enter £2,501 for £2,500.01.
+rounding.up.hint = cy: Round this amount up to the nearest pound, for example, enter £2,500 for £2,499.01.
 rounding.down.hint = cy: Round this amount down to the nearest pound, for example, enter £1,200 for £1,200.99.
 
 date.day = Diwrnod
