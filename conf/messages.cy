@@ -17,7 +17,7 @@ site.opensInNewTab = (yn agor tab newydd)
 site.notApplicable = Amherthnasol
 
 rounding.up.hint = Talgrynnwch y swm hwn i fyny i’r bunt agosaf, er enghraifft, nodwch £2,500 am £2,499.01
-rounding.down.hint = Talgrynnwch y swm hwn i lawr1,200.99£ i’r bunt agosaf, er enghraifft, nodwch £1,200 am £1,200.99.
+rounding.down.hint = Talgrynnwch y swm hwn i lawr i’r bunt agosaf, er enghraifft, nodwch £1,200 am £1,200.99.
 
 date.day = Diwrnod
 date.month = Mis
