@@ -19,10 +19,11 @@ package controllers.auth
 import base.SpecBase
 import config.FrontendAppConfig
 import connectors.SubmitBackendConnector
-import models.Done
+import models.{Done, InternationalAddress}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
+import pages.{ClaimOnBehalfPage, PensionSchemeMemberInternationalAddressPage, PensionSchemeMemberResidencePage}
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -35,10 +36,30 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
   "signOut" - {
 
+    val userAnswers = emptyUserAnswers
+      .set(ClaimOnBehalfPage, true)
+      .get
+      .set(PensionSchemeMemberResidencePage, false)
+      .get
+      .set(
+        PensionSchemeMemberInternationalAddressPage,
+        InternationalAddress(
+          None,
+          "l1",
+          None,
+          None,
+          "town",
+          None,
+          None,
+          "Antarctica"
+        )
+      )
+      .get
+
     "must clear user answers and redirect to sign out" in {
 
       val application =
-        applicationBuilder(None)
+        applicationBuilder(userAnswers = Some(userAnswers), submission = Some(submission))
           .build()
 
       running(application) {

@@ -18,29 +18,47 @@ package controllers.auth
 
 import config.FrontendAppConfig
 import connectors.SubmitBackendConnector
-import controllers.actions.IdentifierAction
+import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import models.AuthenticatedUserSaveAndReturnAuditEvent
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{SubmissionDataService, UserDataService}
+import services.{AuditService, SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class AuthController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   config: FrontendAppConfig,
   userDataService: UserDataService,
   submissionDataService: SubmissionDataService,
+  auditService: AuditService,
   submitBackendConnector: SubmitBackendConnector,
-  identify: IdentifierAction
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireCalculationData: CalculationDataRequiredAction
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
-  def signOut(): Action[AnyContent] = Action(
-    Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
-  )
+  def signOut(): Action[AnyContent] =
+    (identify andThen getData andThen requireCalculationData).async { implicit request =>
+      auditService
+        .auditAuthenticatedUserSignOut(
+          AuthenticatedUserSaveAndReturnAuditEvent(
+            request.submission.id,
+            request.submission.uniqueId,
+            true
+          )
+        )
+        .map { _ =>
+          Redirect(
+            config.signOutUrl,
+            Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url))
+          )
+        }
+    }
 
   def signOutUnauthorised(): Action[AnyContent] = Action(
     Redirect(config.signOutUrl, Map("continue" -> Seq(config.redirectToStartPage)))

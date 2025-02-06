@@ -63,10 +63,9 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
     }
 
     "must return an upstream error response when fail" in {
-      val url                  = s"/submit-public-pension-adjustment/final-submission"
-      val app                  = application
-      val responseJson: String = Json.toJson(FinalSubmissionResponse("ref")).toString()
-      val submission           = TestData.finalSubmission1
+      val url        = s"/submit-public-pension-adjustment/final-submission"
+      val app        = application
+      val submission = TestData.finalSubmission1
       running(app) {
 
         val connector = app.injector.instanceOf[SubmitBackendConnector]

@@ -93,4 +93,10 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val submissionUserSelectionRestartAuditEventName =
     configuration.get[String]("auditing.submission-user-selection-restart-event-name")
 
+  val authenticatedUserSignOut =
+    configuration.get[String]("auditing.authenticated-user-signout")
+
+  val authenticatedUserSaveAndReturn =
+    configuration.get[String]("auditing.authenticated-user-save-and-return")
+
 }
