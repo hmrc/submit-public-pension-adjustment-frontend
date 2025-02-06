@@ -78,7 +78,7 @@ case class ALFConfig @Inject() (
              |    "alphaPhase": false,
              |    "showBackButtons": true,
              |    "includeHMRCBranding": false,
-             |    "disableTranslations": true,
+             |    "disableTranslations": false,
              |    "ukMode": false,
              |    "selectPageConfig": {
              |      "proposalListLimit": 50,
@@ -190,7 +190,7 @@ case class ALFConfig @Inject() (
          |    "alphaPhase": false,
          |    "showBackButtons": true,
          |    "includeHMRCBranding": false,
-         |    "disableTranslations": true,
+         |    "disableTranslations": false,
          |    "ukMode": false,
          |    "selectPageConfig": {
          |      "proposalListLimit": 50,

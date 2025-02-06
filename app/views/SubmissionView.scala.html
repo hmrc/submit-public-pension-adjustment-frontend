@@ -17,27 +17,57 @@
 @this(
         layout: templates.Layout,
         govukButton: GovukButton,
-        govukPanel : GovukPanel
+        govukPanel : GovukPanel,
+        govukInsetText: GovukInsetText
 )
 
 @(userSubmissionReference: String, feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
+
+@insetContent = {
+
+<p class="govuk-body">@messages("submission.message2")
+    <a class="govuk-link" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/pension-scheme-enquiries" rel="noreferrer noopener" target="_blank">@messages("submission.message2.link")</a>.
+</p>
+
+<p class="govuk-body">@messages("submission.message3")</p>
+
+}
 
 @layout(pageTitle = titleNoForm(messages("submission.title")), showBackLink = false) {
 
     @govukPanel(Panel(title = messages("submission.heading"), content = Text(messages("submission.panel.message") + " " + userSubmissionReference.value)))
 
 
-    <p class="govuk-body">@messages("submission.adjustmentSent")</p>
+    <p class="govuk-body">@messages("submission.message1")</p>
 
-    <p class="govuk-body">@messages("submission.communicateHMRC")</p>
+    <h2 class ="govuk-heading-l">@messages("submission.2015to2019.subheading")</h2>
 
-    <br/>
+    <p class="govuk-body">@messages("submission.2015to2019.message1")</p>
 
-    <h2 class="govuk-heading-m">@messages("submission.whatNext")</h2>
+    <p class="govuk-body">@messages("submission.2015to2019.message2")</p>
 
-    <p class="govuk-body">@messages("submission.whatNext.message1")</p>
+    <h2 class ="govuk-heading-l">@messages("submission.2019to2023.subheading")</h2>
 
-    <p class="govuk-body">@messages("submission.whatNext.message2")</p>
+    <h3 class ="govuk-heading-m">@messages("submission.refundProcess.subHeading")</h3>
+
+    <p class="govuk-body">@messages("submission.2019to2023.message1")</p>
+
+    <p class="govuk-body">@messages("submission.2019to2023.message2")</p>
+
+    <h3 class ="govuk-heading-m">@messages("submission.paymentsToHMRC.subHeading")</h3>
+
+    <p class="govuk-body">@messages("submission.paymentsToHMRC.message")</p>
+
+    <h2 class ="govuk-heading-l">@messages("submission.lta.subHeading")</h2>
+
+    <p class="govuk-body">@messages("submission.lta.2015to2019.message")</p>
+
+    <p class="govuk-body">@messages("submission.lta.2019to2023.message")</p>
+
+    @govukInsetText(InsetText(
+        content = HtmlContent(insetContent)
+    ))
+
 
     <p class="govuk-body">
         <a class="govuk-link" href="@feedbackLinkUrl">
