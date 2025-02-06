@@ -62,14 +62,10 @@ class StatusOfUserController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value => {
-            val shouldRunThroughOnBehalfFlow = mode == CheckMode && value.equals(StatusOfUser.Deputyship) ||
-              value.equals(StatusOfUser.LegalPersonalRepresentative)
             for {
               updatedAnswers <- Future.fromTry(
                                   request.userAnswers
                                     .set(StatusOfUserPage, value)
-                                    .get
-                                    .set(RunThroughOnBehalfFlow(), shouldRunThroughOnBehalfFlow)
                                 )
               redirectUrl     =
                 StatusOfUserPage.navigate(mode, updatedAnswers, request.submission).url
