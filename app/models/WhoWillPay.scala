@@ -32,7 +32,7 @@ object WhoWillPay extends Enumerable.Implicits {
     PensionScheme
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+  def options(implicit messages: Messages): Seq[RadioItem] = values.reverse.zipWithIndex.map { case (value, index) =>
     RadioItem(
       content = Text(messages(s"whoWillPay.${value.toString}")),
       value = Some(value.toString),
