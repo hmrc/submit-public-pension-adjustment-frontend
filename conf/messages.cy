@@ -16,6 +16,9 @@ site.next = Nesaf
 site.opensInNewTab = (yn agor tab newydd)
 site.notApplicable = Amherthnasol
 
+rounding.up.hint = Talgrynnwch y swm hwn i fyny i’r bunt agosaf, er enghraifft, nodwch £2,500 am £2,499.01
+rounding.down.hint = Talgrynnwch y swm hwn i lawr i’r bunt agosaf, er enghraifft, nodwch £1,200 am £1,200.99.
+
 date.day = Diwrnod
 date.month = Mis
 date.year = Blwyddyn
@@ -212,7 +215,6 @@ claimingHigherOrAdditionalTaxRateRelief.change.hidden = gwasanaeth cyflwyno yn h
 howMuchTaxRelief.title = Faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano?
 howMuchTaxRelief.heading = Faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano?
 howMuchTaxRelief.hint1 = Gallwch ddod o hyd i’r wybodaeth hon ar eich Ffurflen Dreth Hunanasesiad. Os ydych chi’n cyflwyno ar-lein, mae’n bosibl y byddwch yn dod o hyd iddo pan fyddwch yn
-howMuchTaxRelief.hint2 = Mae’n rhaid talgrynnu’r swm i lawr i’r bunt agosaf, er enghraifft 2300.
 howMuchTaxRelief.here = mewngofnodi i gyflwyno’ch Ffurflen Dreth Hunanasesiad.
 howMuchTaxRelief.caption = Gwasanaeth cyflwyno
 howMuchTaxRelief.checkYourAnswersLabel = Faint o ryddhad treth ychwanegol neu uwch rydych yn hawlio amdano?
