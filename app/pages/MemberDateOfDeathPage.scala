@@ -39,9 +39,9 @@ case object MemberDateOfDeathPage extends QuestionPage[LocalDate] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
-    answers.get(RunThroughOnBehalfFlow()) match {
-      case Some(true)     => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
-      case Some(_) => answers.get(StatusOfUserPage) match {
+    answers.get(RunThroughOnBehalfFlow()).getOrElse(false) match {
+      case true     => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
+      case _ => answers.get(StatusOfUserPage) match {
         case Some(LegalPersonalRepresentative) => routes.CheckYourAnswersController.onPageLoad()
         case Some(_) => ClaimOnBehalfPostALFNavigation.navigate(answers, submission, CheckMode)
         case _ => routes.JourneyRecoveryController.onPageLoad()

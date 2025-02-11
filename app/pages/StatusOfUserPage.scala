@@ -40,10 +40,11 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call = {
-    answers.get(RunThroughOnBehalfFlow()) match {
-      case Some(true) => routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
-      case Some(false) => noClaimOnBehalfRunThroughNavLogic(answers, submission)
-      }
+    if (answers.get(RunThroughOnBehalfFlow()).getOrElse(false)) {
+      routes.PensionSchemeMemberNameController.onPageLoad(CheckMode)
+    } else {
+      noClaimOnBehalfRunThroughNavLogic(answers, submission)
+    }
     }
 
   private def noClaimOnBehalfRunThroughNavLogic(answers: UserAnswers, submission: Submission): Call = {
