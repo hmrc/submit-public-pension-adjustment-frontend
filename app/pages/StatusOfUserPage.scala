@@ -48,10 +48,6 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
 
   private def noClaimOnBehalfRunThroughNavLogic(answers: UserAnswers, submission: Submission): Call = {
     answers.get(StatusOfUserPage) match {
-      case Some(Deputyship) if answers.get(MemberDateOfDeathPage).isDefined =>
-        ClaimOnBehalfPostALFNavigation.navigate(answers, submission, CheckMode)
-      case Some(Deputyship) =>
-        routes.MemberDateOfDeathController.onPageLoad(CheckMode)
       case Some(LegalPersonalRepresentative) if answers.get(MemberDateOfDeathPage).isDefined =>
         ClaimOnBehalfPostALFNavigation.navigate(answers, submission, CheckMode)
       case Some(LegalPersonalRepresentative) =>
@@ -68,7 +64,7 @@ case object StatusOfUserPage extends QuestionPage[StatusOfUser] {
           userAnswers.remove(MemberDateOfDeathPage)
 
         case Deputyship =>
-          super.cleanup(value, userAnswers)
+          userAnswers.remove(MemberDateOfDeathPage)
 
         case LegalPersonalRepresentative =>
           Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, PeriodService.allInDateRemedyPeriods))
