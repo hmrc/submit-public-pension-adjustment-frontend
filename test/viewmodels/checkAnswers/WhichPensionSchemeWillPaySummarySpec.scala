@@ -39,7 +39,7 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
           "Scheme1 / 00348916RT"
         )
         .get
-      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
+      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Scheme1 / 00348916RT")),
@@ -61,7 +61,7 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
           "Private pension scheme"
         )
         .get
-      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
+      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whichPensionSchemeWillPay.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Private pension scheme")),
@@ -78,7 +78,7 @@ class WhichPensionSchemeWillPaySummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) shouldBe None
+      WhichPensionSchemeWillPaySummary.row(userAnswers, Period._2020) `shouldBe` None
     }
   }
 

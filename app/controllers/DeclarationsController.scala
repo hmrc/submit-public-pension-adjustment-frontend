@@ -16,12 +16,11 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import models.UserAnswers
 import pages.{ClaimOnBehalfPage, PensionSchemeMemberNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{SubmissionService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.DeclarationsView
 
@@ -34,9 +33,7 @@ class DeclarationsController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: DeclarationsView,
-  submissionService: SubmissionService,
-  userDataService: UserDataService
+  view: DeclarationsView
 ) extends FrontendBaseController
     with I18nSupport {
 

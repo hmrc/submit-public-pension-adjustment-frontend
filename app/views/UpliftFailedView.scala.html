@@ -19,7 +19,7 @@
         govukButton: GovukButton
 )
 
-@(unauthorisedSignOutUrl: String)(implicit request: Request[_], messages: Messages)
+@(unauthorisedSignOutUrl: String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("upliftFailed.title")), signOutUrl = unauthorisedSignOutUrl) {
 

@@ -20,7 +20,7 @@ import base.SpecBase
 import models.NavigationState
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 
 class ContinueSessionControllerSpec extends SpecBase with MockitoSugar {
 
@@ -37,7 +37,7 @@ class ContinueSessionControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        redirectLocation(result).value mustEqual "/submission-service/uk-resident"
+        redirectLocation(result).value `mustEqual` "/submission-service/uk-resident"
       }
     }
 
@@ -52,7 +52,7 @@ class ContinueSessionControllerSpec extends SpecBase with MockitoSugar {
 
         redirectLocation(
           result
-        ).value mustEqual "/submit-public-pension-adjustment/submission-service/submitting-on-behalf-someone-else"
+        ).value `mustEqual` "/submit-public-pension-adjustment/submission-service/submitting-on-behalf-someone-else"
       }
     }
   }
