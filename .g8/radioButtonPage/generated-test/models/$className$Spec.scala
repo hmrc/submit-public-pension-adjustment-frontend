@@ -19,7 +19,7 @@ class $className$Spec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
       forAll(gen) {
         $className;format="decap"$ =>
 
-          JsString($className;format="decap"$.toString).validate[$className$].asOpt.value mustEqual $className;format="decap"$
+          JsString($className;format="decap"$.toString).validate[$className$].asOpt.value `mustEqual` $className;format="decap"$
       }
     }
 
@@ -30,7 +30,7 @@ class $className$Spec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
       forAll(gen) {
         invalidValue =>
 
-          JsString(invalidValue).validate[$className$] mustEqual JsError("error.invalid")
+          JsString(invalidValue).validate[$className$] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -41,7 +41,7 @@ class $className$Spec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
       forAll(gen) {
         $className;format="decap"$ =>
 
-          Json.toJson($className;format="decap"$) mustEqual JsString($className;format="decap"$.toString)
+          Json.toJson($className;format="decap"$) `mustEqual` JsString($className;format="decap"$.toString)
       }
     }
   }

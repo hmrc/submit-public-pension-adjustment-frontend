@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.ClaimingHigherOrAdditionalTaxRateReliefFormProvider
 import models.{Mode, NavigationState}
 import pages.ClaimingHigherOrAdditionalTaxRateReliefPage

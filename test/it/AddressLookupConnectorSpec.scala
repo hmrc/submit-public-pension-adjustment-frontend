@@ -54,7 +54,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val result = connector.initialiseJourney(request, true, "/some-redirectUrl")(hc).futureValue
 
-        result mustBe "/some-redirectUrl"
+        result `mustBe` "/some-redirectUrl"
       }
     }
 
@@ -73,7 +73,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val result = connector.initialiseJourney(request, true, "/fail")(hc).failed.futureValue
 
-        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+        result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
 
@@ -92,7 +92,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val result = connector.initialiseJourney(request, true, "/some-rediectUrl")(hc).failed.futureValue
 
-        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+        result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
   }
@@ -127,7 +127,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val result = connector.retrieveAddress("1738").futureValue
 
-        result mustBe AddressLookupConfirmation(
+        result `mustBe` AddressLookupConfirmation(
           "some-audit-ref",
           Some("some-id"),
           AddressLookupAddress(
@@ -154,7 +154,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val result = connector.retrieveAddress("1738").failed.futureValue
 
-        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+        result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
   }

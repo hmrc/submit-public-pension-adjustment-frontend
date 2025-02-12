@@ -19,7 +19,7 @@ package services
 import controllers.routes
 import models.submission.Submission
 import models.{CheckMode, Mode, Period, UserAnswers}
-import pages._
+import pages.*
 import play.api.mvc.Call
 
 object ClaimOnBehalfNavigationLogicService {

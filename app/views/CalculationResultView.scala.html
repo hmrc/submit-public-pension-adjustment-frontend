@@ -24,7 +24,7 @@
         govukButton: GovukButton
 )
 
-@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("calculationResults.title"))) {
 

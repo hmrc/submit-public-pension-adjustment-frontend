@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.PensionSchemeMemberDOBFormProvider
 import models.{Mode, NavigationState}
 import pages.PensionSchemeMemberDOBPage

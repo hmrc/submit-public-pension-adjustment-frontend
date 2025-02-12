@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.AlternativeNameFormProvider
 import models.{Mode, NavigationState, UserAnswers}
 import pages.{AlternativeNamePage, ClaimOnBehalfPage}
