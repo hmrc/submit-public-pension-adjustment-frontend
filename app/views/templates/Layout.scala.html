@@ -69,11 +69,6 @@
         ))
     }
 
-    <!-- TODO Below block will be removed while doing welsh translation  -->
-    @if(!appConfig.languageTranslationEnabled) {
-        <div class="govuk-!-margin-top-8"></div>
-    }
-
     @if(showBackLink) {
         @govukBackLink(BackLinkViewModel(href = "#").withCssClass("js-visible"))
     }
