@@ -49,7 +49,7 @@ class AddressLookupRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockAddressLookupConnector = mock[AddressLookupConnector]
 
-      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any(), any())) thenReturn Future
+      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any())) thenReturn Future
         .successful("/redirectUrl")
 
       val application =
@@ -77,7 +77,7 @@ class AddressLookupRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockAddressLookupConnector = mock[AddressLookupConnector]
 
-      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any(), any())) thenReturn Future
+      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any())) thenReturn Future
         .successful("/redirectUrl")
 
       val application =
@@ -105,7 +105,7 @@ class AddressLookupRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockAddressLookupConnector = mock[AddressLookupConnector]
 
-      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any(), any())) thenReturn Future
+      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any())) thenReturn Future
         .successful("/redirectUrl")
 
       val application =
@@ -133,7 +133,7 @@ class AddressLookupRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockAddressLookupConnector = mock[AddressLookupConnector]
 
-      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any(), any())) thenReturn Future
+      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any())) thenReturn Future
         .successful("/redirectUrl")
 
       val application =
@@ -162,7 +162,7 @@ class AddressLookupRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockAddressLookupConnector = mock[AddressLookupConnector]
 
-      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any(), any())) thenReturn Future
+      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any())) thenReturn Future
         .successful("/redirectUrl")
 
       val application =
@@ -191,7 +191,7 @@ class AddressLookupRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockAddressLookupConnector = mock[AddressLookupConnector]
 
-      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any(), any())) thenReturn Future
+      when(mockAddressLookupConnector.initialiseJourney(any(), any(), any())(any())) thenReturn Future
         .successful("/redirectUrl")
 
       val application =

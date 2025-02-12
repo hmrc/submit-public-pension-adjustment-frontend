@@ -20,7 +20,7 @@ import config.ALFConfig
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{Mode, NormalMode}
-import play.api.i18n.{I18nSupport, Lang}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -49,7 +49,6 @@ class AddressLookupRampOnController @Inject() (
 
   def rampOnClaimOnBehalf(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      val language: Lang             = controllerComponents.messagesApi.preferred(request).lang
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
       val returnURL                  = if (mode == NormalMode) {
         ALFConfig.addressLookupReturnClaimOnBehalfNormalMode
@@ -61,13 +60,12 @@ class AddressLookupRampOnController @Inject() (
                            request,
                            true,
                            returnURL
-                         )(hc, language)
+                         )(hc)
       } yield Redirect(initialiseALF)
     }
 
   def rampOnUserAddress(mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireCalculationData andThen requireData).async { implicit request =>
-      val language: Lang             = controllerComponents.messagesApi.preferred(request).lang
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
       val returnURL                  = if (mode == NormalMode) {
         ALFConfig.addressLookupReturnUserAddressNormalMode
@@ -79,7 +77,7 @@ class AddressLookupRampOnController @Inject() (
                            request,
                            false,
                            returnURL
-                         )(hc, language)
+                         )(hc)
       } yield Redirect(initialiseALF)
     }
 }

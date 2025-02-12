@@ -20,7 +20,7 @@ import base.SpecBase
 import models.calculation.response.TaxYearScheme
 import models.submission.Submission
 import models.{CheckMode, NormalMode}
-import pages.{PageBehaviours, UkAddressPage}
+import pages.PageBehaviours
 
 class UserAddressPostALFNavigationSpec extends PageBehaviours with SpecBase {
 
@@ -33,13 +33,6 @@ class UserAddressPostALFNavigationSpec extends PageBehaviours with SpecBase {
       val submission: Submission =
         submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
 
-      val ua     = emptyUserAnswers
-        .set(
-          UkAddressPage,
-          arbitraryUkAddress.arbitrary.sample.value
-        )
-        .success
-        .value
       val result = navigationObject.navigate(submission, NormalMode).url
 
       checkNavigation(result, "/submission-service/12345678AB/legacy-individual-pension-scheme-reference")
@@ -52,13 +45,6 @@ class UserAddressPostALFNavigationSpec extends PageBehaviours with SpecBase {
       val submission: Submission =
         submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
 
-      val ua     = emptyUserAnswers
-        .set(
-          UkAddressPage,
-          arbitraryUkAddress.arbitrary.sample.value
-        )
-        .success
-        .value
       val result = navigationObject.navigate(submission, CheckMode).url
 
       checkNavigation(result, "/check-your-answers")

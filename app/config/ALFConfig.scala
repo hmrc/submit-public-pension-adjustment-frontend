@@ -59,7 +59,7 @@ case class ALFConfig @Inject() (
   val en: Lang = Lang("EN")
 
   // noinspection ScalaStyle
-  def claimOnBehalfRequestConfig(continueUrl: String, requestHeader: RequestHeader)(implicit language: Lang) = {
+  def claimOnBehalfRequestConfig(continueUrl: String, requestHeader: RequestHeader) = {
 
     val feedbackUrl: String =
       frontendAppConfig.feedbackUrl(requestHeader)
@@ -171,7 +171,7 @@ case class ALFConfig @Inject() (
   }
 
   // noinspection ScalaStyle
-  def userAddressRequestConfig(continueUrl: String, requestHeader: RequestHeader)(implicit language: Lang) = {
+  def userAddressRequestConfig(continueUrl: String, requestHeader: RequestHeader) = {
 
     val feedbackUrl: String =
       frontendAppConfig.feedbackUrl(requestHeader)

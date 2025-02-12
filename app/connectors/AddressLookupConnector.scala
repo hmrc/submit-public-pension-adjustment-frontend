@@ -23,7 +23,6 @@ import play.api.Logging
 import play.api.http.HeaderNames
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import play.api.http.Status.{ACCEPTED, OK}
-import play.api.i18n.Lang
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -46,7 +45,7 @@ class AddressLookupConnector @Inject() (
     requestHeader: RequestHeader,
     isClaimOnBehalf: Boolean,
     returnUrl: String
-  )(implicit hc: HeaderCarrier, language: Lang): Future[String] = {
+  )(implicit hc: HeaderCarrier): Future[String] = {
 
     val request = requestBuilder(isClaimOnBehalf, returnUrl, requestHeader)
     httpClient2
@@ -114,7 +113,7 @@ class AddressLookupConnector @Inject() (
     isClaimOnBehalf: Boolean,
     returnURL: String,
     requestHeader: RequestHeader
-  )(implicit language: Lang) =
+  ) =
     if (isClaimOnBehalf) {
       Json
         .toJson(ALFConfig.claimOnBehalfRequestConfig(continueUrl = s"$returnURL", requestHeader))
