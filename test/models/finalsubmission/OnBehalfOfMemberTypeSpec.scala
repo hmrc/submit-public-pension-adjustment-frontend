@@ -36,7 +36,7 @@ class OnBehalfOfMemberTypeSpec extends AnyFreeSpec with Matchers with ScalaCheck
         JsString(onBehalfOfMemberType.toString)
           .validate[OnBehalfOfMemberType]
           .asOpt
-          .value mustEqual onBehalfOfMemberType
+          .value `mustEqual` onBehalfOfMemberType
       }
     }
 
@@ -45,7 +45,7 @@ class OnBehalfOfMemberTypeSpec extends AnyFreeSpec with Matchers with ScalaCheck
       val gen = arbitrary[String] suchThat (!OnBehalfOfMemberType.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[OnBehalfOfMemberType] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[OnBehalfOfMemberType] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -54,7 +54,7 @@ class OnBehalfOfMemberTypeSpec extends AnyFreeSpec with Matchers with ScalaCheck
       val gen = Gen.oneOf(OnBehalfOfMemberType.values)
 
       forAll(gen) { onBehalfOfMemberType =>
-        Json.toJson(onBehalfOfMemberType) mustEqual JsString(onBehalfOfMemberType.toString)
+        Json.toJson(onBehalfOfMemberType) `mustEqual` JsString(onBehalfOfMemberType.toString)
       }
     }
   }

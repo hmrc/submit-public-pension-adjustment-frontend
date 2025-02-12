@@ -33,7 +33,7 @@ class ContinueChoiceSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
       val gen = Gen.oneOf(ContinueChoice.values.toSeq)
 
       forAll(gen) { continueChoice =>
-        JsString(continueChoice.toString).validate[ContinueChoice].asOpt.value mustEqual continueChoice
+        JsString(continueChoice.toString).validate[ContinueChoice].asOpt.value `mustEqual` continueChoice
       }
     }
 
@@ -42,7 +42,7 @@ class ContinueChoiceSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
       val gen = arbitrary[String] suchThat (!ContinueChoice.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[ContinueChoice] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[ContinueChoice] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -51,7 +51,7 @@ class ContinueChoiceSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
       val gen = Gen.oneOf(ContinueChoice.values.toSeq)
 
       forAll(gen) { continueChoice =>
-        Json.toJson(continueChoice) mustEqual JsString(continueChoice.toString)
+        Json.toJson(continueChoice) `mustEqual` JsString(continueChoice.toString)
       }
     }
   }

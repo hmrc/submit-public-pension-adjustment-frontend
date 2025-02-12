@@ -17,7 +17,7 @@
 package models
 
 import models.requests.AddressLookupConfirmation
-import play.api.libs.json._
+import play.api.libs.json.*
 
 case class InternationalAddress(
   organisation: Option[String],

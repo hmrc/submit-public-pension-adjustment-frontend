@@ -24,7 +24,7 @@ import models.submission.Submission
 import models.{Done, InternationalAddress, NormalMode, PensionSchemeDetails, Period, StatusOfUser, UkAddress, UserAnswers, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
-import org.mockito.captor.ArgCaptor
+import org.mockito.ArgumentCaptor
 import org.scalatestplus.mockito.MockitoSugar
 import pages._
 import play.api.inject.bind
@@ -71,7 +71,7 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
+          status(result) `mustEqual` SEE_OTHER
 
           checkNavigation(redirectLocation(result).value, "/there-is-a-problem")
         }
@@ -105,10 +105,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
             val mockAddressLookupConnector = mock[AddressLookupConnector]
             val mockUserDataService        = mock[UserDataService]
-            val userAnswersCaptor          = ArgCaptor[UserAnswers]
+            val userAnswersCaptor          = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-            when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-            when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+            when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+            when(mockAddressLookupConnector.retrieveAddress(any())(any())) `thenReturn` Future.successful(
               AddressLookupConfirmation(
                 "someAuditRef",
                 Some("someId"),
@@ -141,10 +141,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
               val result = route(application, request).value
 
-              status(result) mustEqual SEE_OTHER
-              verify(mockUserDataService).set(userAnswersCaptor)(any())
-              val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
-              capturedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe Some(
+              status(result) `mustEqual` SEE_OTHER
+              verify(mockUserDataService).set(userAnswersCaptor.capture())(any())
+              val capturedUserAnswers: UserAnswers = userAnswersCaptor.getValue
+              capturedUserAnswers.get(PensionSchemeMemberUKAddressPage) `mustBe` Some(
                 UkAddress(
                   None,
                   "UK Address Line 1",
@@ -156,8 +156,8 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
                   Some("United Kingdom")
                 )
               )
-              capturedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe None
-              capturedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) mustBe None
+              capturedUserAnswers.get(PensionSchemeMemberResidencePage) `mustBe` None
+              capturedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) `mustBe` None
             }
           }
 
@@ -189,10 +189,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
             val mockAddressLookupConnector = mock[AddressLookupConnector]
             val mockUserDataService        = mock[UserDataService]
-            val userAnswersCaptor          = ArgCaptor[UserAnswers]
+            val userAnswersCaptor          = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-            when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-            when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+            when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+            when(mockAddressLookupConnector.retrieveAddress(any())(any())) `thenReturn` Future.successful(
               AddressLookupConfirmation(
                 "someAuditRef",
                 Some("someId"),
@@ -225,10 +225,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
               val result = route(application, request).value
 
-              status(result) mustEqual SEE_OTHER
-              verify(mockUserDataService).set(userAnswersCaptor)(any())
-              val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
-              capturedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) mustBe Some(
+              status(result) `mustEqual` SEE_OTHER
+              verify(mockUserDataService).set(userAnswersCaptor.capture())(any())
+              val capturedUserAnswers: UserAnswers = userAnswersCaptor.getValue
+              capturedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) `mustBe` Some(
                 InternationalAddress(
                   None,
                   "Address Line 1",
@@ -240,8 +240,8 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
                   "Antarctica"
                 )
               )
-              capturedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe None
-              capturedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe None
+              capturedUserAnswers.get(PensionSchemeMemberResidencePage) `mustBe` None
+              capturedUserAnswers.get(PensionSchemeMemberUKAddressPage) `mustBe` None
             }
           }
         }
@@ -278,10 +278,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
           val mockAddressLookupConnector = mock[AddressLookupConnector]
           val mockUserDataService        = mock[UserDataService]
-          val userAnswersCaptor          = ArgCaptor[UserAnswers]
+          val userAnswersCaptor          = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-          when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-          when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+          when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+          when(mockAddressLookupConnector.retrieveAddress(any())(any())) `thenReturn` Future.successful(
             AddressLookupConfirmation(
               "someAuditRef",
               Some("someId"),
@@ -314,17 +314,17 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
             val result = route(application, request).value
 
-            status(result) mustEqual SEE_OTHER
-            verify(mockUserDataService).set(userAnswersCaptor)(any())
-            val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
-            capturedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe None
-            capturedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2020)) mustBe None
-            capturedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) mustBe None
-            capturedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2020)) mustBe None
-            capturedUserAnswers.get(WhenWillYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
-            capturedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
-            capturedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) mustBe None
-            capturedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe None
+            status(result) `mustEqual` SEE_OTHER
+            verify(mockUserDataService).set(userAnswersCaptor.capture())(any())
+            val capturedUserAnswers: UserAnswers = userAnswersCaptor.getValue
+            capturedUserAnswers.get(WhoWillPayPage(Period._2020)) `mustBe` None
+            capturedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2020)) `mustBe` None
+            capturedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) `mustBe` None
+            capturedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2020)) `mustBe` None
+            capturedUserAnswers.get(WhenWillYouAskPensionSchemeToPayPage(Period._2020)) `mustBe` None
+            capturedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) `mustBe` None
+            capturedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) `mustBe` None
+            capturedUserAnswers.get(WhoWillPayPage(Period._2021)) `mustBe` None
           }
         }
       }
@@ -350,7 +350,7 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
+          status(result) `mustEqual` SEE_OTHER
 
           checkNavigation(redirectLocation(result).value, "/there-is-a-problem")
         }
@@ -384,10 +384,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
             val mockAddressLookupConnector = mock[AddressLookupConnector]
             val mockUserDataService        = mock[UserDataService]
-            val userAnswersCaptor          = ArgCaptor[UserAnswers]
+            val userAnswersCaptor          = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-            when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-            when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+            when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+            when(mockAddressLookupConnector.retrieveAddress(any())(any())) `thenReturn` Future.successful(
               AddressLookupConfirmation(
                 "someAuditRef",
                 Some("someId"),
@@ -423,10 +423,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
               val result = route(application, request).value
 
-              status(result) mustEqual SEE_OTHER
-              verify(mockUserDataService).set(userAnswersCaptor)(any())
-              val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
-              capturedUserAnswers.get(UkAddressPage) mustBe Some(
+              status(result) `mustEqual` SEE_OTHER
+              verify(mockUserDataService).set(userAnswersCaptor.capture())(any())
+              val capturedUserAnswers: UserAnswers = userAnswersCaptor.getValue
+              capturedUserAnswers.get(UkAddressPage) `mustBe` Some(
                 UkAddress(
                   None,
                   "UK Address Line 1",
@@ -438,8 +438,8 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
                   Some("United Kingdom")
                 )
               )
-              capturedUserAnswers.get(AreYouAUKResidentPage) mustBe None
-              capturedUserAnswers.get(InternationalAddressPage) mustBe None
+              capturedUserAnswers.get(AreYouAUKResidentPage) `mustBe` None
+              capturedUserAnswers.get(InternationalAddressPage) `mustBe` None
             }
           }
         }
@@ -470,10 +470,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
             val mockAddressLookupConnector = mock[AddressLookupConnector]
             val mockUserDataService        = mock[UserDataService]
-            val userAnswersCaptor          = ArgCaptor[UserAnswers]
+            val userAnswersCaptor          = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-            when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-            when(mockAddressLookupConnector.retrieveAddress(any())(any())) thenReturn Future.successful(
+            when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+            when(mockAddressLookupConnector.retrieveAddress(any())(any())) `thenReturn` Future.successful(
               AddressLookupConfirmation(
                 "someAuditRef",
                 Some("someId"),
@@ -509,10 +509,10 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
 
               val result = route(application, request).value
 
-              status(result) mustEqual SEE_OTHER
-              verify(mockUserDataService).set(userAnswersCaptor)(any())
-              val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
-              capturedUserAnswers.get(InternationalAddressPage) mustBe Some(
+              status(result) `mustEqual` SEE_OTHER
+              verify(mockUserDataService).set(userAnswersCaptor.capture())(any())
+              val capturedUserAnswers: UserAnswers = userAnswersCaptor.getValue
+              capturedUserAnswers.get(InternationalAddressPage) `mustBe` Some(
                 InternationalAddress(
                   None,
                   "Address Line 1",
@@ -524,8 +524,8 @@ class AddressLookupLandingControllerSpec extends SpecBase with MockitoSugar {
                   "Antarctica"
                 )
               )
-              capturedUserAnswers.get(AreYouAUKResidentPage) mustBe None
-              capturedUserAnswers.get(UkAddressPage) mustBe None
+              capturedUserAnswers.get(AreYouAUKResidentPage) `mustBe` None
+              capturedUserAnswers.get(UkAddressPage) `mustBe` None
             }
           }
         }

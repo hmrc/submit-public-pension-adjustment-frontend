@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.ReformPensionSchemeReferenceFormProvider
 import models.{Mode, NavigationState, PSTR}
 import pages.ReformPensionSchemeReferencePage

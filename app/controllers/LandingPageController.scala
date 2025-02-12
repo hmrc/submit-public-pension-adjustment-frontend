@@ -17,7 +17,7 @@
 package controllers
 
 import connectors.SubmitBackendConnector
-import controllers.actions._
+import controllers.actions.*
 import models.UniqueId
 import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}

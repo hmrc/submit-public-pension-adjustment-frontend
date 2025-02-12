@@ -23,13 +23,14 @@ import models.submission.Submission
 import models.{Done, PensionSchemeDetails, Period, UserAnswers, UserSubmissionReference, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
-import org.mockito.MockitoSugar.mock
-import org.mockito.captor.ArgCaptor
-import pages._
+import org.scalatestplus.mockito.MockitoSugar.mock
+import org.mockito.ArgumentMatchers
+import pages.*
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{SubmissionDataService, SubmissionService, UserDataService}
+import org.mockito.ArgumentCaptor
 
 import java.time.LocalDate
 import scala.concurrent.Future
@@ -49,8 +50,8 @@ class SubmissionWaitingRoomControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
 
@@ -60,16 +61,16 @@ class SubmissionWaitingRoomControllerSpec extends SpecBase {
       val mockUserDataService       = mock[UserDataService]
       val mockSubmissionDataService = mock[SubmissionDataService]
       val mockSubmissionService     = mock[SubmissionService]
-      val userAnswersCaptor         = ArgCaptor[UserAnswers]
+      val userAnswersCaptor         = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
-      when(mockCalculationInputs.annualAllowance) thenReturn None
-      when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
-      when(mockCalculationInputs.resubmission) thenReturn Resubmission(false, None)
+      when(mockCalculationInputs.annualAllowance) `thenReturn` None
+      when(mockCalculationInputs.lifeTimeAllowance) `thenReturn` None
+      when(mockCalculationInputs.resubmission) `thenReturn` Resubmission(false, None)
 
       when(mockSubmissionService.sendFinalSubmission(any, any, any, any)(any))
-        .thenReturn(Future.successful(FinalSubmissionResponse("userSubmissionReference")))
+        .`thenReturn`(Future.successful(FinalSubmissionResponse("userSubmissionReference")))
 
       val submission: Submission =
         Submission(
@@ -95,12 +96,12 @@ class SubmissionWaitingRoomControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.SubmissionController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.SubmissionController.onPageLoad().url
 
-        verify(mockUserDataService).set(userAnswersCaptor)(any())
-        val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
-        capturedUserAnswers.get(UserSubmissionReference()).get mustEqual "userSubmissionReference"
+        verify(mockUserDataService).set(userAnswersCaptor.capture())(any())
+        val capturedUserAnswers: UserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(UserSubmissionReference()).get `mustEqual` "userSubmissionReference"
       }
     }
 
@@ -111,11 +112,11 @@ class SubmissionWaitingRoomControllerSpec extends SpecBase {
       val mockSubmissionDataService = mock[SubmissionDataService]
       val mockSubmissionService     = mock[SubmissionService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
-      when(mockCalculationInputs.annualAllowance) thenReturn None
-      when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
-      when(mockCalculationInputs.resubmission) thenReturn Resubmission(false, None)
+      when(mockCalculationInputs.annualAllowance) `thenReturn` None
+      when(mockCalculationInputs.lifeTimeAllowance) `thenReturn` None
+      when(mockCalculationInputs.resubmission) `thenReturn` Resubmission(false, None)
 
       val submission: Submission =
         Submission(
@@ -142,8 +143,8 @@ class SubmissionWaitingRoomControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.JourneyRecoveryController.onPageLoad().url
         verifyNoInteractions(mockSubmissionService)
       }
     }

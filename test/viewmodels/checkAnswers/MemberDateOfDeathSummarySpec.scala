@@ -41,7 +41,7 @@ class MemberDateOfDeathSummarySpec extends AnyFreeSpec with Matchers {
           validAnswer
         )
         .get
-      MemberDateOfDeathSummary.row(userAnswers) shouldBe Some(
+      MemberDateOfDeathSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "memberDateOfDeath.checkYourAnswersLabel",
           value = ValueViewModel(Text("6 April 2019").toString()),
@@ -55,7 +55,7 @@ class MemberDateOfDeathSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      MemberDateOfDeathSummary.row(userAnswers) shouldBe None
+      MemberDateOfDeathSummary.row(userAnswers) `shouldBe` None
     }
   }
 

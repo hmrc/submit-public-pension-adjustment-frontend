@@ -19,7 +19,7 @@ package forms
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import forms.mappings.Mappings
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 
 import javax.inject.Inject
 import scala.util.Try

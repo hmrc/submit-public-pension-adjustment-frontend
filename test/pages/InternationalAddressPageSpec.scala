@@ -31,7 +31,7 @@ class InternationalAddressPageSpec extends PageBehaviours {
         )
         .get
 
-      updatedUserAnswers.get(InternationalAddressPage) mustBe Some(
+      updatedUserAnswers.get(InternationalAddressPage) `mustBe` Some(
         InternationalAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), "United Kingdom")
       )
     }

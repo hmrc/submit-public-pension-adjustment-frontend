@@ -88,8 +88,8 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
             None
           )
 
-        when(userDataService.get()(any())) thenReturn Future(None)
-        when(submissionDataService.getByUserId(anyString())(any())) thenReturn Future(Some(submission))
+        when(userDataService.get()(any())) `thenReturn` Future(None)
+        when(submissionDataService.getByUserId(anyString())(any())) `thenReturn` Future(Some(submission))
 
         val action = new Harness(userDataService, submissionDataService)
 
@@ -105,7 +105,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
           )
           .futureValue
 
-        result.userAnswers must not be defined
+        result.userAnswers `must` `not` `be` defined
       }
     }
 
@@ -157,8 +157,8 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
             None
           )
 
-        when(userDataService.get()(any())) thenReturn Future(Some(UserAnswers("id")))
-        when(submissionRepository.getByUserId(anyString())(any())) thenReturn Future(Some(submission))
+        when(userDataService.get()(any())) `thenReturn` Future(Some(UserAnswers("id")))
+        when(submissionRepository.getByUserId(anyString())(any())) `thenReturn` Future(Some(submission))
 
         val action = new Harness(userDataService, submissionRepository)
 
@@ -175,7 +175,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
             )
             .futureValue
 
-        result.userAnswers mustBe defined
+        result.userAnswers `mustBe` defined
       }
     }
   }

@@ -21,13 +21,13 @@ import connectors.{CalculateBackendConnector, SubmitBackendConnector}
 import models.Done
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, when}
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar.mock
 import org.scalatest.concurrent.Eventually.eventually
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.time.{Seconds, Span}
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{CalculateBackendDataService, SubmissionDataService, UserDataService}
 
 import scala.concurrent.Future
@@ -44,12 +44,12 @@ class EditCalculationControllerSpec extends SpecBase {
       val mockSubmitBackendConnector      = mock[SubmitBackendConnector]
       val mockCalculateBackendDataService = mock[CalculateBackendDataService]
 
-      when(mockCalculateBackendConnector.updateCalcBEWithUserAnswers(any())(any())) thenReturn Future.successful(Done)
-      when(mockCalculateBackendConnector.sendFlagResetSignal(any())(any())) thenReturn Future.successful(Done)
-      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) thenReturn Future.successful(Done)
-      when(mockCalculateBackendDataService.clearSubmissionCalcBE()(any())) thenReturn Future.successful(Done)
+      when(mockCalculateBackendConnector.updateCalcBEWithUserAnswers(any())(any())) `thenReturn` Future.successful(Done)
+      when(mockCalculateBackendConnector.sendFlagResetSignal(any())(any())) `thenReturn` Future.successful(Done)
+      when(mockUserDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmissionDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) `thenReturn` Future.successful(Done)
+      when(mockCalculateBackendDataService.clearSubmissionCalcBE()(any())) `thenReturn` Future.successful(Done)
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
         .overrides(
@@ -89,12 +89,12 @@ class EditCalculationControllerSpec extends SpecBase {
       val mockSubmitBackendConnector      = mock[SubmitBackendConnector]
       val mockCalculateBackendDataService = mock[CalculateBackendDataService]
 
-      when(mockCalculateBackendConnector.updateCalcBEWithUserAnswers(any())(any())) thenReturn Future.successful(Done)
-      when(mockCalculateBackendConnector.sendFlagResetSignal(any())(any())) thenReturn Future.successful(Done)
-      when(mockUserDataService.clear()(any())) thenReturn Future.failed(new RuntimeException("Service failed"))
-      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) thenReturn Future.successful(Done)
-      when(mockCalculateBackendDataService.clearSubmissionCalcBE()(any())) thenReturn Future.successful(Done)
+      when(mockCalculateBackendConnector.updateCalcBEWithUserAnswers(any())(any())) `thenReturn` Future.successful(Done)
+      when(mockCalculateBackendConnector.sendFlagResetSignal(any())(any())) `thenReturn` Future.successful(Done)
+      when(mockUserDataService.clear()(any())) `thenReturn` Future.failed(new RuntimeException("Service failed"))
+      when(mockSubmissionDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) `thenReturn` Future.successful(Done)
+      when(mockCalculateBackendDataService.clearSubmissionCalcBE()(any())) `thenReturn` Future.successful(Done)
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
         .overrides(
@@ -111,7 +111,7 @@ class EditCalculationControllerSpec extends SpecBase {
 
         intercept[RuntimeException] {
           await(route(application, request).value)
-        }.getMessage mustBe "Service failed"
+        }.getMessage `mustBe` "Service failed"
       }
     }
 
@@ -124,8 +124,8 @@ class EditCalculationControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CalculationPrerequisiteController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.CalculationPrerequisiteController.onPageLoad().url
       }
     }
   }

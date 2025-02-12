@@ -29,7 +29,7 @@ class UkAddressPageSpec extends PageBehaviours {
           .set(UkAddressPage, UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), Some("United Kingdom")))
           .get
 
-      updatedUserAnswers.get(UkAddressPage) mustBe Some(
+      updatedUserAnswers.get(UkAddressPage) `mustBe` Some(
         UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), Some("United Kingdom"))
       )
     }

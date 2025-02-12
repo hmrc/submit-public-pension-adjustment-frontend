@@ -42,7 +42,7 @@ class PensionSchemeMemberTaxReferenceSummarySpec extends AnyFreeSpec with Matche
         )
         .get
 
-      PensionSchemeMemberTaxReferenceSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberTaxReferenceSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberTaxReference.checkYourAnswersLabel",
           value = ValueViewModel("1234567890"),
@@ -66,7 +66,7 @@ class PensionSchemeMemberTaxReferenceSummarySpec extends AnyFreeSpec with Matche
         )
         .get
 
-      PensionSchemeMemberTaxReferenceSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberTaxReferenceSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberTaxReference.checkYourAnswersLabel",
           value = ValueViewModel(Messages("checkYourAnswers.notAnswered")),
@@ -83,7 +83,7 @@ class PensionSchemeMemberTaxReferenceSummarySpec extends AnyFreeSpec with Matche
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PensionSchemeMemberTaxReferenceSummary.row(userAnswers) shouldBe None
+      PensionSchemeMemberTaxReferenceSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

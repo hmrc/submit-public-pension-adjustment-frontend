@@ -19,7 +19,7 @@ package forms
 import forms.mappings.Mappings
 import models.PensionSchemeDetails
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 
 import javax.inject.Inject
 
@@ -34,6 +34,6 @@ class PensionSchemeDetailsFormProvider @Inject() extends Mappings {
         "pensionSchemeDetails.error.pensionSchemeTaxReference.invalid",
         Seq("""(\d\s*){8}[A-Za-z]{2}""")
       )
-    )(PensionSchemeDetails.apply)(PensionSchemeDetails.unapply)
+    )(PensionSchemeDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

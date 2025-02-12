@@ -100,7 +100,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector.get().futureValue
 
-          result mustBe Some(expectedSubmission)
+          result `mustBe` Some(expectedSubmission)
         }
       }
       "must return None when the server responds with NO_CONTENT" in {
@@ -120,7 +120,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
             }
             .futureValue
 
-          result mustBe None
+          result `mustBe` None
         }
       }
     }
@@ -183,7 +183,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector.getByUserId(userId).futureValue
 
-          result mustBe Some(expectedSubmission)
+          result `mustBe` Some(expectedSubmission)
         }
       }
       "must return None when the server responds with NO_CONTENT" in {
@@ -205,7 +205,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
             }
             .futureValue
 
-          result mustBe None
+          result `mustBe` None
         }
       }
     }
@@ -225,7 +225,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector.insert(userAnswers).futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
       "must return a failed future when the server responds with an error status" in {
@@ -242,7 +242,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector.insert(userAnswers).failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
     }
@@ -260,7 +260,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector.keepAlive().futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
       "must return a failed future when the server responds with an error status" in {
@@ -276,7 +276,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val result    = connector.keepAlive().failed.futureValue
           print(result)
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
     }
@@ -294,7 +294,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector.clear().futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
 
@@ -310,7 +310,7 @@ class SubmissionsConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector.clear().failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
     }

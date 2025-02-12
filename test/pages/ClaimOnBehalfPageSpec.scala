@@ -17,11 +17,12 @@
 package pages
 
 import models.StatusOfUser.Deputyship
-import models.calculation.inputs._
+import models.calculation.inputs.*
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, WhoWillPay}
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar.mock
+
 
 import java.time.LocalDate
 
@@ -414,14 +415,14 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
       val cleanedUserAnswers = ClaimOnBehalfPage.cleanup(Some(false), ua).success.value
 
-      cleanedUserAnswers.get(StatusOfUserPage) mustBe None
-      cleanedUserAnswers.get(PensionSchemeMemberNamePage) mustBe None
-      cleanedUserAnswers.get(PensionSchemeMemberDOBPage) mustBe None
-      cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe None
-      cleanedUserAnswers.get(PensionSchemeMemberNinoPage) mustBe None
-      cleanedUserAnswers.get(PensionSchemeMemberTaxReferencePage) mustBe None
-      cleanedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe None
-      cleanedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe None
+      cleanedUserAnswers.get(StatusOfUserPage) `mustBe` None
+      cleanedUserAnswers.get(PensionSchemeMemberNamePage) `mustBe` None
+      cleanedUserAnswers.get(PensionSchemeMemberDOBPage) `mustBe` None
+      cleanedUserAnswers.get(MemberDateOfDeathPage) `mustBe` None
+      cleanedUserAnswers.get(PensionSchemeMemberNinoPage) `mustBe` None
+      cleanedUserAnswers.get(PensionSchemeMemberTaxReferencePage) `mustBe` None
+      cleanedUserAnswers.get(PensionSchemeMemberResidencePage) `mustBe` None
+      cleanedUserAnswers.get(PensionSchemeMemberUKAddressPage) `mustBe` None
     }
 
     "must cleanup correctly when answered yes" in {
@@ -471,13 +472,13 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
       val cleanedUserAnswers = ClaimOnBehalfPage.cleanup(Some(true), ua).success.value
 
-      cleanedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe Some(WhoWillPay.You)
-      cleanedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe Some(WhoWillPay.PensionScheme)
-      cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2021)) mustBe Some("Private pension scheme")
-      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) mustBe Some(PensionSchemeDetails("name", "pstr"))
-      cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) mustBe Some(true)
-      cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe Some(LocalDate.of(2020, 1, 1))
-      cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) mustBe Some(true)
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2020)) `mustBe` Some(WhoWillPay.You)
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2021)) `mustBe` Some(WhoWillPay.PensionScheme)
+      cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2021)) `mustBe` Some("Private pension scheme")
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) `mustBe` Some(PensionSchemeDetails("name", "pstr"))
+      cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) `mustBe` Some(true)
+      cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) `mustBe` Some(LocalDate.of(2020, 1, 1))
+      cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) `mustBe` Some(true)
 
     }
   }

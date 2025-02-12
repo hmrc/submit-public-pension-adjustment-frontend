@@ -40,7 +40,7 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      AlternativeNameSummary.row(userAnswers) shouldBe Some(
+      AlternativeNameSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "alternativeName.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -70,7 +70,7 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      AlternativeNameSummary.row(userAnswers) shouldBe Some(
+      AlternativeNameSummary.row(userAnswers) `shouldBe`  Some(
         SummaryListRowViewModel(
           key = "alternativeName.checkYourAnswersLabel.onBehalf",
           value = ValueViewModel("site.yes"),
@@ -94,7 +94,7 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      AlternativeNameSummary.row(userAnswers) shouldBe Some(
+      AlternativeNameSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "alternativeName.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -113,6 +113,6 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
 
   "when answer unavailable, return empty" in {
     val userAnswers = UserAnswers("id")
-    AlternativeNameSummary.row(userAnswers) shouldBe None
+    AlternativeNameSummary.row(userAnswers) `shouldBe` None
   }
 }

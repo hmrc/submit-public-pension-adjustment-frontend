@@ -21,7 +21,7 @@ import connectors.SubmissionsConnector
 import models.Done
 import models.calculation.inputs._
 import models.submission.Submission
-import org.mockito.MockitoSugar.when
+import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.http.HeaderCarrier
@@ -80,10 +80,10 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
           calculation = None,
           lastUpdated = Instant.parse("2024-03-12T10:00:00Z")
         )
-        when(connector.getByUserId(userId)(hc)) thenReturn Future.successful(Some(expectedSubmission))
+        when(connector.getByUserId(userId)(hc)) `thenReturn` Future.successful(Some(expectedSubmission))
 
         val result = service.getByUserId(userId)(hc).futureValue
-        result mustBe Some(expectedSubmission)
+        result `mustBe` Some(expectedSubmission)
       }
 
       "must return None when the connector fails to fetch" in {
@@ -91,10 +91,10 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
         val service   = new SubmissionDataService(connector)
         val userId    = "someSessionId"
 
-        when(connector.getByUserId(userId)(hc)) thenReturn Future.successful(None)
+        when(connector.getByUserId(userId)(hc)) `thenReturn` Future.successful(None)
 
         val result = service.getByUserId(userId)(hc).futureValue
-        result mustBe None
+        result `mustBe` None
       }
     }
 
@@ -103,20 +103,20 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
         val connector = mock[SubmissionsConnector]
         val service   = new SubmissionDataService(connector)
 
-        when(connector.keepAlive()(hc)) thenReturn Future.successful(Done)
+        when(connector.keepAlive()(hc)) `thenReturn` Future.successful(Done)
 
         val result = service.keepAlive()(hc).futureValue
-        result mustBe Done
+        result `mustBe` Done
       }
 
       "must return a failed future when the connector fails to update" in {
         val connector = mock[SubmissionsConnector]
         val service   = new SubmissionDataService(connector)
 
-        when(connector.keepAlive()(hc)) thenReturn Future.failed(new RuntimeException("Update failed"))
+        when(connector.keepAlive()(hc)) `thenReturn` Future.failed(new RuntimeException("Update failed"))
 
         val result = service.keepAlive()(hc).failed.futureValue
-        result mustBe a[RuntimeException]
+        result `mustBe` a[RuntimeException]
       }
     }
 
@@ -125,20 +125,20 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
         val connector = mock[SubmissionsConnector]
         val service   = new SubmissionDataService(connector)
 
-        when(connector.clear()(hc)) thenReturn Future.successful(Done)
+        when(connector.clear()(hc)) `thenReturn` Future.successful(Done)
 
         val result = service.clear()(hc).futureValue
-        result mustBe Done
+        result `mustBe` Done
       }
 
       "must return a failed future when the connector fails to clear" in {
         val connector = mock[SubmissionsConnector]
         val service   = new SubmissionDataService(connector)
 
-        when(connector.clear()(hc)) thenReturn Future.failed(new RuntimeException("Clear failed"))
+        when(connector.clear()(hc)) `thenReturn` Future.failed(new RuntimeException("Clear failed"))
 
         val result = service.clear()(hc).failed.futureValue
-        result mustBe a[RuntimeException]
+        result `mustBe` a[RuntimeException]
       }
     }
   }

@@ -119,7 +119,7 @@ class AlternativeNamePageSpec extends PageBehaviours {
         .value
 
       val cleanedUserAnswers = AlternativeNamePage.cleanup(Some(true), ua).success.value
-      cleanedUserAnswers.get(EnterAlternativeNamePage) mustBe None
+      cleanedUserAnswers.get(EnterAlternativeNamePage) `mustBe` None
     }
   }
 }

@@ -20,7 +20,7 @@ import exceptions.InvalidInputException
 import models.calculation.inputs.{Period => InputsPeriod}
 import models.{Period => CorePeriod}
 import play.api.Logging
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import scala.util.{Failure, Success, Try}
 

@@ -36,7 +36,7 @@ class LTAProtectionTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
         JsString(lTAProtectionType.toString)
           .validate[LTAProtectionType]
           .asOpt
-          .value mustEqual lTAProtectionType
+          .value `mustEqual` lTAProtectionType
       }
     }
 
@@ -45,7 +45,7 @@ class LTAProtectionTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
       val gen = arbitrary[String] suchThat (!LTAProtectionType.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[LTAProtectionType] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[LTAProtectionType] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -54,7 +54,7 @@ class LTAProtectionTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
       val gen = Gen.oneOf(LTAProtectionType.values)
 
       forAll(gen) { lTAProtectionType =>
-        Json.toJson(lTAProtectionType) mustEqual JsString(lTAProtectionType.toString)
+        Json.toJson(lTAProtectionType) `mustEqual` JsString(lTAProtectionType.toString)
       }
     }
   }

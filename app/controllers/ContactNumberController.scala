@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.ContactNumberFormProvider
 import models.Mode
 import pages.ContactNumberPage

@@ -20,10 +20,10 @@ import base.SpecBase
 import models.calculation._
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, Period}
-import org.mockito.MockitoSugar
 import pages.TestData
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HeaderCarrier
+import org.scalatestplus.mockito.MockitoSugar
 
 import scala.io.Source
 
@@ -38,9 +38,9 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
   }
 
   def checkYearInDates(year: Seq[RowViewModel]) = {
-    year.size mustBe 9
+    year.size `mustBe` 9
 
-    year(0).value mustNot be(null)
+    year(0).value `mustNot` `be`(null)
     checkRowName(year, 1, "calculationResults.annualResults.chargePaidBySchemes")
     checkRowName(year, 2, "calculationResults.annualResults.chargePaidByMember")
     checkRowName(year, 3, "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate")
@@ -52,7 +52,7 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
   }
 
   def checkYearOutDates(year: Seq[RowViewModel]) = {
-    year.size mustBe 8
+    year.size `mustBe` 8
 
     year(0).value mustNot be(null)
     checkRowName(year, 1, "calculationResults.annualResults.chargePaidBySchemes")
@@ -65,13 +65,13 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
   }
 
   def checkRowNameAndValue(rows: Seq[RowViewModel], index: Int, expectedName: String, expectedValue: String): Unit = {
-    rows(index).name mustBe expectedName
-    rows(index).value mustBe expectedValue
+    rows(index).name `mustBe` expectedName
+    rows(index).value `mustBe` expectedValue
   }
 
   def checkRowName(rows: Seq[RowViewModel], index: Int, expectedName: String): Unit = {
-    rows(index).name mustBe expectedName
-    rows(index).value mustNot be(null)
+    rows(index).name `mustBe` expectedName
+    rows(index).value `mustNot` `be`(null)
   }
 
   "CalculationResultsMapper" - {
@@ -91,7 +91,7 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
           )
 
         val sections: Seq[Seq[RowViewModel]] = viewModel.outDates
-        sections.size mustBe 1
+        sections.size `mustBe` 1
 
         val year = sections(0)
 
@@ -173,7 +173,7 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
           )
 
         val sections: Seq[Seq[RowViewModel]] = viewModel.inDates
-        sections.size mustBe 1
+        sections.size `mustBe` 1
 
         val year = sections(0)
         checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "£0")
@@ -254,7 +254,7 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
           )
 
         val sections: Seq[Seq[RowViewModel]] = viewModel.outDates
-        sections.size mustBe 4
+        sections.size `mustBe` 4
 
         val _2016Period = sections(0)
         val _2017Period = sections(1)
@@ -420,7 +420,7 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
           )
 
         val sections: Seq[Seq[RowViewModel]] = viewModel.inDates
-        sections.size mustBe 4
+        sections.size `mustBe` 4
 
         val _2020 = sections(0)
         val _2021 = sections(1)
@@ -564,18 +564,18 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
             calculationResult
           )
 
-        summaryModel.size mustBe 4
+        summaryModel.size `mustBe` 4
 
         val year2016 = summaryModel(0)
 
-        year2016.period mustBe Period._2016
-        year2016.changeInTaxCharge mustBe 0
-        year2016.changeInTaxChargeNonAbs mustBe 0
-        year2016.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
-        year2016.revisedChargeableAmountBeforeTaxRate mustBe 0
-        year2016.chargePaidByMember mustBe 0
-        year2016.chargePaidBySchemes mustBe 0
-        year2016.revisedChargeableAmountAfterTaxRate mustBe 0
+        year2016.period `mustBe` Period._2016
+        year2016.changeInTaxCharge `mustBe` 0
+        year2016.changeInTaxChargeNonAbs `mustBe` 0
+        year2016.changeInTaxChargeString `mustBe` "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+        year2016.revisedChargeableAmountBeforeTaxRate `mustBe` 0
+        year2016.chargePaidByMember `mustBe` 0
+        year2016.chargePaidBySchemes `mustBe` 0
+        year2016.revisedChargeableAmountAfterTaxRate `mustBe` 0
       }
 
       "An in date year should be well formed" in {
@@ -586,18 +586,18 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
             calculationResult
           )
 
-        summaryModel.size mustBe 4
+        summaryModel.size `mustBe` 4
 
         val year2021 = summaryModel(1)
 
-        year2021.period mustBe Period._2021
-        year2021.changeInTaxCharge mustBe 0
-        year2021.changeInTaxChargeNonAbs mustBe 0
-        year2021.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
-        year2021.revisedChargeableAmountBeforeTaxRate mustBe 0
-        year2021.chargePaidByMember mustBe 0
-        year2021.chargePaidBySchemes mustBe 0
-        year2021.revisedChargeableAmountAfterTaxRate mustBe 0
+        year2021.period `mustBe` Period._2021
+        year2021.changeInTaxCharge `mustBe` 0
+        year2021.changeInTaxChargeNonAbs `mustBe` 0
+        year2021.changeInTaxChargeString `mustBe` "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+        year2021.revisedChargeableAmountBeforeTaxRate `mustBe` 0
+        year2021.chargePaidByMember `mustBe` 0
+        year2021.chargePaidBySchemes `mustBe` 0
+        year2021.revisedChargeableAmountAfterTaxRate `mustBe` 0
 
       }
     }
@@ -612,10 +612,10 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
         expectedLink: String,
         expectedTotalCharge: Option[Int]
       ): Unit = {
-        rows(index).title mustBe expectedTitle
-        rows(index).changeString mustBe expectedString
-        rows(index).link mustBe expectedLink
-        rows(index).totalCharge mustBe expectedTotalCharge
+        rows(index).title `mustBe` expectedTitle
+        rows(index).changeString `mustBe` expectedString
+        rows(index).link `mustBe` expectedLink
+        rows(index).totalCharge `mustBe` expectedTotalCharge
       }
 
       val index = 0
@@ -628,7 +628,7 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
           CalculationResultsMapper.calculationReviewViewModel(calculationResult)
 
         val sections: Seq[Seq[ReviewRowViewModel]] = viewModel.outDates
-        sections.size mustBe 4
+        sections.size `mustBe` 4
 
         checkRowNameAndValueReviewRow(
           sections(0),
@@ -672,7 +672,7 @@ class CalculationResultsMapperSpec extends SpecBase with MockitoSugar {
           CalculationResultsMapper.calculationReviewViewModel(calculationResult)
 
         val sections: Seq[Seq[ReviewRowViewModel]] = viewModel.inDates
-        sections.size mustBe 4
+        sections.size `mustBe` 4
 
         checkRowNameAndValueReviewRow(
           sections(0),

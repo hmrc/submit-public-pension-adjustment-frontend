@@ -24,7 +24,7 @@ import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 
 import scala.concurrent.Future
 
@@ -39,10 +39,10 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
       val mockSubmitBackendConnector = mock[SubmitBackendConnector]
       when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
-        .thenReturn(Future.successful(true))
+        .`thenReturn`(Future.successful(true))
 
       when(mockSubmitBackendConnector.sendCalcUserAnswerSignal(any())(any()))
-        .thenReturn(Future.successful(true))
+        .`thenReturn`(Future.successful(true))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -56,7 +56,7 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         checkNavigation(redirectLocation(result).get, "/submission-info")
       }
     }
@@ -65,10 +65,10 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
       val mockSubmitBackendConnector = mock[SubmitBackendConnector]
       when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
-        .thenReturn(Future.successful(false))
+        .`thenReturn`(Future.successful(false))
 
       when(mockSubmitBackendConnector.sendCalcUserAnswerSignal(any())(any()))
-        .thenReturn(Future.successful(false))
+        .`thenReturn`(Future.successful(false))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -82,7 +82,7 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         checkNavigation(redirectLocation(result).get, "/calculation-not-complete")
       }
     }
@@ -94,10 +94,10 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
       val mockSubmitBackendConnector = mock[SubmitBackendConnector]
       when(mockSubmitBackendConnector.sendSubmissionSignal(any())(any()))
-        .thenReturn(Future.successful(true))
+        .`thenReturn`(Future.successful(true))
 
       when(mockSubmitBackendConnector.sendCalcUserAnswerSignal(any())(any()))
-        .thenReturn(Future.successful(true))
+        .`thenReturn`(Future.successful(true))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -111,14 +111,14 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result).contains("Please check that you have entered the correct web address.") must be(true)
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result).contains("Please check that you have entered the correct web address.") `must` `be`(true)
       }
     }
   }
 
   def checkNavigation(nextUrl: String, expectedUrl: String) = {
     val urlWithNoContext = nextUrl.replace("/submit-public-pension-adjustment", "")
-    urlWithNoContext must be(expectedUrl)
+    urlWithNoContext `must` `be`(expectedUrl)
   }
 }

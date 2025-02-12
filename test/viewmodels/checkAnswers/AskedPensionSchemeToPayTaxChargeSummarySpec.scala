@@ -40,7 +40,7 @@ class AskedPensionSchemeToPayTaxChargeSummarySpec extends AnyFreeSpec with Match
         )
         .get
 
-      AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) shouldBe Some(
+      AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "askedPensionSchemeToPayTaxCharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -65,7 +65,7 @@ class AskedPensionSchemeToPayTaxChargeSummarySpec extends AnyFreeSpec with Match
         )
         .get
 
-      AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) shouldBe Some(
+      AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "askedPensionSchemeToPayTaxCharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -84,6 +84,6 @@ class AskedPensionSchemeToPayTaxChargeSummarySpec extends AnyFreeSpec with Match
 
   "when answer unavailable, return empty" in {
     val userAnswers = UserAnswers("id")
-    AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) shouldBe None
+    AskedPensionSchemeToPayTaxChargeSummary.row(userAnswers, Period._2020) `shouldBe` None
   }
 }

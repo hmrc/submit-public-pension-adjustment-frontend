@@ -16,7 +16,8 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import play.api.libs.json.*
+import scala.language.implicitConversions
 
 trait TaxYear {
   def period: Period

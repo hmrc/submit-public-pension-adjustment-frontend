@@ -67,7 +67,7 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
           )
         )
       )
-      res.calculationInputs.annualAllowance   must be(
+      res.calculationInputs.annualAllowance   `must` `be`(
         Some(
           AnnualAllowance(
             List(),
@@ -94,14 +94,14 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
           )
         )
       )
-      res.calculationInputs.lifeTimeAllowance must be(None)
+      res.calculationInputs.lifeTimeAllowance `must` `be`(None)
 
       val calculation = res.calculation.get
 
-      calculation.resubmission  must be(models.calculation.response.Resubmission(false, None))
-      calculation.totalAmounts  must be(TotalAmounts(13, 0, 0))
-      calculation.inDates.size  must be(0)
-      calculation.outDates.size must be(2)
+      calculation.resubmission  `must` `be`(models.calculation.response.Resubmission(false, None))
+      calculation.totalAmounts  `must` `be`(TotalAmounts(13, 0, 0))
+      calculation.inDates.size  `must` `be`(0)
+      calculation.outDates.size `must` `be`(2)
     }
   }
 

@@ -16,11 +16,11 @@
 
 package pages
 
-import models.calculation.inputs._
+import models.calculation.inputs.*
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
 import models.{BankDetails, CheckMode, NormalMode}
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar.mock
 
 class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
 
@@ -256,9 +256,9 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
 
         val cleanedUserAnswers = ClaimingHigherOrAdditionalTaxRateReliefPage.cleanup(Some(false), ua).success.value
-        cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe None
-        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
-        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPage) `mustBe` None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) `mustBe` None
+        cleanedUserAnswers.get(BankDetailsPage) `mustBe` None
       }
 
       "must cleanup correctly when answered yes" in {
@@ -283,9 +283,9 @@ class ClaimingHigherOrAdditionalTaxRateReliefPageSpec extends PageBehaviours {
           .value
 
         val cleanedUserAnswers = ClaimingHigherOrAdditionalTaxRateReliefPage.cleanup(Some(true), ua).success.value
-        cleanedUserAnswers.get(HowMuchTaxReliefPage) mustBe None
-        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
-        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPage) `mustBe` None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) `mustBe` None
+        cleanedUserAnswers.get(BankDetailsPage) `mustBe` None
       }
     }
   }

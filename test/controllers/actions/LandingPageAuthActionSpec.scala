@@ -22,10 +22,10 @@ import controllers.routes
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar.mock
-import play.api.mvc.{BodyParsers, Results}
+import play.api.mvc.{Action, AnyContent, BodyParsers, Results}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{running, _}
-import uk.gov.hmrc.auth.core._
+import play.api.test.Helpers.{running, *}
+import uk.gov.hmrc.auth.core.*
 import uk.gov.hmrc.auth.core.retrieve.{ItmpName, ~}
 
 import java.time.LocalDate
@@ -35,7 +35,7 @@ import scala.concurrent.Future
 class LandingPageAuthActionSpec extends SpecBase {
 
   class Harness(authAction: LandingPageIdentifierAction) {
-    def onPageLoad() = authAction(_ => Results.Ok)
+    def onPageLoad(): Action[AnyContent] = authAction(_ => Results.Ok)
   }
 
   "Auth Action" - {
@@ -59,8 +59,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val result     =
             controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=12341234-1234-1234-1234-123412341234"))
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result).value must startWith(appConfig.loginUrl)
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result).value `must` `startWith`(appConfig.loginUrl)
         }
       }
     }
@@ -84,8 +84,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val result     =
             controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=12341234-1234-1234-1234-123412341234"))
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result).value must startWith(appConfig.loginUrl)
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result).value `must` `startWith`(appConfig.loginUrl)
         }
       }
 
@@ -106,8 +106,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val result     =
             controller.onPageLoad()(FakeRequest(GET, ""))
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result).value must startWith("/submit-public-pension-adjustment/calculation-not-complete")
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result).value `must` `startWith`("/submit-public-pension-adjustment/calculation-not-complete")
         }
       }
 
@@ -128,8 +128,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val result     =
             controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=someInvalidFormat"))
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result).value must startWith("/submit-public-pension-adjustment/there-is-a-problem")
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result).value `must` `startWith`("/submit-public-pension-adjustment/there-is-a-problem")
         }
       }
     }
@@ -152,8 +152,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val controller = new Harness(authAction)
           val result     = controller.onPageLoad()(FakeRequest())
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result).value mustBe routes.UnauthorisedController.onPageLoad.url
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result).value `mustBe` routes.UnauthorisedController.onPageLoad.url
         }
       }
     }
@@ -176,8 +176,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val controller = new Harness(authAction)
           val result     = controller.onPageLoad()(FakeRequest(GET, "?submissionUniqueId=123"))
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result).value must include("/iv-stub/uplift?origin=ppa&confidenceLevel=250")
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result).value `must` `include`("/iv-stub/uplift?origin=ppa&confidenceLevel=250")
         }
       }
     }
@@ -200,8 +200,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val controller = new Harness(authAction)
           val result     = controller.onPageLoad()(FakeRequest())
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result).value mustBe routes.UnauthorisedController.onPageLoad.url
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result).value `mustBe` routes.UnauthorisedController.onPageLoad.url
         }
       }
     }
@@ -224,8 +224,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val controller = new Harness(authAction)
           val result     = controller.onPageLoad()(FakeRequest())
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result) mustBe Some(routes.CannotUseServiceNotIndividualController.onPageLoad.url)
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result) `mustBe` Some(routes.CannotUseServiceNotIndividualController.onPageLoad.url)
         }
       }
     }
@@ -248,8 +248,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val controller = new Harness(authAction)
           val result     = controller.onPageLoad()(FakeRequest())
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result) `mustBe` Some(routes.UnauthorisedController.onPageLoad.url)
         }
       }
     }
@@ -407,8 +407,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val controller = new Harness(authAction)
           val result     = controller.onPageLoad()(FakeRequest())
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result) `mustBe` Some(routes.UnauthorisedController.onPageLoad.url)
         }
       }
 
@@ -445,8 +445,8 @@ class LandingPageAuthActionSpec extends SpecBase {
           val controller = new Harness(authAction)
           val result     = controller.onPageLoad()(FakeRequest())
 
-          status(result) mustBe SEE_OTHER
-          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad.url)
+          status(result) `mustBe` SEE_OTHER
+          redirectLocation(result) `mustBe` Some(routes.UnauthorisedController.onPageLoad.url)
         }
       }
 
@@ -468,7 +468,7 @@ class LandingPageAuthActionSpec extends SpecBase {
       val controller = new Harness(authAction)
       val result     = controller.onPageLoad()(FakeRequest())
 
-      status(result) mustBe OK
+      status(result) `mustBe` OK
     }
   }
 
@@ -486,7 +486,7 @@ class LandingPageAuthActionSpec extends SpecBase {
         any()
       )(any(), any())
     )
-      .thenReturn(
+      .`thenReturn`(
         Future.successful(
           retrievals
         )

@@ -18,7 +18,7 @@ package controllers
 import base.SpecBase
 import pages.{ClaimOnBehalfPage, PensionSchemeMemberNamePage}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.DeclarationsView
 
 class DeclarationsControllerSpec extends SpecBase {
@@ -40,8 +40,8 @@ class DeclarationsControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[DeclarationsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(false, "")(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(false, "")(request, messages(application)).toString
       }
     }
 
@@ -54,8 +54,8 @@ class DeclarationsControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
 
@@ -72,8 +72,8 @@ class DeclarationsControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[DeclarationsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(isClaimOnBehalf = true, "")(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(isClaimOnBehalf = true, "")(request, messages(application)).toString
       }
     }
 
@@ -90,8 +90,8 @@ class DeclarationsControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[DeclarationsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(isClaimOnBehalf = false, "")(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(isClaimOnBehalf = false, "")(request, messages(application)).toString
       }
     }
 
@@ -106,8 +106,8 @@ class DeclarationsControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.SubmissionWaitingRoomController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` controllers.routes.SubmissionWaitingRoomController.onPageLoad().url
       }
     }
 
@@ -130,8 +130,8 @@ class DeclarationsControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[DeclarationsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(isClaimOnBehalf = true, "John Doe")(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(isClaimOnBehalf = true, "John Doe")(
           request,
           messages(application)
         ).toString

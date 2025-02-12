@@ -58,7 +58,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
         val result: FinalSubmissionResponse = connector.sendFinalSubmission(submission).futureValue
 
-        result mustBe FinalSubmissionResponse("ref")
+        result `mustBe` FinalSubmissionResponse("ref")
       }
     }
 
@@ -76,7 +76,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
         val result = connector.sendFinalSubmission(submission).failed.futureValue
 
-        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+        result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
   }
@@ -99,7 +99,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
         val result: Boolean = connector.sendSubmissionSignal(uniqueId).futureValue
 
-        result mustBe true
+        result `mustBe` true
       }
     }
 
@@ -120,7 +120,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         val resultFut: Future[Boolean] = connector.sendSubmissionSignal(uniqueId)
 
         whenReady(resultFut.failed) { e =>
-          e mustBe a[UpstreamErrorResponse]
+          e `mustBe` a[UpstreamErrorResponse]
         }
       }
     }
@@ -144,7 +144,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
         val result: Boolean = connector.sendCalcUserAnswerSignal(uniqueId).futureValue
 
-        result mustBe true
+        result `mustBe` true
       }
     }
 
@@ -165,7 +165,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         val resultFut: Future[Boolean] = connector.sendCalcUserAnswerSignal(uniqueId)
 
         whenReady(resultFut.failed) { e =>
-          e mustBe a[UpstreamErrorResponse]
+          e `mustBe` a[UpstreamErrorResponse]
         }
       }
     }

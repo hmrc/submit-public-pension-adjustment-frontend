@@ -24,7 +24,7 @@ class AreYouAUKResidentPageSpec extends PageBehaviours {
 
       val updatedUserAnswers = emptyUserAnswers.set(AreYouAUKResidentPage, true).get
 
-      updatedUserAnswers.get(AreYouAUKResidentPage) mustBe Some(true)
+      updatedUserAnswers.get(AreYouAUKResidentPage) `mustBe` Some(true)
     }
   }
 }

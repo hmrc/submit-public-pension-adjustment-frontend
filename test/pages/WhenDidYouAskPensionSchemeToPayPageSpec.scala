@@ -19,7 +19,7 @@ package pages
 import models.calculation.inputs.CalculationInputs
 import models.submission.Submission
 import models.{CheckMode, NormalMode, Period}
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar.mock
 import org.scalacheck.Arbitrary
 
 import java.time.LocalDate

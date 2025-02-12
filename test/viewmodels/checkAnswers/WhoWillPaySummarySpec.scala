@@ -39,7 +39,7 @@ class WhoWillPaySummarySpec extends AnyFreeSpec with Matchers {
           models.WhoWillPay.You
         )
         .get
-      WhoWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
+      WhoWillPaySummary.row(userAnswers, Period._2020) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whoWillPay.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoWillPay.you")),
@@ -61,7 +61,7 @@ class WhoWillPaySummarySpec extends AnyFreeSpec with Matchers {
           models.WhoWillPay.PensionScheme
         )
         .get
-      WhoWillPaySummary.row(userAnswers, Period._2020) shouldBe Some(
+      WhoWillPaySummary.row(userAnswers, Period._2020) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whoWillPay.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoWillPay.pensionScheme")),
@@ -78,7 +78,7 @@ class WhoWillPaySummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhoWillPaySummary.row(userAnswers, Period._2020) shouldBe None
+      WhoWillPaySummary.row(userAnswers, Period._2020) `shouldBe` None
     }
   }
 

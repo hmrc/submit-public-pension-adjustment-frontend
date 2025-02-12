@@ -33,7 +33,7 @@ class WhoWillPaySpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
       val gen = Gen.oneOf(WhoWillPay.values.toSeq)
 
       forAll(gen) { whoWillPay =>
-        JsString(whoWillPay.toString).validate[WhoWillPay].asOpt.value mustEqual whoWillPay
+        JsString(whoWillPay.toString).validate[WhoWillPay].asOpt.value `mustEqual` whoWillPay
       }
     }
 
@@ -42,7 +42,7 @@ class WhoWillPaySpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
       val gen = arbitrary[String] suchThat (!WhoWillPay.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[WhoWillPay] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[WhoWillPay] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -51,7 +51,7 @@ class WhoWillPaySpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
       val gen = Gen.oneOf(WhoWillPay.values.toSeq)
 
       forAll(gen) { whoWillPay =>
-        Json.toJson(whoWillPay) mustEqual JsString(whoWillPay.toString)
+        Json.toJson(whoWillPay) `mustEqual` JsString(whoWillPay.toString)
       }
     }
   }

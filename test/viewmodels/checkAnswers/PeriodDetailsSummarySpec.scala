@@ -32,7 +32,7 @@ class PeriodDetailsSummarySpec extends AnyFreeSpec with Matchers {
   "row" - {
     "when user has entered details for a period, return the period summary row" in {
 
-      PeriodDetailsSummary.row(Period._2020) shouldBe Some(
+      PeriodDetailsSummary.row(Period._2020) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "checkYourAnswers.periodDetails.2020",
           value = ValueViewModel(HtmlContent(""))

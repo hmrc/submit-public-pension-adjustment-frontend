@@ -16,7 +16,7 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import java.time.LocalDate
 
