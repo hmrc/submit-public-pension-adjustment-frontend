@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package bars.barsmodel.request
+package pages.navigationObjects
 
-import org.apache.commons.lang3.StringUtils
-import play.api.libs.json.{Json, OFormat}
+import models.UserAnswers
+import pages.BankDetailsPage
+import play.api.mvc.Call
 
-final case class BarsBankAccount(
-  sortCode: String,
-  accountNumber: String
-)
+object BankDetailsNavigation {
 
-object BarsBankAccount {
-  implicit val format: OFormat[BarsBankAccount] = Json.format
-
-  def normalise(sortCode: String, accountNumber: String): BarsBankAccount =
-    BarsBankAccount(sortCode.filter(_.isDigit), leftPad(accountNumber))
-
-  private def leftPad(accountNumber: String): String =
-    StringUtils.leftPad(accountNumber, 8, "0")
+  def navigate(answers: UserAnswers): Call =
+    answers.get(BankDetailsPage) match {
+      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad()
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

@@ -16,62 +16,23 @@
 
 package pages
 
-import models.{BankDetails, CheckMode, NormalMode}
+import models.BankDetails
 
 class BankDetailsPageSpec extends PageBehaviours {
 
   "BankDetailsPage" - {
 
-    beRetrievable[BankDetails](BankDetailsPage)
+    "should save Bank Detail" in {
 
-    beSettable[BankDetails](BankDetailsPage)
+      val updatedUserAnswers =
+        emptyUserAnswers
+          .set(BankDetailsPage, BankDetails("Testuser One", "111111", "11111111", None))
+          .get
 
-    beRemovable[BankDetails](BankDetailsPage)
-
-    "must navigate correctly in NormalMode" - {
-
-      "to CYA" in {
-        val ua     = emptyUserAnswers
-          .set(
-            BankDetailsPage,
-            BankDetails("Testuser One", "111111", "11111111")
-          )
-          .success
-          .value
-        val result = BankDetailsPage.navigate(NormalMode, ua).url
-
-        checkNavigation(result, "/check-your-answers")
-      }
-
-      "to JourneyRecoveryPage when not answered" in {
-        val ua     = emptyUserAnswers
-        val result = BankDetailsPage.navigate(NormalMode, ua).url
-
-        checkNavigation(result, "/there-is-a-problem")
-      }
+      updatedUserAnswers.get(BankDetailsPage) mustBe Some(
+        BankDetails("Testuser One", "111111", "11111111", None)
+      )
     }
 
-    "must navigate correctly in CheckMode" - {
-
-      "to CYA" in {
-        val ua     = emptyUserAnswers
-          .set(
-            BankDetailsPage,
-            BankDetails("Testuser One", "111111", "11111111")
-          )
-          .success
-          .value
-        val result = BankDetailsPage.navigate(CheckMode, ua).url
-
-        checkNavigation(result, "/check-your-answers")
-      }
-
-      "to JourneyRecovery when not answered" in {
-        val ua     = emptyUserAnswers
-        val result = BankDetailsPage.navigate(CheckMode, ua).url
-
-        checkNavigation(result, "/there-is-a-problem")
-      }
-    }
   }
 }

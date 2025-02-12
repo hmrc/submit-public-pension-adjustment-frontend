@@ -30,15 +30,18 @@ object BankDetailsSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(BankDetailsPage).map { answer =>
-      val value = HtmlFormat.escape(answer.accountName).toString + "<br/>" + HtmlFormat
-        .escape(answer.sortCode)
-        .toString + "<br/>" + HtmlFormat.escape(answer.accountNumber).toString
+      val value = Seq(
+        Some(HtmlFormat.escape(answer.accountName).toString),
+        Some(HtmlFormat.escape(answer.sortCode).toString),
+        Some(HtmlFormat.escape(answer.accountNumber).toString),
+        answer.rollNumber.map(HtmlFormat.escape)
+      ).flatten.mkString("<br/>")
 
       SummaryListRowViewModel(
         key = "bankDetails.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.BankDetailsController.onPageLoad(CheckMode).url)
+          ActionItemViewModel("site.change", routes.BavfRampOnController.rampOnBavf(CheckMode).url)
             .withVisuallyHiddenText(messages("bankDetails.change.hidden"))
         )
       )

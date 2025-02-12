@@ -60,6 +60,7 @@ class HowMuchTaxReliefController @Inject() (
       val numberOfSchemes: Int                              = SchemeService.allSchemeDetailsForTaxReliefLength(request.submission.calculationInputs)
       val schemeDetails: WhichPensionSchemeWillPayTaxRelief =
         SchemeService.allSchemeDetailsForTaxRelief(request.submission.calculationInputs)
+      val memberCredit                                      = request.submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
       form
         .bindFromRequest()
         .fold(
@@ -74,7 +75,7 @@ class HowMuchTaxReliefController @Inject() (
                                   )
                 redirectUrl     = HowMuchTaxReliefPage.navigate(mode, updatedAnswers, request.submission).url
                 answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
-                _              <- userDataService.set(answersWithNav)
+                _              <- if (memberCredit > 0) userDataService.set(updatedAnswers) else userDataService.set(answersWithNav)
               } yield Redirect(redirectUrl)
             } else {
               for {

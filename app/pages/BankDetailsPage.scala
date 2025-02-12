@@ -16,25 +16,14 @@
 
 package pages
 
-import models.{BankDetails, UserAnswers}
+import models.BankDetails
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
+import queries.{Gettable, Settable}
 
-case object BankDetailsPage extends QuestionPage[BankDetails] {
+case object BankDetailsPage extends Gettable[BankDetails] with Settable[BankDetails] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "bankDetails"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(BankDetailsPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(BankDetailsPage) match {
-      case Some(_) => controllers.routes.CheckYourAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
 }

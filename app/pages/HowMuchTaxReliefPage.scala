@@ -17,7 +17,7 @@
 package pages
 
 import models.submission.Submission
-import models.{Mode, NormalMode, UserAnswers}
+import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.SchemeService
@@ -37,7 +37,10 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
     }
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
-    navigateInNormalModeAA(answers, submission)
+    answers.get(HowMuchTaxReliefPage) match {
+      case Some(_) => isSchemePageValid(answers, submission, CheckMode)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override def navigateInNormalModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     answers.get(HowMuchTaxReliefPage) match {
@@ -74,7 +77,7 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
 
   private def whenMemberIsInCredit(mode: Mode, numberOfSchemes: Int) =
     if (numberOfSchemes == 1) {
-      controllers.routes.BankDetailsController.onPageLoad(mode)
+      controllers.routes.BavfRampOnController.rampOnBavf(mode)
     } else {
       controllers.routes.WhichPensionSchemeWillPayTaxReliefController.onPageLoad(mode)
     }

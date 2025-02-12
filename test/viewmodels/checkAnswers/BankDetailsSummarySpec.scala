@@ -36,7 +36,7 @@ class BankDetailsSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           BankDetailsPage,
-          models.BankDetails("Testuser One", "111111", "11111111")
+          models.BankDetails("Testuser One", "111111", "11111111", None)
         )
         .get
       BankDetailsSummary.row(userAnswers) shouldBe Some(
@@ -46,7 +46,7 @@ class BankDetailsSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.BankDetailsController.onPageLoad(CheckMode).url
+              routes.BavfRampOnController.rampOnBavf(CheckMode).url
             )
               .withVisuallyHiddenText("bankDetails.change.hidden")
           )

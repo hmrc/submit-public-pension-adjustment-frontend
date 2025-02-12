@@ -173,7 +173,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
 
       val result = service.buildBankAccountDetails(TestData.userAnswers3)
 
-      result mustBe Some(BankAccountDetails("TestFName TestLName", "012345", "12345678"))
+      result mustBe Some(BankAccountDetails("TestFName TestLName", "012345", "12345678", Some("1222")))
     }
 
     "buildDeclarations with StatusOfUserPage having no PowerOfAttorney, Deputyship and SchemeCreditConsent should return valid Declarations" in {

@@ -247,7 +247,9 @@ class SubmissionService @Inject() (submitBackendConnector: SubmitBackendConnecto
     }
 
   def buildBankAccountDetails(userAnswers: UserAnswers): Option[BankAccountDetails] =
-    userAnswers.get(BankDetailsPage).map(v => BankAccountDetails(v.accountName, v.sortCode, v.accountNumber))
+    userAnswers
+      .get(BankDetailsPage)
+      .map(v => BankAccountDetails(v.accountName, v.sortCode, v.accountNumber, v.rollNumber))
 
   def buildDeclarations(userAnswers: UserAnswers): Declarations =
     userAnswers.get(StatusOfUserPage) match {

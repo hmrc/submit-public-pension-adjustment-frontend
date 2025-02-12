@@ -44,7 +44,8 @@ trait ModelGenerators {
         accountName   <- arbitrary[String]
         sortCode      <- arbitrary[String]
         accountNumber <- arbitrary[String]
-      } yield BankDetails(accountName, sortCode, accountNumber)
+        rollNumber    <- arbitrary[Option[String]]
+      } yield BankDetails(accountName, sortCode, accountNumber, rollNumber)
     }
 
   implicit lazy val arbitraryWhenWillYouAskPensionSchemeToPay: Arbitrary[WhenWillYouAskPensionSchemeToPay] =

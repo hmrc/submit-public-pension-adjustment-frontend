@@ -32,7 +32,6 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(ConfirmEditAnswersPage.type, JsValue)] ::
       arbitrary[(ContinueChoicePage.type, JsValue)] ::
       arbitrary[(MemberDateOfDeathPage.type, JsValue)] ::
-      arbitrary[(BankDetailsPage.type, JsValue)] ::
       arbitrary[(HowMuchTaxReliefPage.type, JsValue)] ::
       arbitrary[(ClaimingHigherOrAdditionalTaxRateReliefPage.type, JsValue)] ::
       arbitrary[(StatusOfUserPage.type, JsValue)] ::

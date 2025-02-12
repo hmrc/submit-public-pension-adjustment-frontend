@@ -165,10 +165,8 @@ POST        /submission-service/date-of-death-someone-else                      
 GET         /submission-service/change-date-of-death-someone-else                                                       controllers.MemberDateOfDeathController.onPageLoad(mode: Mode = CheckMode)
 POST        /submission-service/change-date-of-death-someone-else                                                       controllers.MemberDateOfDeathController.onSubmit(mode: Mode = CheckMode)
 
-GET         /bank-details                                                                                               controllers.BankDetailsController.onPageLoad(mode: Mode = NormalMode)
-POST        /bank-details                                                                                               controllers.BankDetailsController.onSubmit(mode: Mode = NormalMode)
-GET         /change-bank-details                                                                                        controllers.BankDetailsController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-bank-details                                                                                        controllers.BankDetailsController.onSubmit(mode: Mode = CheckMode)
+GET         /bank-details                                                                                               controllers.BavfRampOnController.existingUrlFragmentBavfHandler(mode: Mode = NormalMode)
+GET         /change-bank-details                                                                                        controllers.BavfRampOnController.existingUrlFragmentBavfHandler(mode: Mode = CheckMode)
 
 GET         /check-your-answers                                                                                         controllers.CheckYourAnswersController.onPageLoad()
 GET         /submit-your-answers                                                                                        controllers.DeclarationsController.onSubmit()
@@ -201,6 +199,12 @@ POST       /submission-service/:period/scheme-election-consent                  
 
 GET        /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /submission-service/:period/change-scheme-election-consent                                                   controllers.SchemeElectionConsentController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /bavf-ramp-on/normal-mode                                                                     controllers.BavfRampOnController.rampOnBavf(mode: Mode = NormalMode)
+GET        /bavf-ramp-on/check-mode                                                                      controllers.BavfRampOnController.rampOnBavf(mode: Mode = CheckMode)
+
+GET        /bavf-landing/normal-mode/:id                                                                    controllers.BavfLandingController.redirectBavf(id: String, mode: Mode = NormalMode)
+GET        /bavf-landing/check-mode/:id                                                                      controllers.BavfLandingController.redirectBavf(id: String, mode: Mode = CheckMode)
 
 GET        /submission-in-progress                       controllers.SubmissionWaitingRoomController.onPageLoad()
 
