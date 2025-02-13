@@ -34,8 +34,8 @@ class BavfConfig @Inject() (
   val bavfWebBaseUrl: String = servicesConfig.baseUrl("bank-account-verification-frontend-web")
 
   val bavfApiBaseUrl: String = servicesConfig.baseUrl("bank-account-verification-frontend-api")
-  val startURL: String    = s"$bavfApiBaseUrl/api/v3/init"
-  val retrieveURL: String = s"$bavfApiBaseUrl/api/v3/complete"
+  val startURL: String       = s"$bavfApiBaseUrl/api/v3/init"
+  val retrieveURL: String    = s"$bavfApiBaseUrl/api/v3/complete"
 
   val signOutWithGuidance: String =
     frontendAppConfig.signOutWithGuidance
