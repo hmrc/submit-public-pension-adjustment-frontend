@@ -37,7 +37,7 @@ class BavfConnectorSpec extends SpecBase with WireMockHelper with Matchers {
 
   private def application: Application =
     new GuiceApplicationBuilder()
-      .configure("microservice.services.bank-account-verification-frontend-web.port" -> server.port)
+      .configure("microservice.services.bank-account-verification-frontend-api.port" -> server.port)
       .build()
 
   "initialiseJourney" - {
