@@ -23,7 +23,6 @@ import models.requests.{AddressLookupAddress, AddressLookupConfirmation, Address
 import org.scalatest.matchers.must.Matchers
 import play.api.Application
 import play.api.http.Status.ACCEPTED
-import play.api.i18n.Lang
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers.running
@@ -53,9 +52,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val request = FakeRequest("GET", "/url")
 
-        val lang = Lang("en")
-
-        val result = connector.initialiseJourney(request, true, "/some-redirectUrl")(hc, lang).futureValue
+        val result = connector.initialiseJourney(request, true, "/some-redirectUrl")(hc).futureValue
 
         result mustBe "/some-redirectUrl"
       }
@@ -74,9 +71,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val request = FakeRequest("GET", "/url")
 
-        val lang = Lang("en")
-
-        val result = connector.initialiseJourney(request, true, "/fail")(hc, lang).failed.futureValue
+        val result = connector.initialiseJourney(request, true, "/fail")(hc).failed.futureValue
 
         result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
@@ -95,9 +90,7 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val request = FakeRequest("GET", "/url")
 
-        val lang = Lang("en")
-
-        val result = connector.initialiseJourney(request, true, "/some-rediectUrl")(hc, lang).failed.futureValue
+        val result = connector.initialiseJourney(request, true, "/some-rediectUrl")(hc).failed.futureValue
 
         result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
