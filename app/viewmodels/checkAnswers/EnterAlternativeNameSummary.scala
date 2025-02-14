@@ -33,7 +33,6 @@ object EnterAlternativeNameSummary {
       if (isClaimOnBehalf(answers)) "enterAlternativeName.checkYourAnswersLabel.onBehalf"
       else "enterAlternativeName.checkYourAnswersLabel"
 
-
     answers.get(EnterAlternativeNamePage).map { answer =>
       val value = HtmlFormat.escape(answer).toString
       SummaryListRowViewModel(
