@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.ReformPensionSchemeReferencePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -43,7 +44,7 @@ class ReformPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
       ReformPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
         SummaryListRowViewModel(
           key = "reformPensionSchemeReference.checkYourAnswersLabel",
-          value = ValueViewModel(Text("AB123456123456").toString()),
+          value = ValueViewModel(HtmlContent("AB123456123456")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -65,7 +66,7 @@ class ReformPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
       ReformPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
         SummaryListRowViewModel(
           key = "reformPensionSchemeReference.checkYourAnswersLabel",
-          value = ValueViewModel(Text(messages("checkYourAnswers.notAnswered")).toString()),
+          value = ValueViewModel(HtmlContent(messages("checkYourAnswers.notAnswered"))),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
