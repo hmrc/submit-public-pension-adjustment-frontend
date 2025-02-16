@@ -31,6 +31,7 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, Upstream
 import javax.inject.Inject
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import scala.concurrent.{ExecutionContext, Future}
+import play.api.libs.ws.writeableOf_JsValue
 
 class BavfConnector @Inject() (httpClient: HttpClientV2, bavfConfig: BavfConfig, frontendAppConfig: FrontendAppConfig)
     extends Logging {
