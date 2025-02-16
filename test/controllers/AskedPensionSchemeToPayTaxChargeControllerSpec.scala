@@ -58,7 +58,10 @@ class AskedPensionSchemeToPayTaxChargeControllerSpec extends SpecBase with Mocki
         val view = application.injector.instanceOf[AskedPensionSchemeToPayTaxChargeView]
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2020)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2020)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
