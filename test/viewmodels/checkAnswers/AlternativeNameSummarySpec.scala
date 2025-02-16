@@ -70,7 +70,7 @@ class AlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      AlternativeNameSummary.row(userAnswers) `shouldBe`  Some(
+      AlternativeNameSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "alternativeName.checkYourAnswersLabel.onBehalf",
           value = ValueViewModel("site.yes"),

@@ -23,7 +23,6 @@ import models.submission.Submission
 import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, WhoWillPay}
 import org.scalatestplus.mockito.MockitoSugar.mock
 
-
 import java.time.LocalDate
 
 class ClaimOnBehalfPageSpec extends PageBehaviours {

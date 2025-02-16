@@ -56,7 +56,9 @@ class ConnectorFailureLoggerSpec extends AnyFreeSpec with Matchers with ScalaFut
 
         whenReady(loggedFuture.failed) { exception =>
           exception `mustBe` a[JsValidationException]
-          exception.getMessage `must` `include`("GET of 'http://test.url' returned invalid json. Attempting to convert to")
+          exception.getMessage `must` `include`(
+            "GET of 'http://test.url' returned invalid json. Attempting to convert to"
+          )
           exception.getMessage `must` `include`("SomeResponseType")
           exception.getMessage `must` `include`("gave errors: Invalid format")
         }
