@@ -214,7 +214,9 @@ class WhichPensionSchemeWillPayPageSpec extends PageBehaviours {
         val cleanedUserAnswers =
           WhichPensionSchemeWillPayPage(Period._2020).cleanup(Some("Cynllun pensiwn preifat"), ua).success.value
 
-        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) `mustBe` Some(PensionSchemeDetails("name", "pstr"))
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) `mustBe` Some(
+          PensionSchemeDetails("name", "pstr")
+        )
       }
     }
   }

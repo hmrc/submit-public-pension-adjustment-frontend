@@ -410,13 +410,13 @@ class AuthActionSpec extends SpecBase {
 
   private def whenRetrievalsAre(
     mockAuthConnector: AuthConnector,
-    retrievals: Option[String] ~ Option[AffinityGroup] ~ Some[User.type] ~
-      Option[ItmpName] ~ Option[String] ~ Option[LocalDate]
+    retrievals: Option[String] ~ Option[AffinityGroup] ~ Some[User.type] ~ Option[ItmpName] ~ Option[String] ~
+      Option[LocalDate]
   ) =
     when(
       mockAuthConnector.authorise[
-        Option[String] ~ Option[AffinityGroup] ~ Option[CredentialRole] ~
-          Option[ItmpName] ~ Option[String] ~ Option[LocalDate]
+        Option[String] ~ Option[AffinityGroup] ~ Option[CredentialRole] ~ Option[ItmpName] ~ Option[String] ~
+          Option[LocalDate]
       ](
         any(),
         any()

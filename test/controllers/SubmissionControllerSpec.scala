@@ -21,7 +21,7 @@ import config.FrontendAppConfig
 import connectors.SubmitBackendConnector
 import models.{Done, UserAnswers, UserSubmissionReference}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{verify, when, times}
+import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest

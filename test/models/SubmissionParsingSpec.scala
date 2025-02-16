@@ -35,8 +35,8 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
     "must parse a submission in alignment with calculate backend" in {
       val res: RetrieveSubmissionResponse = readRetrieveSubmissionResponse("test/resources/Submission.json")
 
-      res.calculationInputs.resubmission      must be(models.calculation.inputs.Resubmission(false, None))
-      res.calculationInputs.setup             must be(
+      res.calculationInputs.resubmission must be(models.calculation.inputs.Resubmission(false, None))
+      res.calculationInputs.setup        must be(
         models.calculation.inputs.Setup(
           Some(
             AnnualAllowanceSetup(
@@ -67,7 +67,7 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
           )
         )
       )
-      res.calculationInputs.annualAllowance   `must` `be`(
+      res.calculationInputs.annualAllowance `must` `be`(
         Some(
           AnnualAllowance(
             List(),
@@ -98,9 +98,9 @@ class SubmissionParsingSpec extends AnyFreeSpec with Matchers {
 
       val calculation = res.calculation.get
 
-      calculation.resubmission  `must` `be`(models.calculation.response.Resubmission(false, None))
-      calculation.totalAmounts  `must` `be`(TotalAmounts(13, 0, 0))
-      calculation.inDates.size  `must` `be`(0)
+      calculation.resubmission `must` `be`(models.calculation.response.Resubmission(false, None))
+      calculation.totalAmounts `must` `be`(TotalAmounts(13, 0, 0))
+      calculation.inDates.size `must` `be`(0)
       calculation.outDates.size `must` `be`(2)
     }
   }

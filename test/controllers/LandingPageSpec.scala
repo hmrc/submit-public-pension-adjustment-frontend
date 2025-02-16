@@ -112,7 +112,9 @@ class LandingPageSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) `mustEqual` BAD_REQUEST
-        contentAsString(result).contains("Please check that you have entered the correct web address.") `must` `be`(true)
+        contentAsString(result).contains("Please check that you have entered the correct web address.") `must` `be`(
+          true
+        )
       }
     }
   }
