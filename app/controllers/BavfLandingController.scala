@@ -49,10 +49,10 @@ class BavfLandingController @Inject() (
     andThen getData
     andThen requireCalculationData
     andThen requireData).async { implicit request =>
-    bavfHandlerFactory(id, request, mode)
+    bavfHandlerFactory(id, request)
   }
 
-  private def bavfHandlerFactory(id: String, request: DataRequest[AnyContent], mode: Mode)(implicit
+  private def bavfHandlerFactory(id: String, request: DataRequest[AnyContent])(implicit
     hc: HeaderCarrier
   ) =
     for {

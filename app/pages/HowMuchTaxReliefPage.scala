@@ -38,7 +38,7 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(HowMuchTaxReliefPage) match {
-      case Some(_) => isSchemePageValid(answers, submission, CheckMode)
+      case Some(_) => isSchemePageValid(submission, CheckMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
