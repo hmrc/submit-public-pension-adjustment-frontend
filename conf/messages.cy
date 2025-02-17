@@ -5,7 +5,7 @@ site.remove = Dileu
 site.change = Newid
 site.no = Na
 site.yes = Iawn
-site.continue.noSave = cy: Continue
+site.continue.noSave = Yn eich blaen
 site.continue = Cadw ac yn eich blaen
 site.agreeAndContinue = Cytuno ac yn eich blaen
 site.start = Dechrau nawr
@@ -61,10 +61,10 @@ checkYourAnswers.referenceDetails = Manylion cyfeirnod unigolyn ar gyfer cynllun
 
 journeyRecovery.continue.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.continue.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
-journeyRecovery.continue.guidance = cy: [Add content to explain how to proceed.]
+journeyRecovery.continue.guidance = [Ychwanegu cynnwys i egluro sut i symud ymlaen.]
 journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
-journeyRecovery.startAgain.guidance = cy: [Add content to explain why the user needs to start again.]
+journeyRecovery.startAgain.guidance = [Ychwanegu cynnwys i egluro pam mae angen i'r defnyddiwr ddechrau eto.]
 
 signedOut.title = Wedi allgofnodi
 signedOut.heading =  Wedi allgofnodi
@@ -729,11 +729,11 @@ submissionWaitingRoom.title = Cyflwyniad ar y gweill
 submissionWaitingRoom.heading = Cyflwyniad ar y gweill
 submissionWaitingRoom.message = Peidiwch â gadael y dudalen hon.
 
-viewYourLTAAnswers.title = cy: Review your lifetime allowance answers
-viewYourLTAAnswers.heading = cy: Review your lifetime allowance answers
-viewYourLTAAnswers.message1 = cy: To keep a record of this, you should
-viewYourLTAAnswers.message1.link = cy: print this page
-viewYourLTAAnswers.message2 = cy: You will not be able to do this after you submit your results.
+viewYourLTAAnswers.title = Adolygu eich atebion o ran lwfans oes
+viewYourLTAAnswers.heading = Adolygu eich atebion o ran lwfans oes
+viewYourLTAAnswers.message1 = I gadw cofnod o hyn, dylech
+viewYourLTAAnswers.message1.link = argraffu’r dudalen hon
+viewYourLTAAnswers.message2 = Ni fyddwch yn gallu gwneud hyn ar ôl cyflwyno’ch canlyniadau.
 
 addressLookup.claimOnBehalf.countryPicker.title = Dewiswch y wlad breswyl ar gyfer y person rydych yn ei gyflwyno ar ei ran
 addressLookup.claimOnBehalf.countryPicker.heading = Dewiswch y wlad breswyl ar gyfer y person rydych yn ei gyflwyno ar ei ran
