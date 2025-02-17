@@ -33,7 +33,7 @@ class StatusOfUserSpec extends AnyFreeSpec with Matchers with ScalaCheckProperty
       val gen = Gen.oneOf(StatusOfUser.values.toSeq)
 
       forAll(gen) { statusOfUser =>
-        JsString(statusOfUser.toString).validate[StatusOfUser].asOpt.value mustEqual statusOfUser
+        JsString(statusOfUser.toString).validate[StatusOfUser].asOpt.value `mustEqual` statusOfUser
       }
     }
 
@@ -42,7 +42,7 @@ class StatusOfUserSpec extends AnyFreeSpec with Matchers with ScalaCheckProperty
       val gen = arbitrary[String] suchThat (!StatusOfUser.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[StatusOfUser] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[StatusOfUser] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -51,7 +51,7 @@ class StatusOfUserSpec extends AnyFreeSpec with Matchers with ScalaCheckProperty
       val gen = Gen.oneOf(StatusOfUser.values.toSeq)
 
       forAll(gen) { statusOfUser =>
-        Json.toJson(statusOfUser) mustEqual JsString(statusOfUser.toString)
+        Json.toJson(statusOfUser) `mustEqual` JsString(statusOfUser.toString)
       }
     }
   }

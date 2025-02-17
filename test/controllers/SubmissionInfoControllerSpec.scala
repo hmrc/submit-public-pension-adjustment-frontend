@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.SubmissionInfoView
 
 class SubmissionInfoControllerSpec extends SpecBase {
@@ -40,8 +40,8 @@ class SubmissionInfoControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[SubmissionInfoView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view()(request, messages(application)).toString
       }
     }
 
@@ -54,8 +54,8 @@ class SubmissionInfoControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
   }

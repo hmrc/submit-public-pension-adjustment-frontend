@@ -36,7 +36,7 @@ class LTAChargeHowPaidSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
         JsString(lTAChargeHowPaid.toString)
           .validate[LTAChargeHowPaid]
           .asOpt
-          .value mustEqual lTAChargeHowPaid
+          .value `mustEqual` lTAChargeHowPaid
 
       }
     }
@@ -46,7 +46,7 @@ class LTAChargeHowPaidSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
       val gen = arbitrary[String] suchThat (!LTAChargeHowPaid.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[LTAChargeHowPaid] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[LTAChargeHowPaid] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -55,7 +55,7 @@ class LTAChargeHowPaidSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
       val gen = Gen.oneOf(LTAChargeHowPaid.values)
 
       forAll(gen) { lTAChargeHowPaid =>
-        Json.toJson(lTAChargeHowPaid) mustEqual JsString(lTAChargeHowPaid.toString)
+        Json.toJson(lTAChargeHowPaid) `mustEqual` JsString(lTAChargeHowPaid.toString)
       }
     }
   }

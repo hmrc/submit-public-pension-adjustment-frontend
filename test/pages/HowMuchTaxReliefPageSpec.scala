@@ -18,7 +18,7 @@ package pages
 
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs._
+import models.calculation.inputs.*
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{BankDetails, CheckMode, NormalMode}
@@ -200,8 +200,8 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           .value
 
         val cleanedUserAnswers = HowMuchTaxReliefPage.cleanup(Some(BigInt("100")), ua).success.value
-        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
-        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) `mustBe` None
+        cleanedUserAnswers.get(BankDetailsPage) `mustBe` None
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionWithMultipleSchemes).url
 
@@ -230,8 +230,8 @@ class HowMuchTaxReliefPageSpec extends PageBehaviours {
           .value
 
         val cleanedUserAnswers = HowMuchTaxReliefPage.cleanup(Some(BigInt("100")), ua).success.value
-        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) mustBe None
-        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayTaxReliefPage) `mustBe` None
+        cleanedUserAnswers.get(BankDetailsPage) `mustBe` None
 
         val result = HowMuchTaxReliefPage.navigate(CheckMode, ua, submissionInCreditWithOneScheme).url
 

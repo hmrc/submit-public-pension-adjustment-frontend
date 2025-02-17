@@ -18,10 +18,10 @@ package pages
 
 import models.calculation.inputs.Income.{AboveThreshold, BelowThreshold}
 import models.calculation.inputs.TaxYear2016To2023.{NormalTaxYear, PostFlexiblyAccessedTaxYear}
-import models.calculation.inputs._
+import models.calculation.inputs.*
 import models.calculation.response.{CalculationResponse, InDatesTaxYearSchemeCalculation, InDatesTaxYearsCalculation, OutOfDatesTaxYearSchemeCalculation, OutOfDatesTaxYearsCalculation, Period => responsePeriod, Resubmission => responseResubmission, TaxYearScheme, TotalAmounts}
 import models.finalsubmission.OnBehalfOfMemberType.PowerOfAttorney
-import models.finalsubmission._
+import models.finalsubmission.*
 import models.{InternationalAddress, PSTR, UkAddress, UserAnswers}
 import play.api.libs.json.{JsObject, Json}
 

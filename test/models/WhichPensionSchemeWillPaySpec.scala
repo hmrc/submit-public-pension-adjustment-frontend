@@ -35,7 +35,7 @@ class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with Scala
         JsString(whichPensionSchemeWillPay)
           .validate[String]
           .asOpt
-          .value mustEqual whichPensionSchemeWillPay
+          .value `mustEqual` whichPensionSchemeWillPay
       }
     }
 
@@ -44,7 +44,7 @@ class WhichPensionSchemeWillPaySpec extends AnyFreeSpec with Matchers with Scala
       val gen = Gen.oneOf(WhichPensionSchemeWillPay(Seq("Scheme1 / 00348916RT")).values.toSeq)
 
       forAll(gen) { whichPensionSchemeWillPay =>
-        Json.toJson(whichPensionSchemeWillPay) mustEqual JsString(whichPensionSchemeWillPay)
+        Json.toJson(whichPensionSchemeWillPay) `mustEqual` JsString(whichPensionSchemeWillPay)
       }
     }
   }

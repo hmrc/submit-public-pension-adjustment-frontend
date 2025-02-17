@@ -21,7 +21,7 @@ import models.calculation.response.CalculationResponse
 import models.submission.Submission
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 
 import scala.io.Source
 
@@ -43,9 +43,9 @@ class CalculationResultControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Calculation results") mustBe true
-        contentAsString(result).contains("6 April 2015 to 5 April 2019 does include compensation") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Calculation results") `mustBe` true
+        contentAsString(result).contains("6 April 2015 to 5 April 2019 does include compensation") `mustBe` true
       }
     }
   }

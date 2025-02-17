@@ -40,7 +40,7 @@ class UkAddressSpec extends SpecBase with Matchers {
 
       "four address lines are returned" in {
         val confirmation = addressLookupConfirmation(List("line1", "line2", "line3", "line4"))
-        UkAddress.apply(confirmation) mustBe UkAddress(
+        UkAddress.apply(confirmation) `mustBe` UkAddress(
           None,
           "line1",
           Some("line2"),
@@ -55,7 +55,7 @@ class UkAddressSpec extends SpecBase with Matchers {
       "three address lines are returned" in {
         val confirmation = addressLookupConfirmation(List("line1", "line2", "line3"))
         UkAddress
-          .apply(confirmation) mustBe UkAddress(
+          .apply(confirmation) `mustBe` UkAddress(
           None,
           "line1",
           Some("line2"),
@@ -69,7 +69,7 @@ class UkAddressSpec extends SpecBase with Matchers {
 
       "two address lines are returned" in {
         val confirmation = addressLookupConfirmation(List("line1", "line2"))
-        UkAddress.apply(confirmation) mustBe UkAddress(
+        UkAddress.apply(confirmation) `mustBe` UkAddress(
           None,
           "line1",
           None,
