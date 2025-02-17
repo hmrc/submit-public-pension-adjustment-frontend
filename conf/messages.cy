@@ -1,4 +1,4 @@
-service.name = Gwasanaeth Cyflwyno Addasiad Pensiwn Cyhoeddus
+service.name = Cyfrifwch eich addasiad i bensiwn gwasanaeth cyhoeddus
 
 site.back = Yn ôl
 site.remove = Dileu
