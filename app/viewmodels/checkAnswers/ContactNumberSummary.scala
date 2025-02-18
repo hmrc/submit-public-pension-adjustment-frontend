@@ -21,6 +21,7 @@ import models.{CheckMode, UserAnswers}
 import pages.ContactNumberPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
@@ -32,7 +33,7 @@ object ContactNumberSummary {
       val value = if (answer == "") messages("checkYourAnswers.notAnswered") else answer
       SummaryListRowViewModel(
         key = "contactNumber.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(value).toString),
+        value = ValueViewModel(HtmlContent(HtmlFormat.escape(value).toString)),
         actions = Seq(
           ActionItemViewModel("site.change", routes.ContactNumberController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("contactNumber.change.hidden"))
