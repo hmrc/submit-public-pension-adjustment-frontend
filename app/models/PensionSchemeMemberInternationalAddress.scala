@@ -16,6 +16,7 @@
 
 package models
 
+import play.api.libs.functional.syntax.*
 import play.api.libs.json.*
 
 case class PensionSchemeMemberInternationalAddress(
@@ -28,7 +29,13 @@ case class PensionSchemeMemberInternationalAddress(
 )
 
 object PensionSchemeMemberInternationalAddress {
-  implicit val format: OFormat[PensionSchemeMemberInternationalAddress] =
-    Json.format[PensionSchemeMemberInternationalAddress]
+  implicit val format: Format[PensionSchemeMemberInternationalAddress] = (
+    (__ \ "addressLine1").format[String] and
+      (__ \ "addressLine2").formatNullable[String] and
+      (__ \ "addressLine3").formatNullable[String] and
+      (__ \ "townOrCity").format[String] and
+      (__ \ "stateOrRegion").formatNullable[String] and
+      (__ \ "postCode").formatNullable[String]
+  )(PensionSchemeMemberInternationalAddress.apply, o => Tuple.fromProductTyped(o))
 
 }

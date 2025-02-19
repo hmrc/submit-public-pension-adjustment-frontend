@@ -16,6 +16,7 @@
 
 package models
 
+import play.api.libs.functional.syntax.*
 import play.api.libs.json.*
 
 case class SubmissionStartAuditEvent(
@@ -26,5 +27,9 @@ case class SubmissionStartAuditEvent(
 
 object SubmissionStartAuditEvent {
 
-  implicit lazy val formats: Format[SubmissionStartAuditEvent] = Json.format
+  implicit lazy val formats: Format[SubmissionStartAuditEvent] = (
+    (__ \ "uniqueId").format[String] and
+      (__ \ "userId").format[String] and
+      (__ \ "authenticated").format[Boolean]
+  )(SubmissionStartAuditEvent.apply, o => Tuple.fromProductTyped(o))
 }

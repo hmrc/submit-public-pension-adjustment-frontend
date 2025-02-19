@@ -16,7 +16,8 @@
 
 package models.requests
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{OFormat, __}
 
 case class AddressLookupConfirmation(
   auditRef: String,
@@ -35,5 +36,9 @@ case class AddressLookupConfirmation(
 }
 
 object AddressLookupConfirmation {
-  implicit val format: OFormat[AddressLookupConfirmation] = Json.format[AddressLookupConfirmation]
+  implicit val format: OFormat[AddressLookupConfirmation] = (
+    (__ \ "auditRef").format[String] and
+      (__ \ "id").formatNullable[String] and
+      (__ \ "address").format[AddressLookupAddress]
+  )(AddressLookupConfirmation.apply, o => Tuple.fromProductTyped(o))
 }
