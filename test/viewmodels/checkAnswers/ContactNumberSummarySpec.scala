@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.ContactNumberPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -44,7 +45,7 @@ class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
       ContactNumberSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "contactNumber.checkYourAnswersLabel",
-          value = ValueViewModel(Text("07777777777").toString()),
+          value = ValueViewModel(HtmlContent("07777777777")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -67,7 +68,7 @@ class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
       ContactNumberSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "contactNumber.checkYourAnswersLabel",
-          value = ValueViewModel(Messages("checkYourAnswers.notAnswered")),
+          value = ValueViewModel(HtmlContent("checkYourAnswers.notAnswered")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

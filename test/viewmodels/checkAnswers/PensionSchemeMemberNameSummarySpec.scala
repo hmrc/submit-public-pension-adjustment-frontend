@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.PensionSchemeMemberNamePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -44,7 +45,7 @@ class PensionSchemeMemberNameSummarySpec extends AnyFreeSpec with Matchers {
       PensionSchemeMemberNameSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberName.checkYourAnswersLabel",
-          value = ValueViewModel(Text("John Doe").toString()),
+          value = ValueViewModel(HtmlContent("John Doe")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
