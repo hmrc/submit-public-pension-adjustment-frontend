@@ -78,7 +78,7 @@ object TaxYear2016To2023 {
       (__ \ "incomeSubJourney").read[IncomeSubJourney] and
       (__ \ "income").readNullable[Income] and
       (__ \ "pensionInput2016PostAmount").readNullable[Int])(
-      TaxYear2016To2023.NormalTaxYear.apply _
+      TaxYear2016To2023.NormalTaxYear.apply
     )
 
     val initialReads: Reads[TaxYear2016To2023] = ((__ \ "definedBenefitInputAmount").read[Int] and
@@ -94,7 +94,7 @@ object TaxYear2016To2023 {
       (__ \ "definedBenefitInput2016PostAmount").readNullable[Int] and
       (__ \ "definedContributionInput2016PostAmount").readNullable[Int] and
       (__ \ "postAccessDefinedContributionInput2016PostAmount").readNullable[Int])(
-      TaxYear2016To2023.InitialFlexiblyAccessedTaxYear.apply _
+      TaxYear2016To2023.InitialFlexiblyAccessedTaxYear.apply
     )
 
     val postFlexiblyAccessedReads: Reads[TaxYear2016To2023] =
@@ -108,7 +108,7 @@ object TaxYear2016To2023 {
         (__ \ "income").readNullable[Income] and
         (__ \ "definedBenefitInput2016PostAmount").readNullable[Int] and
         (__ \ "definedContributionInput2016PostAmount").readNullable[Int])(
-        TaxYear2016To2023.PostFlexiblyAccessedTaxYear.apply _
+        TaxYear2016To2023.PostFlexiblyAccessedTaxYear.apply
       )
 
     (__ \ "period")

@@ -41,7 +41,7 @@ object TaxYear2011To2015 {
       (
         (__ \ "pensionInputAmount").read[Int] and
           (__ \ "period").read[Period]
-      )(TaxYear2011To2015.apply _)
+      )(TaxYear2011To2015.apply)
     }
   }
 

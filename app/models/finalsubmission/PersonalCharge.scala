@@ -22,5 +22,5 @@ case class PersonalCharge(amount: Int) {}
 
 object PersonalCharge {
 
-  implicit lazy val formats: Format[PersonalCharge] = Json.format
+  implicit lazy val formats: Format[PersonalCharge] = Json.format[PersonalCharge]
 }

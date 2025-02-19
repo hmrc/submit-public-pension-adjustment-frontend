@@ -43,7 +43,7 @@ object Submission {
         (__ \ "calculationInputs").read[CalculationInputs] and
         (__ \ "calculation").readNullable[CalculationResponse] and
         (__ \ "lastUpdated").read(MongoJavatimeFormats.instantFormat)
-    )(Submission.apply _)
+    )(Submission.apply)
 
   val writes: Writes[Submission] =
     (

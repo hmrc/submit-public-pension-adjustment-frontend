@@ -16,11 +16,15 @@
 
 package models.lta
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{Format, __}
 
 case class LTAProtection(protectionType: LTAProtectionType, protectionReference: String)
 
 object LTAProtection {
 
-  implicit lazy val format: Format[LTAProtection] = Json.format
+  implicit lazy val format: Format[LTAProtection] = (
+    (__ \ "protectionType").format[LTAProtectionType] and
+      (__ \ "protectionReference").format[String]
+  )(LTAProtection.apply, o => Tuple.fromProductTyped(o))
 }
