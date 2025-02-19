@@ -16,10 +16,14 @@
 
 package models
 
+import play.api.libs.functional.syntax.*
 import play.api.libs.json.*
 
 case class PensionSchemeDetails(pensionSchemeName: String, pensionSchemeTaxReference: String)
 
 object PensionSchemeDetails {
-  implicit val format: OFormat[PensionSchemeDetails] = Json.format[PensionSchemeDetails]
+  implicit val format: Format[PensionSchemeDetails] = (
+    (__ \ "pensionSchemeName").format[String] and
+      (__ \ "pensionSchemeTaxReference").format[String]
+  )(PensionSchemeDetails.apply, o => Tuple.fromProductTyped(o))
 }

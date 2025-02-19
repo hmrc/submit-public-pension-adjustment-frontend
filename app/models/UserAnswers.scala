@@ -75,7 +75,7 @@ object UserAnswers {
       (__ \ "_id").read[String] and
         (__ \ "data").read[JsObject] and
         (__ \ "lastUpdated").read(MongoJavatimeFormats.instantFormat)
-    )(UserAnswers.apply _)
+    )(UserAnswers.apply)
   }
 
   val writes: OWrites[UserAnswers] = {

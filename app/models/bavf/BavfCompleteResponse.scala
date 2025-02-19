@@ -16,8 +16,9 @@
 
 package models.bavf
 
+import play.api.libs.functional.syntax.*
 import models.Enumerable
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{OFormat, __}
 
 case class BavfCompleteResponse(
   accountType: String,
@@ -26,21 +27,30 @@ case class BavfCompleteResponse(
 )
 
 object BavfCompleteResponse {
-  implicit val bavfCompleteResponse: OFormat[BavfCompleteResponse] = Json.format[BavfCompleteResponse]
+  implicit val bavfCompleteResponse: OFormat[BavfCompleteResponse] = (
+    (__ \ "accountType").format[String] and
+      (__ \ "personal").formatNullable[BavfPersonalCompleteResponse] and
+      (__ \ "business").formatNullable[BavfBusinessCompleteResponse]
+  )(BavfCompleteResponse.apply, o => Tuple.fromProductTyped(o))
 }
 
 case class BavfCompleteResponseAddress(lines: List[String], town: Option[String], postcode: Option[String]) {}
 
 object BavfCompleteResponseAddress {
-  implicit val bavfCompleteResponseAddress: OFormat[BavfCompleteResponseAddress] =
-    Json.format[BavfCompleteResponseAddress]
+  implicit val bavfCompleteResponseAddress: OFormat[BavfCompleteResponseAddress] = (
+    (__ \ "lines").format[List[String]] and
+      (__ \ "town").formatNullable[String] and
+      (__ \ "postcode").formatNullable[String]
+  )(BavfCompleteResponseAddress.apply, o => Tuple.fromProductTyped(o))
 }
 
 case class BavfExtendedCompleteResponse(bavfCompleteResponse: BavfCompleteResponse, extraInformation: Option[String])
 
 object BavfExtendedCompleteResponse {
-  implicit val bavfExtendedCompleteResponse: OFormat[BavfExtendedCompleteResponse] =
-    Json.format[BavfExtendedCompleteResponse]
+  implicit val bavfExtendedCompleteResponse: OFormat[BavfExtendedCompleteResponse] = (
+    (__ \ "bavfCompleteResponse").format[BavfCompleteResponse] and
+      (__ \ "extraInformation").formatNullable[String]
+  )(BavfExtendedCompleteResponse.apply, o => Tuple.fromProductTyped(o))
 }
 case class BavfPersonalCompleteResponse(
   address: Option[BavfCompleteResponseAddress],
@@ -60,8 +70,22 @@ case class BavfPersonalCompleteResponse(
 )
 
 object BavfPersonalCompleteResponse {
-  implicit val bavfPersonalCompleteResponse: OFormat[BavfPersonalCompleteResponse] =
-    Json.format[BavfPersonalCompleteResponse]
+  implicit val bavfPersonalCompleteResponse: OFormat[BavfPersonalCompleteResponse] = (
+    (__ \ "address").formatNullable[BavfCompleteResponseAddress] and
+      (__ \ "accountName").format[String] and
+      (__ \ "sortCode").format[String] and
+      (__ \ "accountNumber").format[String] and
+      (__ \ "accountNumberIsWellFormatted").format[ReputationResponseEnum] and
+      (__ \ "rollNumber").formatNullable[String] and
+      (__ \ "accountExists").formatNullable[ReputationResponseEnum] and
+      (__ \ "nameMatches").formatNullable[ReputationResponseEnum] and
+      (__ \ "matchedAccountName").formatNullable[String] and
+      (__ \ "nonStandardAccountDetailsRequiredForBacs").formatNullable[ReputationResponseEnum] and
+      (__ \ "sortCodeBankName").formatNullable[String] and
+      (__ \ "sortCodeSupportsDirectDebit").formatNullable[ReputationResponseEnum] and
+      (__ \ "sortCodeSupportsDirectCredit").formatNullable[ReputationResponseEnum] and
+      (__ \ "iban").formatNullable[String]
+  )(BavfPersonalCompleteResponse.apply, o => Tuple.fromProductTyped(o))
 }
 
 case class BavfBusinessCompleteResponse(
@@ -82,8 +106,22 @@ case class BavfBusinessCompleteResponse(
 )
 
 object BavfBusinessCompleteResponse {
-  implicit val bavfBusinessCompleteResponse: OFormat[BavfBusinessCompleteResponse] =
-    Json.format[BavfBusinessCompleteResponse]
+  implicit val bavfBusinessCompleteResponse: OFormat[BavfBusinessCompleteResponse] = (
+    (__ \ "address").formatNullable[BavfCompleteResponseAddress] and
+      (__ \ "companyName").format[String] and
+      (__ \ "sortCode").format[String] and
+      (__ \ "accountNumber").format[String] and
+      (__ \ "rollNumber").formatNullable[String] and
+      (__ \ "accountNumberIsWellFormatted").format[ReputationResponseEnum] and
+      (__ \ "accountExists").formatNullable[ReputationResponseEnum] and
+      (__ \ "nameMatches").formatNullable[ReputationResponseEnum] and
+      (__ \ "matchedAccountName").formatNullable[String] and
+      (__ \ "nonStandardAccountDetailsRequiredForBacs").formatNullable[ReputationResponseEnum] and
+      (__ \ "sortCodeBankName").formatNullable[String] and
+      (__ \ "sortCodeSupportsDirectDebit").formatNullable[ReputationResponseEnum] and
+      (__ \ "sortCodeSupportsDirectCredit").formatNullable[ReputationResponseEnum] and
+      (__ \ "iban").formatNullable[String]
+  )(BavfBusinessCompleteResponse.apply, o => Tuple.fromProductTyped(o))
 }
 
 sealed trait ReputationResponseEnum
@@ -106,7 +144,7 @@ object ReputationResponseEnum extends Enumerable.Implicits {
     Seq(Yes, No, Partial, Indeterminate, Inapplicable, Error)
 
   implicit val enumerable: Enumerable[ReputationResponseEnum] =
-    Enumerable(values.map(v => v.toString -> v): _*)
+    Enumerable(values.map(v => v.toString -> v)*)
 }
 
 class WithName(string: String) {

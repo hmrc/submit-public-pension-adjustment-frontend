@@ -16,7 +16,8 @@
 
 package models.requests
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class AddressLookupAddress(
   organisation: Option[String],
@@ -26,11 +27,19 @@ case class AddressLookupAddress(
 )
 
 object AddressLookupAddress {
-  implicit val format: OFormat[AddressLookupAddress] = Json.format[AddressLookupAddress]
+  implicit lazy val format: Format[AddressLookupAddress] = (
+    (__ \ "organisation").formatNullable[String] and
+      (__ \ "lines").format[List[String]] and
+      (__ \ "postcode").formatNullable[String] and
+      (__ \ "country").format[AddressLookupCountry]
+  )(AddressLookupAddress.apply, o => Tuple.fromProductTyped(o))
 }
 
 case class AddressLookupCountry(code: String, name: String)
 
 object AddressLookupCountry {
-  implicit val format: OFormat[AddressLookupCountry] = Json.format[AddressLookupCountry]
+  implicit lazy val format: Format[AddressLookupCountry] = (
+    (__ \ "code").format[String] and
+      (__ \ "name").format[String]
+  )(AddressLookupCountry.apply, o => Tuple.fromProductTyped(o))
 }

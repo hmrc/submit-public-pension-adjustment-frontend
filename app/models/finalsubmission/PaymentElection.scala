@@ -16,8 +16,9 @@
 
 package models.finalsubmission
 
+import play.api.libs.functional.syntax.*
 import models.calculation.inputs.Period
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, __}
 
 case class PaymentElection(
   period: Period,
@@ -27,5 +28,9 @@ case class PaymentElection(
 
 object PaymentElection {
 
-  implicit lazy val formats: Format[PaymentElection] = Json.format
+  implicit lazy val formats: Format[PaymentElection] = (
+    (__ \ "period").format[Period] and
+      (__ \ "personalCharge").formatNullable[PersonalCharge] and
+      (__ \ "schemeCharge").formatNullable[SchemeCharge]
+  )(PaymentElection.apply, o => Tuple.fromProductTyped(o))
 }

@@ -16,7 +16,8 @@
 
 package models.bavf
 
-import play.api.libs.json.{JsObject, Json, OFormat}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{JsObject, OFormat, __}
 
 final case class BavfInitRequest(
   serviceIdentifier: String,
@@ -32,25 +33,47 @@ final case class BavfInitRequest(
 )
 
 object BavfInitRequest {
-  implicit val bavfInitRequest: OFormat[BavfInitRequest] = Json.format[BavfInitRequest]
+  implicit val bavfInitRequest: OFormat[BavfInitRequest] = (
+    (__ \ "serviceIdentifier").format[String] and
+      (__ \ "continueUrl").format[String] and
+      (__ \ "messages").formatNullable[BavfInitRequestMessages] and
+      (__ \ "customisationsUrl").formatNullable[String] and
+      (__ \ "prepopulatedData").formatNullable[InitRequestPrepopulatedData] and
+      (__ \ "address").formatNullable[BavfInitRequestAddress] and
+      (__ \ "timeoutConfig").formatNullable[InitRequestTimeoutConfig] and
+      (__ \ "signOutUrl").formatNullable[String] and
+      (__ \ "maxCallCount").formatNullable[Int] and
+      (__ \ "maxCallCountRedirectUrl").formatNullable[String]
+  )(BavfInitRequest.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class BavfInitRequestMessages(en: JsObject, cy: Option[JsObject] = None)
 
 object BavfInitRequestMessages {
-  implicit val bavfInitRequestMessages: OFormat[BavfInitRequestMessages] = Json.format[BavfInitRequestMessages]
+  implicit val bavfInitRequestMessages: OFormat[BavfInitRequestMessages] = (
+    (__ \ "en").format[JsObject] and
+      (__ \ "cy").formatNullable[JsObject]
+  )(BavfInitRequestMessages.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class BavfInitRequestAddress(lines: List[String], town: Option[String], postcode: Option[String])
 
 object BavfInitRequestAddress {
-  implicit val bavfInitRequestAddress: OFormat[BavfInitRequestAddress] = Json.format[BavfInitRequestAddress]
+  implicit val bavfInitRequestAddress: OFormat[BavfInitRequestAddress] = (
+    (__ \ "lines").format[List[String]] and
+      (__ \ "town").formatNullable[String] and
+      (__ \ "postcode").formatNullable[String]
+  )(BavfInitRequestAddress.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class InitRequestTimeoutConfig(timeoutUrl: String, timeoutAmount: Int, timeoutKeepAliveUrl: Option[String])
 
 object InitRequestTimeoutConfig {
-  implicit val initRequestTimeoutConfig: OFormat[InitRequestTimeoutConfig] = Json.format[InitRequestTimeoutConfig]
+  implicit val initRequestTimeoutConfig: OFormat[InitRequestTimeoutConfig] = (
+    (__ \ "timeoutUrl").format[String] and
+      (__ \ "timeoutAmount").format[Int] and
+      (__ \ "timeoutKeepAliveUrl").formatNullable[String]
+  )(InitRequestTimeoutConfig.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class InitRequestPrepopulatedData(
@@ -62,6 +85,11 @@ final case class InitRequestPrepopulatedData(
 )
 
 object InitRequestPrepopulatedData {
-  implicit val initRequestPrepopulatedData: OFormat[InitRequestPrepopulatedData] =
-    Json.format[InitRequestPrepopulatedData]
+  implicit val initRequestPrepopulatedData: OFormat[InitRequestPrepopulatedData] = (
+    (__ \ "accountType").formatNullable[String] and
+      (__ \ "name").formatNullable[String] and
+      (__ \ "sortCode").formatNullable[String] and
+      (__ \ "accountNumber").formatNullable[String] and
+      (__ \ "rollNumber").formatNullable[String]
+  )(InitRequestPrepopulatedData.apply, o => Tuple.fromProductTyped(o))
 }

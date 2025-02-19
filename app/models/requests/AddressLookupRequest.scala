@@ -16,7 +16,8 @@
 
 package models.requests
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Json, OFormat, __}
 
 final case class AddressLookupRequest(
   version: Int = 2,
@@ -25,7 +26,11 @@ final case class AddressLookupRequest(
 )
 
 object AddressLookupRequest {
-  implicit val addressLookupRequestFormat: OFormat[AddressLookupRequest] = Json.format[AddressLookupRequest]
+  implicit val addressLookupRequestFormat: OFormat[AddressLookupRequest] = (
+    (__ \ "version").format[Int] and
+      (__ \ "options").format[AddressLookupOptions] and
+      (__ \ "labels").formatNullable[Labels]
+  )(AddressLookupRequest.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class AddressLookupOptions(
@@ -47,7 +52,23 @@ final case class AddressLookupOptions(
 )
 
 object AddressLookupOptions {
-  implicit val format: OFormat[AddressLookupOptions] = Json.format
+  implicit val format: OFormat[AddressLookupOptions] = (
+    (__ \ "continueUrl").format[String] and
+      (__ \ "homeNavHref").format[String] and
+      (__ \ "signOutHref").formatNullable[String] and
+      (__ \ "accessibilityFooterUrl").formatNullable[String] and
+      (__ \ "deskProServiceName").formatNullable[String] and
+      (__ \ "showPhaseBanner").formatNullable[Boolean] and
+      (__ \ "phaseFeedbackLink").formatNullable[String] and
+      (__ \ "alphaPhase").formatNullable[Boolean] and
+      (__ \ "showBackButtons").formatNullable[Boolean] and
+      (__ \ "includeHMRCBranding").formatNullable[Boolean] and
+      (__ \ "disableTranslations").formatNullable[Boolean] and
+      (__ \ "ukMode").formatNullable[Boolean] and
+      (__ \ "selectPageConfig").formatNullable[SelectPageConfig] and
+      (__ \ "confirmPageConfig").formatNullable[ConfirmPageConfig] and
+      (__ \ "timeoutConfig").formatNullable[TimeoutConfig]
+  )(AddressLookupOptions.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class SelectPageConfig(proposalListLimit: Int)
@@ -63,7 +84,11 @@ final case class ConfirmPageConfig(
 )
 
 object ConfirmPageConfig {
-  implicit val confirmPageConfigFormat: OFormat[ConfirmPageConfig] = Json.format[ConfirmPageConfig]
+  implicit val confirmPageConfigFormat: OFormat[ConfirmPageConfig] = (
+    (__ \ "showChangeLink").formatNullable[Boolean] and
+      (__ \ "showSearchAgainLink").formatNullable[Boolean] and
+      (__ \ "showConfirmChangeText").formatNullable[Boolean]
+  )(ConfirmPageConfig.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class TimeoutConfig(
@@ -73,7 +98,11 @@ final case class TimeoutConfig(
 )
 
 object TimeoutConfig {
-  implicit val timeoutConfigFormat: OFormat[TimeoutConfig] = Json.format[TimeoutConfig]
+  implicit val timeoutConfigFormat: OFormat[TimeoutConfig] = (
+    (__ \ "timeoutAmount").format[Int] and
+      (__ \ "timeoutUrl").format[String] and
+      (__ \ "timeoutKeepAliveUrl").formatNullable[String]
+  )(TimeoutConfig.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class Labels(
@@ -82,7 +111,10 @@ final case class Labels(
 )
 
 object Labels {
-  implicit val LabelsFormat: OFormat[Labels] = Json.format[Labels]
+  implicit val LabelsFormat: OFormat[Labels] = (
+    (__ \ "en").formatNullable[PageLabels] and
+      (__ \ "cy").formatNullable[PageLabels]
+  )(Labels.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class PageLabels(
@@ -95,7 +127,14 @@ final case class PageLabels(
 )
 
 object PageLabels {
-  implicit val PageLabelsFormat: OFormat[PageLabels] = Json.format[PageLabels]
+  implicit val PageLabelsFormat: OFormat[PageLabels] = (
+    (__ \ "appLevelLabels").formatNullable[AppLevelLabels] and
+      (__ \ "countryPickerLabels").formatNullable[CountryPickerLabels] and
+      (__ \ "lookupPageLabels").formatNullable[LookupPageLabels] and
+      (__ \ "editPageLabels").formatNullable[EditPageLabels] and
+      (__ \ "selectPageLabels").formatNullable[SelectPageLabels] and
+      (__ \ "confirmPageLabels").formatNullable[ConfirmPageLabels]
+  )(PageLabels.apply, o => Tuple.fromProductTyped(o))
 }
 
 case class AppLevelLabels(
@@ -113,7 +152,11 @@ final case class CountryPickerLabels(
 )
 
 object CountryPickerLabels {
-  implicit val CountryPickerLabelsFormat: OFormat[CountryPickerLabels] = Json.format[CountryPickerLabels]
+  implicit val CountryPickerLabelsFormat: OFormat[CountryPickerLabels] = (
+    (__ \ "title").formatNullable[String] and
+      (__ \ "heading").formatNullable[String] and
+      (__ \ "countryLabel").formatNullable[String]
+  )(CountryPickerLabels.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class LookupPageLabels(
@@ -123,7 +166,11 @@ final case class LookupPageLabels(
 )
 
 object LookupPageLabels {
-  implicit val LookupPageLabelsFormat: OFormat[LookupPageLabels] = Json.format[LookupPageLabels]
+  implicit val LookupPageLabelsFormat: OFormat[LookupPageLabels] = (
+    (__ \ "title").formatNullable[String] and
+      (__ \ "heading").formatNullable[String] and
+      (__ \ "manualAddressLinkText").formatNullable[String]
+  )(LookupPageLabels.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class EditPageLabels(
@@ -132,7 +179,10 @@ final case class EditPageLabels(
 )
 
 object EditPageLabels {
-  implicit val EditPageLabelsFormat: OFormat[EditPageLabels] = Json.format[EditPageLabels]
+  implicit val EditPageLabelsFormat: OFormat[EditPageLabels] = (
+    (__ \ "title").formatNullable[String] and
+      (__ \ "heading").formatNullable[String]
+  )(EditPageLabels.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class SelectPageLabels(
@@ -142,7 +192,11 @@ final case class SelectPageLabels(
 )
 
 object SelectPageLabels {
-  implicit val SelectPageLabelsFormat: OFormat[SelectPageLabels] = Json.format[SelectPageLabels]
+  implicit val SelectPageLabelsFormat: OFormat[SelectPageLabels] = (
+    (__ \ "title").formatNullable[String] and
+      (__ \ "heading").formatNullable[String] and
+      (__ \ "editAddressLinkText").formatNullable[String]
+  )(SelectPageLabels.apply, o => Tuple.fromProductTyped(o))
 }
 
 final case class ConfirmPageLabels(
@@ -153,5 +207,10 @@ final case class ConfirmPageLabels(
 )
 
 object ConfirmPageLabels {
-  implicit val ConfirmPageLabelsFormat: OFormat[ConfirmPageLabels] = Json.format[ConfirmPageLabels]
+  implicit val ConfirmPageLabelsFormat: OFormat[ConfirmPageLabels] = (
+    (__ \ "title").formatNullable[String] and
+      (__ \ "heading").formatNullable[String] and
+      (__ \ "changeLinkText").formatNullable[String] and
+      (__ \ "submitLabel").formatNullable[String]
+  )(ConfirmPageLabels.apply, o => Tuple.fromProductTyped(o))
 }

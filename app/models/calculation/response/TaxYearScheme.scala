@@ -16,6 +16,7 @@
 
 package models.calculation.response
 
+import play.api.libs.functional.syntax.*
 import play.api.libs.json.*
 
 case class TaxYearScheme(
@@ -28,5 +29,11 @@ case class TaxYearScheme(
 
 object TaxYearScheme {
 
-  implicit lazy val formats: Format[TaxYearScheme] = Json.format
+  implicit lazy val formats: Format[TaxYearScheme] = (
+    (__ \ "name").format[String] and
+      (__ \ "pensionSchemeTaxReference").format[String] and
+      (__ \ "revisedPensionInputAmount").format[Int] and
+      (__ \ "chargePaidByScheme").format[Int] and
+      (__ \ "revisedPensionInput2016PostAmount").formatNullable[Int]
+  )(TaxYearScheme.apply, o => Tuple.fromProductTyped(o))
 }

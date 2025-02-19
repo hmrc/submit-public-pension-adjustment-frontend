@@ -16,11 +16,15 @@
 
 package models.finalsubmission
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class ClaimantDetails(claimantPersonalDetails: PersonalDetails, taxIdentifiers: TaxIdentifiers) {}
 
 object ClaimantDetails {
 
-  implicit lazy val formats: Format[ClaimantDetails] = Json.format
+  implicit lazy val formats: Format[ClaimantDetails] = (
+    (__ \ "claimantPersonalDetails").format[PersonalDetails] and
+      (__ \ "taxIdentifiers").format[TaxIdentifiers]
+  )(ClaimantDetails.apply, o => Tuple.fromProductTyped(o))
 }

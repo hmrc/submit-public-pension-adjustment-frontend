@@ -22,5 +22,5 @@ case class FinalSubmissionResponse(userSubmissionReference: String)
 
 object FinalSubmissionResponse {
 
-  implicit lazy val format: OFormat[FinalSubmissionResponse] = Json.format
+  implicit lazy val format: OFormat[FinalSubmissionResponse] = Json.format[FinalSubmissionResponse]
 }
