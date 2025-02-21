@@ -19,7 +19,7 @@ package controllers
 import connectors.AddressLookupConnector
 import controllers.actions.{CalculationDataRequiredAction, DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.requests.{AddressLookupConfirmation, DataRequest}
-import models.{CheckMode, InternationalAddress, Mode, NavigationState, RunThroughOnBehalfFlow, StatusOfUser, UkAddress, UserAnswers}
+import models.{InternationalAddress, Mode, NavigationState, RunThroughOnBehalfFlow, StatusOfUser, UkAddress, UserAnswers}
 import pages._
 import pages.navigationObjects.{ClaimOnBehalfPostALFNavigation, UserAddressPostALFNavigation}
 import play.api.i18n.I18nSupport

@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.StatusOfUserFormProvider
-import models.{CheckMode, Mode, NavigationState, RunThroughOnBehalfFlow, StatusOfUser}
+import models.{Mode, NavigationState}
 import pages.StatusOfUserPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

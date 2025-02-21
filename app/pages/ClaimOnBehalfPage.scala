@@ -21,7 +21,7 @@ import models.submission.Submission
 import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import services.{ClaimOnBehalfNavigationLogicService, PeriodService}
+import services.ClaimOnBehalfNavigationLogicService
 
 import scala.util.Try
 

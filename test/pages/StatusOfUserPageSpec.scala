@@ -17,7 +17,6 @@
 package pages
 
 import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
-import models.WhoWillPay.You
 import models.calculation.response.TaxYearScheme
 import models.submission.Submission
 import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, RunThroughOnBehalfFlow, StatusOfUser, WhenWillYouAskPensionSchemeToPay}

@@ -16,7 +16,7 @@
 
 package pages
 
-import models.StatusOfUser.{LegalPersonalRepresentative, PowerOfAttorney}
+import models.StatusOfUser.LegalPersonalRepresentative
 import models.submission.Submission
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
 import pages.navigationObjects.ClaimOnBehalfPostALFNavigation
