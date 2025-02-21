@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.WhichPensionSchemeWillPayTaxReliefFormProvider
 import models.{Mode, NavigationState}
 import pages.WhichPensionSchemeWillPayTaxReliefPage

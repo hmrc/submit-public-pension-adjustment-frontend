@@ -16,9 +16,7 @@
 
 package controllers
 
-import config.FrontendAppConfig
-import connectors.AddressLookupConnector
-import controllers.actions._
+import controllers.actions.*
 import forms.PensionSchemeMemberTaxReferenceFormProvider
 import models.Mode
 import pages.PensionSchemeMemberTaxReferencePage
@@ -39,11 +37,8 @@ class PensionSchemeMemberTaxReferenceController @Inject() (
   requireCalculationData: CalculationDataRequiredAction,
   requireData: DataRequiredAction,
   formProvider: PensionSchemeMemberTaxReferenceFormProvider,
-  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
-  addressLookupConnector: AddressLookupConnector,
-  view: PensionSchemeMemberTaxReferenceView,
-  frontendAppConfig: FrontendAppConfig
+  view: PensionSchemeMemberTaxReferenceView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {

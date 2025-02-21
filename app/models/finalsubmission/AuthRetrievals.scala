@@ -16,7 +16,8 @@
 
 package models.finalsubmission
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 import java.time.LocalDate
 
@@ -29,5 +30,10 @@ case class AuthRetrievals(
 
 object AuthRetrievals {
 
-  implicit lazy val formats: Format[AuthRetrievals] = Json.format
+  implicit lazy val format: Format[AuthRetrievals] = (
+    (__ \ "userId").format[String] and
+      (__ \ "name").format[String] and
+      (__ \ "saUtr").formatNullable[String] and
+      (__ \ "dob").formatNullable[LocalDate]
+  )(AuthRetrievals.apply, o => Tuple.fromProductTyped(o))
 }

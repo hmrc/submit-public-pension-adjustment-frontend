@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.StatusOfUserFormProvider
 import models.{CheckMode, Mode, NavigationState, RunThroughOnBehalfFlow, StatusOfUser}
 import pages.StatusOfUserPage

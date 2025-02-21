@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import mappers.CalculationResultsMapper
 import play.api.data.Form
 import play.api.data.Forms.ignored
