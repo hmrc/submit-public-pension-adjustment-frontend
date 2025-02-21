@@ -75,6 +75,7 @@ final case class SelectPageConfig(proposalListLimit: Int)
 
 object SelectPageConfig {
   implicit val selectPageConfigFormat: OFormat[SelectPageConfig] = Json.format[SelectPageConfig]
+
 }
 
 final case class ConfirmPageConfig(
