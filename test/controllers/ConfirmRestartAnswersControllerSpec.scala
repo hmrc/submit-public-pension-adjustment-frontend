@@ -17,16 +17,17 @@
 package controllers
 
 import base.SpecBase
+import connectors.SubmitBackendConnector
 import forms.ConfirmRestartAnswersFormProvider
 import models.Done
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import services.UserDataService
+import services.{CalculateBackendDataService, SubmissionDataService, UserDataService}
 import views.html.ConfirmRestartAnswersView
 
 import scala.concurrent.Future
@@ -78,6 +79,45 @@ class ConfirmRestartAnswersControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) `mustEqual` SEE_OTHER
         redirectLocation(result).value `mustEqual` controllers.routes.ContinueChoiceController.onPageLoad().url
+      }
+    }
+
+    "must clear repositories on submit" in {
+
+      val mockUserDataService = mock[UserDataService]
+      val mockSubmissionDataService = mock[SubmissionDataService]
+      val mockCalculateBackendDataService = mock[CalculateBackendDataService]
+      val mockSubmitBackendConnector = mock[SubmitBackendConnector]
+
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+      when(mockUserDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmissionDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockCalculateBackendDataService.clearSubmissionCalcBE()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) `thenReturn` Future.successful(Done)
+      when(mockCalculateBackendDataService.clearUserAnswersCalcBE()(any())) `thenReturn` Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers), Some(submission))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService),
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService),
+            bind[CalculateBackendDataService].toInstance(mockCalculateBackendDataService),
+            bind[SubmitBackendConnector].toInstance(mockSubmitBackendConnector))
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, confirmRestartAnswersRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) `mustEqual` SEE_OTHER
+        verify(mockUserDataService, times(1)).clear()(any())
+        verify(mockSubmissionDataService, times(1)).clear()(any())
+        verify(mockSubmitBackendConnector, times(1)).clearCalcUserAnswersSubmitBE()(any())
+        verify(mockCalculateBackendDataService, times(1)).clearSubmissionCalcBE()(any())
+        verify(mockCalculateBackendDataService, times(1)).clearUserAnswersCalcBE()(any())
+
       }
     }
 
