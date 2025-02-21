@@ -16,11 +16,14 @@
 
 package models.finalsubmission
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Format, __}
 
 case class FinalSubmissionResponse(userSubmissionReference: String)
 
 object FinalSubmissionResponse {
 
-  implicit lazy val format: OFormat[FinalSubmissionResponse] = Json.format[FinalSubmissionResponse]
+  implicit lazy val formats: Format[FinalSubmissionResponse] = Format(
+    (__ \ "userSubmissionReference").read[String].map(FinalSubmissionResponse(_)),
+    (__ \ "userSubmissionReference").write[String].contramap(_.userSubmissionReference)
+  )
 }

@@ -16,7 +16,7 @@
 
 package models
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, __}
 import play.api.mvc.PathBindable
 
 import scala.util.matching.Regex
@@ -25,7 +25,10 @@ case class PSTR(value: String)
 
 object PSTR {
 
-  implicit lazy val formats: Format[PSTR] = Json.format
+  implicit lazy val formats: Format[PSTR] = Format(
+    (__ \ "value").read[String].map(PSTR(_)),
+    (__ \ "value").write[String].contramap(_.value)
+  )
 
   val New: String = "Private pension scheme"
 
