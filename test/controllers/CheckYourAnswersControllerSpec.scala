@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import models.calculation.inputs.CalculationInputs
 import models.submission.Submission
-import models.{Done, NavigationState, PensionSchemeDetails, Period, UserAnswers, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
+import models.{Done, NavigationState, PensionSchemeDetails, Period, StatusOfUser, UserAnswers, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.mockito.MockitoSugar.mock
@@ -140,7 +140,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       }
     }
 
-    "must return OK and the correct view for a GET when user enters period based answers" in {
+    "must return OK and the correct view for a GET when user enters period based answers, no claim on behalf" in {
 
       val mockCalculationInputs     = mock[CalculationInputs]
       val mockUserDataService       = mock[UserDataService]
@@ -159,7 +159,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           Some(aCalculationResponseWithAnInDateDebitYear)
         )
 
-      val ua: UserAnswers = completeUserAnswers
+      val ua: UserAnswers = completeUserAnswersNoClaimOnBehalf
       val answersWithNav  = NavigationState.save(ua, NavigationState.checkYourAnswersUrl)
 
       val application =
@@ -177,7 +177,53 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val view = application.injector.instanceOf[CheckYourAnswersView]
 
-        val expectedSeq: Seq[SummaryListRow] = expectedSummaryRowsForCompleteAnswers(ua, application)
+        val expectedSeq: Seq[SummaryListRow] = expectedSummaryRowsForCompleteAnswersNoClaimOnBehalf(ua, application)
+
+        val list = SummaryListViewModel(expectedSeq)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(list, declarationRoute)(request, messages(application)).toString()
+      }
+    }
+
+    "must return OK and the correct view for a GET when user enters period based answers with claim on behalf" in {
+
+      val mockCalculationInputs     = mock[CalculationInputs]
+      val mockUserDataService       = mock[UserDataService]
+      val mockSubmissionDataService = mock[SubmissionDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      when(mockCalculationInputs.annualAllowance) thenReturn None
+      when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
+
+      val submission: Submission =
+        Submission(
+          "id",
+          "uniqueId",
+          mockCalculationInputs,
+          Some(aCalculationResponseWithAnInDateDebitYear)
+        )
+
+      val ua: UserAnswers = completeUserAnswersClaimOnBehalf
+      val answersWithNav  = NavigationState.save(ua, NavigationState.checkYourAnswersUrl)
+
+      val application =
+        applicationBuilder(userAnswers = Some(answersWithNav), submission = Some(submission))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService),
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, checkYourAnswerRoute)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[CheckYourAnswersView]
+
+        val expectedSeq: Seq[SummaryListRow] = expectedSummaryRowsForCompleteAnswersClaimOnBehalf(ua, application)
 
         val list = SummaryListViewModel(expectedSeq)
 
@@ -187,7 +233,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
     }
   }
 
-  private def expectedSummaryRowsForCompleteAnswers(ua: UserAnswers, application: Application) = {
+  private def expectedSummaryRowsForCompleteAnswersNoClaimOnBehalf(ua: UserAnswers, application: Application) = {
     val expectedSeq = Seq(
       ClaimOnBehalfSummary.row(ua)(messages(application)) ++
         PeriodDetailsSummary.row(Period._2020)(messages(application)) ++
@@ -209,7 +255,71 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
     expectedSeq
   }
 
-  private def completeUserAnswers = {
+  private def expectedSummaryRowsForCompleteAnswersClaimOnBehalf(ua: UserAnswers, application: Application) = {
+    val expectedSeq = Seq(
+      ClaimOnBehalfSummary.row(ua)(messages(application)) ++
+        StatusOfUserSummary.row(ua)(messages(application)) ++
+        PeriodDetailsSummary.row(Period._2020)(messages(application)) ++
+        WhoWillPaySummary.row(ua, Period._2020)(messages(application)) ++
+
+        PeriodDetailsSummary.row(Period._2021)(messages(application)) ++
+        WhoWillPaySummary.row(ua, Period._2021)(messages(application)) ++
+        WhichPensionSchemeWillPaySummary.row(ua, Period._2021)(messages(application)) ++
+        PensionSchemeDetailsSummary.row(ua, Period._2021)(messages(application)) ++
+        AskedPensionSchemeToPayTaxChargeSummary.row(ua, Period._2021)(messages(application)) ++
+        WhenDidYouAskPensionSchemeToPaySummary.row(ua, Period._2021)(messages(application)) ++
+
+        PeriodDetailsSummary.row(Period._2022)(messages(application)) ++
+        WhoWillPaySummary.row(ua, Period._2022)(messages(application)) ++
+        WhichPensionSchemeWillPaySummary.row(ua, Period._2022)(messages(application)) ++
+        AskedPensionSchemeToPayTaxChargeSummary.row(ua, Period._2022)(messages(application)) ++
+        WhenWillYouAskPensionSchemeToPaySummary.row(ua, Period._2022)(messages(application))
+    ).flatten
+    expectedSeq
+  }
+
+  private def completeUserAnswersClaimOnBehalf = {
+    val ua = UserAnswers(userAnswersId)
+      .set(ClaimOnBehalfPage, true)
+      .success
+      .value
+      .set(StatusOfUserPage, StatusOfUser.Deputyship)
+      .success
+      .value
+      .set(WhoWillPayPage(Period._2020), WhoWillPay.You)
+      .success
+      .value
+      .set(WhoWillPayPage(Period._2021), WhoWillPay.PensionScheme)
+      .success
+      .value
+      .set(WhichPensionSchemeWillPayPage(Period._2021), "Private pension scheme")
+      .success
+      .value
+      .set(PensionSchemeDetailsPage(Period._2021), PensionSchemeDetails("name", "pstr"))
+      .success
+      .value
+      .set(AskedPensionSchemeToPayTaxChargePage(Period._2021), true)
+      .success
+      .value
+      .set(WhenDidYouAskPensionSchemeToPayPage(Period._2021), LocalDate.of(2020, 1, 1))
+      .success
+      .value
+      .set(WhoWillPayPage(Period._2022), WhoWillPay.PensionScheme)
+      .success
+      .value
+      .set(WhichPensionSchemeWillPayPage(Period._2022), "Scheme1_PSTR")
+      .success
+      .value
+      .set(AskedPensionSchemeToPayTaxChargePage(Period._2022), false)
+      .success
+      .value
+      .set(WhenWillYouAskPensionSchemeToPayPage(Period._2022), WhenWillYouAskPensionSchemeToPay.OctToDec23)
+      .success
+      .value
+    ua
+  }
+
+  private def completeUserAnswersNoClaimOnBehalf = {
     val ua = UserAnswers(userAnswersId)
       .set(ClaimOnBehalfPage, false)
       .success

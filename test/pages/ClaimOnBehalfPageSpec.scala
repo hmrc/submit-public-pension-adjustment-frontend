@@ -492,13 +492,13 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
 
       val cleanedUserAnswers = ClaimOnBehalfPage.cleanup(Some(true), ua).success.value
 
-      cleanedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe None
-      cleanedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe None
-      cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) mustBe None
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2020)) mustBe Some(WhoWillPay.You)
+      cleanedUserAnswers.get(WhoWillPayPage(Period._2021)) mustBe Some(WhoWillPay.PensionScheme)
+      cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2021)) mustBe Some("Private pension scheme")
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2021)) mustBe Some(PensionSchemeDetails("name", "pstr"))
+      cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2021)) mustBe Some(true)
+      cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2021)) mustBe Some(LocalDate.of(2020, 1, 1))
+      cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2021)) mustBe Some(true)
 
     }
   }

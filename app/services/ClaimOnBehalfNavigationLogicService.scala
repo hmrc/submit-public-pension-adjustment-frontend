@@ -32,7 +32,7 @@ object ClaimOnBehalfNavigationLogicService {
     submission.calculation match {
       case Some(calculation) =>
         if (calculation.totalAmounts.inDatesDebit > 0) {
-          navigateWhenTotalAmountsHasInDateDebit(submission, mode)
+          navigateWhenTotalAmountsHasInDateDebit(submission, mode, answers)
         } else {
           if (mode == CheckMode) {
             routes.CheckYourAnswersController.onPageLoad()
@@ -43,10 +43,15 @@ object ClaimOnBehalfNavigationLogicService {
       case None              => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  private def navigateWhenTotalAmountsHasInDateDebit(submission: Submission, mode: Mode) = {
+  private def navigateWhenTotalAmountsHasInDateDebit(submission: Submission, mode: Mode, answers: UserAnswers) = {
     val maybePeriod = PeriodService.getFirstDebitPeriod(submission)
     maybePeriod match {
-      case Some(period) => routes.WhoWillPayController.onPageLoad(mode, period)
+      case Some(period) =>
+        answers.get(WhoWillPayPage(period)) match {
+          case Some(_) if mode == CheckMode =>
+            routes.CheckYourAnswersController.onPageLoad()
+          case _                            => routes.WhoWillPayController.onPageLoad(mode, period)
+        }
       case None         => routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
