@@ -17,12 +17,13 @@
 package it
 
 import base.SpecBase
-import com.github.tomakehurst.wiremock.client.WireMock._
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import connectors.{AddressLookupConnector, WireMockHelper}
 import models.requests.{AddressLookupAddress, AddressLookupConfirmation, AddressLookupCountry}
 import org.scalatest.matchers.must.Matchers
 import play.api.Application
 import play.api.http.Status.ACCEPTED
+import play.api.i18n.Lang
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers.running
@@ -93,6 +94,27 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
         val result = connector.initialiseJourney(request, true, "/some-rediectUrl")(hc).failed.futureValue
 
         result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
+      }
+    }
+
+    "must return a result when the server responds with Accepted in user address scenarios" in {
+      val app = application
+      running(app) {
+
+        val url       = "/api/init"
+        val connector = app.injector.instanceOf[AddressLookupConnector]
+        server.stubFor(
+          post(urlEqualTo(url))
+            .willReturn(aResponse.withStatus(ACCEPTED).withHeader("LOCATION", "/some-redirectUrl"))
+        )
+
+        val request = FakeRequest("GET", "/url")
+
+        val lang = Lang("en")
+
+        val result = connector.initialiseJourney(request, false, "/some-redirectUrl")(hc).futureValue
+
+        result mustBe "/some-redirectUrl"
       }
     }
   }
