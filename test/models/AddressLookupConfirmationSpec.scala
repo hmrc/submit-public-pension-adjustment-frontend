@@ -40,17 +40,17 @@ class AddressLookupConfirmationSpec extends SpecBase with Matchers {
 
       "four address lines are returned" in {
         val confirmation = addressLookupConfirmation(List("line1", "line2", "line3", "line4"))
-        confirmation.extractAddressLines() mustBe (("line1", Some("line2"), Some("line3"), "line4"))
+        confirmation.extractAddressLines() `mustBe` (("line1", Some("line2"), Some("line3"), "line4"))
       }
 
       "three address lines are returned" in {
         val confirmation = addressLookupConfirmation(List("line1", "line2", "line3"))
-        confirmation.extractAddressLines() mustBe (("line1", Some("line2"), None, "line3"))
+        confirmation.extractAddressLines() `mustBe` (("line1", Some("line2"), None, "line3"))
       }
 
       "two address lines are returned" in {
         val confirmation = addressLookupConfirmation(List("line1", "line2"))
-        confirmation.extractAddressLines() mustBe (("line1", None, None, "line2"))
+        confirmation.extractAddressLines() `mustBe` (("line1", None, None, "line2"))
       }
     }
   }

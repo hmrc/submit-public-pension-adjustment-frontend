@@ -16,11 +16,16 @@
 
 package models.finalsubmission
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class TaxIdentifiers(nino: Option[String], trn: Option[String], utr: Option[String]) {}
 
 object TaxIdentifiers {
 
-  implicit lazy val formats: Format[TaxIdentifiers] = Json.format
+  implicit lazy val formats: Format[TaxIdentifiers] = (
+    (__ \ "nino").formatNullable[String] and
+      (__ \ "trn").formatNullable[String] and
+      (__ \ "utr").formatNullable[String]
+  )(TaxIdentifiers.apply, o => Tuple.fromProductTyped(o))
 }

@@ -16,13 +16,17 @@
 
 package models.submission
 
+import play.api.libs.functional.syntax.*
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.CalculationResponse
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, __}
 
 case class RetrieveSubmissionResponse(calculationInputs: CalculationInputs, calculation: Option[CalculationResponse])
 
 object RetrieveSubmissionResponse {
 
-  implicit lazy val format: Format[RetrieveSubmissionResponse] = Json.format
+  implicit lazy val format: Format[RetrieveSubmissionResponse] = (
+    (__ \ "calculationInputs").format[CalculationInputs] and
+      (__ \ "calculation").formatNullable[CalculationResponse]
+  )(RetrieveSubmissionResponse.apply, o => Tuple.fromProductTyped(o))
 }

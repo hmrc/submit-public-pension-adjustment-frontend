@@ -43,7 +43,7 @@ class PensionSchemeMemberInternationalAddressSummarySpec extends AnyFreeSpec wit
         )
         .get
 
-      PensionSchemeMemberInternationalAddressSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberInternationalAddressSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberInternationalAddress.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("line1<br/>town<br/>France")),
@@ -60,7 +60,7 @@ class PensionSchemeMemberInternationalAddressSummarySpec extends AnyFreeSpec wit
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PensionSchemeMemberInternationalAddressSummary.row(userAnswers) shouldBe None
+      PensionSchemeMemberInternationalAddressSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

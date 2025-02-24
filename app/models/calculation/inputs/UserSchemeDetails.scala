@@ -16,10 +16,14 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
 
 case class UserSchemeDetails(name: String, taxRef: String)
 
 object UserSchemeDetails {
-  implicit val format: OFormat[UserSchemeDetails] = Json.format[UserSchemeDetails]
+  implicit val format: OFormat[UserSchemeDetails] = (
+    (__ \ "name").format[String] and
+      (__ \ "taxRef").format[String]
+  )(UserSchemeDetails.apply, o => Tuple.fromProductTyped(o))
 }

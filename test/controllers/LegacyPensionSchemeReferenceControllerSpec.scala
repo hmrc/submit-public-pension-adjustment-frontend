@@ -28,7 +28,7 @@ import pages.LegacyPensionSchemeReferencePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.LegacyPensionSchemeReferenceView
 
@@ -59,8 +59,8 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
 
         val view = application.injector.instanceOf[LegacyPensionSchemeReferenceView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, PSTR("12345678AB"), "")(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, PSTR("12345678AB"), "")(
           request,
           messages(application)
         ).toString
@@ -84,8 +84,8 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(Some("answer")), NormalMode, PSTR("12345678AB"), "")(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(Some("answer")), NormalMode, PSTR("12345678AB"), "")(
           request,
           messages(application)
         ).toString
@@ -96,7 +96,7 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val submission: Submission =
         submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
@@ -113,7 +113,7 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -126,8 +126,8 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -142,8 +142,8 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -156,8 +156,8 @@ class LegacyPensionSchemeReferenceControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
   }

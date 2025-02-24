@@ -34,13 +34,13 @@ class WhenWillYouAskPensionSchemeToPaySpec
 
     "must deserialise valid values" in {
 
-      val gen = Gen.oneOf(WhenWillYouAskPensionSchemeToPay.values.toSeq)
+      val gen = Gen.oneOf(WhenWillYouAskPensionSchemeToPay.values)
 
       forAll(gen) { whenWillYouAskPensionSchemeToPay =>
         JsString(whenWillYouAskPensionSchemeToPay.toString)
           .validate[WhenWillYouAskPensionSchemeToPay]
           .asOpt
-          .value mustEqual whenWillYouAskPensionSchemeToPay
+          .value `mustEqual` whenWillYouAskPensionSchemeToPay
       }
     }
 
@@ -49,16 +49,16 @@ class WhenWillYouAskPensionSchemeToPaySpec
       val gen = arbitrary[String] suchThat (!WhenWillYouAskPensionSchemeToPay.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[WhenWillYouAskPensionSchemeToPay] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[WhenWillYouAskPensionSchemeToPay] `mustEqual` JsError("error.invalid")
       }
     }
 
     "must serialise" in {
 
-      val gen = Gen.oneOf(WhenWillYouAskPensionSchemeToPay.values.toSeq)
+      val gen = Gen.oneOf(WhenWillYouAskPensionSchemeToPay.values)
 
       forAll(gen) { whenWillYouAskPensionSchemeToPay =>
-        Json.toJson(whenWillYouAskPensionSchemeToPay) mustEqual JsString(whenWillYouAskPensionSchemeToPay.toString)
+        Json.toJson(whenWillYouAskPensionSchemeToPay) `mustEqual` JsString(whenWillYouAskPensionSchemeToPay.toString)
       }
     }
   }

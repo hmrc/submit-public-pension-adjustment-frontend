@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.PensionSchemeDetailsFormProvider
 import models.{Mode, NavigationState, Period}
 import pages.PensionSchemeDetailsPage
