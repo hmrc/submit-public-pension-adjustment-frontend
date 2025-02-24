@@ -44,10 +44,10 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
   ".sendFinalSubmission" - {
 
     "must return OK when submission successful" in {
-      val url = s"/submit-public-pension-adjustment/final-submission"
-      val app = application
+      val url                  = s"/submit-public-pension-adjustment/final-submission"
+      val app                  = application
       val responseJson: String = Json.toJson(FinalSubmissionResponse("ref")).toString()
-      val submission = TestData.finalSubmission1
+      val submission           = TestData.finalSubmission1
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
 
@@ -63,8 +63,8 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
     }
 
     "must return an upstream error response when fail" in {
-      val url = s"/submit-public-pension-adjustment/final-submission"
-      val app = application
+      val url        = s"/submit-public-pension-adjustment/final-submission"
+      val app        = application
       val submission = TestData.finalSubmission1
       running(app) {
 
@@ -85,8 +85,8 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "must return true when the submission signal is successfully sent" in {
       val uniqueId = Some(UniqueId("SomeUniqueId"))
-      val url = s"/submit-public-pension-adjustment/submission-signal/${uniqueId.get.value}"
-      val app = application
+      val url      = s"/submit-public-pension-adjustment/submission-signal/${uniqueId.get.value}"
+      val app      = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
@@ -105,8 +105,8 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "Handle a not found exception" in {
       val uniqueId = Some(UniqueId("InvalidUniqueId"))
-      val url = s"/submit-public-pension-adjustment/submission-signal/${uniqueId.get.value}"
-      val app = application
+      val url      = s"/submit-public-pension-adjustment/submission-signal/${uniqueId.get.value}"
+      val app      = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
@@ -130,8 +130,8 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "must return true when the submission signal is successfully sent" in {
       val uniqueId = Some(UniqueId("SomeUniqueId"))
-      val url = s"/submit-public-pension-adjustment/calc-user-answers-signal/${uniqueId.get.value}"
-      val app = application
+      val url      = s"/submit-public-pension-adjustment/calc-user-answers-signal/${uniqueId.get.value}"
+      val app      = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
@@ -150,8 +150,8 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "Handle a not found exception" in {
       val uniqueId = Some(UniqueId("InvalidUniqueId"))
-      val url = s"/submit-public-pension-adjustment/calc-user-answers-signal/${uniqueId.get.value}"
-      val app = application
+      val url      = s"/submit-public-pension-adjustment/calc-user-answers-signal/${uniqueId.get.value}"
+      val app      = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
@@ -176,8 +176,8 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
     "must return Done when no content found" in {
 
       val uniqueId = Some(UniqueId("SomeUniqueId"))
-      val url = "/submit-public-pension-adjustment/calc-user-answers"
-      val app = application
+      val url      = "/submit-public-pension-adjustment/calc-user-answers"
+      val app      = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
@@ -193,12 +193,12 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         result `mustBe` Done
       }
     }
-    
+
     "must return an upstream error response when any other status" in {
 
       val uniqueId = Some(UniqueId("SomeUniqueId"))
-      val url = "/submit-public-pension-adjustment/calc-user-answers"
-      val app = application
+      val url      = "/submit-public-pension-adjustment/calc-user-answers"
+      val app      = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
@@ -210,10 +210,10 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         )
 
         val result = connector.clearCalcUserAnswersSubmitBE().failed.futureValue
-        
+
         result `mustBe` a[UpstreamErrorResponse]
       }
-      
+
     }
 
   }

@@ -84,10 +84,10 @@ class ConfirmRestartAnswersControllerSpec extends SpecBase with MockitoSugar {
 
     "must clear repositories on submit" in {
 
-      val mockUserDataService = mock[UserDataService]
-      val mockSubmissionDataService = mock[SubmissionDataService]
+      val mockUserDataService             = mock[UserDataService]
+      val mockSubmissionDataService       = mock[SubmissionDataService]
       val mockCalculateBackendDataService = mock[CalculateBackendDataService]
-      val mockSubmitBackendConnector = mock[SubmitBackendConnector]
+      val mockSubmitBackendConnector      = mock[SubmitBackendConnector]
 
       when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
       when(mockUserDataService.clear()(any())) `thenReturn` Future.successful(Done)
@@ -98,10 +98,12 @@ class ConfirmRestartAnswersControllerSpec extends SpecBase with MockitoSugar {
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), Some(submission))
-          .overrides(bind[UserDataService].toInstance(mockUserDataService),
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService),
             bind[SubmissionDataService].toInstance(mockSubmissionDataService),
             bind[CalculateBackendDataService].toInstance(mockCalculateBackendDataService),
-            bind[SubmitBackendConnector].toInstance(mockSubmitBackendConnector))
+            bind[SubmitBackendConnector].toInstance(mockSubmitBackendConnector)
+          )
           .build()
 
       running(application) {
