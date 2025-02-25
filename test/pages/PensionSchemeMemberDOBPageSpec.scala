@@ -211,7 +211,7 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
 
       }
 
-      "when status of user not legal representative must go to AA debit loop when has a debit and not answered debit loop" in {
+      "when status of user not legal representative must go to AA debit loop in normal mode when has a debit and not answered debit loop" in {
 
         val page = PensionSchemeMemberDOBPage
 
@@ -232,7 +232,7 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
 
         val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-        checkNavigation(nextPageUrl, "/submission-service/2020/change-who-will-pay-new-tax-charge")
+        checkNavigation(nextPageUrl, "/submission-service/2020/who-will-pay-new-tax-charge")
       }
 
       "when status of user not legal representative must go to CYA when has a debit and has answered debit loop" in {

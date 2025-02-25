@@ -19,7 +19,7 @@ package pages
 import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
 import models.calculation.response.TaxYearScheme
 import models.submission.Submission
-import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, RunThroughOnBehalfFlow, StatusOfUser, WhenWillYouAskPensionSchemeToPay}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, RunThroughOnBehalfFlow, StatusOfUser, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
 
 import java.time.LocalDate
 
@@ -136,7 +136,7 @@ class StatusOfUserPageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/submission-service/change-date-of-death-someone-else")
     }
 
-    "must redirect to AA Debit loop when deputyship, has debit submission and member date of death already defined" in {
+    "must redirect to AA Debit loop when deputyship in normal mode, has debit submission and member date of death already defined but no debit answers" in {
 
       val page = StatusOfUserPage
 
@@ -150,7 +150,27 @@ class StatusOfUserPageSpec extends PageBehaviours {
           .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
 
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
-      checkNavigation(nextPageUrl, "/submission-service/2020/change-who-will-pay-new-tax-charge")
+      checkNavigation(nextPageUrl, "/submission-service/2020/who-will-pay-new-tax-charge")
+    }
+
+    "must redirect to CYA when deputyship, has debit submission and member date of death already defined and has debit answers" in {
+
+      val page = StatusOfUserPage
+
+      val userAnswers = emptyUserAnswers
+        .set(page, Deputyship)
+        .success
+        .value
+        .set(WhoWillPayPage(Period._2020), WhoWillPay.You)
+        .success
+        .value
+
+      val submission: Submission =
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+          .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
+
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+      checkNavigation(nextPageUrl, "/check-your-answers")
     }
 
     "must redirect to JourneyRecoveryPage when not answered in check mode" in {

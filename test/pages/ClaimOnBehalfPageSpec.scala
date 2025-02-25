@@ -174,27 +174,6 @@ class ClaimOnBehalfPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/submission-service/change-authority-someone-else")
   }
 
-  "must redirect to who paid charge page when user selects no and user is in debit in check mode" in {
-
-    val page = ClaimOnBehalfPage
-
-    val userAnswers = emptyUserAnswers
-      .set(page, false)
-      .success
-      .value
-
-    val submission: Submission = Submission(
-      "id",
-      "submissionUniqueId",
-      mockCalculationInputsWithAA,
-      Some(aCalculationResponseWithAnInDateDebitYear)
-    )
-
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
-
-    checkNavigation(nextPageUrl, "/submission-service/2020/change-who-will-pay-new-tax-charge")
-  }
-
   "must redirect to check your answers page when user selects no and is in credit/direct comp/indirect comp " in {
 
     val page = ClaimOnBehalfPage

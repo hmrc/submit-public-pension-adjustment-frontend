@@ -19,7 +19,7 @@ package pages
 import models.calculation.inputs.{CalculationInputs, LifeTimeAllowance, Resubmission, Setup}
 import models.calculation.response.TaxYearScheme
 import models.submission.Submission
-import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, StatusOfUser}
+import models.{CheckMode, NormalMode, Period, RunThroughOnBehalfFlow, StatusOfUser, WhoWillPay}
 import org.mockito.MockitoSugar.mock
 import org.scalacheck.Arbitrary
 
@@ -103,7 +103,7 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/check-your-answers")
     }
 
-    "must redirect to AA Debit loop when user has not answered debit loop previously and has debit and not legal representative in check mode" in {
+    "must redirect to AA Debit loop when user has not answered debit loop previously and has debit and not legal representative in normal mode" in {
 
       val page = MemberDateOfDeathPage
 
@@ -119,7 +119,28 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-      checkNavigation(nextPageUrl, "/submission-service/2020/change-who-will-pay-new-tax-charge")
+      checkNavigation(nextPageUrl, "/submission-service/2020/who-will-pay-new-tax-charge")
+    }
+
+    "must redirect to CYA when user has answered debit loop previously and has debit and not legal representative in normal mode" in {
+
+      val page = MemberDateOfDeathPage
+
+      val userAnswers = emptyUserAnswers
+        .set(page, LocalDate.of(1995, 1, 1))
+        .get
+        .set(StatusOfUserPage, StatusOfUser.Deputyship)
+        .get
+        .set(WhoWillPayPage(Period._2020), WhoWillPay.You)
+        .get
+
+      val submission: Submission =
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+          .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
+
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers")
     }
   }
 
