@@ -195,8 +195,8 @@ legacyPensionSchemeReference.caption = Yn ymwneud â’r cynllun
 
 reformPensionSchemeReference.title = Beth yw cyfeirnod eich cynllun pensiwn unigol ôl-ddiwygio? (dewisol)
 reformPensionSchemeReference.heading = Beth yw cyfeirnod eich cynllun pensiwn unigol ôl-ddiwygio? (dewisol)
-reformPensionSchemeReference.hint1 = Mae cynlluniau pensiwn gwasanaeth cyhoeddus ôl-ddiwygio’n bensiynau o 2015 ymlaen. Nid yw hyn yr un peth â’ch Cyfeirnod Treth y Cynllun Pensiwn (PSTR).
-reformPensionSchemeReference.hint2 = Efallai y gwelwch hyn ar ddatganiad blynyddol eich cynllun pensiwn neu efallai y bydd angen i chi gysylltu â’ch cynllun pensiwn.
+reformPensionSchemeReference.message = Mae cynlluniau pensiwn gwasanaeth cyhoeddus ôl-ddiwygio’n bensiynau o 2015 ymlaen. Nid yw hyn yr un peth â’ch Cyfeirnod Treth y Cynllun Pensiwn (PSTR).
+reformPensionSchemeReference.hint = Efallai y gwelwch hyn ar ddatganiad blynyddol eich cynllun pensiwn neu efallai y bydd angen i chi gysylltu â’ch cynllun pensiwn.
 reformPensionSchemeReference.checkYourAnswersLabel = Beth yw cyfeirnod eich cynllun pensiwn unigol ôl-ddiwygio? (dewisol)
 reformPensionSchemeReference.error.length = Mae’n rhaid i gyfeirnod cynllun pensiwn unigol ôl-ddiwygio fod yn 15 o gymeriadau neu lai
 reformPensionSchemeReference.change.hidden = cyfeirnod eich cynllun pensiwn unigol ôl-ddiwygio (dewisol)
