@@ -382,8 +382,8 @@ upliftFailed.contact = Gallwch gysylltu â ni i gael mynediad at ein gwasanaetha
 upliftFailed.details = Fel arall, rhowch fanylion i ni o un neu ddau o’r mathau o dystiolaeth a restrir, a rhowch gynnig arall ar gadarnhau pwy ydych ar-lein.
 upliftFailed.support = Rydym hefyd yn cynnig cymorth technegol os nad yw eich manylion yn cyd-fynd â’n cofnodion.
 
-cannotUseServiceNotIndividual.title = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r manylion m
-cannotUseServiceNotIndividual.heading = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r manylion
+cannotUseServiceNotIndividual.title = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r manylion mewngofnodi hynny
+cannotUseServiceNotIndividual.heading = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r manylion mewngofnodi hynny
 cannotUseServiceNotIndividual.message1 = Rydych wedi mewngofnodi gan ddefnyddio Dynodydd Defnyddiwr (ID) asiant ar gyfer Porth y Llywodraeth. Er mwyn defnyddio’r gwasanaeth hwn, mae’n rhaid i chi greu Dynodydd Defnyddiwr (ID) ar gyfer Porth y Llywodraeth ar gyfer unigolyn
 cannotUseServiceNotIndividual.message2 = Gallwch
 cannotUseServiceNotIndividual.link = ddysgu rhagor am fewngofnodi i wasanaethau ar-lein CThEF
