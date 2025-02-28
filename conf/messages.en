@@ -382,10 +382,11 @@ upliftFailed.contact = You can contact us to access our services and speak to an
 upliftFailed.details = Alternatively, give us details from one or two of the evidence types listed, and try again to confirm your identity online.
 upliftFailed.support = We also offer technical support if your details do not match our records.
 
-cannotUseServiceNotIndividual.title = Cannot use submission service
-cannotUseServiceNotIndividual.heading = You cannot use the submission service with this account
-cannotUseServiceNotIndividual.message1 = Only individual user accounts can use the submission service. If you signed into the government gateway using an organisation or agent account, you must create a personal account instead.
-cannotUseServiceNotIndividual.link = More information about Government Gateway and creating account
+cannotUseServiceNotIndividual.title = You cannot use this service with those sign-in details
+cannotUseServiceNotIndividual.heading = You cannot use this service with those sign-in details
+cannotUseServiceNotIndividual.message1 = You signed in with an agent Government Gateway ID. To use this service, you must create an individual Government Gateway ID.
+cannotUseServiceNotIndividual.message2 = You can
+cannotUseServiceNotIndividual.link = learn more about signing in to HMRC online services.
 
 incompleteData.title = You did not complete a change you were making
 incompleteData.heading = You did not complete a change you were making
