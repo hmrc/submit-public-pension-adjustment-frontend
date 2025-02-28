@@ -19,19 +19,19 @@ package forms
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.i18n.Messages
+import views.helpers.ImplicitDateFormatter
 
-import java.time.format.DateTimeFormatter
 import java.time.{Clock, LocalDate}
 import javax.inject.Inject
 
-class MemberDateOfDeathFormProvider @Inject() (clock: Clock) extends Mappings {
+class MemberDateOfDeathFormProvider @Inject() (clock: Clock) extends Mappings with ImplicitDateFormatter {
 
   val max = LocalDate.now(clock)
   val min = LocalDate.now(clock).minusYears(130)
 
-  val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+  def apply()(implicit messages: Messages): Form[LocalDate] = {
 
-  def apply()(implicit messages: Messages): Form[LocalDate] =
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
     Form(
       "value" -> localDate(
         invalidKey = "memberDateOfDeath.error.invalid",
@@ -39,7 +39,8 @@ class MemberDateOfDeathFormProvider @Inject() (clock: Clock) extends Mappings {
         twoRequiredKey = "memberDateOfDeath.error.required.two",
         requiredKey = "memberDateOfDeath.error.required"
       )
-        .verifying(maxDate(max, "memberDateOfDeath.error.max", max.format(dateTimeFormat)))
-        .verifying(minDate(min, "memberDateOfDeath.error.min", min.format(dateTimeFormat)))
+        .verifying(maxDate(max, "memberDateOfDeath.error.max", dateToString(max, languageTag)))
+        .verifying(minDate(min, "memberDateOfDeath.error.min", dateToString(min, languageTag)))
     )
+  }
 }

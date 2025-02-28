@@ -19,19 +19,19 @@ package forms
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.i18n.Messages
+import views.helpers.ImplicitDateFormatter
 
-import java.time.format.DateTimeFormatter
 import java.time.{Clock, LocalDate}
 import javax.inject.Inject
 
-class PensionSchemeMemberDOBFormProvider @Inject() (clock: Clock) extends Mappings {
+class PensionSchemeMemberDOBFormProvider @Inject() (clock: Clock) extends Mappings with ImplicitDateFormatter {
 
   val max = LocalDate.now(clock)
   val min = LocalDate.now(clock).minusYears(130)
 
-  val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+  def apply()(implicit messages: Messages): Form[LocalDate] = {
 
-  def apply()(implicit messages: Messages): Form[LocalDate] =
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
     Form(
       "value" -> localDate(
         invalidKey = "pensionSchemeMemberDOB.error.invalid",
@@ -39,7 +39,8 @@ class PensionSchemeMemberDOBFormProvider @Inject() (clock: Clock) extends Mappin
         twoRequiredKey = "pensionSchemeMemberDOB.error.required.two",
         requiredKey = "pensionSchemeMemberDOB.error.required"
       )
-        .verifying(maxDate(max, "pensionSchemeMemberDOB.error.max", max.format(dateTimeFormat)))
-        .verifying(minDate(min, "pensionSchemeMemberDOB.error.min", min.format(dateTimeFormat)))
+        .verifying(maxDate(max, "pensionSchemeMemberDOB.error.max", dateToString(max, languageTag)))
+        .verifying(minDate(min, "pensionSchemeMemberDOB.error.min", dateToString(min, languageTag)))
     )
+  }
 }
