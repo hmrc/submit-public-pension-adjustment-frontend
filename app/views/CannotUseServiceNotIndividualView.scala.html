@@ -15,21 +15,21 @@
  *@
 
 @this(
-        layout: templates.Layout,
-        govukButton: GovukButton
+layout: templates.Layout,
+govukButton: GovukButton
 )
 
 @(unauthorisedSignOutUrl: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("cannotUseServiceNotIndividual.title")), showBackLink = false, signOutUrl = unauthorisedSignOutUrl) {
 
-    <h1 class="govuk-heading-xl">@messages("cannotUseServiceNotIndividual.heading")</h1>
+<h1 class="govuk-heading-xl">@messages("cannotUseServiceNotIndividual.heading")</h1>
 
-    <p class="govuk-body">@messages("cannotUseServiceNotIndividual.message1")</p>
+<p class="govuk-body">@messages("cannotUseServiceNotIndividual.message1")</p>
 
-
-     <a class="govuk-link" href="https://www.gov.uk/log-in-register-hmrc-online-services/register">
-      @messages("cannotUseServiceNotIndividual.link")
-     </a>
+<p class="govuk-body">@messages("cannotUseServiceNotIndividual.message2")
+ <a class="govuk-link" href="https://www.gov.uk/log-in-register-hmrc-online-services/register" rel="noreferrer noopener" target="_blank">
+  @messages("cannotUseServiceNotIndividual.link")
+ </a> </p>
 
 }
