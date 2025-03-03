@@ -17,9 +17,8 @@
 package controllers
 
 import controllers.actions.{DataRetrievalAction, IdentifierAction}
-import models.{NavigationState, SubmissionSaveAndReturnAuditEvent, UserAnswers}
+import models.{NavigationState, UserAnswers}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
@@ -28,18 +27,12 @@ import scala.concurrent.ExecutionContext
 class ContinueSessionController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
-  getData: DataRetrievalAction,
-  auditService: AuditService
+  getData: DataRetrievalAction
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController {
 
-  def continueSession: Action[AnyContent] = (identify andThen getData).async { implicit request =>
+  def continueSession: Action[AnyContent] = (identify andThen getData) { implicit request =>
     val userAnswers = request.userAnswers.getOrElse(UserAnswers(request.userId))
-    val uniqueId    = request.submission.map(_.uniqueId).getOrElse("Submission Not Found")
-    for {
-      _ <- auditService.auditSubmissionUserSelectionContinue(
-             SubmissionSaveAndReturnAuditEvent(true, uniqueId, request.userId)
-           )
-    } yield Redirect(NavigationState.getContinuationUrl(userAnswers))
+    Redirect(NavigationState.getContinuationUrl(userAnswers))
   }
 }

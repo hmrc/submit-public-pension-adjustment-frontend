@@ -18,11 +18,10 @@ package controllers
 
 import controllers.actions._
 import forms.ConfirmEditAnswersFormProvider
-import models.{NormalMode, SubmissionSaveAndReturnAuditEvent, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import pages.ConfirmEditAnswersPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ConfirmEditAnswersView
 
@@ -35,7 +34,6 @@ class ConfirmEditAnswersController @Inject() (
   getData: DataRetrievalAction,
   requireCalculationData: CalculationDataRequiredAction,
   formProvider: ConfirmEditAnswersFormProvider,
-  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: ConfirmEditAnswersView
 )(implicit ec: ExecutionContext)
@@ -61,13 +59,8 @@ class ConfirmEditAnswersController @Inject() (
           value => {
             val updateAnswersFuture = Future
               .fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmEditAnswersPage, value))
-            val auditFuture         = auditService.auditSubmissionUserSelectionEdit(
-              SubmissionSaveAndReturnAuditEvent(true, request.submission.uniqueId, request.userId)
-            )
-
             for {
               updatedAnswers <- updateAnswersFuture
-              _              <- auditFuture
             } yield Redirect(ConfirmEditAnswersPage.navigate(NormalMode, updatedAnswers))
           }
         )
