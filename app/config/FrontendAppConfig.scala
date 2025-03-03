@@ -79,16 +79,4 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val cacheTtl: Int = configuration.get[Int]("mongodb.timeToLiveInSeconds")
 
-  val submissionStartAuditEventName =
-    configuration.get[String]("auditing.submission-start-event-name")
-
-  val submissionUserSelectionContinueAuditEventName =
-    configuration.get[String]("auditing.submission-user-selection-continue-event-name")
-
-  val submissionUserSelectionEditAuditEventName =
-    configuration.get[String]("auditing.submission-user-selection-edit-event-name")
-
-  val submissionUserSelectionRestartAuditEventName =
-    configuration.get[String]("auditing.submission-user-selection-restart-event-name")
-
 }
