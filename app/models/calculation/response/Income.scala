@@ -16,7 +16,7 @@
 
 package models.calculation.response
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 sealed trait Income
 
@@ -28,7 +28,7 @@ object Income {
   implicit lazy val reads: Reads[Income] =
     (__ \ "incomeAboveThreshold").read[Boolean].flatMap {
       case true  =>
-        (__ \ "adjustedIncome").read[Int].map(Income.AboveThreshold)
+        (__ \ "adjustedIncome").read[Int].map(models.calculation.response.Income.AboveThreshold.apply)
       case false =>
         Reads(_ => JsSuccess(Income.BelowThreshold))
     }

@@ -16,11 +16,16 @@
 
 package models.lta
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class LTACharge(amount: Int, who: LTAChargeWhoPays, chargePaidByScheme: Option[LTAChargePaidByScheme])
 
 object LTACharge {
 
-  implicit lazy val format: Format[LTACharge] = Json.format
+  implicit lazy val format: Format[LTACharge] = (
+    (__ \ "amount").format[Int] and
+      (__ \ "who").format[LTAChargeWhoPays] and
+      (__ \ "chargePaidByScheme").formatNullable[LTAChargePaidByScheme]
+  )(LTACharge.apply, o => Tuple.fromProductTyped(o))
 }

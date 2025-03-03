@@ -107,7 +107,7 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val cleanedUserAnswers = StatusOfUserPage.cleanup(Some(PowerOfAttorney), ua).success.value
 
-    cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe None
+    cleanedUserAnswers.get(MemberDateOfDeathPage) `mustBe` None
 
   }
 
@@ -120,7 +120,7 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val cleanedUserAnswers = StatusOfUserPage.cleanup(Some(LegalPersonalRepresentative), ua).success.value
 
-    cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe Some(validDate)
+    cleanedUserAnswers.get(MemberDateOfDeathPage) `mustBe` Some(validDate)
 
   }
 
@@ -133,7 +133,7 @@ class StatusOfUserSpec extends PageBehaviours {
 
     val cleanedUserAnswers = StatusOfUserPage.cleanup(Some(Deputyship), ua).success.value
 
-    cleanedUserAnswers.get(MemberDateOfDeathPage) mustBe Some(validDate)
+    cleanedUserAnswers.get(MemberDateOfDeathPage) `mustBe` Some(validDate)
 
   }
 }

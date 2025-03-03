@@ -16,13 +16,19 @@
 
 package models
 
+import play.api.libs.functional.syntax.*
 import models.bavf.BavfCompleteResponse
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.*
 
 case class BankDetails(accountName: String, sortCode: String, accountNumber: String, rollNumber: Option[String])
 
 object BankDetails {
-  implicit val format: OFormat[BankDetails] = Json.format[BankDetails]
+  implicit val format: Format[BankDetails] = (
+    (__ \ "accountName").format[String] and
+      (__ \ "sortCode").format[String] and
+      (__ \ "accountNumber").format[String] and
+      (__ \ "rollNumber").formatNullable[String]
+  )(BankDetails.apply, o => Tuple.fromProductTyped(o))
 
   def apply(completeResponse: BavfCompleteResponse): BankDetails = {
     val personal = completeResponse.personal.get

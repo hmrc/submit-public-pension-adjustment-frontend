@@ -18,13 +18,13 @@ package services
 
 import connectors.SubmitBackendConnector
 import models.StatusOfUser.Deputyship
-import models.WhenWillYouAskPensionSchemeToPay._
+import models.WhenWillYouAskPensionSchemeToPay.*
 import models.WhoWillPay.{PensionScheme, You}
 import models.calculation.inputs.CalculationInputs
 import models.calculation.response.{CalculationResponse, Period}
-import models.finalsubmission._
+import models.finalsubmission.*
 import models.{PSTR, SchemeCreditConsent, StatusOfUser, UserAnswers}
-import pages._
+import pages.*
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendHeaderCarrierProvider

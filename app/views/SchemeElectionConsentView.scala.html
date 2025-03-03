@@ -20,7 +20,7 @@
         govukButton: GovukButton
 )
 
-@(mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(mode: Mode, period: Period)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("schemeElectionConsent.title"))) {
 

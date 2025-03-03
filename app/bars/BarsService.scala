@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package models
-
-import play.api.libs.json._
-
-case class PensionSchemeMemberInternationalAddress(
-  addressLine1: String,
-  addressLine2: Option[String],
-  addressLine3: Option[String],
-  townOrCity: String,
-  stateOrRegion: Option[String],
-  postCode: Option[String]
-)
-
-object PensionSchemeMemberInternationalAddress {
-  implicit val format: OFormat[PensionSchemeMemberInternationalAddress] =
-    Json.format[PensionSchemeMemberInternationalAddress]
-
-}

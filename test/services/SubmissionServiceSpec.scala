@@ -18,9 +18,11 @@ package services
 
 import base.SpecBase
 import connectors.SubmitBackendConnector
-import models.finalsubmission._
+import models.finalsubmission.*
 import models.{InternationalAddress, UkAddress}
-import org.mockito.{ArgumentMatchers, MockitoSugar}
+import org.mockito.ArgumentMatchers
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar
 import pages.TestData
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -46,7 +48,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
           ArgumentMatchers.eq(headerCarrier)
         )
       )
-        .thenReturn(Future.successful(finalSubmissionResponse))
+        .`thenReturn`(Future.successful(finalSubmissionResponse))
 
       val result = service.sendFinalSubmission(
         TestData.authRetrievals,
@@ -55,7 +57,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers1
       )(implicitly(headerCarrier))
 
-      result.futureValue mustBe finalSubmissionResponse
+      result.futureValue `mustBe` finalSubmissionResponse
     }
 
     "buildFinalSubmission with claimOnBehalf = false should return FinalSubmission for valid inputs" in {
@@ -67,7 +69,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers1
       )
 
-      result mustBe TestData.finalSubmission1
+      result `mustBe` TestData.finalSubmission1
     }
 
     "buildFinalSubmission with claimOnBehalf = true should return FinalSubmission for valid inputs" in {
@@ -79,7 +81,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers2
       )
 
-      result mustBe TestData.finalSubmission2
+      result `mustBe` TestData.finalSubmission2
     }
 
     "buildSubmissionInputs should return SubmissionInputs for valid inputs" in {
@@ -91,7 +93,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers1
       )
 
-      result mustBe TestData.finalSubmission1.submissionInputs
+      result `mustBe` TestData.finalSubmission1.submissionInputs
     }
 
     "buildPersonalDetails with claimOnBehalf = false should return PersonalDetails for valid inputs" in {
@@ -102,7 +104,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers1
       )
 
-      result mustBe PersonalDetails(
+      result `mustBe` PersonalDetails(
         "Test User",
         None,
         Some(LocalDate.of(1968, 11, 30)),
@@ -124,7 +126,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers2
       )
 
-      result mustBe PersonalDetails(
+      result `mustBe` PersonalDetails(
         "Test SchemeUser",
         Some("Duplicate Name"),
         Some(LocalDate.parse("1962-10-24")),
@@ -155,7 +157,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers1
       )
 
-      result mustBe TaxIdentifiers(Some("AA000000A"), None, Some("1234567890"))
+      result `mustBe` TaxIdentifiers(Some("AA000000A"), None, Some("1234567890"))
     }
 
     "buildTaxIdentifiers with claimOnBehalf = true should return TaxIdentifiers for valid inputs" in {
@@ -166,21 +168,21 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
         TestData.userAnswers2
       )
 
-      result mustBe TaxIdentifiers(Some("AB123456C"), None, Some("1234567890"))
+      result `mustBe` TaxIdentifiers(Some("AB123456C"), None, Some("1234567890"))
     }
 
     "buildBankAccountDetails should return BankAccountDetails for valid inputs" in {
 
       val result = service.buildBankAccountDetails(TestData.userAnswers3)
 
-      result mustBe Some(BankAccountDetails("TestFName TestLName", "012345", "12345678", Some("1222")))
+      result `mustBe` Some(BankAccountDetails("TestFName TestLName", "012345", "12345678", Some("1222")))
     }
 
     "buildDeclarations with StatusOfUserPage having no PowerOfAttorney, Deputyship and SchemeCreditConsent should return valid Declarations" in {
 
       val result = service.buildDeclarations(TestData.userAnswers1)
 
-      result mustBe Declarations(
+      result `mustBe` Declarations(
         compensation = true,
         tax = true,
         contactDetails = true,
@@ -195,7 +197,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
 
       val result = service.buildDeclarations(TestData.userAnswers2)
 
-      result mustBe Declarations(
+      result `mustBe` Declarations(
         compensation = true,
         tax = true,
         contactDetails = true,
@@ -210,7 +212,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
 
       val result = service.buildDeclarations(TestData.userAnswers3)
 
-      result mustBe Declarations(
+      result `mustBe` Declarations(
         compensation = true,
         tax = true,
         contactDetails = true,
@@ -225,7 +227,7 @@ class SubmissionServiceSpec extends SpecBase with MockitoSugar {
 
       val result = service.buildDeclarations(TestData.userAnswers4)
 
-      result mustBe Declarations(
+      result `mustBe` Declarations(
         compensation = true,
         tax = true,
         contactDetails = true,

@@ -36,7 +36,7 @@ class LTAChargeTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPropert
         JsString(lTAChargeType.toString)
           .validate[LTAChargeType]
           .asOpt
-          .value mustEqual lTAChargeType
+          .value `mustEqual` lTAChargeType
       }
     }
 
@@ -45,7 +45,7 @@ class LTAChargeTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPropert
       val gen = arbitrary[String] suchThat (!LTAChargeType.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[LTAChargeType] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[LTAChargeType] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -54,7 +54,7 @@ class LTAChargeTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPropert
       val gen = Gen.oneOf(LTAChargeType.values)
 
       forAll(gen) { lTAChargeType =>
-        Json.toJson(lTAChargeType) mustEqual JsString(lTAChargeType.toString)
+        Json.toJson(lTAChargeType) `mustEqual` JsString(lTAChargeType.toString)
       }
     }
   }

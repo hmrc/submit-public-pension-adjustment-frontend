@@ -16,7 +16,8 @@
 
 package models.finalsubmission
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 import java.time.LocalDate
 
@@ -29,5 +30,10 @@ case class OnBehalfOfMember(
 
 object OnBehalfOfMember {
 
-  implicit lazy val formats: Format[OnBehalfOfMember] = Json.format
+  implicit lazy val formats: Format[OnBehalfOfMember] = (
+    (__ \ "memberPersonalDetails").format[PersonalDetails] and
+      (__ \ "taxIdentifiers").format[TaxIdentifiers] and
+      (__ \ "dateOfDeath").formatNullable[LocalDate] and
+      (__ \ "memberType").format[OnBehalfOfMemberType]
+  )(OnBehalfOfMember.apply, o => Tuple.fromProductTyped(o))
 }
