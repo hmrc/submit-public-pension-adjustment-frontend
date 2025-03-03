@@ -20,11 +20,11 @@ import forms.behaviours.DateBehaviours
 import play.api.data.FormError
 import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
+import views.helpers.ImplicitDateFormatter
 
-import java.time.format.DateTimeFormatter
 import java.time.{Clock, LocalDate, ZoneId, ZoneOffset}
 
-class MemberDateOfDeathFormProviderSpec extends DateBehaviours {
+class MemberDateOfDeathFormProviderSpec extends DateBehaviours with ImplicitDateFormatter {
 
   private val fixedInstant                = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
   private val clock                       = Clock.fixed(fixedInstant, ZoneId.systemDefault)
@@ -32,9 +32,8 @@ class MemberDateOfDeathFormProviderSpec extends DateBehaviours {
 
   val form = new MemberDateOfDeathFormProvider(clock)()(messages)
 
-  private def dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
-  private val minDate       = LocalDate.now(clock).minusYears(130)
-  private val maxDate       = LocalDate.now(clock)
+  private val minDate = LocalDate.now(clock).minusYears(130)
+  private val maxDate = LocalDate.now(clock)
 
   ".value" - {
 
@@ -51,14 +50,14 @@ class MemberDateOfDeathFormProviderSpec extends DateBehaviours {
       form = form,
       key = "value",
       max = maxDate,
-      formError = FormError("value", "memberDateOfDeath.error.max", Seq(maxDate.format(dateFormatter)))
+      formError = FormError("value", "memberDateOfDeath.error.max", Seq(dateToString(maxDate, "en")))
     )
 
     behave like dateFieldWithMin(
       form = form,
       key = "value",
       min = minDate,
-      formError = FormError("value", "memberDateOfDeath.error.min", Seq(minDate.format(dateFormatter)))
+      formError = FormError("value", "memberDateOfDeath.error.min", Seq(dateToString(minDate, "en")))
     )
   }
 }
