@@ -16,9 +16,10 @@
 
 package pages
 
-import controllers.routes
-import models.StatusOfUser.{Deputyship, LegalPersonalRepresentative, PowerOfAttorney}
+import models.StatusOfUser.LegalPersonalRepresentative
+import models.submission.Submission
 import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, UserAnswers}
+import pages.navigationObjects.ClaimOnBehalfPostALFNavigation
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -30,23 +31,33 @@ case object PensionSchemeMemberDOBPage extends QuestionPage[LocalDate] {
 
   override def toString: String = "pensionSchemeMemberDOB"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(StatusOfUserPage) match {
-      case Some(status) if status == Deputyship || status == LegalPersonalRepresentative =>
+      case Some(LegalPersonalRepresentative) =>
         controllers.routes.MemberDateOfDeathController.onPageLoad(NormalMode)
-      case Some(PowerOfAttorney)                                                         => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
-      case _                                                                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_)                           => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(NormalMode)
+      case _                                 => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers, submission: Submission): Call =
     answers.get(RunThroughOnBehalfFlow()) match {
       case Some(true)     =>
         answers.get(StatusOfUserPage) match {
-          case Some(status) if status == Deputyship || status == LegalPersonalRepresentative =>
+          case Some(LegalPersonalRepresentative) =>
             controllers.routes.MemberDateOfDeathController.onPageLoad(CheckMode)
-          case Some(PowerOfAttorney)                                                         => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
-          case _                                                                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+          case Some(_)                           => controllers.routes.PensionSchemeMemberNinoController.onPageLoad(CheckMode)
+          case _                                 => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
-      case Some(_) | None => routes.CheckYourAnswersController.onPageLoad()
+      case Some(_) | None => noClaimOnBehalfRunThroughNavLogic(answers, submission)
+    }
+
+  private def noClaimOnBehalfRunThroughNavLogic(answers: UserAnswers, submission: Submission) =
+    answers.get(StatusOfUserPage) match {
+      case Some(LegalPersonalRepresentative) if answers.get(MemberDateOfDeathPage).isEmpty =>
+        controllers.routes.MemberDateOfDeathController.onPageLoad(CheckMode)
+      case Some(LegalPersonalRepresentative)                                               =>
+        controllers.routes.CheckYourAnswersController.onPageLoad()
+      case _                                                                               =>
+        ClaimOnBehalfPostALFNavigation.navigate(answers, submission, CheckMode)
     }
 }

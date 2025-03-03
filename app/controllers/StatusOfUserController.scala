@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.StatusOfUserFormProvider
-import models.{CheckMode, Mode, NavigationState, RunThroughOnBehalfFlow, StatusOfUser}
+import models.{Mode, NavigationState}
 import pages.StatusOfUserPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -61,22 +61,17 @@ class StatusOfUserController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value => {
-            val shouldRunThroughOnBehalfFlow = mode == CheckMode && value.equals(StatusOfUser.Deputyship) ||
-              value.equals(StatusOfUser.LegalPersonalRepresentative)
+          value =>
             for {
               updatedAnswers <- Future.fromTry(
                                   request.userAnswers
                                     .set(StatusOfUserPage, value)
-                                    .get
-                                    .set(RunThroughOnBehalfFlow(), shouldRunThroughOnBehalfFlow)
                                 )
               redirectUrl     =
-                StatusOfUserPage.navigate(mode, updatedAnswers).url
+                StatusOfUserPage.navigate(mode, updatedAnswers, request.submission).url
               answersWithNav  = NavigationState.save(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
-          }
         )
     }
 }
