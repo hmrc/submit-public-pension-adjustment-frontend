@@ -20,20 +20,19 @@ import forms.behaviours.DateBehaviours
 import play.api.data.FormError
 import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
+import views.helpers.ImplicitDateFormatter
 
-import java.time.format.DateTimeFormatter
 import java.time.{Clock, LocalDate, ZoneId}
 
-class PensionSchemeMemberDOBFormProviderSpec extends DateBehaviours {
+class PensionSchemeMemberDOBFormProviderSpec extends DateBehaviours with ImplicitDateFormatter {
 
   private val fixedInstant                = LocalDate.now.atStartOfDay(ZoneId.systemDefault).toInstant
   private val clock                       = Clock.fixed(fixedInstant, ZoneId.systemDefault)
   private implicit val messages: Messages = stubMessages()
 
-  val form                  = new PensionSchemeMemberDOBFormProvider(clock)()(messages)
-  private def dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
-  private val minDate       = LocalDate.now(clock).minusYears(130)
-  private val maxDate       = LocalDate.now(clock)
+  val form            = new PensionSchemeMemberDOBFormProvider(clock)()(messages)
+  private val minDate = LocalDate.now(clock).minusYears(130)
+  private val maxDate = LocalDate.now(clock)
 
   ".value" - {
 
@@ -47,14 +46,14 @@ class PensionSchemeMemberDOBFormProviderSpec extends DateBehaviours {
       form = form,
       key = "value",
       max = maxDate,
-      formError = FormError("value", "pensionSchemeMemberDOB.error.max", Seq(maxDate.format(dateFormatter)))
+      formError = FormError("value", "pensionSchemeMemberDOB.error.max", Seq(dateToString(maxDate, "en")))
     )
 
     behave like dateFieldWithMin(
       form = form,
       key = "value",
       min = minDate,
-      formError = FormError("value", "pensionSchemeMemberDOB.error.min", Seq(minDate.format(dateFormatter)))
+      formError = FormError("value", "pensionSchemeMemberDOB.error.min", Seq(dateToString(minDate, "en")))
     )
   }
 }
