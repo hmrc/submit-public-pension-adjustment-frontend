@@ -22,7 +22,7 @@ object AppDependencies {
   val test = Seq(
     "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % bootstrapPlay30Version % Test,
     "org.scalatest"          %% "scalatest"               % "3.2.10" % Test,
-    "org.scalacheck"         %% "scalacheck"              % "1.18.0",
+    "org.scalacheck"         %% "scalacheck"              % "1.18.0" % Test,
     "org.scalatestplus"      %% "scalacheck-1-17"         % "3.2.18.0" % Test,
     "org.scalatestplus"      %% "mockito-4-11"            % "3.2.17.0" % Test,
     "org.pegdown"             % "pegdown"                 % "1.6.0" % Test,
