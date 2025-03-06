@@ -22,15 +22,15 @@ import utils.CurrencyFormatter.currencyFormat
 class CurrencyFormatterSpec extends SpecBase {
 
   "must format string with exclusively digits correctly" in {
-    currencyFormat("123") mustBe "£123"
-    currencyFormat("123456") mustBe "£123,456"
-    currencyFormat("1234567") mustBe "£1,234,567"
-    currencyFormat("12345678") mustBe "£12,345,678"
-    currencyFormat("123456789") mustBe "£123,456,789"
+    currencyFormat("123") `mustBe` "£123"
+    currencyFormat("123456") `mustBe` "£123,456"
+    currencyFormat("1234567") `mustBe` "£1,234,567"
+    currencyFormat("12345678") `mustBe` "£12,345,678"
+    currencyFormat("123456789") `mustBe` "£123,456,789"
   }
 
   "must not format any other strings" in {
-    currencyFormat("notApplicable") mustBe "notApplicable"
-    currencyFormat("1two3") mustBe "1two3"
+    currencyFormat("notApplicable") `mustBe` "notApplicable"
+    currencyFormat("1two3") `mustBe` "1two3"
   }
 }

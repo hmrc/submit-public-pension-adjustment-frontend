@@ -43,7 +43,7 @@ class PensionSchemeMemberNinoSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      PensionSchemeMemberNinoSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberNinoSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberNino.checkYourAnswersLabel",
           value = ValueViewModel("AA123456A"),
@@ -60,7 +60,7 @@ class PensionSchemeMemberNinoSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PensionSchemeMemberNinoSummary.row(userAnswers) shouldBe None
+      PensionSchemeMemberNinoSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

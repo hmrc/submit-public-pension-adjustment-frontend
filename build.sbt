@@ -7,10 +7,10 @@ import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 lazy val appName: String = "submit-public-pension-adjustment-frontend"
 
-val scala2_13_12 = "2.13.12"
+val scala3_3_4 = "3.3.4"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := scala2_13_12
+ThisBuild / scalaVersion := scala3_3_4
 
 lazy val it = project
   .enablePlugins(PlayScala)
@@ -25,7 +25,7 @@ lazy val root = (project in file("."))
   .settings(majorVersion := 0)
   .settings(ThisBuild / useSuperShell := false)
   .settings(
-    scalaVersion := "2.13.12",
+    scalaVersion := "3.3.4",
     name := appName,
     RoutesKeys.routesImport ++= Seq(
       "models._",
@@ -44,16 +44,20 @@ lazy val root = (project in file("."))
       "viewmodels.govuk.all._"
     ),
     PlayKeys.playDefaultPort := 12805,
+    ScoverageKeys.coverageExcludedPackages := Seq("<empty>", "uk.gov.hmrc.BuildInfo", "Reverse.*",".*Routes.*",".*RoutesPrefix.*",".*GuiceInjector","$anon").mkString(","),
     ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*handlers.*;.*components.*;" +
       ".*Routes.*;.*viewmodels.govuk.*;",
     ScoverageKeys.coverageMinimumStmtTotal := 75,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
     scalacOptions ++= Seq(
-      "-feature",
-      "-rootdir",
+      "-Wconf:src=routes/.*:s",
+      "-Wconf:msg=unused.import&src=html/.*:s",
+      "-Wconf:msg=unused.explicit.parameter&src=html/.*:s",
+      "-Wconf:msg=unused.import&src=xml/.*:s",
+      "-Wconf:msg=Flag.*repeatedly:s",
       baseDirectory.value.getCanonicalPath,
-      "-Wconf:cat=deprecation:ws,cat=feature:ws,cat=optimizer:ws,src=target/.*:s",
+      "-feature",
       "-deprecation",
       "-Ypatmat-exhaust-depth",
       "off"

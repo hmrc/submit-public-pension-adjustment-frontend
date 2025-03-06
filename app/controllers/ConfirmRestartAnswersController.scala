@@ -17,7 +17,7 @@
 package controllers
 
 import connectors.SubmitBackendConnector
-import controllers.actions._
+import controllers.actions.*
 import forms.ConfirmRestartAnswersFormProvider
 import models.{NormalMode, SubmissionSaveAndReturnAuditEvent, UserAnswers}
 import pages.ConfirmRestartAnswersPage

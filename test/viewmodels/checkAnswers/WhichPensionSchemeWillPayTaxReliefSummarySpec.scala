@@ -39,7 +39,7 @@ class WhichPensionSchemeWillPayTaxReliefSummarySpec extends AnyFreeSpec with Mat
           "Scheme1 / 00348916RT"
         )
         .get
-      WhichPensionSchemeWillPayTaxReliefSummary.row(userAnswers) shouldBe Some(
+      WhichPensionSchemeWillPayTaxReliefSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whichPensionSchemeWillPayTaxRelief.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Scheme1 / 00348916RT")),
@@ -56,7 +56,7 @@ class WhichPensionSchemeWillPayTaxReliefSummarySpec extends AnyFreeSpec with Mat
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhichPensionSchemeWillPayTaxReliefSummary.row(userAnswers) shouldBe None
+      WhichPensionSchemeWillPayTaxReliefSummary.row(userAnswers) `shouldBe` None
     }
   }
 

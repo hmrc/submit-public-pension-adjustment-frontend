@@ -42,7 +42,7 @@ class EnterAlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
           "John Doe"
         )
         .get
-      EnterAlternativeNameSummary.row(userAnswers) shouldBe Some(
+      EnterAlternativeNameSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "enterAlternativeName.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("John Doe")),
@@ -71,7 +71,7 @@ class EnterAlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      EnterAlternativeNameSummary.row(userAnswers) shouldBe Some(
+      EnterAlternativeNameSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "enterAlternativeName.checkYourAnswersLabel.onBehalf",
           value = ValueViewModel(HtmlContent("John Doe")),
@@ -88,7 +88,7 @@ class EnterAlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      EnterAlternativeNameSummary.row(userAnswers) shouldBe None
+      EnterAlternativeNameSummary.row(userAnswers) `shouldBe` None
     }
 
   }

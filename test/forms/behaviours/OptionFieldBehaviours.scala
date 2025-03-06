@@ -27,8 +27,8 @@ class OptionFieldBehaviours extends FieldBehaviours {
       for (value <- validValues) {
 
         val result = form.bind(Map(fieldName -> value.toString)).apply(fieldName)
-        result.value.value mustEqual value.toString
-        result.errors mustBe empty
+        result.value.value `mustEqual` value.toString
+        result.errors `mustBe` empty
       }
     }
 
@@ -38,7 +38,7 @@ class OptionFieldBehaviours extends FieldBehaviours {
 
       forAll(generator -> "invalidValue") { value =>
         val result = form.bind(Map(fieldName -> value)).apply(fieldName)
-        result.errors must contain only invalidError
+        result.errors `must` `contain` only invalidError
       }
     }
   }

@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import models.{SubmissionSaveAndReturnAuditEvent, SubmissionStartAuditEvent}
 import org.apache.pekko.util.Timeout
-import org.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.await
@@ -62,7 +62,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             true
           )
 
-        await(service.auditSubmissionStart(submissionStartAuditEvent)(hc)) mustBe ()
+        await(service.auditSubmissionStart(submissionStartAuditEvent)(hc)) `mustBe` ()
       }
     }
 
@@ -78,7 +78,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             "userId"
           )
 
-        await(service.auditSubmissionUserSelectionContinue(submissionSaveAndReturnAuditEvent)(hc)) mustBe ()
+        await(service.auditSubmissionUserSelectionContinue(submissionSaveAndReturnAuditEvent)(hc)) `mustBe` ()
       }
     }
 
@@ -94,7 +94,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             "userId"
           )
 
-        await(service.auditSubmissionUserSelectionEdit(submissionSaveAndReturnAuditEvent)(hc)) mustBe ()
+        await(service.auditSubmissionUserSelectionEdit(submissionSaveAndReturnAuditEvent)(hc)) `mustBe` ()
       }
     }
 
@@ -110,7 +110,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             "userId"
           )
 
-        await(service.auditSubmissionUserSelectionRestart(submissionSaveAndReturnAuditEvent)(hc)) mustBe ()
+        await(service.auditSubmissionUserSelectionRestart(submissionSaveAndReturnAuditEvent)(hc)) `mustBe` ()
       }
     }
 

@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import config.FrontendAppConfig
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.CalculationPrerequisiteView
 
 class CalculationPrerequisiteControllerSpec extends SpecBase {
@@ -38,8 +38,8 @@ class CalculationPrerequisiteControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[CalculationPrerequisiteView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(appConfig.redirectToStartPage)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(appConfig.redirectToStartPage)(request, messages(application)).toString
       }
     }
   }

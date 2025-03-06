@@ -20,7 +20,7 @@ import models.WhoWillPay.You
 import models.calculation.inputs.CalculationInputs
 import models.submission.Submission
 import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar.mock
 
 import java.time.LocalDate
 
@@ -178,12 +178,12 @@ class WhoWillPayPageSpec extends PageBehaviours {
 
         val cleanedUserAnswers = WhoWillPayPage(Period._2020).cleanup(Some(You), ua).success.value
 
-        cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2020)) mustBe None
-        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) mustBe None
-        cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2020)) mustBe None
-        cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
-        cleanedUserAnswers.get(WhenWillYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
-        cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) mustBe None
+        cleanedUserAnswers.get(WhichPensionSchemeWillPayPage(Period._2020)) `mustBe` None
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020)) `mustBe` None
+        cleanedUserAnswers.get(AskedPensionSchemeToPayTaxChargePage(Period._2020)) `mustBe` None
+        cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) `mustBe` None
+        cleanedUserAnswers.get(WhenWillYouAskPensionSchemeToPayPage(Period._2020)) `mustBe` None
+        cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) `mustBe` None
       }
     }
   }

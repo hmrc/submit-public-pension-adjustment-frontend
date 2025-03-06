@@ -16,7 +16,8 @@
 
 package models
 
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
 
 case class SubmissionSaveAndReturnAuditEvent(
   authenticated: Boolean,
@@ -26,5 +27,9 @@ case class SubmissionSaveAndReturnAuditEvent(
 
 object SubmissionSaveAndReturnAuditEvent {
 
-  implicit lazy val formats: Format[SubmissionSaveAndReturnAuditEvent] = Json.format
+  implicit lazy val formats: Format[SubmissionSaveAndReturnAuditEvent] = (
+    (__ \ "authenticated").format[Boolean] and
+      (__ \ "uniqueId").format[String] and
+      (__ \ "userId").format[String]
+  )(SubmissionSaveAndReturnAuditEvent.apply, o => Tuple.fromProductTyped(o))
 }
