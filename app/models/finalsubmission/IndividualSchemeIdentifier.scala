@@ -28,8 +28,8 @@ case class IndividualSchemeIdentifier(
 object IndividualSchemeIdentifier {
 
   implicit lazy val formats: Format[IndividualSchemeIdentifier] = (
-    (__ \ "calculationInputs").format[SchemeDetails] and
-      (__ \ "calculation").formatNullable[String] and
-      (__ \ "submissionInputs").formatNullable[String]
+    (__ \ "relatedToScheme").format[SchemeDetails] and
+      (__ \ "legacyReference").formatNullable[String] and
+      (__ \ "reformReference").formatNullable[String]
   )(IndividualSchemeIdentifier.apply, o => Tuple.fromProductTyped(o))
 }
