@@ -66,15 +66,11 @@ journeyRecovery.startAgain.title = Sorry, there is a problem with the service
 journeyRecovery.startAgain.heading = Sorry, there is a problem with the service
 journeyRecovery.startAgain.guidance = [Add content to explain why the user needs to start again.]
 
-signedOut.title = Signed Out
-signedOut.heading = Signed Out
-signedOut.message1 = We have saved your progress
-signedOut.message2 = We will store your data for 270 days (9 months)
-signedOut.subHeading = How to continue your application
-signedOut.bullet1 = Go to the Gov.uk service page
-signedOut.bullet2 = Press the start now button
-signedOut.bullet3 = Sign in using Government Gateway ID
-signedOut.message3 = Alternatively, continue your application now.
+signedOut.title = You have been signed out
+signedOut.heading = You have been signed out
+signedOut.message1 = We have saved your progress and we will store your data for 270 days (9 months).
+signedOut.message2 = You can
+signedOut.link= sign into the service again using your Government Gateway ID.
 
 unauthorised.title = You cannot access this service with this account
 unauthorised.heading = You cannot access this service with this account
