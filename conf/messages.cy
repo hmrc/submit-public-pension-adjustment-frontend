@@ -66,15 +66,11 @@ journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gw
 journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.startAgain.guidance = [Ychwanegu cynnwys i egluro pam mae angen i'r defnyddiwr ddechrau eto.]
 
-signedOut.title = Wedi allgofnodi
-signedOut.heading =  Wedi allgofnodi
-signedOut.message1 = Rydym wedi cadw’ch cynnydd
-signedOut.message2 = Byddwn yn storio’ch data am 270 diwrnod (9 mis)
-signedOut.subHeading = Sut i fynd ymlaen â’ch cais
-signedOut.bullet1 = Ewch i dudalen gwasanaeth GOV.UK
-signedOut.bullet2 = Gwasgwch y botwm ‘Dechrau nawr’
-signedOut.bullet3 = Mewngofnodi gan ddefnyddio Dynodydd Defnyddiwr (ID) Porth y Llywodraeth
-signedOut.message3 = Fel arall, ewch ymlaen â’ch cais nawr.
+signedOut.title = Rydych wedi cael eich allgofnodi
+signedOut.heading = Rydych wedi cael eich allgofnodi
+signedOut.message1 = Rydym wedi cadw’ch cynnydd a byddwn yn cadw’ch data am 270 diwrnod (9 mis).
+signedOut.message2 = Gallwch
+signedOut.link= fewngofnodi i’r gwasanaeth eto gan ddefnyddio’ch Dynodydd Defnyddiwr (ID) ar gyfer Porth y Llywodraeth.
 
 unauthorised.title = Ni allwch gael mynediad at y gwasanaeth hwn gyda’r cyfrif hwn
 unauthorised.heading = Ni allwch gael mynediad at y gwasanaeth hwn gyda’r cyfrif hwn
