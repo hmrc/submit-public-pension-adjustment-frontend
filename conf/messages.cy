@@ -298,6 +298,8 @@ declarations.member.bullet4 = Efallai y byddaf yn wynebu erlyniad
 
 submission.title = Addasiad wedi’i anfon
 submission.heading = Addasiad wedi’i anfon
+submission.print.message = Gallwch gadw cofnod o’ch cyfeirnod cyflwyno, gan na fydd hwn yn cael ei anfon atoch dros e-bost. I wneud hyn, gallwch
+submission.print.link = argraffu’r dudalen hon
 submission.panel.message = Cyfeirnod cyflwyno:
 submission.message1 = Bydd manylion pob addasiad a gyflwynwyd yn cael eu gwirio a’u prosesu gan CThEF.
 submission.2015to2019.subheading = Addasiad lwfans blynyddol 2015 i 2019
