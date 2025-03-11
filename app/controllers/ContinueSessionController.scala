@@ -27,8 +27,7 @@ class ContinueSessionController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
   getData: DataRetrievalAction
-)
-    extends FrontendBaseController {
+) extends FrontendBaseController {
 
   def continueSession: Action[AnyContent] = (identify andThen getData) { implicit request =>
     val userAnswers = request.userAnswers.getOrElse(UserAnswers(request.userId))

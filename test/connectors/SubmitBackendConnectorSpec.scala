@@ -175,8 +175,8 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "must return Done when no content found" in {
 
-      val url      = "/submit-public-pension-adjustment/calc-user-answers"
-      val app      = application
+      val url = "/submit-public-pension-adjustment/calc-user-answers"
+      val app = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
@@ -195,8 +195,8 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "must return an upstream error response when any other status" in {
 
-      val url      = "/submit-public-pension-adjustment/calc-user-answers"
-      val app      = application
+      val url = "/submit-public-pension-adjustment/calc-user-answers"
+      val app = application
 
       running(app) {
         val connector = app.injector.instanceOf[SubmitBackendConnector]
