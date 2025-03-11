@@ -16,12 +16,19 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow}
+import models.calculation.inputs.{CalculationInputs, LifeTimeAllowance, Resubmission, Setup}
+import models.calculation.response.TaxYearScheme
+import models.submission.Submission
+import models.{CheckMode, NormalMode, Period, RunThroughOnBehalfFlow, StatusOfUser, WhoWillPay}
+import org.mockito.MockitoSugar.mock
 import org.scalacheck.Arbitrary
 
 import java.time.LocalDate
 
 class MemberDateOfDeathPageSpec extends PageBehaviours {
+
+  val mockCalculationInputsWithLTAOnly =
+    CalculationInputs(mock[Resubmission], mock[Setup], None, Some(mock[LifeTimeAllowance]))
 
   "MemberDateOfDeathPage" - {
 
@@ -45,7 +52,7 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
       .success
       .value
 
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/submission-service/national-insurance-number-someone-else")
 
@@ -57,7 +64,7 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
 
     val userAnswers = emptyUserAnswers
 
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/there-is-a-problem")
   }
@@ -73,20 +80,104 @@ class MemberDateOfDeathPageSpec extends PageBehaviours {
       .success
       .value
 
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/submission-service/change-national-insurance-number-someone-else")
 
   }
 
-  "must redirect to check your answers when RunThroughOnBehalfFlow is false or empty in check mode" in {
+  "when no run through claim on behalf" - {
+
+    "must redirect to CYA when status of user Legal Personal Rep in check mode" in {
+
+      val page = MemberDateOfDeathPage
+
+      val userAnswers = emptyUserAnswers
+        .set(page, LocalDate.of(1995, 1, 1))
+        .get
+        .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
+        .get
+
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers")
+    }
+
+    "must redirect to AA Debit loop when user has not answered debit loop previously and has debit and not legal representative in normal mode" in {
+
+      val page = MemberDateOfDeathPage
+
+      val userAnswers = emptyUserAnswers
+        .set(page, LocalDate.of(1995, 1, 1))
+        .get
+        .set(StatusOfUserPage, StatusOfUser.Deputyship)
+        .get
+
+      val submission: Submission =
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+          .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
+
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+      checkNavigation(nextPageUrl, "/submission-service/2020/who-will-pay-new-tax-charge")
+    }
+
+    "must redirect to CYA when user has answered debit loop previously and has debit and not legal representative in normal mode" in {
+
+      val page = MemberDateOfDeathPage
+
+      val userAnswers = emptyUserAnswers
+        .set(page, LocalDate.of(1995, 1, 1))
+        .get
+        .set(StatusOfUserPage, StatusOfUser.Deputyship)
+        .get
+        .set(WhoWillPayPage(Period._2020), WhoWillPay.You)
+        .get
+
+      val submission: Submission =
+        submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+          .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
+
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers")
+    }
+  }
+
+  "must redirect to CYA when user is legal representative with debit in check mode" in {
 
     val page = MemberDateOfDeathPage
 
     val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .get
+      .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
+      .get
 
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+    val submission: Submission =
+      submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+        .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
     checkNavigation(nextPageUrl, "/check-your-answers")
+  }
+
+  "must redirect to journey recover when no status of user" in {
+
+    val page = MemberDateOfDeathPage
+
+    val userAnswers = emptyUserAnswers
+      .set(page, LocalDate.of(1995, 1, 1))
+      .get
+
+    val submission: Submission =
+      submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+        .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
+
+    val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
+
   }
 }

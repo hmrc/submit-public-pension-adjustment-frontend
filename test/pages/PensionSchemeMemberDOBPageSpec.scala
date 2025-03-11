@@ -16,7 +16,9 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, RunThroughOnBehalfFlow, StatusOfUser}
+import models.calculation.response.TaxYearScheme
+import models.submission.Submission
+import models.{CheckMode, NormalMode, Period, RunThroughOnBehalfFlow, StatusOfUser, WhoWillPay}
 import org.scalacheck.Arbitrary
 
 import java.time.LocalDate
@@ -36,160 +38,229 @@ class PensionSchemeMemberDOBPageSpec extends PageBehaviours {
     beRemovable[LocalDate](PensionSchemeMemberDOBPage)
   }
 
-  "must redirect to Pension Scheme Members Nino page when user submits data and has selected power of attorney" in {
+  "normal mode" - {
 
-    val page = PensionSchemeMemberDOBPage
+    "must redirect to Pension Scheme Members Nino page when user submits data and has selected power of attorney" in {
 
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
-      .set(StatusOfUserPage, StatusOfUser.PowerOfAttorney)
-      .success
-      .value
+      val page = PensionSchemeMemberDOBPage
 
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+      val userAnswers = emptyUserAnswers
+        .set(page, LocalDate.of(1995, 1, 1))
+        .success
+        .value
+        .set(StatusOfUserPage, StatusOfUser.PowerOfAttorney)
+        .success
+        .value
 
-    checkNavigation(nextPageUrl, "/submission-service/national-insurance-number-someone-else")
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
 
+      checkNavigation(nextPageUrl, "/submission-service/national-insurance-number-someone-else")
+
+    }
+
+    "must redirect to Pension Scheme Members Nino page when user submits data and has selected deputyship" in {
+
+      val page = PensionSchemeMemberDOBPage
+
+      val userAnswers = emptyUserAnswers
+        .set(StatusOfUserPage, StatusOfUser.Deputyship)
+        .success
+        .value
+        .set(page, LocalDate.of(1995, 1, 1))
+        .success
+        .value
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+      checkNavigation(nextPageUrl, "/submission-service/national-insurance-number-someone-else")
+
+    }
+
+    "must redirect to member date of death page when user submits data and has selected legal personal representative" in {
+
+      val page = PensionSchemeMemberDOBPage
+
+      val userAnswers = emptyUserAnswers
+        .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
+        .success
+        .value
+        .set(page, LocalDate.of(1995, 1, 1))
+        .success
+        .value
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+      checkNavigation(nextPageUrl, "/submission-service/date-of-death-someone-else")
+
+    }
+
+    "must redirect to journey recovery when not answered" in {
+
+      val page = PensionSchemeMemberDOBPage
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers, submission).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 
-  "must redirect to Members Date of Death page when user submits data and has selected deputyship" in {
+  "check mode" - {
 
-    val page = PensionSchemeMemberDOBPage
+    "when run through on behalf flow" - {
+      "when status of user == legal personal representative, redirect to member date of death" in {
 
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
-      .set(StatusOfUserPage, StatusOfUser.Deputyship)
-      .success
-      .value
+        val page = PensionSchemeMemberDOBPage
 
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+        val userAnswers = emptyUserAnswers
+          .set(RunThroughOnBehalfFlow(), true)
+          .success
+          .value
+          .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
+          .success
+          .value
+          .set(page, LocalDate.of(1995, 1, 1))
+          .success
+          .value
 
-    checkNavigation(nextPageUrl, "/submission-service/date-of-death-someone-else")
-  }
+        val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-  "must redirect to Members Date of Death page when user submits data and has selected LegalPersonalRepresentative" in {
+        checkNavigation(nextPageUrl, "/submission-service/change-date-of-death-someone-else")
 
-    val page = PensionSchemeMemberDOBPage
+      }
 
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
-      .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
-      .success
-      .value
+      "when status of user NOT legal personal representative, redirect to member NINO page" in {
 
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+        val page = PensionSchemeMemberDOBPage
 
-    checkNavigation(nextPageUrl, "/submission-service/date-of-death-someone-else")
-  }
+        val userAnswers = emptyUserAnswers
+          .set(RunThroughOnBehalfFlow(), true)
+          .success
+          .value
+          .set(StatusOfUserPage, StatusOfUser.Deputyship)
+          .success
+          .value
+          .set(page, LocalDate.of(1995, 1, 1))
+          .success
+          .value
 
-  "must redirect to journey recovery when no answer for status of user page in normal mode" in {
+        val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-    val page = PensionSchemeMemberDOBPage
+        checkNavigation(nextPageUrl, "/submission-service/change-national-insurance-number-someone-else")
 
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
+      }
 
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+      "when no status of user, redirect to journey recovery" in {
 
-    checkNavigation(nextPageUrl, "/there-is-a-problem")
-  }
+        val page = PensionSchemeMemberDOBPage
 
-  "must redirect to Pension Scheme Members Nino page when user submits data in checkmode and has selected power of attorney" in {
+        val userAnswers = emptyUserAnswers
+          .set(RunThroughOnBehalfFlow(), true)
+          .success
+          .value
+          .set(page, LocalDate.of(1995, 1, 1))
+          .success
+          .value
 
-    val page = PensionSchemeMemberDOBPage
+        val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
-      .set(RunThroughOnBehalfFlow(), true)
-      .success
-      .value
-      .set(StatusOfUserPage, StatusOfUser.PowerOfAttorney)
-      .success
-      .value
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
 
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+      }
+    }
 
-    checkNavigation(nextPageUrl, "/submission-service/change-national-insurance-number-someone-else")
-  }
+    "noClaimOnBehalfRunThrough" - {
 
-  "must redirect to Members Date of Death page when user submits data in checkmode and has selected deputyship" in {
+      "when status of user == legal personal representative and member date of death not defined, redirect to member date of death" in {
 
-    val page = PensionSchemeMemberDOBPage
+        val page = PensionSchemeMemberDOBPage
 
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
-      .set(RunThroughOnBehalfFlow(), true)
-      .success
-      .value
-      .set(StatusOfUserPage, StatusOfUser.Deputyship)
-      .success
-      .value
+        val userAnswers = emptyUserAnswers
+          .set(page, LocalDate.of(1995, 1, 1))
+          .success
+          .value
+          .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
+          .success
+          .value
 
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+        val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-    checkNavigation(nextPageUrl, "/submission-service/change-date-of-death-someone-else")
-  }
+        checkNavigation(nextPageUrl, "/submission-service/change-date-of-death-someone-else")
 
-  "must redirect to Members Date of Death page when user submits data in checkmode and has selected LegalPersonalRepresentative" in {
+      }
 
-    val page = PensionSchemeMemberDOBPage
+      "when status of user == legal personal representative and member date of death is defined, redirect to CYA" in {
 
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
-      .set(RunThroughOnBehalfFlow(), true)
-      .success
-      .value
-      .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
-      .success
-      .value
+        val page = PensionSchemeMemberDOBPage
 
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+        val userAnswers = emptyUserAnswers
+          .set(page, LocalDate.of(1995, 1, 1))
+          .success
+          .value
+          .set(StatusOfUserPage, StatusOfUser.LegalPersonalRepresentative)
+          .success
+          .value
+          .set(MemberDateOfDeathPage, LocalDate.of(2020, 1, 1))
+          .success
+          .value
 
-    checkNavigation(nextPageUrl, "/submission-service/change-date-of-death-someone-else")
-  }
+        val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-  "must redirect to journey recovery when no answer for status of user page in check mode" in {
+        checkNavigation(nextPageUrl, "/check-your-answers")
 
-    val page = PensionSchemeMemberDOBPage
+      }
 
-    val userAnswers = emptyUserAnswers
-      .set(page, LocalDate.of(1995, 1, 1))
-      .success
-      .value
-      .set(RunThroughOnBehalfFlow(), true)
-      .success
-      .value
+      "when status of user not legal representative must go to AA debit loop in normal mode when has a debit and not answered debit loop" in {
 
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+        val page = PensionSchemeMemberDOBPage
 
-    checkNavigation(nextPageUrl, "/there-is-a-problem")
-  }
+        val userAnswers = emptyUserAnswers
+          .set(page, LocalDate.of(1995, 1, 1))
+          .success
+          .value
+          .set(StatusOfUserPage, StatusOfUser.Deputyship)
+          .success
+          .value
+          .set(MemberDateOfDeathPage, LocalDate.of(2020, 1, 1))
+          .success
+          .value
 
-  "must redirect to CYA when RunThroughOnBehalfFlow is false in check mode" in {
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+            .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
 
-    val page = PensionSchemeMemberDOBPage
+        val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
 
-    val userAnswers = emptyUserAnswers
-      .set(RunThroughOnBehalfFlow(), false)
-      .success
-      .value
+        checkNavigation(nextPageUrl, "/submission-service/2020/who-will-pay-new-tax-charge")
+      }
 
-    val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+      "when status of user not legal representative must go to CYA when has a debit and has answered debit loop" in {
 
-    checkNavigation(nextPageUrl, "/check-your-answers")
+        val page = PensionSchemeMemberDOBPage
+
+        val userAnswers = emptyUserAnswers
+          .set(page, LocalDate.of(1995, 1, 1))
+          .success
+          .value
+          .set(StatusOfUserPage, StatusOfUser.Deputyship)
+          .success
+          .value
+          .set(MemberDateOfDeathPage, LocalDate.of(2020, 1, 1))
+          .success
+          .value
+          .set(WhoWillPayPage(Period._2020), WhoWillPay.You)
+          .success
+          .value
+
+        val submission: Submission =
+          submissionRelatingToTaxYearSchemes(List(TaxYearScheme("scheme1", "12345678AB", 0, 0, None)))
+            .copy(calculation = Some(aCalculationResponseWithAnInDateDebitYear))
+
+        val nextPageUrl: String = page.navigate(CheckMode, userAnswers, submission).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers")
+      }
+    }
   }
 }

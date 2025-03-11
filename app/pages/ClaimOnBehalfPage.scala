@@ -21,7 +21,7 @@ import models.submission.Submission
 import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import services.{ClaimOnBehalfNavigationLogicService, PeriodService}
+import services.ClaimOnBehalfNavigationLogicService
 
 import scala.util.Try
 
@@ -61,18 +61,16 @@ case object ClaimOnBehalfPage extends QuestionPageWithLTAOnlyNavigation[Boolean]
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
-    val periodsToCleanup = PeriodService.allInDateRemedyPeriods
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
         case false =>
           onBehalfOfCleanup(userAnswers)
 
         case true =>
-          Try(ClaimOnBehalfNavigationLogicService.periodPageCleanup(userAnswers, periodsToCleanup))
+          super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
-  }
 
   private def onBehalfOfCleanup(userAnswers: UserAnswers) =
     userAnswers
