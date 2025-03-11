@@ -22,13 +22,12 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class ContinueSessionController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
   getData: DataRetrievalAction
-)(implicit ec: ExecutionContext)
+)
     extends FrontendBaseController {
 
   def continueSession: Action[AnyContent] = (identify andThen getData) { implicit request =>

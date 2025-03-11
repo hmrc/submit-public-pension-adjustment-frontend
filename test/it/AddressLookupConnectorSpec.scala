@@ -110,8 +110,6 @@ class AddressLookupConnectorSpec extends SpecBase with WireMockHelper with Match
 
         val request = FakeRequest("GET", "/url")
 
-        val lang = Lang("en")
-
         val result = connector.initialiseJourney(request, false, "/some-redirectUrl")(hc).futureValue
 
         result mustBe "/some-redirectUrl"

@@ -175,7 +175,6 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "must return Done when no content found" in {
 
-      val uniqueId = Some(UniqueId("SomeUniqueId"))
       val url      = "/submit-public-pension-adjustment/calc-user-answers"
       val app      = application
 
@@ -196,7 +195,6 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
     "must return an upstream error response when any other status" in {
 
-      val uniqueId = Some(UniqueId("SomeUniqueId"))
       val url      = "/submit-public-pension-adjustment/calc-user-answers"
       val app      = application
 
