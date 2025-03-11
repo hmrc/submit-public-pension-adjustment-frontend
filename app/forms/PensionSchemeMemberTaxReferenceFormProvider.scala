@@ -30,9 +30,9 @@ class PensionSchemeMemberTaxReferenceFormProvider @Inject() extends Mappings {
         text()
           .verifying(
             firstError(
-              maxLength(10, "pensionSchemeMemberTaxReference.error.length"),
+              twoValuesExactLength(10, 13, "pensionSchemeMemberTaxReference.error.length"),
               regexp(
-                """^(?!1234567890)\d{10}$""",
+                """^(?!1234567890$)(\d{10}|\d{13})$""",
                 "pensionSchemeMemberTaxReference.error.invalid"
               )
             )

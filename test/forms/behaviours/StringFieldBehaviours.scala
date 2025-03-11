@@ -30,6 +30,15 @@ trait StringFieldBehaviours extends FieldBehaviours {
       }
     }
 
+  def fieldWithExactLength(form: Form[_], fieldName: String, length: Int, lengthError: FormError): Unit =
+    s"not bind strings with exact length $length characters" in {
+
+      forAll(stringsOfLength(length + 1) -> "longString") { string =>
+        val result = form.bind(Map(fieldName -> string)).apply(fieldName)
+        result.errors must contain only lengthError
+      }
+    }
+
   def fieldThatDoesNotBindInvalidStrings(
     form: Form[_],
     fieldName: String,
@@ -37,7 +46,7 @@ trait StringFieldBehaviours extends FieldBehaviours {
     gen: Gen[String],
     invalidKey: String
   ): Unit =
-    s"must not bind strings which don't match $regex" in {
+    s"must not bind strings which don't match $regex with ${gen.sample.map(_.length).getOrElse("invalid")} characters" in {
 
       val expectedError = FormError(fieldName, invalidKey, Seq(regex))
 
