@@ -17,11 +17,17 @@
 package controllers.auth
 
 import base.SpecBase
+import config.FrontendAppConfig
+import play.api.Configuration
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.api.test.Helpers.baseApplicationBuilder.injector
 import views.html.auth.SignedOutView
 
 class SignedOutControllerSpec extends SpecBase {
+
+  val config: Configuration = injector.instanceOf[Configuration]
+  val startPageUrl: String  = new FrontendAppConfig(config).redirectToStartPage
 
   "SignedOut Controller" - {
 
@@ -37,7 +43,7 @@ class SignedOutControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[SignedOutView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        contentAsString(result) mustEqual view(startPageUrl)(request, messages(application)).toString
       }
     }
   }
