@@ -20,13 +20,13 @@ import base.SpecBase
 import config.FrontendAppConfig
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import play.api.test.Helpers.*
 import views.html.auth.SignedOutView
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class SignedOutControllerSpec extends SpecBase {
+class SignedOutControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
-  val config: Configuration = injector.instanceOf[Configuration]
+  val config: Configuration = app.injector.instanceOf[Configuration]
   val startPageUrl: String  = new FrontendAppConfig(config).redirectToStartPage
 
   "SignedOut Controller" - {
