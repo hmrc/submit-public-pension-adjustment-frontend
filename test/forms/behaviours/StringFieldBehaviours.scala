@@ -33,7 +33,7 @@ trait StringFieldBehaviours extends FieldBehaviours {
   def fieldWithExactLength(form: Form[_], fieldName: String, length: Int, lengthError: FormError): Unit =
     s"not bind strings with exact length $length characters" in {
 
-      forAll(stringsOfLength(length + 1) -> "longString") { string =>
+      forAll(intsOfLengthAsString(length + 1) -> "longString") { string =>
         val result = form.bind(Map(fieldName -> string)).apply(fieldName)
         result.errors must contain only lengthError
       }
