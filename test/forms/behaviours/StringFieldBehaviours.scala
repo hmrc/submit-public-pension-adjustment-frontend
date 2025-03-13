@@ -26,7 +26,7 @@ trait StringFieldBehaviours extends FieldBehaviours {
 
       forAll(stringsLongerThan(maxLength) -> "longString") { string =>
         val result = form.bind(Map(fieldName -> string)).apply(fieldName)
-        result.errors must contain only lengthError
+        result.errors `must` `contain` only lengthError
       }
     }
 
@@ -52,7 +52,7 @@ trait StringFieldBehaviours extends FieldBehaviours {
 
       forAll(gen.retryUntil(!_.matches(regex))) { invalidString =>
         val result: Field = form.bind(Map(fieldName -> invalidString)).apply(fieldName)
-        result.errors must contain(expectedError)
+        result.errors `must` `contain`(expectedError)
       }
     }
 }

@@ -52,8 +52,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
           URLEncoder.encode("http://localhost:12805/submit-public-pension-adjustment/account/signed-out", "UTF-8")
         val expectedRedirectUrl = s"${appConfig.signOutUrl}?continue=$encodedContinueUrl"
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual expectedRedirectUrl
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` expectedRedirectUrl
       }
     }
   }
@@ -74,8 +74,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
         val encodedContinueUrl  = URLEncoder.encode(appConfig.redirectToStartPage, "UTF-8")
         val expectedRedirectUrl = s"${appConfig.signOutUrl}?continue=$encodedContinueUrl"
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual expectedRedirectUrl
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` expectedRedirectUrl
       }
     }
   }
@@ -88,9 +88,9 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
       val mockSubmissionDataService  = mock[SubmissionDataService]
       val mockSubmitBackendConnector = mock[SubmitBackendConnector]
 
-      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmissionDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(None)
@@ -111,8 +111,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
         val encodedContinueUrl  = URLEncoder.encode(routes.SignedOutController.onPageLoad.url, "UTF-8")
         val expectedRedirectUrl = s"${appConfig.signOutUrl}?continue=$encodedContinueUrl"
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual expectedRedirectUrl
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` expectedRedirectUrl
         verify(mockUserDataService, times(1)).clear()(any())
         verify(mockSubmissionDataService, times(1)).clear()(any())
         verify(mockSubmitBackendConnector, times(1)).clearCalcUserAnswersSubmitBE()(any())

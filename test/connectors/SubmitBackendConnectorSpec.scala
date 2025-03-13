@@ -20,12 +20,12 @@ import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, post, urlEqualTo}
 import generators.Generators
-import models.UniqueId
+import models.{Done, UniqueId}
 import models.finalsubmission.FinalSubmissionResponse
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.TestData
 import play.api.Application
-import play.api.http.Status.{NOT_FOUND, OK}
+import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, NO_CONTENT, OK}
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
 import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
@@ -58,7 +58,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
         val result: FinalSubmissionResponse = connector.sendFinalSubmission(submission).futureValue
 
-        result mustBe FinalSubmissionResponse("ref")
+        result `mustBe` FinalSubmissionResponse("ref")
       }
     }
 
@@ -76,7 +76,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
         val result = connector.sendFinalSubmission(submission).failed.futureValue
 
-        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+        result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
   }
@@ -99,7 +99,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
         val result: Boolean = connector.sendSubmissionSignal(uniqueId).futureValue
 
-        result mustBe true
+        result `mustBe` true
       }
     }
 
@@ -120,7 +120,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         val resultFut: Future[Boolean] = connector.sendSubmissionSignal(uniqueId)
 
         whenReady(resultFut.failed) { e =>
-          e mustBe a[UpstreamErrorResponse]
+          e `mustBe` a[UpstreamErrorResponse]
         }
       }
     }
@@ -144,7 +144,7 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
 
         val result: Boolean = connector.sendCalcUserAnswerSignal(uniqueId).futureValue
 
-        result mustBe true
+        result `mustBe` true
       }
     }
 
@@ -165,10 +165,54 @@ class SubmitBackendConnectorSpec extends SpecBase with WireMockHelper with Scala
         val resultFut: Future[Boolean] = connector.sendCalcUserAnswerSignal(uniqueId)
 
         whenReady(resultFut.failed) { e =>
-          e mustBe a[UpstreamErrorResponse]
+          e `mustBe` a[UpstreamErrorResponse]
         }
       }
     }
   }
 
+  "clearCalcUserAnswersSubmitBE" - {
+
+    "must return Done when no content found" in {
+
+      val url = "/submit-public-pension-adjustment/calc-user-answers"
+      val app = application
+
+      running(app) {
+        val connector = app.injector.instanceOf[SubmitBackendConnector]
+
+        server.stubFor(
+          WireMock
+            .delete(urlEqualTo(url))
+            .willReturn(aResponse().withStatus(NO_CONTENT))
+        )
+
+        val result = connector.clearCalcUserAnswersSubmitBE().futureValue
+
+        result `mustBe` Done
+      }
+    }
+
+    "must return an upstream error response when any other status" in {
+
+      val url = "/submit-public-pension-adjustment/calc-user-answers"
+      val app = application
+
+      running(app) {
+        val connector = app.injector.instanceOf[SubmitBackendConnector]
+
+        server.stubFor(
+          WireMock
+            .delete(urlEqualTo(url))
+            .willReturn(aResponse().withStatus(BAD_REQUEST))
+        )
+
+        val result = connector.clearCalcUserAnswersSubmitBE().failed.futureValue
+
+        result `mustBe` a[UpstreamErrorResponse]
+      }
+
+    }
+
+  }
 }

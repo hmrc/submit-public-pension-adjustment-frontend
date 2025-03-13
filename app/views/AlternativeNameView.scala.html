@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, isClaimOnBehalf: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], mode: Mode, isClaimOnBehalf: Boolean)(implicit request: Request[?], messages: Messages)
 
 @if(isClaimOnBehalf) {
     @layout(pageTitle = title(form, messages("alternativeName.title.onBehalf"))) {

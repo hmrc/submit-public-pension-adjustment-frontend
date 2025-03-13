@@ -38,7 +38,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefSummarySpec extends AnyFreeSpec wit
           true
         )
         .get
-      ClaimingHigherOrAdditionalTaxRateReliefSummary.row(userAnswers) shouldBe Some(
+      ClaimingHigherOrAdditionalTaxRateReliefSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "claimingHigherOrAdditionalTaxRateRelief.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -60,7 +60,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefSummarySpec extends AnyFreeSpec wit
           false
         )
         .get
-      ClaimingHigherOrAdditionalTaxRateReliefSummary.row(userAnswers) shouldBe Some(
+      ClaimingHigherOrAdditionalTaxRateReliefSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "claimingHigherOrAdditionalTaxRateRelief.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -77,7 +77,7 @@ class ClaimingHigherOrAdditionalTaxRateReliefSummarySpec extends AnyFreeSpec wit
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ClaimingHigherOrAdditionalTaxRateReliefSummary.row(userAnswers) shouldBe None
+      ClaimingHigherOrAdditionalTaxRateReliefSummary.row(userAnswers) `shouldBe` None
     }
   }
 

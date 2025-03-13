@@ -22,13 +22,12 @@ object AppDependencies {
   val test = Seq(
     "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % bootstrapPlay30Version % Test,
     "org.scalatest"          %% "scalatest"               % "3.2.10" % Test,
-    "org.scalatestplus"      %% "scalacheck-1-15"         % "3.2.10.0" % Test,
-    "org.scalatestplus"      %% "mockito-3-4"             % "3.2.10.0" % Test,
-    "org.scalatestplus.play" %% "scalatestplus-play"      % "7.0.1" % Test,
+    "org.scalacheck"         %% "scalacheck"              % "1.18.0" % Test,
+    "org.scalatestplus"      %% "scalacheck-1-17"         % "3.2.18.0" % Test,
+    "org.scalatestplus"      %% "mockito-4-11"            % "3.2.17.0" % Test,
     "org.pegdown"             % "pegdown"                 % "1.6.0" % Test,
     "org.jsoup"               % "jsoup"                   % "1.14.3" % Test,
     "org.playframework"      %% "play-test"               % PlayVersion.current % Test,
-    "org.mockito"            %% "mockito-scala"           % "1.17.29" % Test,
     "org.scalacheck"         %% "scalacheck"              % "1.15.4" % Test,
     "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % mongoPlay30Version % Test,
     "com.vladsch.flexmark"    % "flexmark-all"            % "0.62.2" % Test

@@ -39,7 +39,7 @@ class LegacyPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
           "QT123456123456"
         )
         .get
-      LegacyPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
+      LegacyPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") `shouldBe` Some(
         SummaryListRowViewModel(
           key = "legacyPensionSchemeReference.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("QT123456123456")),
@@ -61,7 +61,7 @@ class LegacyPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
           ""
         )
         .get
-      LegacyPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
+      LegacyPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") `shouldBe` Some(
         SummaryListRowViewModel(
           key = "legacyPensionSchemeReference.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(messages("checkYourAnswers.notAnswered"))),

@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.WhichPensionSchemeWillPayTaxReliefFormProvider
 import models.calculation.inputs.Income.AboveThreshold
 import models.calculation.inputs.TaxYear2016To2023.NormalTaxYear
-import models.calculation.inputs._
+import models.calculation.inputs.*
 import models.calculation.response.{CalculationResponse, TaxYearScheme, TotalAmounts}
 import models.submission.Submission
 import models.{Done, NormalMode, UserAnswers, WhichPensionSchemeWillPayTaxRelief}
@@ -32,7 +32,7 @@ import pages.WhichPensionSchemeWillPayTaxReliefPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.WhichPensionSchemeWillPayTaxReliefView
 
@@ -127,8 +127,8 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
         val view = application.injector.instanceOf[WhichPensionSchemeWillPayTaxReliefView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form,
           NormalMode,
           WhichPensionSchemeWillPayTaxRelief(Seq("Scheme1 / 00348916RT"))
@@ -216,8 +216,8 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form.fill("Scheme1 / 00348916RT"),
           NormalMode,
           WhichPensionSchemeWillPayTaxRelief(Seq("Scheme1 / 00348916RT"))
@@ -232,7 +232,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val period: models.calculation.response.Period = models.calculation.response.Period._2021
 
@@ -262,7 +262,7 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -275,8 +275,8 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -291,9 +291,9 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value `mustEqual` routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -306,8 +306,8 @@ class WhichPensionSchemeWillPayTaxReliefControllerSpec extends SpecBase with Moc
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
   }

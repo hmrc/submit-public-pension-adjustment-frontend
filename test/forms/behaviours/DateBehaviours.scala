@@ -36,8 +36,8 @@ class DateBehaviours extends FieldBehaviours {
 
         val result = form.bind(data)
 
-        result.value.value mustEqual date
-        result.errors mustBe empty
+        result.value.value `mustEqual` date
+        result.errors `mustBe` empty
       }
     }
 
@@ -55,7 +55,7 @@ class DateBehaviours extends FieldBehaviours {
 
         val result = form.bind(data)
 
-        result.errors must contain only formError
+        result.errors `must` `contain` only formError
       }
     }
 
@@ -73,7 +73,7 @@ class DateBehaviours extends FieldBehaviours {
 
         val result = form.bind(data)
 
-        result.errors must contain only formError
+        result.errors `must` `contain` only formError
       }
     }
 
@@ -82,6 +82,6 @@ class DateBehaviours extends FieldBehaviours {
 
       val result = form.bind(Map.empty[String, String])
 
-      result.errors must contain only FormError(key, requiredAllKey, errorArgs)
+      result.errors `must` `contain` only FormError(key, requiredAllKey, errorArgs)
     }
 }

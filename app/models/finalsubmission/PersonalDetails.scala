@@ -16,8 +16,9 @@
 
 package models.finalsubmission
 
+import play.api.libs.functional.syntax.*
 import models.{InternationalAddress, UkAddress}
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, __}
 
 import java.time.LocalDate
 
@@ -34,5 +35,14 @@ case class PersonalDetails(
 
 object PersonalDetails {
 
-  implicit lazy val formats: Format[PersonalDetails] = Json.format
+  implicit lazy val formats: Format[PersonalDetails] = (
+    (__ \ "fullName").format[String] and
+      (__ \ "alternateName").formatNullable[String] and
+      (__ \ "dateOfBirth").formatNullable[LocalDate] and
+      (__ \ "address").formatNullable[UkAddress] and
+      (__ \ "internationalAddress").formatNullable[InternationalAddress] and
+      (__ \ "pensionSchemeMemberAddress").formatNullable[UkAddress] and
+      (__ \ "pensionSchemeMemberInternationalAddress").formatNullable[InternationalAddress] and
+      (__ \ "contactPhoneNumber").formatNullable[String]
+  )(PersonalDetails.apply, o => Tuple.fromProductTyped(o))
 }

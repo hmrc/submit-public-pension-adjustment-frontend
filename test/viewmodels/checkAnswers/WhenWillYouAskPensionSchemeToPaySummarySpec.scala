@@ -40,7 +40,7 @@ class WhenWillYouAskPensionSchemeToPaySummarySpec extends AnyFreeSpec with Match
           models.WhenWillYouAskPensionSchemeToPay.OctToDec23
         )
         .get
-      WhenWillYouAskPensionSchemeToPaySummary.row(userAnswers, Period._2020) shouldBe Some(
+      WhenWillYouAskPensionSchemeToPaySummary.row(userAnswers, Period._2020) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whenWillYouAskPensionSchemeToPay.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whenWillYouAskPensionSchemeToPay.octToDec23")),
@@ -57,7 +57,7 @@ class WhenWillYouAskPensionSchemeToPaySummarySpec extends AnyFreeSpec with Match
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhenWillYouAskPensionSchemeToPaySummary.row(userAnswers, Period._2020) shouldBe None
+      WhenWillYouAskPensionSchemeToPaySummary.row(userAnswers, Period._2020) `shouldBe` None
     }
 
   }

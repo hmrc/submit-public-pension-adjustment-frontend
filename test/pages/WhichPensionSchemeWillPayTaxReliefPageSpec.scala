@@ -16,11 +16,11 @@
 
 package pages
 
-import models.calculation.inputs._
+import models.calculation.inputs.*
 import models.calculation.response.{CalculationResponse, Period, TotalAmounts}
 import models.submission.Submission
 import models.{BankDetails, CheckMode, NormalMode}
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar.mock
 
 class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
@@ -205,7 +205,7 @@ class WhichPensionSchemeWillPayTaxReliefSpec extends PageBehaviours {
 
         val cleanedUserAnswers =
           WhichPensionSchemeWillPayTaxReliefPage.cleanup(Some("Scheme1 / 00348916RL"), ua).success.value
-        cleanedUserAnswers.get(BankDetailsPage) mustBe None
+        cleanedUserAnswers.get(BankDetailsPage) `mustBe` None
 
         val submission: Submission =
           Submission("id", "submissionUniqueId", mockCalculationInputsWithAA, Some(calculationResponse))

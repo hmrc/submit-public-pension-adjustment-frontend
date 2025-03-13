@@ -21,7 +21,7 @@ import models.calculation.inputs._
 import models.calculation.response.{CalculationResponse, TotalAmounts}
 import models.submission.Submission
 import models.{CheckMode, NormalMode, StatusOfUser, WhoWillPay}
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.{PageBehaviours, PensionSchemeMemberUKAddressPage, StatusOfUserPage, WhoWillPayPage}
 
 class ClaimOnBehalfPostALFNavigationSpec extends PageBehaviours with SpecBase {

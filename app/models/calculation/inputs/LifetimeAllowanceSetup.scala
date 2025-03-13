@@ -16,7 +16,8 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
 
 case class LifetimeAllowanceSetup(
   benefitCrystallisationEventFlag: Option[Boolean],
@@ -30,5 +31,13 @@ case class LifetimeAllowanceSetup(
 
 object LifetimeAllowanceSetup {
 
-  implicit lazy val formats: Format[LifetimeAllowanceSetup] = Json.format
+  implicit lazy val formats: Format[LifetimeAllowanceSetup] = (
+    (__ \ "benefitCrystallisationEventFlag").formatNullable[Boolean] and
+      (__ \ "previousLTACharge").formatNullable[Boolean] and
+      (__ \ "changeInLifetimeAllowancePercentageInformedFlag").formatNullable[Boolean] and
+      (__ \ "increaseInLTACharge").formatNullable[Boolean] and
+      (__ \ "newLTACharge").formatNullable[Boolean] and
+      (__ \ "multipleBenefitCrystallisationEventFlag").formatNullable[Boolean] and
+      (__ \ "otherSchemeNotification").formatNullable[Boolean]
+  )(LifetimeAllowanceSetup.apply, o => Tuple.fromProductTyped(o))
 }

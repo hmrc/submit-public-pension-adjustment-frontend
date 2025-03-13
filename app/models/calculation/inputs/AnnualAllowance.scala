@@ -16,19 +16,19 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json.{Format, Json, Reads, __}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, Reads, __}
 
 case class AnnualAllowance(scottishTaxYears: List[Period], taxYears: List[TaxYear])
 
 object AnnualAllowance {
 
-  implicit lazy val reads: Reads[AnnualAllowance] = {
-
-    import play.api.libs.functional.syntax._
-
+  implicit lazy val reads: Reads[AnnualAllowance] =
     ((__ \ "scottishTaxYears").read[List[Period]] and
       (__ \ "taxYears").read[List[TaxYear]])(AnnualAllowance(_, _))
-  }
 
-  implicit lazy val formats: Format[AnnualAllowance] = Json.format
+  implicit lazy val formats: Format[AnnualAllowance] = (
+    (__ \ "scottishTaxYears").format[List[Period]] and
+      (__ \ "taxYears").format[List[TaxYear]]
+  )(AnnualAllowance.apply, o => Tuple.fromProductTyped(o))
 }

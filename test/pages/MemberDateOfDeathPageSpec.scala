@@ -20,9 +20,9 @@ import models.calculation.inputs.{CalculationInputs, LifeTimeAllowance, Resubmis
 import models.calculation.response.TaxYearScheme
 import models.submission.Submission
 import models.{CheckMode, NormalMode, Period, RunThroughOnBehalfFlow, StatusOfUser, WhoWillPay}
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar.mock
 import org.scalacheck.Arbitrary
-
 import java.time.LocalDate
 
 class MemberDateOfDeathPageSpec extends PageBehaviours {

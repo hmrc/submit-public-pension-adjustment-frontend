@@ -39,7 +39,7 @@ class ReformPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
           "AB123456123456"
         )
         .get
-      ReformPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
+      ReformPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") `shouldBe` Some(
         SummaryListRowViewModel(
           key = "reformPensionSchemeReference.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("AB123456123456")),
@@ -61,7 +61,7 @@ class ReformPensionSchemeReferenceSummarySpec extends AnyFreeSpec with Matchers 
           ""
         )
         .get
-      ReformPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") shouldBe Some(
+      ReformPensionSchemeReferenceSummary.row(userAnswers, PSTR("12345678AB"), "Scheme1") `shouldBe` Some(
         SummaryListRowViewModel(
           key = "reformPensionSchemeReference.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(messages("checkYourAnswers.notAnswered"))),

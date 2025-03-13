@@ -42,7 +42,7 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
       val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
 
-      DateOfBenefitCrystallisationEventSummary.row(submission) shouldBe Some(
+      DateOfBenefitCrystallisationEventSummary.row(submission) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"dateOfBenefitCrystallisationEvent.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(Text("6 April 2015").toString())
@@ -53,7 +53,7 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
     "when answer unavailable, return empty" in {
       val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
-      DateOfBenefitCrystallisationEventSummary.row(submission) shouldBe None
+      DateOfBenefitCrystallisationEventSummary.row(submission) `shouldBe` None
     }
   }
 }

@@ -16,10 +16,16 @@
 
 package models.bavf
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{OFormat, __}
 
 case class BavfInitResponse(journeyId: String, startUrl: String, completeUrl: String, detailsUrl: Option[String])
 
 object BavfInitResponse {
-  implicit val bavfInitResponse: OFormat[BavfInitResponse] = Json.format[BavfInitResponse]
+  implicit val bavfInitResponse: OFormat[BavfInitResponse] = (
+    (__ \ "journeyId").format[String] and
+      (__ \ "startUrl").format[String] and
+      (__ \ "completeUrl").format[String] and
+      (__ \ "detailsUrl").formatNullable[String]
+  )(BavfInitResponse.apply, o => Tuple.fromProductTyped(o))
 }

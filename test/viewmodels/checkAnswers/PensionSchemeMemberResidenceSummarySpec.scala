@@ -40,7 +40,7 @@ class PensionSchemeMemberResidenceSummarySpec extends AnyFreeSpec with Matchers 
         )
         .get
 
-      PensionSchemeMemberResidenceSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberResidenceSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberResidence.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -65,7 +65,7 @@ class PensionSchemeMemberResidenceSummarySpec extends AnyFreeSpec with Matchers 
         )
         .get
 
-      PensionSchemeMemberResidenceSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberResidenceSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberResidence.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -84,6 +84,6 @@ class PensionSchemeMemberResidenceSummarySpec extends AnyFreeSpec with Matchers 
 
   "when answer unavailable, return empty" in {
     val userAnswers = UserAnswers("id")
-    PensionSchemeMemberResidenceSummary.row(userAnswers) shouldBe None
+    PensionSchemeMemberResidenceSummary.row(userAnswers) `shouldBe` None
   }
 }

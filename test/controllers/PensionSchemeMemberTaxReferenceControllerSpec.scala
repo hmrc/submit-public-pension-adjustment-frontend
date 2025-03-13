@@ -26,7 +26,7 @@ import pages.PensionSchemeMemberTaxReferencePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.PensionSchemeMemberTaxReferenceView
 
@@ -59,8 +59,8 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
         val view = application.injector.instanceOf[PensionSchemeMemberTaxReferenceView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -78,8 +78,8 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(Option(validAnswer)), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(Option(validAnswer)), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -90,7 +90,7 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
@@ -108,7 +108,7 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
         emptyUserAnswers.set(PensionSchemeMemberTaxReferencePage, validAnswer).success.value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -126,8 +126,8 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
         val result = route(application, request).value
         val view   = application.injector.instanceOf[PensionSchemeMemberTaxReferenceView]
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -145,8 +145,8 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
         val result = route(application, request).value
         val view   = application.injector.instanceOf[PensionSchemeMemberTaxReferenceView]
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -159,8 +159,8 @@ class PensionSchemeMemberTaxReferenceControllerSpec extends SpecBase with Mockit
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
   }

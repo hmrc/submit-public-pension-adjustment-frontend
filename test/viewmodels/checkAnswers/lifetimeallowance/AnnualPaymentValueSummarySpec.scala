@@ -45,7 +45,7 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
       )
       val submission: Submission                                       = Submission("id", "uniqueId", calculationInputs, None)
 
-      AnnualPaymentValueSummary.row(submission) shouldBe Some(
+      AnnualPaymentValueSummary.row(submission) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"annualPaymentValue.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("£999"))
@@ -56,7 +56,7 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
-      AnnualPaymentValueSummary.row(submission) shouldBe None
+      AnnualPaymentValueSummary.row(submission) `shouldBe` None
     }
   }
 

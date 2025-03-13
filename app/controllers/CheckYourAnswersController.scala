@@ -17,7 +17,7 @@
 package controllers
 
 import com.google.inject.Inject
-import controllers.actions._
+import controllers.actions.*
 import models.StatusOfUser.{Deputyship, PowerOfAttorney}
 import models.requests.DataRequest
 import models.submission.Submission
@@ -29,8 +29,8 @@ import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import services.{PeriodService, SchemeService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers._
-import viewmodels.govuk.summarylist._
+import viewmodels.checkAnswers.*
+import viewmodels.govuk.summarylist.*
 import views.html.{CheckYourAnswersView, IncompleteDataCaptureView}
 
 class CheckYourAnswersController @Inject() (

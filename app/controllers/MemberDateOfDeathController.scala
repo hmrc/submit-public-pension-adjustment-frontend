@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.MemberDateOfDeathFormProvider
 import models.{Mode, NavigationState}
 import pages.MemberDateOfDeathPage

@@ -17,7 +17,7 @@
 package forms.behaviours
 
 import forms.FormSpec
-import models._
+import models.*
 import play.api.data.Form
 
 trait FormBehaviours extends FormSpec {
@@ -29,8 +29,8 @@ trait FormBehaviours extends FormSpec {
   def questionForm[A](expectedResult: A) =
     "bind valid values correctly" in {
       val boundForm = form.bind(validData)
-      boundForm.get mustBe expectedResult
-      boundForm.errors mustBe empty
+      boundForm.get `mustBe` expectedResult
+      boundForm.errors `mustBe` empty
     }
 
   def formWithOptionalTextFields(fields: String*) =
@@ -38,7 +38,7 @@ trait FormBehaviours extends FormSpec {
       s"bind when $field is omitted" in {
         val data      = validData - field
         val boundForm = form.bind(data)
-        boundForm.errors mustBe empty
+        boundForm.errors `mustBe` empty
       }
 
   def formWithMandatoryTextFields(fields: Field*) =
@@ -60,7 +60,7 @@ trait FormBehaviours extends FormSpec {
     s"bind when $booleanField is false and $field is omitted" in {
       val data      = validData + (booleanField -> "false") - field
       val boundForm = form.bind(data)
-      boundForm.errors mustBe empty
+      boundForm.errors `mustBe` empty
     }
 
     s"fail to bind when $booleanField is true and $field is omitted" in {
@@ -90,7 +90,7 @@ trait FormBehaviours extends FormSpec {
       s"bind when ${field.name} is set to $validValue" in {
         val data      = validData + (field.name -> validValue)
         val boundForm = form.bind(data)
-        boundForm.errors mustBe empty
+        boundForm.errors `mustBe` empty
       }
 
     s"fail to bind when ${field.name} is omitted" in {
