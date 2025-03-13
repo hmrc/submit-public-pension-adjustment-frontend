@@ -14,7 +14,9 @@
  * limitations under the License.
  *@
 
+@import views.html.helper.CSPNonce
 @this(
+        printLink: PrintLink,
         layout: templates.Layout,
         govukButton: GovukButton,
         govukPanel : GovukPanel,
@@ -37,6 +39,9 @@
 
     @govukPanel(Panel(title = messages("submission.heading"), content = Text(messages("submission.panel.message") + " " + userSubmissionReference.value)))
 
+
+    <p class="govuk-body"> @messages("submission.print.message") <a class="govuk-link" id="print-reference" href="#print" onclick="window.print();return false;">@messages("submission.print.link")</a>.</p>
+    <script @{CSPNonce.attr}>document.getElementById("print-reference").addEventListener("click", () => window.print());</script>
 
     <p class="govuk-body">@messages("submission.message1")</p>
 
