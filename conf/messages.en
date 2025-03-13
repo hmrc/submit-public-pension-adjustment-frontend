@@ -324,15 +324,15 @@ pensionSchemeMemberNino.message1 = You can find a National Insurance number on a
 pensionSchemeMemberNino.hint1 = For example, QQ123456C.
 pensionSchemeMemberNino.checkYourAnswersLabel = What is the National Insurance number of the person you are acting on behalf of?
 pensionSchemeMemberNino.error.required = Enter the National Insurance number of the person you are acting on behalf of
-pensionSchemeMemberNino.error.invalid = The National Insurance number of the person you are acting on behalf of must only include letters a to z and numbers 0 to 9
+pensionSchemeMemberNino.error.invalid = Enter a National Insurance number in the right format
 pensionSchemeMemberNino.change.hidden = the National Insurance number of the person you are acting on behalf of
 
 pensionSchemeMemberTaxReference.title = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
 pensionSchemeMemberTaxReference.heading = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
-pensionSchemeMemberTaxReference.hint = The UTR number has 10 digits, for example, 1234567890
+pensionSchemeMemberTaxReference.hint = Your UTR can be 10 or 13 digits long.
 pensionSchemeMemberTaxReference.checkYourAnswersLabel = What is the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of? (optional)
-pensionSchemeMemberTaxReference.error.length = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must be 10 digits or less
-pensionSchemeMemberTaxReference.error.invalid = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must only include numbers 0 to 9
+pensionSchemeMemberTaxReference.error.length = The Unique Taxpayer Reference (UTR) of the person you are acting on behalf of must be 10 or 13 digits long
+pensionSchemeMemberTaxReference.error.invalid = Enter the Unique Taxpayer Reference (UTR) of the person you are acting on behalf of in the correct format
 pensionSchemeMemberTaxReference.change.hidden = Unique Taxpayer Reference (UTR) of the person you are acting on behalf of (optional)
 
 calculationPrerequisite.title = Calculation not complete

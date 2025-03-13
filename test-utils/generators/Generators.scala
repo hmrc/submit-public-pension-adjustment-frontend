@@ -128,6 +128,9 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     chars <- listOfN(length, charGen)
   } yield chars.mkString
 
+  def intsOfLengthAsString(length: Int): Gen[String] =
+    Gen.listOfN(length, Gen.numChar).map(_.mkString)
+
   def unsafeInputs: Gen[Char] = Gen.oneOf(
     Gen.const('<'),
     Gen.const('>'),

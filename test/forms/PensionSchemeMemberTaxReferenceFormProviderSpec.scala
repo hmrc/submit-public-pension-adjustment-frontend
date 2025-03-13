@@ -24,9 +24,9 @@ class PensionSchemeMemberTaxReferenceFormProviderSpec extends StringFieldBehavio
 
   val form = new PensionSchemeMemberTaxReferenceFormProvider()()
 
-  val invalidKey = "pensionSchemeMemberTaxReference.error.invalid"
-  val lengthKey  = "pensionSchemeMemberTaxReference.error.length"
-  val maxLength  = 10
+  val invalidKey   = "pensionSchemeMemberTaxReference.error.invalid"
+  val lengthKey    = "pensionSchemeMemberTaxReference.error.length"
+  val validLengths = Seq(10, 13)
 
   val validAnswer = Gen.listOfN(10, Gen.numChar).map(_.mkString)
 
@@ -40,19 +40,23 @@ class PensionSchemeMemberTaxReferenceFormProviderSpec extends StringFieldBehavio
       validAnswer
     )
 
-    behave like fieldThatDoesNotBindInvalidStrings(
-      form = form,
-      fieldName = fieldName,
-      regex = """^(?!1234567890)\d{10}$""",
-      gen = stringsOfLength(maxLength),
-      invalidKey = invalidKey
-    )
+    validLengths.foreach { length =>
+      behave like fieldThatDoesNotBindInvalidStrings(
+        form = form,
+        fieldName = fieldName,
+        regex = """^(?!1234567890$)\d+$""",
+        gen = stringsOfLength(length),
+        invalidKey = invalidKey
+      )
+    }
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    validLengths.foreach { length =>
+      behave like fieldWithExactLength(
+        form,
+        fieldName,
+        length = length,
+        lengthError = FormError(fieldName, lengthKey)
+      )
+    }
   }
 }

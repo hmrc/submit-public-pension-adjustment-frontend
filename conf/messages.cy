@@ -324,15 +324,15 @@ pensionSchemeMemberNino.message1 = Gallwch ddod o hyd i’w rif Yswiriant Gwlado
 pensionSchemeMemberNino.hint1 = Er enghraifft, QQ123456C.
 pensionSchemeMemberNino.checkYourAnswersLabel = Beth yw rhif Yswiriant Gwladol y person rydych yn gweithredu ar ei ran?
 pensionSchemeMemberNino.error.required = Nodwch rif Yswiriant Gwladol y person rydych yn gweithredu ar ei ran
-pensionSchemeMemberNino.error.invalid = Mae’n rhaid i rif Yswiriant Gwladol y person rydych yn gweithredu ar ei ran gynnwys y llythrennau a i z a’r rhifau 0 i 9 yn unig
+pensionSchemeMemberNino.error.invalid = Nodwch rif Yswiriant Gwladol yn y fformat cywir
 pensionSchemeMemberNino.change.hidden = rhif Yswiriant Gwladol y person rydych yn gweithredu ar ei ran
 
 pensionSchemeMemberTaxReference.title = Beth yw Cyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran? (dewisol)
 pensionSchemeMemberTaxReference.heading = Beth yw Cyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran? (dewisol)
-pensionSchemeMemberTaxReference.hint = Mae cyfeirnod unigryw y trethdalwr yn 10 digid , er enghraifft, 1234567890
+pensionSchemeMemberTaxReference.hint = Gall eich Cyfeirnod Unigryw y Trethdalwr fod yn 10 neu’n 13 digid o hyd.
 pensionSchemeMemberTaxReference.checkYourAnswersLabel = Beth yw Cyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran? (dewisol)
-pensionSchemeMemberTaxReference.error.length = Mae’n rhaid i Gyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran fod yn 10 digid neu lai
-pensionSchemeMemberTaxReference.error.invalid = Mae’n rhaid i Gyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran gynnwys y rhifau 0 i 9 yn unig
+pensionSchemeMemberTaxReference.error.length = Mae’n rhaid i Gyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran fod yn 10 neu 13 digid o hyd
+pensionSchemeMemberTaxReference.error.invalid = Nodwch Gyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran yn y fformat cywir
 pensionSchemeMemberTaxReference.change.hidden = Cyfeirnod Unigryw y Trethdalwr (UTR) ar gyfer y person rydych yn gweithredu ar ei ran (dewisol)
 
 calculationPrerequisite.title = Cyfrifiad heb ei gwblhau
