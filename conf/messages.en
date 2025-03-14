@@ -267,6 +267,7 @@ enterAlternativeName.error.length = Your name must be 100 characters or fewer
 enterAlternativeName.error.onBehalf.required = Enter their name
 enterAlternativeName.error.onBehalf.length = Their name must be 100 characters or fewer
 enterAlternativeName.change.hidden = your name
+enterAlternativeName.change.hidden.onBehalf = their name
 
 contactNumber.title = What is your contact number? (optional)
 contactNumber.heading = What is your contact number? (optional)
@@ -350,11 +351,11 @@ unauthorised.guidance = You should access this service by clicking "Continue to 
 pensionSchemeMemberResidence.checkYourAnswersLabel = Is the person you are acting on behalf of a UK resident?
 pensionSchemeMemberResidence.change.hidden = the person you are acting on behalf of is a UK resident
 
-pensionSchemeMemberUKAddress.checkYourAnswersLabel = What is the address of the person you are acting on behalf of?
-pensionSchemeMemberUKAddress.change.hidden = the address of the person you are acting on behalf of
+pensionSchemeMemberUKAddress.checkYourAnswersLabel = What is their address?
+pensionSchemeMemberUKAddress.change.hidden = their address
 
 pensionSchemeMemberInternationalAddress.checkYourAnswersLabel = What is their address?
-pensionSchemeMemberInternationalAddress.change.hidden = the address of the person you are submitting on behalf of
+pensionSchemeMemberInternationalAddress.change.hidden = their address
 
 memberDateOfDeath.title = What was the date of death of the person you are acting on behalf of?
 memberDateOfDeath.heading = What was the date of death of the person you are acting on behalf of?

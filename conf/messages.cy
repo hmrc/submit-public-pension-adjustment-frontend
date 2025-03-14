@@ -267,6 +267,7 @@ enterAlternativeName.error.length = Mae’n rhaid i’ch enw fod yn 100 o gymeri
 enterAlternativeName.error.onBehalf.required = Nodwch ei enw
 enterAlternativeName.error.onBehalf.length = Mae’n rhaid i’w enw fod yn 100 o gymeriadau neu lai
 enterAlternativeName.change.hidden = Beth yw eich enw?
+enterAlternativeName.change.hidden.onBehalf = ei enw
 
 contactNumber.title = Beth yw eich rhif cyswllt? (dewisol)
 contactNumber.heading = Beth yw eich rhif cyswllt? (dewisol)
@@ -350,11 +351,11 @@ unauthorised.guidance = Dylech gael mynediad i’r gwasanaeth drwy glicio ar “
 pensionSchemeMemberResidence.checkYourAnswersLabel = A yw’r person rydych yn gweithredu ar ei ran yn breswylydd yn y DU?
 pensionSchemeMemberResidence.change.hidden = y person rydych yn gweithredu ar ei ran yn breswylydd yn y DU
 
-pensionSchemeMemberUKAddress.checkYourAnswersLabel = Beth yw cyfeiriad y person rydych yn gweithredu ar ei ran?
-pensionSchemeMemberUKAddress.change.hidden = cyfeiriad y person rydych yn gweithredu ar ei ran
+pensionSchemeMemberUKAddress.checkYourAnswersLabel = Beth yw cyfeiriad y person?
+pensionSchemeMemberUKAddress.change.hidden = ei gyfeiriad
 
 pensionSchemeMemberInternationalAddress.checkYourAnswersLabel = Beth yw cyfeiriad y person?
-pensionSchemeMemberInternationalAddress.change.hidden = cyfeiriad y person rydych yn cyflwyno ar ei ran
+pensionSchemeMemberInternationalAddress.change.hidden = ei gyfeiriad
 
 memberDateOfDeath.title = Beth oedd dyddiad marwolaeth y person rydych yn gweithredu ar ei ran?
 memberDateOfDeath.heading = Beth oedd dyddiad marwolaeth y person rydych yn gweithredu ar ei ran?
