@@ -78,7 +78,7 @@ class EnterAlternativeNameSummarySpec extends AnyFreeSpec with Matchers {
               "site.change",
               routes.EnterAlternativeNameController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("enterAlternativeName.change.hidden")
+              .withVisuallyHiddenText("enterAlternativeName.change.hidden.onBehalf")
           )
         )
       )
