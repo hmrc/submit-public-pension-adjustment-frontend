@@ -56,7 +56,6 @@ lazy val root = (project in file("."))
       "-Wconf:msg=unused.explicit.parameter&src=html/.*:s",
       "-Wconf:msg=unused.import&src=xml/.*:s",
       "-Wconf:msg=Flag.*repeatedly:s",
-      baseDirectory.value.getCanonicalPath,
       "-feature",
       "-deprecation",
       "-Ypatmat-exhaust-depth",
