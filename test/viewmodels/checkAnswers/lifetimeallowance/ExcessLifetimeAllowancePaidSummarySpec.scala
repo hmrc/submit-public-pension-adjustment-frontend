@@ -40,7 +40,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
       val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
 
-      ExcessLifetimeAllowancePaidSummary.row(submission) shouldBe Some(
+      ExcessLifetimeAllowancePaidSummary.row(submission) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.annualPayment"))
@@ -55,7 +55,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
       val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = Some(lifeTimeAllowance))
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
 
-      ExcessLifetimeAllowancePaidSummary.row(submission) shouldBe Some(
+      ExcessLifetimeAllowancePaidSummary.row(submission) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.lumpSum"))
@@ -66,7 +66,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val calculationInputs      = TestData.calculationInputs.copy(lifeTimeAllowance = None)
       val submission: Submission = Submission("id", "uniqueId", calculationInputs, None)
-      ExcessLifetimeAllowancePaidSummary.row(submission) shouldBe None
+      ExcessLifetimeAllowancePaidSummary.row(submission) `shouldBe` None
     }
   }
 }

@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, pstr: PSTR, schemeName: String)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], mode: Mode, pstr: PSTR, schemeName: String)(implicit request: Request[?], messages: Messages)
 
 @contentHint = {
 <p class="govuk-body">@messages("reformPensionSchemeReference.message1")</p>

@@ -43,7 +43,7 @@ class PensionSchemeMemberDOBSummarySpec extends AnyFreeSpec with Matchers {
           validAnswer
         )
         .get
-      PensionSchemeMemberDOBSummary.row(userAnswers) shouldBe Some(
+      PensionSchemeMemberDOBSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionSchemeMemberDOB.checkYourAnswersLabel",
           value = ValueViewModel(Text("1 January 2000").toString()),
@@ -60,7 +60,7 @@ class PensionSchemeMemberDOBSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PensionSchemeMemberDOBSummary.row(userAnswers) shouldBe None
+      PensionSchemeMemberDOBSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

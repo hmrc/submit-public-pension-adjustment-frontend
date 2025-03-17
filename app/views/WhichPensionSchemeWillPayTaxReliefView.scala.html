@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, whichPensionSchemeWillPayTaxRelief: WhichPensionSchemeWillPayTaxRelief)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], mode: Mode, whichPensionSchemeWillPayTaxRelief: WhichPensionSchemeWillPayTaxRelief)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = title(form, messages("whichPensionSchemeWillPayTaxRelief.title"))) {
 

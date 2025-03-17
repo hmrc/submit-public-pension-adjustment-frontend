@@ -21,7 +21,7 @@
         govukInsetText: GovukInsetText
 )
 
-@(userSubmissionReference: String, feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
+@(userSubmissionReference: String, feedbackLinkUrl: String)(implicit request: Request[?], messages: Messages)
 
 @insetContent = {
 

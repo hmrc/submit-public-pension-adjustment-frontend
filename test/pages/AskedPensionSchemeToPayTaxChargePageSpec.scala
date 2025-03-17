@@ -115,7 +115,7 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
 
         val cleanedUserAnswers =
           AskedPensionSchemeToPayTaxChargePage(Period._2020).cleanup(Some(false), ua).success.value
-        cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
+        cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) `mustBe` None
       }
 
       "must cleanup correctly when answered yes" in {
@@ -129,8 +129,8 @@ class AskedPensionSchemeToPayTaxChargePageSpec extends PageBehaviours {
 
         val cleanedUserAnswers =
           AskedPensionSchemeToPayTaxChargePage(Period._2020).cleanup(Some(true), ua).success.value
-        cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) mustBe None
-        cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) mustBe None
+        cleanedUserAnswers.get(WhenDidYouAskPensionSchemeToPayPage(Period._2020)) `mustBe` None
+        cleanedUserAnswers.get(SchemeElectionConsentPage(Period._2020)) `mustBe` None
       }
     }
   }

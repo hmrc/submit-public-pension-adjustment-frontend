@@ -2,7 +2,7 @@ package controllers
 
 import base.SpecBase
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.$className$View
 
 class $className$ControllerSpec extends SpecBase {
@@ -20,8 +20,8 @@ class $className$ControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[$className$View]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view()(request, messages(application)).toString
       }
     }
   }

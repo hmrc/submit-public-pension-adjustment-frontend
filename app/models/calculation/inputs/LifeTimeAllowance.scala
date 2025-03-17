@@ -16,7 +16,8 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
 
 import java.time.LocalDate
 
@@ -39,7 +40,22 @@ case class LifeTimeAllowance(
 
 object LifeTimeAllowance {
 
-  implicit lazy val formats: Format[LifeTimeAllowance] = Json.format
+  implicit lazy val formats: Format[LifeTimeAllowance] = (
+    (__ \ "benefitCrystallisationEventDate").format[LocalDate] and
+      (__ \ "lifetimeAllowanceProtectionOrEnhancements").format[LtaProtectionOrEnhancements] and
+      (__ \ "protectionType").formatNullable[ProtectionType] and
+      (__ \ "protectionReference").formatNullable[String] and
+      (__ \ "protectionTypeEnhancementChanged").format[ProtectionEnhancedChanged] and
+      (__ \ "newProtectionTypeOrEnhancement").formatNullable[WhatNewProtectionTypeEnhancement] and
+      (__ \ "newProtectionTypeOrEnhancementReference").formatNullable[String] and
+      (__ \ "previousLifetimeAllowanceChargeFlag").format[Boolean] and
+      (__ \ "previousLifetimeAllowanceChargePaymentMethod").formatNullable[ExcessLifetimeAllowancePaid] and
+      (__ \ "previousLifetimeAllowanceChargePaidBy").formatNullable[WhoPaidLTACharge] and
+      (__ \ "previousLifetimeAllowanceChargeSchemeNameAndTaxRef").formatNullable[SchemeNameAndTaxRef] and
+      (__ \ "newLifetimeAllowanceChargeWillBePaidBy").formatNullable[WhoPayingExtraLtaCharge] and
+      (__ \ "newLifetimeAllowanceChargeSchemeNameAndTaxRef").formatNullable[LtaPensionSchemeDetails] and
+      (__ \ "newLifeTimeAllowanceAdditions").format[NewLifeTimeAllowanceAdditions]
+  )(LifeTimeAllowance.apply, o => Tuple.fromProductTyped(o))
 }
 
 case class NewLifeTimeAllowanceAdditions(
@@ -61,5 +77,20 @@ case class NewLifeTimeAllowanceAdditions(
 
 object NewLifeTimeAllowanceAdditions {
 
-  implicit lazy val formats: Format[NewLifeTimeAllowanceAdditions] = Json.format
+  implicit lazy val formats: Format[NewLifeTimeAllowanceAdditions] = (
+    (__ \ "enhancementType").formatNullable[EnhancementType] and
+      (__ \ "internationalEnhancementReference").formatNullable[String] and
+      (__ \ "pensionCreditReference").formatNullable[String] and
+      (__ \ "newEnhancementType").formatNullable[NewEnhancementType] and
+      (__ \ "newInternationalEnhancementReference").formatNullable[String] and
+      (__ \ "newPensionCreditReference").formatNullable[String] and
+      (__ \ "lumpSumValue").formatNullable[Int] and
+      (__ \ "annualPaymentValue").formatNullable[Int] and
+      (__ \ "userSchemeDetails").formatNullable[UserSchemeDetails] and
+      (__ \ "quarterChargePaid").formatNullable[QuarterChargePaid] and
+      (__ \ "yearChargePaid").formatNullable[YearChargePaid] and
+      (__ \ "newExcessLifetimeAllowancePaid").formatNullable[NewExcessLifetimeAllowancePaid] and
+      (__ \ "newLumpSumValue").formatNullable[Int] and
+      (__ \ "newAnnualPaymentValue").formatNullable[Int]
+  )(NewLifeTimeAllowanceAdditions.apply, o => Tuple.fromProductTyped(o))
 }

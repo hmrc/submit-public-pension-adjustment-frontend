@@ -19,7 +19,7 @@
         govukButton: GovukButton
 )
 
-@(startPageUrl: String)(implicit request: Request[_], messages: Messages)
+@(startPageUrl: String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("calculationPrerequisite.title"))) {
 

@@ -29,7 +29,7 @@ import pages.WhoWillPayPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{SubmissionDataService, UserDataService}
 import views.html.WhoWillPayView
 
@@ -59,8 +59,11 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[WhoWillPayView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2020)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2020)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -78,8 +81,8 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhoWillPay.values.head), NormalMode, Period._2020)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(WhoWillPay.values.head), NormalMode, Period._2020)(
           request,
           messages(application)
         ).toString
@@ -92,7 +95,7 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
       val mockSubmissionDataService = mock[SubmissionDataService]
       val mockCalculationInputs     = mock[CalculationInputs]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val calculationResponse    = CalculationResponse(
         models.calculation.response.Resubmission(false, None),
@@ -118,7 +121,7 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -137,8 +140,8 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2020)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2020)(
           request,
           messages(application)
         ).toString
@@ -154,8 +157,8 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -170,9 +173,9 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value `mustEqual` routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -185,8 +188,8 @@ class WhoWillPayControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
   }

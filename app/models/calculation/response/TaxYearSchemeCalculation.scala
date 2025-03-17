@@ -31,19 +31,19 @@ object OutOfDatesTaxYearSchemeCalculation {
 
   implicit lazy val reads: Reads[OutOfDatesTaxYearSchemeCalculation] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     (
       (__ \ "name").read[String] and
         (__ \ "pensionSchemeTaxReference").read[String] and
         (__ \ "compensation").read[Int]
-    )(OutOfDatesTaxYearSchemeCalculation.apply _)
+    )(OutOfDatesTaxYearSchemeCalculation.apply)
 
   }
 
   implicit lazy val writes: Writes[OutOfDatesTaxYearSchemeCalculation] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     (
       (__ \ "name").write[String] and
@@ -65,19 +65,19 @@ object InDatesTaxYearSchemeCalculation {
 
   implicit lazy val reads: Reads[InDatesTaxYearSchemeCalculation] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     (
       (__ \ "name").read[String] and
         (__ \ "pensionSchemeTaxReference").read[String] and
         (__ \ "chargePaidByScheme").read[Int]
-    )(InDatesTaxYearSchemeCalculation.apply _)
+    )(InDatesTaxYearSchemeCalculation.apply)
 
   }
 
   implicit lazy val writes: Writes[InDatesTaxYearSchemeCalculation] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     (
       (__ \ "name").write[String] and

@@ -28,7 +28,7 @@ class PensionSchemeMemberUKAddressPageSpec extends PageBehaviours {
         .set(PensionSchemeMemberUKAddressPage, UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), None))
         .get
 
-      updatedUserAnswers.get(PensionSchemeMemberUKAddressPage) mustBe Some(
+      updatedUserAnswers.get(PensionSchemeMemberUKAddressPage) `mustBe` Some(
         UkAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), None)
       )
     }

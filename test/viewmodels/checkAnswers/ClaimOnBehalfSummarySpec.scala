@@ -40,7 +40,7 @@ class ClaimOnBehalfSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      ClaimOnBehalfSummary.row(userAnswers) shouldBe Some(
+      ClaimOnBehalfSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "claimOnBehalf.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -64,7 +64,7 @@ class ClaimOnBehalfSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      ClaimOnBehalfSummary.row(userAnswers) shouldBe Some(
+      ClaimOnBehalfSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "claimOnBehalf.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -82,6 +82,6 @@ class ClaimOnBehalfSummarySpec extends AnyFreeSpec with Matchers {
 
   "when answer unavailable, return empty" in {
     val userAnswers = UserAnswers("id")
-    ClaimOnBehalfSummary.row(userAnswers) shouldBe None
+    ClaimOnBehalfSummary.row(userAnswers) `shouldBe` None
   }
 }

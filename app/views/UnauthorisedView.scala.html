@@ -18,7 +18,7 @@
     layout: templates.Layout
 )
 
-@(unauthorisedSignOutUrl: String)(implicit request: Request[_], messages: Messages)
+@(unauthorisedSignOutUrl: String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("unauthorised.title")), timeout   = false, signOutUrl = unauthorisedSignOutUrl) {
 

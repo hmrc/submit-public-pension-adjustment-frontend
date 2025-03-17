@@ -40,7 +40,7 @@ class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
           "07777777777"
         )
         .get
-      ContactNumberSummary.row(userAnswers) shouldBe Some(
+      ContactNumberSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "contactNumber.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("07777777777")),
@@ -63,7 +63,7 @@ class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
           ""
         )
         .get
-      ContactNumberSummary.row(userAnswers) shouldBe Some(
+      ContactNumberSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "contactNumber.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("checkYourAnswers.notAnswered")),
@@ -80,7 +80,7 @@ class ContactNumberSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      EnterAlternativeNameSummary.row(userAnswers) shouldBe None
+      EnterAlternativeNameSummary.row(userAnswers) `shouldBe` None
     }
 
   }

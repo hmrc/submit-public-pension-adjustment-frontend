@@ -16,10 +16,10 @@
 
 package mappers
 
-import models.calculation._
+import models.calculation.*
 import models.calculation.inputs.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.calculation.inputs.{CalculationInputs, IncomeSubJourney, TaxYear2016To2023}
-import models.calculation.response._
+import models.calculation.response.*
 import utils.CurrencyFormatter.currencyFormat
 
 object CalculationResultsMapper {

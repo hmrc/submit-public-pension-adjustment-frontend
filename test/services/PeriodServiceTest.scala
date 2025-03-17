@@ -20,7 +20,7 @@ import base.SpecBase
 import models.Period
 import models.calculation.inputs.CalculationInputs
 import models.submission.Submission
-import org.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 
 class PeriodServiceTest extends SpecBase with MockitoSugar {
 
@@ -38,7 +38,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       )
 
       val firstPeriod: Option[Period] = PeriodService.getFirstDebitPeriod(submission)
-      firstPeriod mustBe None
+      firstPeriod `mustBe` None
     }
 
     "should get the first debit period when there is one" in {
@@ -53,7 +53,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       )
 
       val firstPeriod: Option[Period] = PeriodService.getFirstDebitPeriod(submission)
-      firstPeriod mustBe (Some(Period._2020))
+      firstPeriod `mustBe` (Some(Period._2020))
     }
 
     "should get the next debit period when one exists" in {
@@ -67,7 +67,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       )
 
       val nextPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, Period._2021)
-      nextPeriod mustBe (Some(Period._2022))
+      nextPeriod `mustBe` (Some(Period._2022))
     }
 
     "should get None when there is no next period" in {
@@ -81,7 +81,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       )
 
       val nextPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, Period._2023)
-      nextPeriod mustBe None
+      nextPeriod `mustBe` None
     }
 
     "should get None when there is no next debit period because there are no more years in debit" in {
@@ -95,7 +95,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       )
 
       val nextPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, Period._2022)
-      nextPeriod mustBe None
+      nextPeriod `mustBe` None
     }
 
     "should get None for next debit period if there is no calculation response" in {
@@ -110,7 +110,7 @@ class PeriodServiceTest extends SpecBase with MockitoSugar {
       )
 
       val nextPeriod: Option[Period] = PeriodService.getNextDebitPeriod(submission, Period._2022)
-      nextPeriod mustBe None
+      nextPeriod `mustBe` None
     }
 
   }

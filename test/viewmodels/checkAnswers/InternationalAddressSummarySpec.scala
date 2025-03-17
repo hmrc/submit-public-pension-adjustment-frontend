@@ -43,7 +43,7 @@ class InternationalAddressSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      InternationalAddressSummary.row(userAnswers) shouldBe Some(
+      InternationalAddressSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "internationalAddress.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("line1<br/>town<br/>France")),
@@ -60,7 +60,7 @@ class InternationalAddressSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      InternationalAddressSummary.row(userAnswers) shouldBe None
+      InternationalAddressSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

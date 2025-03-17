@@ -16,12 +16,16 @@
 
 package models.finalsubmission
 
+import play.api.libs.functional.syntax.*
 import models.PSTR
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, __}
 
 case class SchemeDetails(schemeName: String, pstr: PSTR)
 
 object SchemeDetails {
 
-  implicit lazy val formats: Format[SchemeDetails] = Json.format
+  implicit lazy val formats: Format[SchemeDetails] = (
+    (__ \ "schemeName").format[String] and
+      (__ \ "pstr").format[PSTR]
+  )(SchemeDetails.apply, o => Tuple.fromProductTyped(o))
 }

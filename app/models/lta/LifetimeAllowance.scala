@@ -16,7 +16,8 @@
 
 package models.lta
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{Format, __}
 
 import java.time.LocalDate
 
@@ -30,5 +31,11 @@ case class LifetimeAllowance(
 
 object LifetimeAllowance {
 
-  implicit lazy val format: Format[LifetimeAllowance] = Json.format
+  implicit lazy val format: Format[LifetimeAllowance] = (
+    (__ \ "benefitCrystallisationEventDate").format[LocalDate] and
+      (__ \ "chargeType").format[LTAChargeType] and
+      (__ \ "protection").format[List[LTAProtection]] and
+      (__ \ "changedProtection").format[List[LTAProtection]] and
+      (__ \ "charge").format[LTACharge]
+  )(LifetimeAllowance.apply, o => Tuple.fromProductTyped(o))
 }

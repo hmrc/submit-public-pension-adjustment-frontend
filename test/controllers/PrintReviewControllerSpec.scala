@@ -23,7 +23,7 @@ import models.submission.Submission
 import pages.TestData
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 
 import scala.io.Source
 
@@ -44,8 +44,8 @@ class PrintReviewControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.ViewYourLTAAnswersController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` controllers.routes.ViewYourLTAAnswersController.onPageLoad().url
       }
     }
 
@@ -65,14 +65,14 @@ class PrintReviewControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Overview of calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Overview of calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe true
+        ) `mustBe` true
       }
     }
 
@@ -92,14 +92,14 @@ class PrintReviewControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Overview of calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Overview of calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe false
+        ) `mustBe` false
       }
     }
 
@@ -119,15 +119,15 @@ class PrintReviewControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Overview of calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Overview of calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe true
-        contentAsString(result).contains("Lifetime allowance answers") mustBe true
+        ) `mustBe` true
+        contentAsString(result).contains("Lifetime allowance answers") `mustBe` true
 
       }
     }
@@ -150,15 +150,15 @@ class PrintReviewControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Overview of calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Overview of calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe true
-        contentAsString(result).contains("Lifetime allowance answers") mustBe false
+        ) `mustBe` true
+        contentAsString(result).contains("Lifetime allowance answers") `mustBe` false
 
       }
     }

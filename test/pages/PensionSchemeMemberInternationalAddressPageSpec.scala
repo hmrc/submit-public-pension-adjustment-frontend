@@ -31,7 +31,7 @@ class PensionSchemeMemberInternationalAddressPageSpec extends PageBehaviours {
         )
         .get
 
-      updatedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) mustBe Some(
+      updatedUserAnswers.get(PensionSchemeMemberInternationalAddressPage) `mustBe` Some(
         InternationalAddress(None, "l1", None, None, "town", None, Some("ZZ1 1ZZ"), "United Kingdom")
       )
     }

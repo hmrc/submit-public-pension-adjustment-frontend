@@ -20,10 +20,10 @@ import base.SpecBase
 import models.{Done, NormalMode, Period}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
-import org.mockito.MockitoSugar.mock
+import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.SchemeElectionConsentView
 
@@ -44,8 +44,8 @@ class SchemeElectionConsentControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[SchemeElectionConsentView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(NormalMode, Period._2020)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(NormalMode, Period._2020)(request, messages(application)).toString
       }
     }
 
@@ -53,7 +53,7 @@ class SchemeElectionConsentControllerSpec extends SpecBase {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers), submission = Some(submission))
@@ -67,7 +67,7 @@ class SchemeElectionConsentControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
   }

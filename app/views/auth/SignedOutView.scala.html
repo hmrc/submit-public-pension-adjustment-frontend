@@ -19,7 +19,7 @@
     govukButton: GovukButton
 )
 
-@(redirectToStartPage: String)(implicit request: Request[_], messages: Messages)
+@(redirectToStartPage: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageTitle    = titleNoForm(messages("signedOut.title")),
@@ -36,4 +36,3 @@
         @messages("signedOut.link")
     </a></p>
 }
-

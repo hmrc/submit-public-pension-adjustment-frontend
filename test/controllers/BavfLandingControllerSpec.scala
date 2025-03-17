@@ -22,7 +22,7 @@ import models.bavf.{BavfCompleteResponse, BavfPersonalCompleteResponse, Reputati
 import models.{BankDetails, Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
-import org.mockito.captor.ArgCaptor
+import org.mockito.ArgumentCaptor
 import org.scalatestplus.mockito.MockitoSugar
 import pages._
 import play.api.inject.bind
@@ -50,10 +50,10 @@ class BavfLandingControllerSpec extends SpecBase with MockitoSugar {
 
         val mockBavfConnector   = mock[BavfConnector]
         val mockUserDataService = mock[UserDataService]
-        val userAnswersCaptor   = ArgCaptor[UserAnswers]
+        val userAnswersCaptor   = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-        when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-        when(mockBavfConnector.retrieveBarsDetails(any())(any(), any())) thenReturn Future.successful(
+        when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+        when(mockBavfConnector.retrieveBarsDetails(any())(any(), any())) `thenReturn` Future.successful(
           BavfCompleteResponse(
             "personal",
             Some(
@@ -95,10 +95,10 @@ class BavfLandingControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
-          verify(mockUserDataService).set(userAnswersCaptor)(any())
-          val capturedUserAnswers: UserAnswers = userAnswersCaptor.value
-          capturedUserAnswers.get(BankDetailsPage) mustBe Some(
+          status(result) `mustEqual` SEE_OTHER
+          verify(mockUserDataService).set(userAnswersCaptor.capture())(any())
+          val capturedUserAnswers: UserAnswers = userAnswersCaptor.getValue
+          capturedUserAnswers.get(BankDetailsPage) `mustBe` Some(
             BankDetails("Test Man", "sortcode", "accountNumber", None)
           )
         }

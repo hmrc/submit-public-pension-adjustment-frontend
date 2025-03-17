@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.CannotUseServiceNotIndividualView
 
 class CannotUseServiceNotIndividualControllerSpec extends SpecBase {
@@ -36,8 +36,8 @@ class CannotUseServiceNotIndividualControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[CannotUseServiceNotIndividualView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(controllers.auth.routes.AuthController.signOutUnauthorised().url)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(controllers.auth.routes.AuthController.signOutUnauthorised().url)(
           request,
           messages(application)
         ).toString

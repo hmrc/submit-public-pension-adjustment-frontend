@@ -40,7 +40,7 @@ class AreYouAUKResidentSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      AreYouAUKResidentSummary.row(userAnswers) shouldBe Some(
+      AreYouAUKResidentSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "areYouAUKResident.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -65,7 +65,7 @@ class AreYouAUKResidentSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      AreYouAUKResidentSummary.row(userAnswers) shouldBe Some(
+      AreYouAUKResidentSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "areYouAUKResident.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -84,6 +84,6 @@ class AreYouAUKResidentSummarySpec extends AnyFreeSpec with Matchers {
 
   "when answer unavailable, return empty" in {
     val userAnswers = UserAnswers("id")
-    AreYouAUKResidentSummary.row(userAnswers) shouldBe None
+    AreYouAUKResidentSummary.row(userAnswers) `shouldBe` None
   }
 }

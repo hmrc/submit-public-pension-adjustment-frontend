@@ -39,7 +39,7 @@ class BankDetailsSummarySpec extends AnyFreeSpec with Matchers {
           models.BankDetails("Testuser One", "111111", "11111111", None)
         )
         .get
-      BankDetailsSummary.row(userAnswers) shouldBe Some(
+      BankDetailsSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "bankDetails.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Testuser One<br/>111111<br/>11111111")),
@@ -56,7 +56,7 @@ class BankDetailsSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      BankDetailsSummary.row(userAnswers) shouldBe None
+      BankDetailsSummary.row(userAnswers) `shouldBe` None
     }
   }
 

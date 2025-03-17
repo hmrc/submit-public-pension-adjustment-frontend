@@ -32,13 +32,13 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
 
   override def navigateInNormalModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(HowMuchTaxReliefPage) match {
-      case Some(_) => isSchemePageValid(answers, submission, NormalMode)
+      case Some(_) => isSchemePageValid(submission, NormalMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def navigateInCheckModeAA(answers: UserAnswers, submission: Submission): Call =
     answers.get(HowMuchTaxReliefPage) match {
-      case Some(_) => isSchemePageValid(answers, submission, CheckMode)
+      case Some(_) => isSchemePageValid(submission, CheckMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -57,7 +57,7 @@ case object HowMuchTaxReliefPage extends QuestionPageWithLTAOnlyNavigation[BigIn
   override def navigateInCheckModeLTAOnly(answers: UserAnswers, submission: Submission): Call =
     navigateInNormalModeLTAOnly(answers, submission)
 
-  private def isSchemePageValid(answers: UserAnswers, submission: Submission, mode: Mode): Call = {
+  private def isSchemePageValid(submission: Submission, mode: Mode): Call = {
     val numberOfSchemes: Int = SchemeService.allSchemeDetailsForTaxReliefLength(submission.calculationInputs)
     val memberCredit         = submission.calculation.map(_.inDates.map(_.memberCredit).sum).getOrElse(0)
 

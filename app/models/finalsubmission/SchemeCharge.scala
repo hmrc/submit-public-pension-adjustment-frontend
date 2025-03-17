@@ -16,7 +16,8 @@
 
 package models.finalsubmission
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 import java.time.LocalDate
 
@@ -28,5 +29,9 @@ case class SchemeCharge(
 
 object SchemeCharge {
 
-  implicit lazy val formats: Format[SchemeCharge] = Json.format
+  implicit lazy val formats: Format[SchemeCharge] = (
+    (__ \ "amount").format[Int] and
+      (__ \ "schemeDetails").format[SchemeDetails] and
+      (__ \ "paymentElectionDate").formatNullable[LocalDate]
+  )(SchemeCharge.apply, o => Tuple.fromProductTyped(o))
 }

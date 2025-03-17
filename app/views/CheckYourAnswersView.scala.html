@@ -21,7 +21,7 @@
     govukButton: GovukButton
 )
 
-@(list: SummaryList, continueURL: Call)(implicit request: Request[_], messages: Messages)
+@(list: SummaryList, continueURL: Call)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 

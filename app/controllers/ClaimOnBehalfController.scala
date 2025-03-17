@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.ClaimOnBehalfFormProvider
 import models.{CheckMode, Mode, NavigationState, RunThroughOnBehalfFlow, UserAnswers}
 import pages.ClaimOnBehalfPage

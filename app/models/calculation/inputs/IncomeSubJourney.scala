@@ -16,7 +16,8 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
 
 case class IncomeSubJourney(
   salarySacrificeAmount: Option[Int],
@@ -39,5 +40,22 @@ case class IncomeSubJourney(
 
 object IncomeSubJourney {
 
-  implicit lazy val formats: Format[IncomeSubJourney] = Json.format
+  implicit lazy val formats: Format[IncomeSubJourney] = (
+    (__ \ "salarySacrificeAmount").formatNullable[Int] and
+      (__ \ "flexibleRemunerationAmount").formatNullable[Int] and
+      (__ \ "rASContributionsAmount").formatNullable[Int] and
+      (__ \ "lumpsumDeathBenefitsAmount").formatNullable[Int] and
+      (__ \ "isAboveThreshold").formatNullable[Boolean] and
+      (__ \ "taxReliefAmount").formatNullable[Int] and
+      (__ \ "adjustedIncomeAmount").formatNullable[Int] and
+      (__ \ "taxReliefPensionAmount").formatNullable[Int] and
+      (__ \ "personalContributionsAmount").formatNullable[Int] and
+      (__ \ "reliefClaimedOnOverseasPensionsAmount").formatNullable[Int] and
+      (__ \ "giftAidAmount").formatNullable[Int] and
+      (__ \ "personalAllowanceAmount").formatNullable[Int] and
+      (__ \ "tradeUnionOrPoliceReliefAmount").formatNullable[Int] and
+      (__ \ "blindPersonsAllowanceAmount").formatNullable[Int] and
+      (__ \ "thresholdIncomeAmount").formatNullable[Int] and
+      (__ \ "reducedNetIncomeAmount").formatNullable[Int]
+  )(IncomeSubJourney.apply, o => Tuple.fromProductTyped(o))
 }

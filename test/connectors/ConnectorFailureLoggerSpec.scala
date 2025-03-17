@@ -41,8 +41,8 @@ class ConnectorFailureLoggerSpec extends AnyFreeSpec with Matchers with ScalaFut
         val loggedFuture = futureFailingResponse.logFailureReason(connectorName)
 
         whenReady(loggedFuture.failed) { exception =>
-          exception mustBe an[UpstreamErrorResponse]
-          exception.asInstanceOf[UpstreamErrorResponse].statusCode mustBe 500
+          exception `mustBe` an[UpstreamErrorResponse]
+          exception.asInstanceOf[UpstreamErrorResponse].statusCode `mustBe` 500
         }
       }
 
@@ -55,10 +55,12 @@ class ConnectorFailureLoggerSpec extends AnyFreeSpec with Matchers with ScalaFut
         val loggedFuture = futureFailingResponse.logFailureReason(connectorName)
 
         whenReady(loggedFuture.failed) { exception =>
-          exception mustBe a[JsValidationException]
-          exception.getMessage must include("GET of 'http://test.url' returned invalid json. Attempting to convert to")
-          exception.getMessage must include("SomeResponseType")
-          exception.getMessage must include("gave errors: Invalid format")
+          exception `mustBe` a[JsValidationException]
+          exception.getMessage `must` `include`(
+            "GET of 'http://test.url' returned invalid json. Attempting to convert to"
+          )
+          exception.getMessage `must` `include`("SomeResponseType")
+          exception.getMessage `must` `include`("gave errors: Invalid format")
         }
       }
 
@@ -69,8 +71,8 @@ class ConnectorFailureLoggerSpec extends AnyFreeSpec with Matchers with ScalaFut
         val loggedFuture = futureFailingResponse.logFailureReason(connectorName)
 
         whenReady(loggedFuture.failed) { exception =>
-          exception mustBe an[Exception]
-          exception.getMessage mustBe "Generic exception"
+          exception `mustBe` an[Exception]
+          exception.getMessage `mustBe` "Generic exception"
         }
       }
     }

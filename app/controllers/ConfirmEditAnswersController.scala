@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.ConfirmEditAnswersFormProvider
 import models.{NormalMode, UserAnswers}
 import pages.ConfirmEditAnswersPage

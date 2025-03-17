@@ -36,20 +36,20 @@ class CalculateBackendDataServiceSpec extends SpecBase with MockitoSugar with Sc
       val connector = mock[CalculateBackendConnector]
       val service   = new CalculateBackendDataService(connector)
 
-      when(connector.clearUserAnswersCalcBE()(any())) thenReturn Future.successful(Done)
+      when(connector.clearUserAnswersCalcBE()(any())) `thenReturn` Future.successful(Done)
 
       val result = service.clearUserAnswersCalcBE()(hc).futureValue
-      result mustBe Done
+      result `mustBe` Done
     }
 
     "must return a failed future when the connector fails to clear" in {
       val connector = mock[CalculateBackendConnector]
       val service   = new CalculateBackendDataService(connector)
 
-      when(connector.clearUserAnswersCalcBE()(any())) thenReturn Future.failed(new RuntimeException("Clear failed"))
+      when(connector.clearUserAnswersCalcBE()(any())) `thenReturn` Future.failed(new RuntimeException("Clear failed"))
 
       val result = service.clearUserAnswersCalcBE()(hc).failed.futureValue
-      result mustBe a[RuntimeException]
+      result `mustBe` a[RuntimeException]
     }
   }
 
@@ -58,20 +58,20 @@ class CalculateBackendDataServiceSpec extends SpecBase with MockitoSugar with Sc
       val connector = mock[CalculateBackendConnector]
       val service   = new CalculateBackendDataService(connector)
 
-      when(connector.clearSubmissionCalcBE()(any())) thenReturn Future.successful(Done)
+      when(connector.clearSubmissionCalcBE()(any())) `thenReturn` Future.successful(Done)
 
       val result = service.clearSubmissionCalcBE()(hc).futureValue
-      result mustBe Done
+      result `mustBe` Done
     }
 
     "must return a failed future when the connector fails to clear" in {
       val connector = mock[CalculateBackendConnector]
       val service   = new CalculateBackendDataService(connector)
 
-      when(connector.clearSubmissionCalcBE()(any())) thenReturn Future.failed(new RuntimeException("Clear failed"))
+      when(connector.clearSubmissionCalcBE()(any())) `thenReturn` Future.failed(new RuntimeException("Clear failed"))
 
       val result = service.clearSubmissionCalcBE()(hc).failed.futureValue
-      result mustBe a[RuntimeException]
+      result `mustBe` a[RuntimeException]
     }
   }
 

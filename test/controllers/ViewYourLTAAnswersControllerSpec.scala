@@ -46,8 +46,8 @@ class ViewYourLTAAnswersControllerSpec extends SpecBase {
         val expectedSeq: Seq[SummaryListRow] = summaryRowsLTA(application, submissionLTAOnly)
         val list                             = SummaryListViewModel(expectedSeq)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           list
         )(
           request,

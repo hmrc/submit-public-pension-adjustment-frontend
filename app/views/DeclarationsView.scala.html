@@ -20,7 +20,7 @@ formHelper: FormWithCSRF,
         govukButton: GovukButton
 )
 
-@(isClaimOnBehalf: Boolean, memberName: String)(implicit request: Request[_], messages: Messages)
+@(isClaimOnBehalf: Boolean, memberName: String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("declarations.title"))) {
 

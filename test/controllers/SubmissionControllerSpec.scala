@@ -21,10 +21,11 @@ import config.FrontendAppConfig
 import connectors.SubmitBackendConnector
 import models.{Done, UserAnswers, UserSubmissionReference}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito.{times, verify, when}
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{CalculateBackendDataService, SubmissionDataService, SubmissionService, UserDataService}
 import views.html.SubmissionView
 
@@ -47,11 +48,11 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculateBackendDataService = mock[CalculateBackendDataService]
       val mockSubmitBackendConnector      = mock[SubmitBackendConnector]
 
-      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockCalculateBackendDataService.clearUserAnswersCalcBE()(any())) thenReturn Future.successful(Done)
-      when(mockCalculateBackendDataService.clearSubmissionCalcBE()(any())) thenReturn Future.successful(Done)
-      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmissionDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockCalculateBackendDataService.clearUserAnswersCalcBE()(any())) `thenReturn` Future.successful(Done)
+      when(mockCalculateBackendDataService.clearSubmissionCalcBE()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmitBackendConnector.clearCalcUserAnswersSubmitBE()(any())) `thenReturn` Future.successful(Done)
 
       val userAnswers =
         UserAnswers(userAnswersId).set(UserSubmissionReference(), "userSubmissionReference").success.value
@@ -78,8 +79,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
         val expectedRedirectUrl = s"${appConfig.exitSurveyUrl}"
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           "userSubmissionReference",
           expectedRedirectUrl
         )(request, messages(application)).toString
@@ -105,8 +106,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -119,8 +120,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
   }

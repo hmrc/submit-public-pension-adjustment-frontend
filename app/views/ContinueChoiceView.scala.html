@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_])(implicit request: Request[_], messages: Messages)
+@(form: Form[?])(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = title(form, messages("continueChoice.title"))) {
 

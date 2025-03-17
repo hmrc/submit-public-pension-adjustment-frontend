@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.ContinueChoiceFormProvider
 import models.{NormalMode, UserAnswers}
 import pages.ContinueChoicePage

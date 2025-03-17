@@ -16,7 +16,7 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import scala.math.Ordered.orderingToOrdered
 
@@ -28,7 +28,7 @@ case class TaxYear2011To2015(
 object TaxYear2011To2015 {
   implicit lazy val reads: Reads[TaxYear2011To2015] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     (__ \ "period")
       .read[Period]
@@ -41,13 +41,13 @@ object TaxYear2011To2015 {
       (
         (__ \ "pensionInputAmount").read[Int] and
           (__ \ "period").read[Period]
-      )(TaxYear2011To2015.apply _)
+      )(TaxYear2011To2015.apply)
     }
   }
 
   implicit lazy val writes: Writes[TaxYear2011To2015] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     (
       (__ \ "pensionInputAmount").write[Int] and

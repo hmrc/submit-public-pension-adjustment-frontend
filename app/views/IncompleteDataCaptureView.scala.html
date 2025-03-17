@@ -20,7 +20,7 @@
     govukButton: GovukButton
 )
 
-@(continuationUrl : String)(implicit request: Request[_], messages: Messages)
+@(continuationUrl : String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("incompleteData.title")), showBackLink = false) {
 

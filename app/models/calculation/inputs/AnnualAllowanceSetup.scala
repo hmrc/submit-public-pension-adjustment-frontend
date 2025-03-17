@@ -16,7 +16,8 @@
 
 package models.calculation.inputs
 
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class AnnualAllowanceSetup(
   savingsStatement: Option[Boolean],
@@ -35,5 +36,18 @@ case class AnnualAllowanceSetup(
 
 object AnnualAllowanceSetup {
 
-  implicit lazy val formats: Format[AnnualAllowanceSetup] = Json.format
+  implicit lazy val formats: Format[AnnualAllowanceSetup] = (
+    (__ \ "savingsStatement").formatNullable[Boolean] and
+      (__ \ "pensionProtectedMember").formatNullable[Boolean] and
+      (__ \ "hadAACharge").formatNullable[Boolean] and
+      (__ \ "contributionRefunds").formatNullable[Boolean] and
+      (__ \ "netIncomeAbove100K").formatNullable[Boolean] and
+      (__ \ "netIncomeAbove190K").formatNullable[Boolean] and
+      (__ \ "maybePIAIncrease").formatNullable[MaybePIAIncrease] and
+      (__ \ "maybePIAUnchangedOrDecreased").formatNullable[MaybePIAUnchangedOrDecreased] and
+      (__ \ "pIAAboveAnnualAllowanceIn2023").formatNullable[Boolean] and
+      (__ \ "netIncomeAbove190KIn2023").formatNullable[Boolean] and
+      (__ \ "flexibleAccessDcScheme").formatNullable[Boolean] and
+      (__ \ "contribution4000ToDirectContributionScheme").formatNullable[Boolean]
+  )(AnnualAllowanceSetup.apply, o => Tuple.fromProductTyped(o))
 }

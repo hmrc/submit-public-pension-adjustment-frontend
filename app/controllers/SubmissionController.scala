@@ -18,7 +18,7 @@ package controllers
 
 import config.FrontendAppConfig
 import connectors.SubmitBackendConnector
-import controllers.actions._
+import controllers.actions.*
 import models.UserSubmissionReference
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

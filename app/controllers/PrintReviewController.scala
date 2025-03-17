@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import mappers.CalculationResultsMapper
 import play.api.data.Form
 import play.api.data.Forms.ignored
@@ -24,7 +24,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.lifetimeallowance._
+import viewmodels.checkAnswers.lifetimeallowance.*
 import viewmodels.govuk.all.SummaryListViewModel
 import views.html.PrintReviewView
 

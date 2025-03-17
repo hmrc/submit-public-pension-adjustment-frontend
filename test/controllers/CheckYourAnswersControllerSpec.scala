@@ -22,15 +22,15 @@ import models.submission.Submission
 import models.{Done, NavigationState, PensionSchemeDetails, Period, StatusOfUser, UserAnswers, WhenWillYouAskPensionSchemeToPay, WhoWillPay}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
-import org.mockito.MockitoSugar.mock
-import pages._
+import org.scalatestplus.mockito.MockitoSugar.mock
+import pages.*
 import play.api.Application
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{SubmissionDataService, UserDataService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import viewmodels.checkAnswers._
+import viewmodels.checkAnswers.*
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
 
@@ -60,8 +60,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val view = application.injector.instanceOf[CheckYourAnswersView]
         val list = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list, declarationRoute)(request, messages(application)).toString()
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(list, declarationRoute)(request, messages(application)).toString()
       }
     }
 
@@ -84,8 +84,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val view = application.injector.instanceOf[CheckYourAnswersView]
         val list = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list, declarationRoute)(request, messages(application)).toString()
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(list, declarationRoute)(request, messages(application)).toString()
       }
     }
 
@@ -106,8 +106,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val view = application.injector.instanceOf[CheckYourAnswersView]
         val list = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list, schemeCreditConsentRoute)(request, messages(application))
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(list, schemeCreditConsentRoute)(request, messages(application))
           .toString()
       }
     }
@@ -121,8 +121,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual calculationPrerequisiteRoute
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` calculationPrerequisiteRoute
       }
     }
 
@@ -135,8 +135,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` controllers.routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -146,10 +146,10 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val mockUserDataService       = mock[UserDataService]
       val mockSubmissionDataService = mock[SubmissionDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
-      when(mockCalculationInputs.annualAllowance) thenReturn None
-      when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
+      when(mockCalculationInputs.annualAllowance) `thenReturn` None
+      when(mockCalculationInputs.lifeTimeAllowance) `thenReturn` None
 
       val submission: Submission =
         Submission(
@@ -227,8 +227,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val list = SummaryListViewModel(expectedSeq)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list, declarationRoute)(request, messages(application)).toString()
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(list, declarationRoute)(request, messages(application)).toString()
       }
     }
   }

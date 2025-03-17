@@ -16,11 +16,14 @@
 
 package models.finalsubmission
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, __}
 
 case class PersonalCharge(amount: Int) {}
 
 object PersonalCharge {
 
-  implicit lazy val formats: Format[PersonalCharge] = Json.format
+  implicit lazy val formats: Format[PersonalCharge] = Format(
+    (__ \ "amount").read[Int].map(PersonalCharge(_)),
+    (__ \ "amount").write[Int].contramap(_.amount)
+  )
 }

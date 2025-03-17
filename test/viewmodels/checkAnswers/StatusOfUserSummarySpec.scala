@@ -41,7 +41,7 @@ class StatusOfUserSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      StatusOfUserSummary.row(userAnswers) shouldBe Some(
+      StatusOfUserSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "statusOfUser.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("statusOfUser.deputyship")),
@@ -58,7 +58,7 @@ class StatusOfUserSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      StatusOfUserSummary.row(userAnswers) shouldBe None
+      StatusOfUserSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

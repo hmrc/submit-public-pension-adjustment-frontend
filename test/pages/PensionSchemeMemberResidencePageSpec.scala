@@ -24,7 +24,7 @@ class PensionSchemeMemberResidencePageSpec extends PageBehaviours {
 
       val updatedUserAnswers = emptyUserAnswers.set(PensionSchemeMemberResidencePage, true).get
 
-      updatedUserAnswers.get(PensionSchemeMemberResidencePage) mustBe Some(true)
+      updatedUserAnswers.get(PensionSchemeMemberResidencePage) `mustBe` Some(true)
     }
   }
 }

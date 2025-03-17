@@ -16,8 +16,9 @@
 
 package models
 
+import play.api.libs.functional.syntax.*
 import models.requests.AddressLookupConfirmation
-import play.api.libs.json._
+import play.api.libs.json.*
 
 case class InternationalAddress(
   organisation: Option[String],
@@ -31,7 +32,16 @@ case class InternationalAddress(
 )
 
 object InternationalAddress {
-  implicit val format: OFormat[InternationalAddress] = Json.format[InternationalAddress]
+  implicit val format: Format[InternationalAddress] = (
+    (__ \ "organisation").formatNullable[String] and
+      (__ \ "addressLine1").format[String] and
+      (__ \ "addressLine2").formatNullable[String] and
+      (__ \ "addressLine3").formatNullable[String] and
+      (__ \ "townOrCity").format[String] and
+      (__ \ "stateOrRegion").formatNullable[String] and
+      (__ \ "postCode").formatNullable[String] and
+      (__ \ "country").format[String]
+  )(InternationalAddress.apply, o => Tuple.fromProductTyped(o))
 
   def apply(addressLookupConfirmation: AddressLookupConfirmation): InternationalAddress = {
     val lines = addressLookupConfirmation.extractAddressLines()

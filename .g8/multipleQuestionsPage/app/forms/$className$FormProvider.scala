@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 import forms.mappings.Mappings
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import models.$className$
 
 class $className$FormProvider @Inject() extends Mappings {
