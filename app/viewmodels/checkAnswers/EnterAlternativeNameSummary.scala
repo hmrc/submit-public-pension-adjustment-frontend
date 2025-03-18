@@ -29,18 +29,22 @@ import viewmodels.implicits.*
 object EnterAlternativeNameSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] = {
-    val key =
+    val headingKey =
       if (isClaimOnBehalf(answers)) "enterAlternativeName.checkYourAnswersLabel.onBehalf"
       else "enterAlternativeName.checkYourAnswersLabel"
+
+    val changeKey =
+      if (isClaimOnBehalf(answers)) "enterAlternativeName.change.hidden.onBehalf"
+      else "enterAlternativeName.change.hidden"
 
     answers.get(EnterAlternativeNamePage).map { answer =>
       val value = HtmlFormat.escape(answer).toString
       SummaryListRowViewModel(
-        key = key,
+        key = headingKey,
         value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
           ActionItemViewModel("site.change", routes.EnterAlternativeNameController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("enterAlternativeName.change.hidden"))
+            .withVisuallyHiddenText(messages(changeKey))
         )
       )
     }
