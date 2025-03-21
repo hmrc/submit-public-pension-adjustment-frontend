@@ -4,12 +4,12 @@ object AppDependencies {
   import play.core.PlayVersion
 
   private val bootstrapPlay30Version = "9.11.0"
-  private val mongoPlay30Version     = "2.5.0"
+  private val mongoPlay30Version     = "2.6.0"
 
   val compile = Seq(
     play.sbt.PlayImport.ws,
 
-    "uk.gov.hmrc"                  %% "play-frontend-hmrc-play-30"    % "11.12.0",
+    "uk.gov.hmrc"                  %% "play-frontend-hmrc-play-30"    % "12.0.0",
     "uk.gov.hmrc"                  %% "play-conditional-form-mapping-play-30" % "3.2.0",
     "uk.gov.hmrc"                  %% "domain-play-30"                        % "10.0.0",
     "uk.gov.hmrc"                  %% "bootstrap-frontend-play-30"    % bootstrapPlay30Version,
