@@ -90,5 +90,5 @@ object UserAnswers {
   }
 
   implicit val format: OFormat[UserAnswers] = OFormat(reads, writes)
-  
+
 }
