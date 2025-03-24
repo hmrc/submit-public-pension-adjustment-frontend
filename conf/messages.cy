@@ -317,7 +317,7 @@ submission.lta.2015to2019.message = Ar gyfer y blynyddoedd 2015 i 2019, byddwn y
 submission.lta.2015to2019.message2 = Os oes iawndal yn ddyledus i chi, mae’n rhaid i chi gysylltu â’ch cynllun pensiwn gwasanaeth cyhoeddus yn uniongyrchol i gael diweddariadau.
 submission.lta.2019to2023.message = Ar gyfer blynyddoedd 2019 i 2023, byddwch yn cael ymateb gan CThEF cyn pen 90 diwrnod.
 submission.message2 = Os oes gennych unrhyw ymholiadau ynghylch eich addasiad, neu os na fyddwch yn cael ymateb gan CThEF cyn pen 90 diwrnod, gallwch
-submission.message2.link = gysylltu â Gwasanaeth Cwsmeriaid Cymraeg CThEF gan nodi’ch cyfeirnod cyflwyno (yn agor tab newydd).
+submission.message2.link = gysylltu â Gwasanaeth Cwsmeriaid Cymraeg CThEF gan nodi’ch cyfeirnod cyflwyno (yn agor tab newydd)
 submission.link = Beth oedd eich barn am y gwasanaeth hwn?
 submission.takesSecond = (mae’n cymryd 30 eiliad)
 
