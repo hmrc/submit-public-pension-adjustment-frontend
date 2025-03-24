@@ -18,13 +18,6 @@ package models.calculation.response
 
 import play.api.libs.json.{Reads, Writes, __}
 
-sealed trait TaxYearSchemeCalculation {
-
-  def name: String
-
-  def pensionSchemeTaxReference: String
-}
-
 case class OutOfDatesTaxYearSchemeCalculation(name: String, pensionSchemeTaxReference: String, compensation: Int)
 
 object OutOfDatesTaxYearSchemeCalculation {
