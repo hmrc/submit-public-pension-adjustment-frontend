@@ -15,7 +15,6 @@
  *@
 
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.hmrcfrontend.views.config.StandardBetaBanner
 @import views.html.helper.CSPNonce
 
 @this(
@@ -30,7 +29,6 @@
     hmrcTimeoutDialog: HmrcTimeoutDialog,
     hmrcReportTechnicalIssueHelper: HmrcReportTechnicalIssueHelper,
     hmrcScripts: HmrcScripts,
-    betaBanner: StandardBetaBanner
 )
 
 @(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, signOutUrl: String = controllers.auth.routes.AuthController.signOut().url, serviceBannerClickable: Boolean = true)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
@@ -89,9 +87,7 @@
         serviceUrl  = if (serviceBannerClickable) {
                         Some(routes.IndexController.onPageLoad.url)
                       } else {None},
-        signOutUrl  = if(showSignOut) Some(signOutUrl) else None,
-        phaseBanner = Some(betaBanner(appConfig.feedbackUrl))
-    )),
+        signOutUrl  = if(showSignOut) Some(signOutUrl) else None)),
     beforeContentBlock = Some(beforeContent),
     footerBlock        = Some(hmrcStandardFooter()),
     scriptsBlock       = Some(hmrcScripts(
