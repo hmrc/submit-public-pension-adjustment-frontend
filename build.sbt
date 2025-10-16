@@ -8,7 +8,7 @@ import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 lazy val appName: String = "submit-public-pension-adjustment-frontend"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "3.3.5"
+ThisBuild / scalaVersion := "3.6.4"
 
 lazy val it = project
   .enablePlugins(PlayScala)
@@ -54,7 +54,6 @@ lazy val root = (project in file("."))
       "-Wconf:msg=Flag.*repeatedly:s",
       "-feature",
       "-deprecation",
-      "-Ypatmat-exhaust-depth",
       "off"
     ),
     libraryDependencies ++= AppDependencies(),

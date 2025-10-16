@@ -56,7 +56,7 @@ object Submission {
 
   implicit val format: Format[Submission] = Format(reads, writes)
 
-  def encryptedFormat(implicit crypto: Encrypter with Decrypter): Format[Submission] = {
+  def encryptedFormat(implicit crypto: Encrypter & Decrypter): Format[Submission] = {
 
     import play.api.libs.functional.syntax.*
 
