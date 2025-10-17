@@ -23,7 +23,6 @@ import models.requests.{AddressLookupAddress, AddressLookupConfirmation, Address
 import org.scalatest.matchers.must.Matchers
 import play.api.Application
 import play.api.http.Status.ACCEPTED
-import play.api.i18n.Lang
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers.running
