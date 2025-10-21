@@ -75,7 +75,7 @@ class ConfirmRestartAnswersController @Inject() (
                   _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
                   _ <- calculateBackendDataService.clearUserAnswersCalcBE()
                 } yield ()
-              } else Future.unit
+              } else { Future.unit }
 
             for {
               _              <- maybeClearF
