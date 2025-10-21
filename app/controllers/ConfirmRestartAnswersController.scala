@@ -48,6 +48,8 @@ class ConfirmRestartAnswersController @Inject() (
 
   val form = formProvider()
 
+  // sequentially execute the clear calls when needed (keeps order deterministic)
+
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData) { implicit request =>
     val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(ConfirmRestartAnswersPage) match {
       case None        => form
@@ -63,27 +65,26 @@ class ConfirmRestartAnswersController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
-          value =>
-            if (value) {
-              for {
-                _              <- userDataService.clear()
-                _              <- submissionDataService.clear()
-                _              <- calculateBackendDataService.clearSubmissionCalcBE()
-                _              <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
-                _              <- calculateBackendDataService.clearUserAnswersCalcBE()
-                updatedAnswers <-
-                  Future.fromTry(
-                    request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmRestartAnswersPage, value)
-                  )
-              } yield Redirect(ConfirmRestartAnswersPage.navigate(NormalMode, updatedAnswers))
-            } else {
-              for {
-                updatedAnswers <-
-                  Future.fromTry(
-                    request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmRestartAnswersPage, value)
-                  )
-              } yield Redirect(ConfirmRestartAnswersPage.navigate(NormalMode, updatedAnswers))
-            }
+          value => {
+            val maybeClearF =
+              if (value) {
+                for {
+                  _ <- userDataService.clear()
+                  _ <- submissionDataService.clear()
+                  _ <- calculateBackendDataService.clearSubmissionCalcBE()
+                  _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
+                  _ <- calculateBackendDataService.clearUserAnswersCalcBE()
+                } yield ()
+              } else Future.unit
+
+            for {
+              _              <- maybeClearF
+              updatedAnswers <-
+                Future.fromTry(
+                  request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmRestartAnswersPage, value)
+                )
+            } yield Redirect(ConfirmRestartAnswersPage.navigate(NormalMode, updatedAnswers))
+          }
         )
   }
 }
