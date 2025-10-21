@@ -48,8 +48,6 @@ class ConfirmRestartAnswersController @Inject() (
 
   val form = formProvider()
 
-  // sequentially execute the clear calls when needed (keeps order deterministic)
-
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireCalculationData) { implicit request =>
     val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(ConfirmRestartAnswersPage) match {
       case None        => form
