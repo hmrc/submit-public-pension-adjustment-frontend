@@ -36,7 +36,7 @@ object TaxYear {
     implicit def convertToSupertype[A, B >: A](a: Reads[A]): Reads[B] =
       a.map(identity)
 
-    TaxYear2011To2015.reads or
+    TaxYear2011To2015.reads `or`
       TaxYear2016To2023.reads
 
   }

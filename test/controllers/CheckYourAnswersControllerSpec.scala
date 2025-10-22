@@ -192,10 +192,10 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val mockUserDataService       = mock[UserDataService]
       val mockSubmissionDataService = mock[SubmissionDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
-      when(mockCalculationInputs.annualAllowance) thenReturn None
-      when(mockCalculationInputs.lifeTimeAllowance) thenReturn None
+      when(mockCalculationInputs.annualAllowance) `thenReturn` None
+      when(mockCalculationInputs.lifeTimeAllowance) `thenReturn` None
 
       val submission: Submission =
         Submission(

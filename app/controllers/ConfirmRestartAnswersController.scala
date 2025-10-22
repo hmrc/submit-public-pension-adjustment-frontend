@@ -64,21 +64,24 @@ class ConfirmRestartAnswersController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
           value => {
-            if (value) {
-              for {
-                _ <- userDataService.clear()
-                _ <- submissionDataService.clear()
-                _ <- calculateBackendDataService.clearSubmissionCalcBE()
-                _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
-                r <- calculateBackendDataService.clearUserAnswersCalcBE()
-              } yield r
-            }
+            val maybeClearF =
+              if (value) {
+                for {
+                  _ <- userDataService.clear()
+                  _ <- submissionDataService.clear()
+                  _ <- calculateBackendDataService.clearSubmissionCalcBE()
+                  _ <- submitBackendConnector.clearCalcUserAnswersSubmitBE()
+                  _ <- calculateBackendDataService.clearUserAnswersCalcBE()
+                } yield ()
+              } else {
+                Future.unit
+              }
             for {
+              _              <- maybeClearF
               updatedAnswers <-
-                Future
-                  .fromTry(
-                    request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmRestartAnswersPage, value)
-                  )
+                Future.fromTry(
+                  request.userAnswers.getOrElse(UserAnswers(request.userId)).set(ConfirmRestartAnswersPage, value)
+                )
             } yield Redirect(ConfirmRestartAnswersPage.navigate(NormalMode, updatedAnswers))
           }
         )

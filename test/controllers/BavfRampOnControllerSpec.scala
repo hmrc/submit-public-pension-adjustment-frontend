@@ -44,7 +44,7 @@ class BavfRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockBavfConnector = mock[BavfConnector]
 
-      when(mockBavfConnector.initialiseJourney(any(), any())(any(), any())) thenReturn Future
+      when(mockBavfConnector.initialiseJourney(any(), any())(any(), any())) `thenReturn` Future
         .successful("/redirectUrl")
 
       val application =
@@ -72,7 +72,7 @@ class BavfRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockBavfConnector = mock[BavfConnector]
 
-      when(mockBavfConnector.initialiseJourney(any(), any())(any(), any())) thenReturn Future
+      when(mockBavfConnector.initialiseJourney(any(), any())(any(), any())) `thenReturn` Future
         .successful("/redirectUrl")
 
       val application =
@@ -100,7 +100,7 @@ class BavfRampOnControllerSpec extends SpecBase with MockitoSugar {
 
       val mockBavfConnector = mock[BavfConnector]
 
-      when(mockBavfConnector.initialiseJourney(any(), any())(any(), any())) thenReturn Future
+      when(mockBavfConnector.initialiseJourney(any(), any())(any(), any())) `thenReturn` Future
         .successful("/redirectUrl")
 
       val application =

@@ -36,7 +36,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   def feedbackUrl(implicit request: RequestHeader): String = {
     val backUrl: String                  = host + request.uri
     val allowedRedirectUrls: Seq[String] = configuration.get[Seq[String]]("urls.allowedRedirects")
-    val policy: RedirectUrlPolicy[Id]    = AbsoluteWithHostnameFromAllowlist(allowedRedirectUrls: _*)
+    val policy: RedirectUrlPolicy[Id]    = AbsoluteWithHostnameFromAllowlist(allowedRedirectUrls*)
     val safeBackUrl                      = RedirectUrl(backUrl).get(policy).encodedUrl
     s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=$safeBackUrl"
   }
