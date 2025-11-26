@@ -77,4 +77,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val timeout: Int   = configuration.get[Int]("timeout-dialog.timeout")
   val countdown: Int = configuration.get[Int]("timeout-dialog.countdown")
 
+  val forceServiceNavigation: Boolean =
+    configuration.getOptional[Boolean]("play-frontend-hmrc.forceServiceNavigation").getOrElse(false)
+
 }
