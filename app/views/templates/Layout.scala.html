@@ -82,7 +82,6 @@
 @headerBlock = @{
     if (appConfig.forceServiceNavigation){
         hmrcStandardHeader(
-            isWelshTranslationAvailable = true,
             serviceNavigation = Some(
                 if(appConfig.languageTranslationEnabled) {
                     ServiceNavigation(
@@ -98,7 +97,6 @@
             ),
             signOutUrl  = if(showSignOut) Some(signOutUrl) else None,
             phaseBanner = Some(betaBanner(appConfig.feedbackUrl))
-
         )
     } else {
         hmrcStandardHeader(
