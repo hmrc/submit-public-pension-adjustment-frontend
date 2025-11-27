@@ -17,6 +17,7 @@
 @import config.FrontendAppConfig
 @import uk.gov.hmrc.hmrcfrontend.views.config.StandardBetaBanner
 @import views.html.helper.CSPNonce
+@import uk.gov.hmrc.govukfrontend.views.Implicits._
 
 @this(
     appConfig: FrontendAppConfig,
@@ -60,17 +61,49 @@
 }
 
 @beforeContent = {
-
-    @if(appConfig.languageTranslationEnabled) {
-        @hmrcLanguageSelect(LanguageSelect(
-            if (messages.lang.code == "cy") Cy else En,
-            (En, routes.LanguageSwitchController.switchToLanguage("en").url),
-            (Cy, routes.LanguageSwitchController.switchToLanguage("cy").url)
-        ))
+    @if(appConfig.forceServiceNavigation) {
+        @if(showBackLink) {
+            @govukBackLink(BackLinkViewModel(href = "#").withCssClass("js-visible"))
+        }
+    } else {
+        @if(appConfig.languageTranslationEnabled) {
+            @hmrcLanguageSelect(LanguageSelect(
+                if (messages.lang.code == "cy") Cy else En,
+                (En, routes.LanguageSwitchController.switchToLanguage("en").url),
+                (Cy, routes.LanguageSwitchController.switchToLanguage("cy").url)
+            ))
+        }
+        @if(showBackLink) {
+            @govukBackLink(BackLinkViewModel(href = "#").withCssClass("js-visible"))
+        }
     }
+}
 
-    @if(showBackLink) {
-        @govukBackLink(BackLinkViewModel(href = "#").withCssClass("js-visible"))
+@headerBlock = @{
+    if (appConfig.forceServiceNavigation){
+        hmrcStandardHeader(
+            serviceNavigation = Some(
+                if(appConfig.languageTranslationEnabled) {
+                    ServiceNavigation(
+                        serviceName = Some(messages("service.name")),
+                        serviceUrl  = if (serviceBannerClickable) Some(routes.IndexController.onPageLoad.url) else None
+                    ).withLanguageToggle()
+                } else {
+                    ServiceNavigation(
+                        serviceName = Some(messages("service.name")),
+                        serviceUrl  = if (serviceBannerClickable) Some(routes.IndexController.onPageLoad.url) else None
+                    )
+                }
+            ),
+            signOutUrl  = if(showSignOut) Some(signOutUrl) else None,
+            phaseBanner = Some(betaBanner(appConfig.feedbackUrl))
+        )
+    } else {
+        hmrcStandardHeader(
+            serviceUrl  = if (serviceBannerClickable) Some(routes.IndexController.onPageLoad.url) else None,
+            signOutUrl  = if(showSignOut) Some(signOutUrl) else None,
+            phaseBanner = Some(betaBanner(appConfig.feedbackUrl))
+        )
     }
 }
 
@@ -85,13 +118,7 @@
 @govukLayout(
     pageTitle   = Some(pageTitle),
     headBlock   = Some(head),
-    headerBlock = Some(hmrcStandardHeader(
-        serviceUrl  = if (serviceBannerClickable) {
-                        Some(routes.IndexController.onPageLoad.url)
-                      } else {None},
-        signOutUrl  = if(showSignOut) Some(signOutUrl) else None,
-        phaseBanner = Some(betaBanner(appConfig.feedbackUrl))
-    )),
+    headerBlock = Some(headerBlock),
     beforeContentBlock = Some(beforeContent),
     footerBlock        = Some(hmrcStandardFooter()),
     scriptsBlock       = Some(hmrcScripts(
