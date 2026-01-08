@@ -23,7 +23,6 @@ object AppDependencies {
     "org.scalacheck"         %% "scalacheck"              % "1.19.0" % Test,
     "org.scalatestplus"      %% "scalacheck-1-17"         % "3.2.18.0" % Test,
     "org.scalatestplus"      %% "mockito-4-11"            % "3.2.18.0" % Test,
-    "org.playframework"      %% "play-test"               % PlayVersion.current % Test,
     "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % mongoPlay30Version % Test,
     "com.vladsch.flexmark"    % "flexmark-all"            % "0.64.8" % Test
   )
